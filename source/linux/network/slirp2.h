@@ -1,6 +1,10 @@
 #pragma once
 
+#ifndef MARIANI
 #include "linux/config.h"
+#else
+#define SLIRP_FOUND "1"
+#endif
 
 #ifdef SLIRP_FOUND
 // disable to use libpcap in all cases

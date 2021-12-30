@@ -150,6 +150,7 @@ namespace sa2
 
   void SDLFrame::setGLSwapInterval(const int interval)
   {
+#ifndef MARIANI
     const int current = SDL_GL_GetSwapInterval();
     // in QEMU with GL_RENDERER: llvmpipe (LLVM 12.0.0, 256 bits)
     // SDL_GL_SetSwapInterval() always fails
@@ -157,6 +158,7 @@ namespace sa2
     {
       throw std::runtime_error(std::string("SDL_GL_SetSwapInterval: ") + SDL_GetError());
     }
+#endif // MARIANI
   }
 
   void SDLFrame::Begin()

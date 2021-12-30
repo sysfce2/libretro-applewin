@@ -71,6 +71,14 @@ void LinuxFrame::Destroy()
   GetVideo().Destroy(); // this resets the Video's FrameBuffer pointer
 }
 
+#ifdef MARIANI
+// FIXME: temporary hack to vend frame buffer to Metal renderer before the
+// renderer is made a subclass of LinuxFrame
+void *LinuxFrame::FrameBufferData() {
+    return myFramebuffer.data();
+}
+#endif
+
 void LinuxFrame::ApplyVideoModeChange()
 {
   // this is similar to Win32Frame::ApplyVideoModeChange

@@ -11,7 +11,16 @@
 
 #include "Log.h"
 #include "Core.h"
+#ifndef MARIANI
 #include "config.h"
+#else
+// relative path from executable to resources
+#define ROOT_PATH "../"
+#define SHARE_PATH "../share/applewin"
+
+// this one is a bit of a hack, until resources are embedded in the retro core
+#define CMAKE_SOURCE_DIR "/Users/sh95014/Developer/AppleWin"  // FIXME
+#endif // MARIANI
 
 namespace
 {

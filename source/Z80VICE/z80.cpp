@@ -5554,7 +5554,7 @@ DWORD z80_mainloop(ULONG uTotalCycles, ULONG uExecutedCycles)
 
         FETCH_OPCODE(opcode);
 
-#ifdef DEBUG
+#if defined(DEBUG) && !defined(MARIANI)
         if (debug.maincpu_traceflg)
             log_message(LOG_DEFAULT,
                         ".%04x %i %-25s A%02x F%02x B%02x C%02x D%02x E%02x "

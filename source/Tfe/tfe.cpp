@@ -1255,7 +1255,10 @@ void REGPARM2 tfe_store(WORD ioaddress, BYTE byte)
                 ppaddress, GET_PP_16(ppaddress) );
 #endif
             {
-                register WORD tmpIoAddr = ioaddress & ~1; /* word-align the address */
+#if __cplusplus < 201703L
+                register
+#endif
+                WORD tmpIoAddr = ioaddress & ~1; /* word-align the address */
                 SET_PP_16(ppaddress, GET_TFE_16(tmpIoAddr));
             }
 

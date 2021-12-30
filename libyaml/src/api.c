@@ -63,7 +63,10 @@ yaml_strdup(const yaml_char_t *str)
     if (!str)
         return NULL;
 
-    return (yaml_char_t *)_strdup((char *)str);	// TC: strdup() > _strdup()
+    size_t str_length = strlen((const char *)str);
+    yaml_char_t *dup = yaml_malloc(str_length + 1);
+    strcpy((char *)dup, (char *)str);
+    return dup;
 }
 
 /*

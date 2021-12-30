@@ -17,7 +17,7 @@ else()
 endif()
 
 if (SA2_OPENGL)
-  pkg_search_module(GLES2 REQUIRED opengl)
+  # pkg_search_module(GLES2 REQUIRED opengl)
 else()
   pkg_search_module(GLES2 REQUIRED glesv2)
   target_compile_definitions(sa2 PRIVATE

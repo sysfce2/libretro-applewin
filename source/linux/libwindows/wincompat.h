@@ -102,7 +102,9 @@ typedef int32_t INT32;
 #endif
 
 typedef uint32_t            DWORD;
+#ifndef __OBJC__
 typedef int32_t             BOOL;
+#endif
 typedef unsigned char       BYTE;
 typedef uint16_t            WORD;
 typedef float               FLOAT;
