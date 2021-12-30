@@ -19,6 +19,7 @@
 #import "utils.h"
 
 // AppleWin imports
+#import "Card.h"
 #import "Interface.h"
 #import "Utilities.h"
 #import "Video.h"
@@ -35,16 +36,15 @@
 @property (weak) IBOutlet NSMenu *displayTypeMenu;
 @property (weak) IBOutlet EmulatorViewController *emulatorVC;
 @property (strong) PreferencesWindowController *preferencesWC;
-@property (weak) IBOutlet NSImageView *drive1LightView;
-@property (weak) IBOutlet NSPopUpButton *drive1PopUpButton;
-@property (weak) IBOutlet NSImageView *drive2LightView;
-@property (weak) IBOutlet NSPopUpButton *drive2PopUpButton;
+@property (weak) IBOutlet NSButton *driveLightButtonTemplate;
 @property (weak) IBOutlet NSButton *volumeToggleButton;
 
 @property NSTimer *timer;
 @property Initialisation *initialisation;
 @property LoggerContext *logger;
 @property RegistryContext *registryContext;
+@property NSArray *driveLightButtons;
+@property NSData *driveLightButtonTemplateArchive;
 
 @end
 
@@ -52,6 +52,8 @@
 
 std::shared_ptr<sa2::SDLFrame> frame;
 FrameBuffer frameBuffer;
+
+Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (int)getRefreshRate {
     SDL_DisplayMode current;
@@ -119,11 +121,32 @@ FrameBuffer frameBuffer;
             [self.displayTypeMenu addItem:item];
         }
         
+        self.driveLightButtonTemplateArchive = [self archiveFromTemplateView:self.driveLightButtonTemplate];
+        [self createDriveLightButtons];
+        
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
     }
 }
 
 - (void)timerFired {
+    for (NSButton *driveLightButton in self.driveLightButtons) {
+        CardManager & cardManager = GetCardMgr();
+        UINT slot = (UINT)driveLightButton.tag / 10;
+        NSInteger drive = driveLightButton.tag % 10;
+        Disk2InterfaceCard * card2 = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+        Disk_Status_e status[NUM_DRIVES];
+        card2->GetLightStatus(&status[0], &status[1]);
+        const BOOL active = (status[drive] == DISK_STATUS_READ || status[drive] == DISK_STATUS_WRITE);
+        if (active) {
+            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
+            driveLightButton.contentTintColor = [NSColor controlAccentColor];
+        }
+        else {
+            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
+            driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
+        }
+    }
+    
     if (self.volumeToggleButton.state == NSControlStateValueOn) {
         sa2::writeAudio();
     }
@@ -201,14 +224,8 @@ FrameBuffer frameBuffer;
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
-- (IBAction)volumeToggled:(id)sender {
+- (IBAction)driveLightAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    if (self.volumeToggleButton.state == NSControlStateValueOn) {
-        self.volumeToggleButton.state == NSControlStateValueOff;
-    }
-    else {
-        self.volumeToggleButton.state == NSControlStateValueOn;
-    }
 }
 
 #pragma mark - Utilties
@@ -232,6 +249,67 @@ FrameBuffer frameBuffer;
     
     NSString *name = [videoTypeNames objectForKey:[NSNumber numberWithInt:(int)videoType]];
     return (name != nil) ? name : NSLocalizedString(@"Unknown", @"");
+}
+
+- (NSView *)viewCopyFromTemplateView:(NSView *)templateView {
+    return [self viewCopyFromArchive:[self archiveFromTemplateView:templateView]];
+}
+
+- (NSData *)archiveFromTemplateView:(NSView *)templateView {
+    NSError *error;
+    NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:templateView requiringSecureCoding:NO error:&error];
+    if (error != nil) {
+        NSLog(@"%s: %@", __PRETTY_FUNCTION__, error.localizedDescription);
+        return nil;
+    }
+    return archive;
+}
+
+- (NSView *)viewCopyFromArchive:(NSData *)templateArchive {
+    NSError *error;
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:templateArchive error:&error];
+    unarchiver.requiresSecureCoding = NO;
+    NSView *view = [unarchiver decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    if (error != nil) {
+        NSLog(@"%s: %@", __PRETTY_FUNCTION__, error.localizedDescription);
+    }
+    return view;
+}
+
+- (void)createDriveLightButtons {
+    // only using as template, never actually show this button
+    self.driveLightButtonTemplate.hidden = YES;
+    
+    // remove the old light buttons, if any
+    for (NSView *button in self.driveLightButtons) {
+        [button removeFromSuperview];
+    }
+    
+    NSMutableArray *driveLightButtons = [NSMutableArray array];
+    NSInteger position = 0;
+    CardManager & cardManager = GetCardMgr();
+    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
+        if (cardManager.QuerySlot(slot) == CT_Disk2) {
+            for (int drive = DRIVE_1; drive < NUM_DRIVES; drive++) {
+                NSButton *driveLightButton = (NSButton *)[self viewCopyFromArchive:self.driveLightButtonTemplateArchive];
+
+                [driveLightButtons addObject:driveLightButton];
+                [[self.driveLightButtonTemplate superview] addSubview:driveLightButton];
+                
+                // offset each drive light button from the left
+                CGRect driveLightButtonFrame = driveLightButton.frame;
+                driveLightButtonFrame.origin.x = self.driveLightButtonTemplate.frame.origin.x + position * self.driveLightButtonTemplate.frame.size.width;
+                driveLightButton.frame = driveLightButtonFrame;
+                
+                driveLightButton.tag = slot * 10 + drive;
+                driveLightButton.hidden = NO;
+                
+                position++;
+            }
+        }
+    }
+    
+    self.driveLightButtons = driveLightButtons;
 }
 
 @end

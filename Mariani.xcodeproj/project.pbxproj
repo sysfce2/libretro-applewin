@@ -60,7 +60,7 @@
 		B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
 		B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */; };
 		B0927416277D9399003FFB79 /* PreferencesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B0927414277D9399003FFB79 /* PreferencesViewController.h */; };
-		B0927417277D9399003FFB79 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.m */; };
+		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B092741A277D9403003FFB79 /* PreferencesWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = B0927418277D9403003FFB79 /* PreferencesWindowController.h */; };
 		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
 		B09AB655277A14DB0002A6C3 /* Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5E7277A14DA0002A6C3 /* Core.cpp */; };
@@ -272,7 +272,7 @@
 		B049E8AE277C9A8000FC14A3 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		B0927414277D9399003FFB79 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
-		B0927415277D9399003FFB79 /* PreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
+		B0927415277D9399003FFB79 /* PreferencesViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PreferencesViewController.mm; sourceTree = "<group>"; };
 		B0927418277D9403003FFB79 /* PreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
 		B0927419277D9403003FFB79 /* PreferencesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
 		B09AB5E5277A14DA0002A6C3 /* Peripheral_Clock_Generic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Peripheral_Clock_Generic.cpp; path = source/Peripheral_Clock_Generic.cpp; sourceTree = SOURCE_ROOT; };
@@ -592,7 +592,7 @@
 				B049E89C277C43BF00FC14A3 /* EmulatorViewController.h */,
 				B049E89D277C43BF00FC14A3 /* EmulatorViewController.m */,
 				B0927414277D9399003FFB79 /* PreferencesViewController.h */,
-				B0927415277D9399003FFB79 /* PreferencesViewController.m */,
+				B0927415277D9399003FFB79 /* PreferencesViewController.mm */,
 				B0927418277D9403003FFB79 /* PreferencesWindowController.h */,
 				B0927419277D9403003FFB79 /* PreferencesWindowController.m */,
 				B049E8A4277C4F0E00FC14A3 /* ShaderTypes.h */,
@@ -1317,7 +1317,7 @@
 				B09AB724277A1BA40002A6C3 /* Debugger_Disassembler.cpp in Sources */,
 				B09AB65B277A14DB0002A6C3 /* LanguageCard.cpp in Sources */,
 				B09AB801277A21410002A6C3 /* dmusicc.cpp in Sources */,
-				B0927417277D9399003FFB79 /* PreferencesViewController.m in Sources */,
+				B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */,
 				B09AB655277A14DB0002A6C3 /* Core.cpp in Sources */,
 				B09AB680277A14DB0002A6C3 /* StdAfx.cpp in Sources */,
 				B09AB666277A14DB0002A6C3 /* Utilities.cpp in Sources */,

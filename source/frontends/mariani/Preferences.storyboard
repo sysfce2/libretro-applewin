@@ -76,6 +76,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="toggleDeveloperTools:" target="FE3-Py-9oA" id="9CA-oJ-Xel"/>
+                                </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5S9-PS-cOu">
                                 <rect key="frame" x="146" y="16" width="288" height="25"/>
@@ -91,6 +94,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="screenshotFolderAction:" target="FE3-Py-9oA" id="n2u-HA-iSU"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jL-0T-Ueg">
                                 <rect key="frame" x="18" y="22" width="120" height="16"/>
@@ -103,6 +109,10 @@
                             </textField>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="generalDeveloperToolsButton" destination="3Sk-BC-urJ" id="e42-jh-Eku"/>
+                        <outlet property="generalScreenshotsFolderButton" destination="5S9-PS-cOu" id="fs6-x2-uqB"/>
+                    </connections>
                 </viewController>
                 <customObject id="Y15-Zv-W4e" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -130,6 +140,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="mainBoardAction:" target="cWg-fO-BCh" id="VMw-C6-azA"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rgc-F0-DkW">
                                 <rect key="frame" x="18" y="328" width="120" height="16"/>
@@ -140,7 +153,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F5F-E6-ZkS">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="F5F-E6-ZkS">
                                 <rect key="frame" x="146" y="263" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="cPV-ia-eNb" id="vFM-Bm-7F6">
@@ -154,6 +167,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="87j-B4-fye"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="37e-66-sfP">
                                 <rect key="frame" x="18" y="269" width="120" height="16"/>
@@ -173,7 +189,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fgw-MD-H7Z">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="Fgw-MD-H7Z">
                                 <rect key="frame" x="146" y="55" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="mNX-8S-bfy" id="EKD-ys-2x5">
@@ -187,6 +203,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="HZT-wd-XJ3"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="syt-ld-aZT">
                                 <rect key="frame" x="18" y="61" width="120" height="16"/>
@@ -197,7 +216,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gox-0e-V6d">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="gox-0e-V6d">
                                 <rect key="frame" x="146" y="237" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="t1m-k0-Y8Y" id="srZ-sl-ft8">
@@ -211,6 +230,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="pnc-C1-jpg"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rbp-yA-Dtf">
                                 <rect key="frame" x="18" y="243" width="120" height="16"/>
@@ -221,7 +243,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D7U-OX-Bpf">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="D7U-OX-Bpf">
                                 <rect key="frame" x="146" y="211" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zUh-Wz-VVP" id="407-Gx-t3d">
@@ -235,6 +257,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="NR0-wG-Arx"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tFZ-hB-7vw">
                                 <rect key="frame" x="18" y="217" width="120" height="16"/>
@@ -245,7 +270,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXh-hH-9kF">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="pXh-hH-9kF">
                                 <rect key="frame" x="146" y="185" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4ff-08-g0f" id="wL5-6k-hok">
@@ -259,6 +284,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="Z5A-kM-H81"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zXU-cf-WKi">
                                 <rect key="frame" x="18" y="191" width="120" height="16"/>
@@ -269,7 +297,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yp2-xx-V6X">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="Yp2-xx-V6X">
                                 <rect key="frame" x="146" y="159" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oC7-6g-BFC" id="Pf6-4B-8dv">
@@ -283,6 +311,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="Fdp-MT-lvR"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iEb-V6-q5I">
                                 <rect key="frame" x="18" y="165" width="120" height="16"/>
@@ -293,7 +324,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fbC-aH-4vi">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="fbC-aH-4vi">
                                 <rect key="frame" x="146" y="133" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="nFe-ca-n3y" id="V0a-HW-BJg">
@@ -307,6 +338,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="Xxi-X6-EKp"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="exT-qZ-wy4">
                                 <rect key="frame" x="18" y="139" width="120" height="16"/>
@@ -317,7 +351,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FCh-2I-uKq">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="FCh-2I-uKq">
                                 <rect key="frame" x="146" y="107" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Ahb-Jg-UNH" id="AUG-xs-jRs">
@@ -331,6 +365,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="Qeg-hj-lOU"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNA-n3-RvP">
                                 <rect key="frame" x="18" y="113" width="120" height="16"/>
@@ -341,7 +378,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eTX-wc-sjo">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="eTX-wc-sjo">
                                 <rect key="frame" x="146" y="81" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="yGH-yL-eA6" id="jbg-sU-Pav">
@@ -355,6 +392,9 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="slotAction:" target="cWg-fO-BCh" id="4ZV-ae-qrV"/>
+                                </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Smo-sS-8zG">
                                 <rect key="frame" x="18" y="87" width="120" height="16"/>
@@ -376,9 +416,25 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="rebootEmulatorAction:" target="cWg-fO-BCh" id="5vO-Wm-gQa"/>
+                                </connections>
                             </button>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="computerExansionSlotButton" destination="eTX-wc-sjo" id="AbV-Lx-sbT"/>
+                        <outlet property="computerMainBoardButton" destination="LqV-Yb-6TQ" id="UFz-qI-ZQ2"/>
+                        <outlet property="computerPcapSlotButton" destination="Fgw-MD-H7Z" id="vhY-45-rBn"/>
+                        <outlet property="computerRebootEmulatorButton" destination="nN3-kc-Igy" id="CUv-B1-99k"/>
+                        <outlet property="computerSlot1Button" destination="F5F-E6-ZkS" id="cQv-xH-hfj"/>
+                        <outlet property="computerSlot2Button" destination="gox-0e-V6d" id="rhB-jo-a0a"/>
+                        <outlet property="computerSlot3Button" destination="D7U-OX-Bpf" id="XUg-ai-FLh"/>
+                        <outlet property="computerSlot4Button" destination="pXh-hH-9kF" id="HfG-TE-UaQ"/>
+                        <outlet property="computerSlot5Button" destination="Yp2-xx-V6X" id="caH-wv-sat"/>
+                        <outlet property="computerSlot6Button" destination="fbC-aH-4vi" id="4rw-vx-o91"/>
+                        <outlet property="computerSlot7Button" destination="FCh-2I-uKq" id="h7c-8Y-l4F"/>
+                    </connections>
                 </viewController>
                 <customObject id="uQq-sY-q4d" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -393,17 +449,23 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tG3-7g-zu5">
-                                <rect key="frame" x="105" y="124" width="272" height="18"/>
+                                <rect key="frame" x="105" y="125" width="272" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="50% Scan Lines" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="edJ-M4-tX0">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="toggle50PercentScanLines:" target="H0g-ug-jVk" id="bki-8l-57t"/>
+                                </connections>
                             </button>
                             <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z5D-6e-Uwh">
-                                <rect key="frame" x="76" y="97" width="44" height="23"/>
+                                <rect key="frame" x="76" y="98" width="44" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="customColorWellAction:" target="H0g-ug-jVk" id="Xjb-qt-U6h"/>
+                                </connections>
                             </colorWell>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VW3-Tg-cCI">
                                 <rect key="frame" x="126" y="101" width="253" height="16"/>
@@ -426,7 +488,10 @@
                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hAy-Ko-ZKz">
                                 <rect key="frame" x="212" y="54" width="194" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="u52-4P-Kh3"/>
+                                <sliderCell key="cell" state="on" alignment="left" maxValue="99" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="u52-4P-Kh3"/>
+                                <connections>
+                                    <action selector="speakerVolumeSliderAction:" target="H0g-ug-jVk" id="CWG-Ss-o5q"/>
+                                </connections>
                             </slider>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K6D-YY-P2Y">
                                 <rect key="frame" x="405" y="53.5" width="25.5" height="33"/>
@@ -438,7 +503,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vzr-vm-uSJ">
-                                <rect key="frame" x="193" y="54" width="24.5" height="32"/>
+                                <rect key="frame" x="193" y="54" width="25.5" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" imageAlignment="left" imageScaling="proportionallyDown" image="speaker.wave.1" catalog="system" id="2ZH-b6-4Hh"/>
                             </imageView>
@@ -454,7 +519,10 @@
                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j99-7o-JGO">
                                 <rect key="frame" x="212" y="18" width="194" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="pKV-Ar-0lj"/>
+                                <sliderCell key="cell" state="on" alignment="left" maxValue="99" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="pKV-Ar-0lj"/>
+                                <connections>
+                                    <action selector="mockingboardVolumeSliderAction:" target="H0g-ug-jVk" id="RKN-a5-Nla"/>
+                                </connections>
                             </slider>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dsh-Xh-NKj">
                                 <rect key="frame" x="405" y="18.5" width="25.5" height="33"/>
@@ -468,6 +536,15 @@
                             </imageView>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="audioMockingboardVolumeSlider" destination="j99-7o-JGO" id="bl5-GM-Y0A"/>
+                        <outlet property="audioSpeakerVolumeSlider" destination="hAy-Ko-ZKz" id="fUv-re-QHy"/>
+                        <outlet property="audioVideo50PercentScanLinesButton" destination="tG3-7g-zu5" id="wQj-Q8-DGp"/>
+                        <outlet property="audioVideoCustomColorWell" destination="z5D-6e-Uwh" id="yxI-fJ-etp"/>
+                        <outlet property="av50PercentScanLinesButton" destination="tG3-7g-zu5" id="M3t-mQ-waI"/>
+                        <outlet property="video50PercentScanLinesButton" destination="tG3-7g-zu5" id="XtC-tx-6IP"/>
+                        <outlet property="videoCustomColorWell" destination="VW3-Tg-cCI" id="Zwn-D7-ojD"/>
+                    </connections>
                 </viewController>
                 <customObject id="gS5-W1-EYc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -490,13 +567,16 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button toolTip="Eject Disk 1" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zd8-Ic-HQa">
+                            <button toolTip="Eject Disk 1" verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zd8-Ic-HQa">
                                 <rect key="frame" x="391" y="65" width="46" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" bezelStyle="rounded" image="eject" catalog="system" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="76i-xo-JT7">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="diskEjectAction:" target="e3Y-c0-dGl" id="9Hs-qH-jCs"/>
+                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u80-ZX-doj">
                                 <rect key="frame" x="18" y="46" width="120" height="16"/>
@@ -507,14 +587,6 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button toolTip="Eject Disk 1" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z4R-nh-ABh">
-                                <rect key="frame" x="391" y="37" width="46" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="eject" catalog="system" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="boL-CR-gbL">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                             <button toolTip="Enables faster but less authentic disk access" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3p-Y6-znB">
                                 <rect key="frame" x="88" y="19" width="272" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -522,8 +594,11 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="toggleDiskEnhancedSpeed:" target="e3Y-c0-dGl" id="SjK-gw-f7W"/>
+                                </connections>
                             </button>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c8V-LK-Kj3">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="c8V-LK-Kj3">
                                 <rect key="frame" x="142" y="68" width="248" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Ujn-kL-adf" id="XZa-8f-8mx">
@@ -537,8 +612,11 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="diskAction:" target="e3Y-c0-dGl" id="F4O-Ql-JO3"/>
+                                </connections>
                             </popUpButton>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UpA-lv-Hjf">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="UpA-lv-Hjf">
                                 <rect key="frame" x="142" y="38" width="248" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="StS-27-eHa" id="J8x-pU-cXB">
@@ -552,9 +630,28 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="diskAction:" target="e3Y-c0-dGl" id="0f7-mb-3dn"/>
+                                </connections>
                             </popUpButton>
+                            <button toolTip="Eject Disk 1" verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="Z4R-nh-ABh">
+                                <rect key="frame" x="391" y="35" width="46" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="eject" catalog="system" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="boL-CR-gbL">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="diskEjectAction:" target="e3Y-c0-dGl" id="jWG-8A-7sG"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="storageDisk1Button" destination="c8V-LK-Kj3" id="OGb-Q9-GLi"/>
+                        <outlet property="storageDisk2Button" destination="UpA-lv-Hjf" id="GgM-CR-ziF"/>
+                        <outlet property="storageEnhancedSpeedButton" destination="T3p-Y6-znB" id="5gE-8M-hQO"/>
+                    </connections>
                 </viewController>
                 <customObject id="9EP-jI-MpJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
