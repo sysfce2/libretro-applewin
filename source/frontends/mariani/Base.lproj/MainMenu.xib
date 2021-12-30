@@ -14,6 +14,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="displayTypeMenu" destination="eeY-Un-lEj" id="N54-FR-NAN"/>
                 <outlet property="emulatorVC" destination="S0z-N3-T9h" id="XAc-8o-NgU"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -116,6 +117,19 @@
                             <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
                                 <connections>
                                     <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="081-d1-Gfw"/>
+                            <menuItem title="Control-Reset" id="dm4-pj-VNI">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="controlResetAction:" target="Voe-Tx-rLC" id="YbO-lB-ePv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Reboot Emulator" id="ptn-P3-scg">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="rebootEmulatorAction:" target="Voe-Tx-rLC" id="vA5-k8-OWY"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
@@ -630,7 +644,17 @@
                                     <action selector="runToolbarCustomizationPalette:" target="-1" id="pQI-g3-MTW"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="8hY-E0-rc2"/>
+                            <menuItem title="Display Type" id="WpN-hG-YWg">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" id="eeY-Un-lEj"/>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
+                            <menuItem title="Actual Size" keyEquivalent="1" id="9TQ-ZY-lSP"/>
+                            <menuItem title="Fit to Screen" keyEquivalent="2" id="0la-AK-P3R"/>
+                            <menuItem title="Increase Size" keyEquivalent="+" id="QSQ-NY-o55"/>
+                            <menuItem title="Decrease Size" keyEquivalent="-" id="QG7-uV-e1N"/>
+                            <menuItem isSeparatorItem="YES" id="CPg-xX-I73"/>
                             <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
@@ -662,6 +686,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
+                            <menuItem title="Show Memory Viewer" id="ig1-4e-Udw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Show Debugger" id="1DA-XY-M6d">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="X44-mn-AYa"/>
                             <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

@@ -18,7 +18,10 @@
 #import "sdlrendererframe.h"
 #import "utils.h"
 
+// AppleWin imports
 #import "Interface.h"
+#import "Utilities.h"
+#import "Video.h"
 
 #import "CommonTypes.h"
 #import "EmulatorViewController.h"
@@ -28,13 +31,13 @@
 @interface AppDelegate ()
 
 @property (strong) IBOutlet NSWindow *window;
+@property (strong) IBOutlet NSMenu *displayTypeMenu;
+@property (strong) IBOutlet EmulatorViewController *emulatorVC;
 
 @property NSTimer *timer;
 @property Initialisation *initialisation;
 @property LoggerContext *logger;
 @property RegistryContext *registryContext;
-
-@property (strong) IBOutlet EmulatorViewController *emulatorVC;
 
 @end
 
@@ -97,6 +100,18 @@ FrameBuffer frameBuffer;
         frameBuffer.pixelHeight = video.GetFrameBufferBorderlessHeight();
         [self.emulatorVC createScreen:&frameBuffer];
         
+        // populate the Display Type menu with options
+        const VideoType_e currentVideoType = video.GetVideoType();
+        for (NSInteger videoType = VT_MONO_CUSTOM; videoType < NUM_VIDEO_MODES; videoType++) {
+            NSString *itemTitle = [self localizedVideoType:videoType];
+            NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:itemTitle
+                                                          action:@selector(displayTypeAction:)
+                                                   keyEquivalent:@""];
+            item.tag = videoType;
+            item.state = (currentVideoType == videoType) ? NSControlStateValueOn : NSControlStateValueOff;
+            [self.displayTypeMenu addItem:item];
+        }
+        
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
     }
 }
@@ -126,6 +141,63 @@ FrameBuffer frameBuffer;
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
     return YES;
+}
+
+#pragma mark - File menu actions
+
+- (IBAction)controlResetAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    CtrlReset();
+}
+
+- (IBAction)rebootEmulatorAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    frame->Restart();
+}
+
+#pragma mark - View menu actions
+
+- (IBAction)displayTypeAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    if ([sender isKindOfClass:[NSMenuItem class]]) {
+        Video & video = GetVideo();
+        
+        // clear the selected state of the old item
+        const VideoType_e currentVideoType = video.GetVideoType();
+        NSMenuItem *oldItem = [self.displayTypeMenu itemWithTag:currentVideoType];
+        oldItem.state = NSControlStateValueOff;
+
+        // set the new item
+        NSMenuItem *newItem = (NSMenuItem *)sender;
+        newItem.state = NSControlStateValueOn;
+        video.SetVideoType(VideoType_e(newItem.tag));
+        frame->ApplyVideoModeChange();
+        NSLog(@"Set video type to %ld", (long)newItem.tag);
+    }
+}
+
+#pragma mark - Utilties
+
+- (NSString *)localizedVideoType:(NSInteger)videoType {
+    static NSDictionary *videoTypeNames;
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        videoTypeNames = @{
+            @(VT_MONO_CUSTOM): NSLocalizedString(@"Monochrome (Custom)", @""),
+            @(VT_COLOR_IDEALIZED): NSLocalizedString(@"Color (Composite Idealized)", @"Color rendering from AppleWin 1.25 (GH#357)"),
+            @(VT_COLOR_VIDEOCARD_RGB): NSLocalizedString(@"Color (RGB Card/Monitor)", @"Real RGB card rendering"),
+            @(VT_COLOR_MONITOR_NTSC): NSLocalizedString(@"Color (Composite Monitor)", @"NTSC or PAL"),
+            @(VT_COLOR_TV): NSLocalizedString(@"Color TV", @""),
+            @(VT_MONO_TV): NSLocalizedString(@"B&W TV", @""),
+            @(VT_MONO_AMBER): NSLocalizedString(@"Monochrome (Amber)", @""),
+            @(VT_MONO_GREEN): NSLocalizedString(@"Monochrome (Green)", @""),
+            @(VT_MONO_WHITE): NSLocalizedString(@"Monochrome (White)", @""),
+        };
+    });
+    
+    NSString *name = [videoTypeNames objectForKey:[NSNumber numberWithInt:videoType]];
+    return (name != nil) ? name : NSLocalizedString(@"Unknown", @"");
 }
 
 @end
