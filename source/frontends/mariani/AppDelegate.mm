@@ -175,6 +175,10 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     return YES;
 }
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+    return YES;
+}
+
 #pragma mark - App menu actions
 
 - (IBAction)preferencesAction:(id)sender {
