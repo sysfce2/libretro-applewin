@@ -7,6 +7,134 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0098C73277E133D00F38E0C /* tfearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB835277A22530002A6C3 /* tfearch.cpp */; };
+		B0098C74277E133D00F38E0C /* tfesupp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB833277A22530002A6C3 /* tfesupp.cpp */; };
+		B0098C75277E133D00F38E0C /* tfe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB830277A22520002A6C3 /* tfe.cpp */; };
+		B0098C76277E140100F38E0C /* CmdLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB643277A14DB0002A6C3 /* CmdLine.cpp */; };
+		B0098C77277E140100F38E0C /* Disk2CardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB613277A14DA0002A6C3 /* Disk2CardManager.cpp */; };
+		B0098C78277E140100F38E0C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB637277A14DB0002A6C3 /* Log.cpp */; };
+		B0098C79277E140100F38E0C /* SynchronousEventManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5FF277A14DA0002A6C3 /* SynchronousEventManager.cpp */; };
+		B0098C7A277E140100F38E0C /* CardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5EC277A14DA0002A6C3 /* CardManager.cpp */; };
+		B0098C7B277E140100F38E0C /* YamlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB60D277A14DA0002A6C3 /* YamlHelper.cpp */; };
+		B0098C7C277E140100F38E0C /* Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5E7277A14DA0002A6C3 /* Core.cpp */; };
+		B0098C7D277E140100F38E0C /* SaveState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB648277A14DB0002A6C3 /* SaveState.cpp */; };
+		B0098C7E277E140100F38E0C /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB64C277A14DB0002A6C3 /* CPU.cpp */; };
+		B0098C7F277E140100F38E0C /* DiskFormatTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5FE277A14DA0002A6C3 /* DiskFormatTrack.cpp */; };
+		B0098C80277E140100F38E0C /* NTSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB64F277A14DB0002A6C3 /* NTSC.cpp */; };
+		B0098C81277E140100F38E0C /* Disk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB621277A14DB0002A6C3 /* Disk.cpp */; };
+		B0098C82277E140100F38E0C /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB64E277A14DB0002A6C3 /* Memory.cpp */; };
+		B0098C83277E140100F38E0C /* Harddisk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB61C277A14DB0002A6C3 /* Harddisk.cpp */; };
+		B0098C84277E140100F38E0C /* Utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB609277A14DA0002A6C3 /* Utilities.cpp */; };
+		B0098C85277E140100F38E0C /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB64B277A14DB0002A6C3 /* Card.cpp */; };
+		B0098C86277E140100F38E0C /* SAM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB62E277A14DB0002A6C3 /* SAM.cpp */; };
+		B0098C87277E140100F38E0C /* Video.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB63E277A14DB0002A6C3 /* Video.cpp */; };
+		B0098C88277E140100F38E0C /* RGBMonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5ED277A14DA0002A6C3 /* RGBMonitor.cpp */; };
+		B0098C89277E140100F38E0C /* Riff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB619277A14DB0002A6C3 /* Riff.cpp */; };
+		B0098C8A277E140100F38E0C /* NoSlotClock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB611277A14DA0002A6C3 /* NoSlotClock.cpp */; };
+		B0098C8B277E140100F38E0C /* z80emu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5EE277A14DA0002A6C3 /* z80emu.cpp */; };
+		B0098C8C277E140100F38E0C /* MouseInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB605277A14DA0002A6C3 /* MouseInterface.cpp */; };
+		B0098C8D277E140100F38E0C /* Pravets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB620277A14DB0002A6C3 /* Pravets.cpp */; };
+		B0098C8E277E140100F38E0C /* 6821.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB62A277A14DB0002A6C3 /* 6821.cpp */; };
+		B0098C8F277E140100F38E0C /* NTSC_CharSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB62F277A14DB0002A6C3 /* NTSC_CharSet.cpp */; };
+		B0098C90277E140100F38E0C /* Speaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB614277A14DB0002A6C3 /* Speaker.cpp */; };
+		B0098C91277E140100F38E0C /* SoundCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB640277A14DB0002A6C3 /* SoundCore.cpp */; };
+		B0098C92277E140100F38E0C /* SSI263.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5F4277A14DA0002A6C3 /* SSI263.cpp */; };
+		B0098C93277E140100F38E0C /* LanguageCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5F3277A14DA0002A6C3 /* LanguageCard.cpp */; };
+		B0098C94277E140100F38E0C /* AY8910.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB627277A14DB0002A6C3 /* AY8910.cpp */; };
+		B0098C95277E140100F38E0C /* Mockingboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB61D277A14DB0002A6C3 /* Mockingboard.cpp */; };
+		B0098C96277E140100F38E0C /* VidHD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB604277A14DA0002A6C3 /* VidHD.cpp */; };
+		B0098C97277E140100F38E0C /* FrameBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5F0277A14DA0002A6C3 /* FrameBase.cpp */; };
+		B0098C98277E140100F38E0C /* DiskImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB646277A14DB0002A6C3 /* DiskImage.cpp */; };
+		B0098C99277E140100F38E0C /* DiskImageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5FD277A14DA0002A6C3 /* DiskImageHelper.cpp */; };
+		B0098C9A277E140100F38E0C /* ParallelPrinter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB601277A14DA0002A6C3 /* ParallelPrinter.cpp */; };
+		B0098C9B277E141600F38E0C /* PropertySheetHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7EA277A36CE00FC14A3 /* PropertySheetHelper.cpp */; };
+		B0098C9C277E143200F38E0C /* benchmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB79F277A20FA0002A6C3 /* benchmark.cpp */; };
+		B0098C9D277E144E00F38E0C /* slirp2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB820277A21640002A6C3 /* slirp2.cpp */; };
+		B0098C9E277E144E00F38E0C /* tape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB799277A20FA0002A6C3 /* tape.cpp */; };
+		B0098C9F277E144E00F38E0C /* linuxframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A8277A20FA0002A6C3 /* linuxframe.cpp */; };
+		B0098CA0277E144E00F38E0C /* version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A4277A20FA0002A6C3 /* version.cpp */; };
+		B0098CA1277E144E00F38E0C /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB79E277A20FA0002A6C3 /* context.cpp */; };
+		B0098CA2277E144E00F38E0C /* registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A6277A20FA0002A6C3 /* registry.cpp */; };
+		B0098CA3277E144E00F38E0C /* uthernet2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB81F277A21640002A6C3 /* uthernet2.cpp */; };
+		B0098CA4277E144E00F38E0C /* resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB798277A20FA0002A6C3 /* resources.cpp */; };
+		B0098CA5277E144E00F38E0C /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7AA277A20FA0002A6C3 /* keyboard.cpp */; };
+		B0098CA6277E144E00F38E0C /* tfe2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB81E277A21640002A6C3 /* tfe2.cpp */; };
+		B0098CA7277E144E00F38E0C /* paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A2277A20FA0002A6C3 /* paddle.cpp */; };
+		B0098CA8277E147500F38E0C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C8277A21180002A6C3 /* Joystick.cpp */; };
+		B0098CA9277E147500F38E0C /* SNESMAX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D1277A21180002A6C3 /* SNESMAX.cpp */; };
+		B0098CAA277E147500F38E0C /* FourPlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CF277A21180002A6C3 /* FourPlay.cpp */; };
+		B0098CAB277E147500F38E0C /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D0277A21180002A6C3 /* Keyboard.cpp */; };
+		B0098CAC277E147500F38E0C /* Debugger_Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CB277A21180002A6C3 /* Debugger_Display.cpp */; };
+		B0098CAD277E147500F38E0C /* SerialComms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CD277A21180002A6C3 /* SerialComms.cpp */; };
+		B0098CAE277E147500F38E0C /* Registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CC277A21180002A6C3 /* Registry.cpp */; };
+		B0098CAF277E147500F38E0C /* PropertySheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CE277A21180002A6C3 /* PropertySheet.cpp */; };
+		B0098CB0277E147500F38E0C /* Debugger_Win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C9277A21180002A6C3 /* Debugger_Win32.cpp */; };
+		B0098CB1277E148600F38E0C /* z80.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7CC277A339600FC14A3 /* z80.cpp */; };
+		B0098CB2277E148600F38E0C /* daa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7CE277A339700FC14A3 /* daa.cpp */; };
+		B0098CB3277E148600F38E0C /* z80mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7CF277A339700FC14A3 /* z80mem.cpp */; };
+		B0098CB4277E171100F38E0C /* uthernet2.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB824277A21640002A6C3 /* uthernet2.h */; };
+		B0098CB5277E171100F38E0C /* tfe2.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB821277A21640002A6C3 /* tfe2.h */; };
+		B0098CB6277E171100F38E0C /* Card.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB618277A14DB0002A6C3 /* Card.h */; };
+		B0098CB7277E171100F38E0C /* SSI263Phonemes.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB61A277A14DB0002A6C3 /* SSI263Phonemes.h */; };
+		B0098CB8277E171100F38E0C /* linuxinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB79B277A20FA0002A6C3 /* linuxinterface.h */; };
+		B0098CB9277E171100F38E0C /* SaveState_Structs_common.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB644277A14DB0002A6C3 /* SaveState_Structs_common.h */; };
+		B0098CBA277E171100F38E0C /* SoundCore.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB649277A14DB0002A6C3 /* SoundCore.h */; };
+		B0098CBB277E171100F38E0C /* DiskLog.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5EB277A14DA0002A6C3 /* DiskLog.h */; };
+		B0098CBC277E171100F38E0C /* registry.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A0277A20FA0002A6C3 /* registry.h */; };
+		B0098CBD277E171100F38E0C /* LanguageCard.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB608277A14DA0002A6C3 /* LanguageCard.h */; };
+		B0098CBE277E171100F38E0C /* linuxframe.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB79D277A20FA0002A6C3 /* linuxframe.h */; };
+		B0098CBF277E171100F38E0C /* NTSC_CharSet.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB638277A14DB0002A6C3 /* NTSC_CharSet.h */; };
+		B0098CC0277E171100F38E0C /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB61B277A14DB0002A6C3 /* Common.h */; };
+		B0098CC1277E171100F38E0C /* Pravets.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB64A277A14DB0002A6C3 /* Pravets.h */; };
+		B0098CC2277E171100F38E0C /* keyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A7277A20FA0002A6C3 /* keyboard.h */; };
+		B0098CC3277E171100F38E0C /* DiskDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5E8277A14DA0002A6C3 /* DiskDefs.h */; };
+		B0098CC4277E171100F38E0C /* registers.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB823277A21640002A6C3 /* registers.h */; };
+		B0098CC5277E171100F38E0C /* NTSC.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB624277A14DB0002A6C3 /* NTSC.h */; };
+		B0098CC6277E171100F38E0C /* tape.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A1277A20FA0002A6C3 /* tape.h */; };
+		B0098CC7277E171100F38E0C /* Mockingboard.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB63B277A14DB0002A6C3 /* Mockingboard.h */; };
+		B0098CC8277E171100F38E0C /* RGBMonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB630277A14DB0002A6C3 /* RGBMonitor.h */; };
+		B0098CC9277E171100F38E0C /* Riff.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB61E277A14DB0002A6C3 /* Riff.h */; };
+		B0098CCA277E171100F38E0C /* VidHD.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB632277A14DB0002A6C3 /* VidHD.h */; };
+		B0098CCB277E171100F38E0C /* 6821.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5F6277A14DA0002A6C3 /* 6821.h */; };
+		B0098CCC277E171100F38E0C /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A5277A20FA0002A6C3 /* version.h */; };
+		B0098CCD277E171100F38E0C /* ParallelPrinter.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5FA277A14DA0002A6C3 /* ParallelPrinter.h */; };
+		B0098CCE277E171100F38E0C /* CardManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB63C277A14DB0002A6C3 /* CardManager.h */; };
+		B0098CCF277E171100F38E0C /* z80.h in Headers */ = {isa = PBXBuildFile; fileRef = B049E7D0277A339700FC14A3 /* z80.h */; };
+		B0098CD0277E171100F38E0C /* DiskImageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB651277A14DB0002A6C3 /* DiskImageHelper.h */; };
+		B0098CD1277E171100F38E0C /* SSI263.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB63D277A14DB0002A6C3 /* SSI263.h */; };
+		B0098CD2277E171100F38E0C /* DiskFormatTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB625277A14DB0002A6C3 /* DiskFormatTrack.h */; };
+		B0098CD3277E171100F38E0C /* FrameBase.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB60A277A14DA0002A6C3 /* FrameBase.h */; };
+		B0098CD4277E171100F38E0C /* Tape.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB62B277A14DB0002A6C3 /* Tape.h */; };
+		B0098CD5277E171100F38E0C /* MouseInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB647277A14DB0002A6C3 /* MouseInterface.h */; };
+		B0098CD6277E171100F38E0C /* SAM.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB641277A14DB0002A6C3 /* SAM.h */; };
+		B0098CD7277E171100F38E0C /* daa.h in Headers */ = {isa = PBXBuildFile; fileRef = B049E7CB277A339600FC14A3 /* daa.h */; };
+		B0098CD8277E171100F38E0C /* resources.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7AD277A20FA0002A6C3 /* resources.h */; };
+		B0098CD9277E171100F38E0C /* SaveState_Structs_v1.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5F8277A14DA0002A6C3 /* SaveState_Structs_v1.h */; };
+		B0098CDA277E171100F38E0C /* SynchronousEventManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB650277A14DB0002A6C3 /* SynchronousEventManager.h */; };
+		B0098CDB277E171100F38E0C /* PropertySheetHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = B049E7FA277A36CE00FC14A3 /* PropertySheetHelper.h */; };
+		B0098CDC277E171100F38E0C /* Interface.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB62C277A14DB0002A6C3 /* Interface.h */; };
+		B0098CDD277E171100F38E0C /* Memory.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB645277A14DB0002A6C3 /* Memory.h */; };
+		B0098CDE277E171100F38E0C /* benchmark.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A9277A20FA0002A6C3 /* benchmark.h */; };
+		B0098CDF277E171100F38E0C /* SNESMAX.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB62D277A14DB0002A6C3 /* SNESMAX.h */; };
+		B0098CE0277E171100F38E0C /* DiskImage.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5FC277A14DA0002A6C3 /* DiskImage.h */; };
+		B0098CE1277E171100F38E0C /* Harddisk.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB636277A14DB0002A6C3 /* Harddisk.h */; };
+		B0098CE2277E171100F38E0C /* YamlHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB642277A14DB0002A6C3 /* YamlHelper.h */; };
+		B0098CE3277E171100F38E0C /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5F1277A14DA0002A6C3 /* Utilities.h */; };
+		B0098CE4277E171100F38E0C /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB612277A14DA0002A6C3 /* Log.h */; };
+		B0098CE5277E171100F38E0C /* CPU.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5F7277A14DA0002A6C3 /* CPU.h */; };
+		B0098CE6277E171100F38E0C /* z80regs.h in Headers */ = {isa = PBXBuildFile; fileRef = B049E7CD277A339700FC14A3 /* z80regs.h */; };
+		B0098CE7277E171100F38E0C /* z80emu.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB615277A14DB0002A6C3 /* z80emu.h */; };
+		B0098CE8277E171100F38E0C /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB652277A14DB0002A6C3 /* Core.h */; };
+		B0098CE9277E171200F38E0C /* Disk.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5E9277A14DA0002A6C3 /* Disk.h */; };
+		B0098CEA277E171200F38E0C /* slirp2.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB822277A21640002A6C3 /* slirp2.h */; };
+		B0098CEB277E171200F38E0C /* Disk2CardManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB600277A14DA0002A6C3 /* Disk2CardManager.h */; };
+		B0098CEC277E171200F38E0C /* Speaker.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB602277A14DA0002A6C3 /* Speaker.h */; };
+		B0098CED277E171200F38E0C /* z80mem.h in Headers */ = {isa = PBXBuildFile; fileRef = B049E7CA277A339600FC14A3 /* z80mem.h */; };
+		B0098CEE277E171200F38E0C /* NoSlotClock.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB60E277A14DA0002A6C3 /* NoSlotClock.h */; };
+		B0098CEF277E171200F38E0C /* Video.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB610277A14DA0002A6C3 /* Video.h */; };
+		B0098CF0277E171200F38E0C /* AY8910.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB61F277A14DB0002A6C3 /* AY8910.h */; };
+		B0098CF1277E171200F38E0C /* paddle.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A3277A20FA0002A6C3 /* paddle.h */; };
+		B0098CF2277E171200F38E0C /* FourPlay.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB639277A14DB0002A6C3 /* FourPlay.h */; };
 		B032DE26277A0C23006DC0F7 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE25277A0C23006DC0F7 /* AppDelegate.mm */; };
 		B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B032DE27277A0C24006DC0F7 /* Assets.xcassets */; };
 		B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B032DE29277A0C24006DC0F7 /* MainMenu.xib */; };
@@ -63,6 +191,7 @@
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B092741A277D9403003FFB79 /* PreferencesWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = B0927418277D9403003FFB79 /* PreferencesWindowController.h */; };
 		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
+		B092741E277E09EA003FFB79 /* registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A6277A20FA0002A6C3 /* registry.cpp */; };
 		B09AB655277A14DB0002A6C3 /* Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5E7277A14DA0002A6C3 /* Core.cpp */; };
 		B09AB657277A14DB0002A6C3 /* CardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5EC277A14DA0002A6C3 /* CardManager.cpp */; };
 		B09AB658277A14DB0002A6C3 /* RGBMonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5ED277A14DA0002A6C3 /* RGBMonitor.cpp */; };
@@ -136,7 +265,6 @@
 		B09AB7B7277A20FA0002A6C3 /* benchmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB79F277A20FA0002A6C3 /* benchmark.cpp */; };
 		B09AB7BA277A20FA0002A6C3 /* paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A2277A20FA0002A6C3 /* paddle.cpp */; };
 		B09AB7BC277A20FA0002A6C3 /* version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A4277A20FA0002A6C3 /* version.cpp */; };
-		B09AB7BE277A20FA0002A6C3 /* registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A6277A20FA0002A6C3 /* registry.cpp */; };
 		B09AB7C0277A20FA0002A6C3 /* linuxframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A8277A20FA0002A6C3 /* linuxframe.cpp */; };
 		B09AB7C2277A20FA0002A6C3 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7AA277A20FA0002A6C3 /* keyboard.cpp */; };
 		B09AB7C3277A20FA0002A6C3 /* fedora.list.txt in Resources */ = {isa = PBXBuildFile; fileRef = B09AB7AB277A20FA0002A6C3 /* fedora.list.txt */; };
@@ -191,6 +319,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B0098BFA277E0F6800F38E0C /* libAppleWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAppleWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE21277A0C23006DC0F7 /* Mariani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mariani.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE24277A0C23006DC0F7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B032DE25277A0C23006DC0F7 /* AppDelegate.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -523,6 +652,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B0098BF8277E0F6800F38E0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B032DE1E277A0C23006DC0F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -575,6 +711,7 @@
 				B032DE21277A0C23006DC0F7 /* Mariani.app */,
 				B032DE33277A0C24006DC0F7 /* MarianiTests.xctest */,
 				B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */,
+				B0098BFA277E0F6800F38E0C /* libAppleWin.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1038,6 +1175,76 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		B0098BF6277E0F6800F38E0C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0098CC2277E171100F38E0C /* keyboard.h in Headers */,
+				B0098CC8277E171100F38E0C /* RGBMonitor.h in Headers */,
+				B0098CF1277E171200F38E0C /* paddle.h in Headers */,
+				B0098CC4277E171100F38E0C /* registers.h in Headers */,
+				B0098CC1277E171100F38E0C /* Pravets.h in Headers */,
+				B0098CBC277E171100F38E0C /* registry.h in Headers */,
+				B0098CB4277E171100F38E0C /* uthernet2.h in Headers */,
+				B0098CD5277E171100F38E0C /* MouseInterface.h in Headers */,
+				B0098CE2277E171100F38E0C /* YamlHelper.h in Headers */,
+				B0098CD9277E171100F38E0C /* SaveState_Structs_v1.h in Headers */,
+				B0098CE5277E171100F38E0C /* CPU.h in Headers */,
+				B0098CB9277E171100F38E0C /* SaveState_Structs_common.h in Headers */,
+				B0098CE6277E171100F38E0C /* z80regs.h in Headers */,
+				B0098CD3277E171100F38E0C /* FrameBase.h in Headers */,
+				B0098CC9277E171100F38E0C /* Riff.h in Headers */,
+				B0098CEC277E171200F38E0C /* Speaker.h in Headers */,
+				B0098CB6277E171100F38E0C /* Card.h in Headers */,
+				B0098CCF277E171100F38E0C /* z80.h in Headers */,
+				B0098CB5277E171100F38E0C /* tfe2.h in Headers */,
+				B0098CDF277E171100F38E0C /* SNESMAX.h in Headers */,
+				B0098CD8277E171100F38E0C /* resources.h in Headers */,
+				B0098CE7277E171100F38E0C /* z80emu.h in Headers */,
+				B0098CDD277E171100F38E0C /* Memory.h in Headers */,
+				B0098CD0277E171100F38E0C /* DiskImageHelper.h in Headers */,
+				B0098CCC277E171100F38E0C /* version.h in Headers */,
+				B0098CDE277E171100F38E0C /* benchmark.h in Headers */,
+				B0098CDB277E171100F38E0C /* PropertySheetHelper.h in Headers */,
+				B0098CE0277E171100F38E0C /* DiskImage.h in Headers */,
+				B0098CCA277E171100F38E0C /* VidHD.h in Headers */,
+				B0098CE8277E171100F38E0C /* Core.h in Headers */,
+				B0098CCD277E171100F38E0C /* ParallelPrinter.h in Headers */,
+				B0098CBB277E171100F38E0C /* DiskLog.h in Headers */,
+				B0098CBD277E171100F38E0C /* LanguageCard.h in Headers */,
+				B0098CCB277E171100F38E0C /* 6821.h in Headers */,
+				B0098CB7277E171100F38E0C /* SSI263Phonemes.h in Headers */,
+				B0098CE9277E171200F38E0C /* Disk.h in Headers */,
+				B0098CEE277E171200F38E0C /* NoSlotClock.h in Headers */,
+				B0098CD7277E171100F38E0C /* daa.h in Headers */,
+				B0098CF0277E171200F38E0C /* AY8910.h in Headers */,
+				B0098CDA277E171100F38E0C /* SynchronousEventManager.h in Headers */,
+				B0098CD6277E171100F38E0C /* SAM.h in Headers */,
+				B0098CC6277E171100F38E0C /* tape.h in Headers */,
+				B0098CD4277E171100F38E0C /* Tape.h in Headers */,
+				B0098CB8277E171100F38E0C /* linuxinterface.h in Headers */,
+				B0098CED277E171200F38E0C /* z80mem.h in Headers */,
+				B0098CC5277E171100F38E0C /* NTSC.h in Headers */,
+				B0098CDC277E171100F38E0C /* Interface.h in Headers */,
+				B0098CE1277E171100F38E0C /* Harddisk.h in Headers */,
+				B0098CBF277E171100F38E0C /* NTSC_CharSet.h in Headers */,
+				B0098CBE277E171100F38E0C /* linuxframe.h in Headers */,
+				B0098CEF277E171200F38E0C /* Video.h in Headers */,
+				B0098CC7277E171100F38E0C /* Mockingboard.h in Headers */,
+				B0098CD2277E171100F38E0C /* DiskFormatTrack.h in Headers */,
+				B0098CEA277E171200F38E0C /* slirp2.h in Headers */,
+				B0098CCE277E171100F38E0C /* CardManager.h in Headers */,
+				B0098CC3277E171100F38E0C /* DiskDefs.h in Headers */,
+				B0098CEB277E171200F38E0C /* Disk2CardManager.h in Headers */,
+				B0098CBA277E171100F38E0C /* SoundCore.h in Headers */,
+				B0098CE4277E171100F38E0C /* Log.h in Headers */,
+				B0098CE3277E171100F38E0C /* Utilities.h in Headers */,
+				B0098CF2277E171200F38E0C /* FourPlay.h in Headers */,
+				B0098CD1277E171100F38E0C /* SSI263.h in Headers */,
+				B0098CC0277E171100F38E0C /* Common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B09AB6E1277A171A0002A6C3 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1069,6 +1276,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B0098BF9277E0F6800F38E0C /* AppleWin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0098C04277E0F6800F38E0C /* Build configuration list for PBXNativeTarget "AppleWin" */;
+			buildPhases = (
+				B0098BF6277E0F6800F38E0C /* Headers */,
+				B0098BF7277E0F6800F38E0C /* Sources */,
+				B0098BF8277E0F6800F38E0C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppleWin;
+			productName = AppleWin;
+			productReference = B0098BFA277E0F6800F38E0C /* libAppleWin.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		B032DE20277A0C23006DC0F7 /* Mariani */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B032DE47277A0C24006DC0F7 /* Build configuration list for PBXNativeTarget "Mariani" */;
@@ -1132,6 +1356,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					B0098BF9277E0F6800F38E0C = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					B032DE20277A0C23006DC0F7 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -1159,6 +1386,7 @@
 			projectRoot = "";
 			targets = (
 				B032DE20277A0C23006DC0F7 /* Mariani */,
+				B0098BF9277E0F6800F38E0C /* AppleWin */,
 				B032DE32277A0C24006DC0F7 /* MarianiTests */,
 				B032DE3C277A0C24006DC0F7 /* MarianiUITests */,
 			);
@@ -1201,6 +1429,78 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B0098BF7277E0F6800F38E0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0098C88277E140100F38E0C /* RGBMonitor.cpp in Sources */,
+				B0098C9D277E144E00F38E0C /* slirp2.cpp in Sources */,
+				B0098C7E277E140100F38E0C /* CPU.cpp in Sources */,
+				B0098C95277E140100F38E0C /* Mockingboard.cpp in Sources */,
+				B0098CA0277E144E00F38E0C /* version.cpp in Sources */,
+				B0098CAB277E147500F38E0C /* Keyboard.cpp in Sources */,
+				B0098C86277E140100F38E0C /* SAM.cpp in Sources */,
+				B0098CAF277E147500F38E0C /* PropertySheet.cpp in Sources */,
+				B0098C8A277E140100F38E0C /* NoSlotClock.cpp in Sources */,
+				B0098C9A277E140100F38E0C /* ParallelPrinter.cpp in Sources */,
+				B0098C8D277E140100F38E0C /* Pravets.cpp in Sources */,
+				B0098C99277E140100F38E0C /* DiskImageHelper.cpp in Sources */,
+				B0098CB3277E148600F38E0C /* z80mem.cpp in Sources */,
+				B0098C92277E140100F38E0C /* SSI263.cpp in Sources */,
+				B0098CA8277E147500F38E0C /* Joystick.cpp in Sources */,
+				B0098C9C277E143200F38E0C /* benchmark.cpp in Sources */,
+				B0098C78277E140100F38E0C /* Log.cpp in Sources */,
+				B0098C7F277E140100F38E0C /* DiskFormatTrack.cpp in Sources */,
+				B0098CA9277E147500F38E0C /* SNESMAX.cpp in Sources */,
+				B0098C89277E140100F38E0C /* Riff.cpp in Sources */,
+				B0098CAE277E147500F38E0C /* Registry.cpp in Sources */,
+				B0098C80277E140100F38E0C /* NTSC.cpp in Sources */,
+				B0098C87277E140100F38E0C /* Video.cpp in Sources */,
+				B0098C98277E140100F38E0C /* DiskImage.cpp in Sources */,
+				B0098CAD277E147500F38E0C /* SerialComms.cpp in Sources */,
+				B0098CB1277E148600F38E0C /* z80.cpp in Sources */,
+				B0098CA3277E144E00F38E0C /* uthernet2.cpp in Sources */,
+				B0098CA4277E144E00F38E0C /* resources.cpp in Sources */,
+				B0098CA5277E144E00F38E0C /* keyboard.cpp in Sources */,
+				B0098C82277E140100F38E0C /* Memory.cpp in Sources */,
+				B0098CAC277E147500F38E0C /* Debugger_Display.cpp in Sources */,
+				B0098CB2277E148600F38E0C /* daa.cpp in Sources */,
+				B0098C79277E140100F38E0C /* SynchronousEventManager.cpp in Sources */,
+				B0098C83277E140100F38E0C /* Harddisk.cpp in Sources */,
+				B0098CA7277E144E00F38E0C /* paddle.cpp in Sources */,
+				B0098CB0277E147500F38E0C /* Debugger_Win32.cpp in Sources */,
+				B0098C8B277E140100F38E0C /* z80emu.cpp in Sources */,
+				B0098CA2277E144E00F38E0C /* registry.cpp in Sources */,
+				B0098C94277E140100F38E0C /* AY8910.cpp in Sources */,
+				B0098C9B277E141600F38E0C /* PropertySheetHelper.cpp in Sources */,
+				B0098C9F277E144E00F38E0C /* linuxframe.cpp in Sources */,
+				B0098C76277E140100F38E0C /* CmdLine.cpp in Sources */,
+				B0098C8F277E140100F38E0C /* NTSC_CharSet.cpp in Sources */,
+				B0098C84277E140100F38E0C /* Utilities.cpp in Sources */,
+				B0098CA1277E144E00F38E0C /* context.cpp in Sources */,
+				B0098C77277E140100F38E0C /* Disk2CardManager.cpp in Sources */,
+				B0098C7C277E140100F38E0C /* Core.cpp in Sources */,
+				B0098C93277E140100F38E0C /* LanguageCard.cpp in Sources */,
+				B0098CAA277E147500F38E0C /* FourPlay.cpp in Sources */,
+				B0098C90277E140100F38E0C /* Speaker.cpp in Sources */,
+				B0098C8E277E140100F38E0C /* 6821.cpp in Sources */,
+				B0098CA6277E144E00F38E0C /* tfe2.cpp in Sources */,
+				B0098C8C277E140100F38E0C /* MouseInterface.cpp in Sources */,
+				B0098C85277E140100F38E0C /* Card.cpp in Sources */,
+				B0098C7D277E140100F38E0C /* SaveState.cpp in Sources */,
+				B0098C81277E140100F38E0C /* Disk.cpp in Sources */,
+				B0098C96277E140100F38E0C /* VidHD.cpp in Sources */,
+				B0098C75277E133D00F38E0C /* tfe.cpp in Sources */,
+				B0098C7A277E140100F38E0C /* CardManager.cpp in Sources */,
+				B0098C73277E133D00F38E0C /* tfearch.cpp in Sources */,
+				B0098C9E277E144E00F38E0C /* tape.cpp in Sources */,
+				B0098C97277E140100F38E0C /* FrameBase.cpp in Sources */,
+				B0098C7B277E140100F38E0C /* YamlHelper.cpp in Sources */,
+				B0098C74277E133D00F38E0C /* tfesupp.cpp in Sources */,
+				B0098C91277E140100F38E0C /* SoundCore.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B032DE1D277A0C23006DC0F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1303,12 +1603,12 @@
 				B09AB66C277A14DB0002A6C3 /* Speaker.cpp in Sources */,
 				B09AB804277A21410002A6C3 /* timeapi.cpp in Sources */,
 				B09AB728277A1BA40002A6C3 /* Debugger_DisassemblerData.cpp in Sources */,
-				B09AB7BE277A20FA0002A6C3 /* registry.cpp in Sources */,
 				B0A6BB78277A3239008813DE /* z80emu.cpp in Sources */,
 				B09AB69F277A15D90002A6C3 /* dumper.c in Sources */,
 				B09AB727277A1BA40002A6C3 /* Debugger_Parser.cpp in Sources */,
 				B09AB683277A14DB0002A6C3 /* CmdLine.cpp in Sources */,
 				B09AB684277A14DB0002A6C3 /* DiskImage.cpp in Sources */,
+				B092741E277E09EA003FFB79 /* registry.cpp in Sources */,
 				B09AB809277A21410002A6C3 /* winstrings.cpp in Sources */,
 				B09AB7C2277A20FA0002A6C3 /* keyboard.cpp in Sources */,
 				B049E800277A36CE00FC14A3 /* PropertySheetHelper.cpp in Sources */,
@@ -1375,6 +1675,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B0098C02277E0F6800F38E0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					source,
+					/opt/homebrew/opt/boost/include,
+					/opt/homebrew/opt/libslirp/include/slirp,
+					/opt/homebrew/opt/sdl2_image/include/SDL2,
+					/opt/homebrew/opt/sdl2/include/SDL2,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B0098C03277E0F6800F38E0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					source,
+					/opt/homebrew/opt/boost/include,
+					/opt/homebrew/opt/libslirp/include/slirp,
+					/opt/homebrew/opt/sdl2_image/include/SDL2,
+					/opt/homebrew/opt/sdl2/include/SDL2,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		B032DE45277A0C24006DC0F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1418,6 +1758,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					"MARIANI=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1474,6 +1815,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "MARIANI=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1499,11 +1841,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = source/frontends/mariani/PrefixHeader.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-					"MARIANI=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					source,
@@ -1544,7 +1882,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = source/frontends/mariani/PrefixHeader.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "MARIANI=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					source,
@@ -1637,6 +1975,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B0098C04277E0F6800F38E0C /* Build configuration list for PBXNativeTarget "AppleWin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0098C02277E0F6800F38E0C /* Debug */,
+				B0098C03277E0F6800F38E0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B032DE1C277A0C23006DC0F7 /* Build configuration list for PBXProject "Mariani" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
