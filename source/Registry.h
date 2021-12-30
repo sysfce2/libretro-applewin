@@ -10,6 +10,9 @@ BOOL RegLoadString (LPCTSTR section, LPCTSTR key, BOOL peruser, LPTSTR buffer, D
 BOOL RegLoadValue (LPCTSTR section, LPCTSTR key, BOOL peruser, DWORD* value);
 BOOL RegLoadValue (LPCTSTR section, LPCTSTR key, BOOL peruser, DWORD* value, DWORD defaultValue);
 void RegSaveString (LPCTSTR section, LPCTSTR key, BOOL peruser, const std::string & buffer);
+#ifdef MARIANI
+extern "C"
+#endif
 void RegSaveValue (LPCTSTR section, LPCTSTR key, BOOL peruser, DWORD value);
 
 std::string& RegGetConfigSlotSection(UINT slot);

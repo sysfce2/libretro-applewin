@@ -18,7 +18,7 @@
 #import "sdlrendererframe.h"
 #import "utils.h"
 
-// AppleWin imports
+// AppleWin
 #import "Card.h"
 #import "Interface.h"
 #import "Utilities.h"

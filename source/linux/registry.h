@@ -26,6 +26,11 @@ public:
 
 BOOL RegLoadString (LPCTSTR section, LPCTSTR key, BOOL peruser, LPTSTR buffer, DWORD chars);
 BOOL RegLoadValue (LPCTSTR section, LPCTSTR key, BOOL peruser, DWORD *value);
+#ifndef MARIANI
 BOOL RegLoadValue (LPCTSTR section, LPCTSTR key, BOOL peruser, BOOL *value);
+#endif
 void RegSaveString (LPCTSTR section, LPCTSTR key, BOOL peruser, const std::string & buffer);
+#ifdef MARIANI
+extern "C"
+#endif
 void RegSaveValue (LPCTSTR section, LPCTSTR key, BOOL peruser, DWORD value);

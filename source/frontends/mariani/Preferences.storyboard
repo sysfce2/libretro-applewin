@@ -109,6 +109,9 @@
                             </textField>
                         </subviews>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="vcId" value="general"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="generalDeveloperToolsButton" destination="3Sk-BC-urJ" id="e42-jh-Eku"/>
                         <outlet property="generalScreenshotsFolderButton" destination="5S9-PS-cOu" id="fs6-x2-uqB"/>
@@ -129,16 +132,10 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LqV-Yb-6TQ">
                                 <rect key="frame" x="146" y="322" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="DAT-B1-fpI" id="BTF-88-vQW">
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="BTF-88-vQW">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="xWX-73-gB4">
-                                        <items>
-                                            <menuItem title="Item 1" state="on" id="DAT-B1-fpI"/>
-                                            <menuItem title="Item 2" id="yHr-sQ-XvM"/>
-                                            <menuItem title="Item 3" id="pK0-1Q-gJG"/>
-                                        </items>
-                                    </menu>
+                                    <menu key="menu" id="xWX-73-gB4"/>
                                 </popUpButtonCell>
                                 <connections>
                                     <action selector="mainBoardAction:" target="cWg-fO-BCh" id="VMw-C6-azA"/>
@@ -422,6 +419,9 @@
                             </button>
                         </subviews>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="vcId" value="computer"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="computerExansionSlotButton" destination="eTX-wc-sjo" id="AbV-Lx-sbT"/>
                         <outlet property="computerMainBoardButton" destination="LqV-Yb-6TQ" id="UFz-qI-ZQ2"/>
@@ -536,14 +536,14 @@
                             </imageView>
                         </subviews>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="vcId" value="audioVideo"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="audioMockingboardVolumeSlider" destination="j99-7o-JGO" id="bl5-GM-Y0A"/>
                         <outlet property="audioSpeakerVolumeSlider" destination="hAy-Ko-ZKz" id="fUv-re-QHy"/>
-                        <outlet property="audioVideo50PercentScanLinesButton" destination="tG3-7g-zu5" id="wQj-Q8-DGp"/>
-                        <outlet property="audioVideoCustomColorWell" destination="z5D-6e-Uwh" id="yxI-fJ-etp"/>
-                        <outlet property="av50PercentScanLinesButton" destination="tG3-7g-zu5" id="M3t-mQ-waI"/>
-                        <outlet property="video50PercentScanLinesButton" destination="tG3-7g-zu5" id="XtC-tx-6IP"/>
-                        <outlet property="videoCustomColorWell" destination="VW3-Tg-cCI" id="Zwn-D7-ojD"/>
+                        <outlet property="video50PercentScanLinesButton" destination="tG3-7g-zu5" id="9QT-Z3-f12"/>
+                        <outlet property="videoCustomColorWell" destination="z5D-6e-Uwh" id="dc5-wJ-fUR"/>
                     </connections>
                 </viewController>
                 <customObject id="gS5-W1-EYc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -647,6 +647,9 @@
                             </button>
                         </subviews>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="vcId" value="storage"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="storageDisk1Button" destination="c8V-LK-Kj3" id="OGb-Q9-GLi"/>
                         <outlet property="storageDisk2Button" destination="UpA-lv-Hjf" id="GgM-CR-ziF"/>

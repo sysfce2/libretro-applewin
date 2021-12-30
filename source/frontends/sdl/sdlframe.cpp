@@ -139,6 +139,7 @@ namespace sa2
   void SDLFrame::End()
   {
     CommonFrame::End();
+#ifndef MARIANI
     if (!myFullscreen)
     {
       common2::Geometry geometry;
@@ -146,6 +147,7 @@ namespace sa2
       SDL_GetWindowSize(myWindow.get(), &geometry.width, &geometry.height);
       saveGeometryToRegistry("sa2", geometry);
     }
+#endif // MARIANI
   }
 
   void SDLFrame::setGLSwapInterval(const int interval)

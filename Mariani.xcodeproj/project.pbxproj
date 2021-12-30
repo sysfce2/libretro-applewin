@@ -148,6 +148,7 @@
 		B0098D04277E1D4F00F38E0C /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB6D2277A16600002A6C3 /* mztools.c */; };
 		B0098D06277E1D4F00F38E0C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB6D0277A16600002A6C3 /* unzip.c */; };
 		B0098D07277E1D4F00F38E0C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB6D5277A16600002A6C3 /* ioapi.c */; };
+		B0098D08277E244F00F38E0C /* Registry.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5EF277A14DA0002A6C3 /* Registry.h */; };
 		B032DE26277A0C23006DC0F7 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE25277A0C23006DC0F7 /* AppDelegate.mm */; };
 		B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B032DE27277A0C24006DC0F7 /* Assets.xcassets */; };
 		B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B032DE29277A0C24006DC0F7 /* MainMenu.xib */; };
@@ -1154,6 +1155,7 @@
 				B0098CCE277E171100F38E0C /* CardManager.h in Headers */,
 				B0098CC3277E171100F38E0C /* DiskDefs.h in Headers */,
 				B0098CEB277E171200F38E0C /* Disk2CardManager.h in Headers */,
+				B0098D08277E244F00F38E0C /* Registry.h in Headers */,
 				B0098CBA277E171100F38E0C /* SoundCore.h in Headers */,
 				B0098CE4277E171100F38E0C /* Log.h in Headers */,
 				B0098CE3277E171100F38E0C /* Utilities.h in Headers */,
