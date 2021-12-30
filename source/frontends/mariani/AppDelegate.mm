@@ -25,14 +25,21 @@
 
 #import "CommonTypes.h"
 #import "EmulatorViewController.h"
+#import "PreferencesWindowController.h"
 
 #define TARGET_FPS          60
 
 @interface AppDelegate ()
 
 @property (strong) IBOutlet NSWindow *window;
-@property (strong) IBOutlet NSMenu *displayTypeMenu;
-@property (strong) IBOutlet EmulatorViewController *emulatorVC;
+@property (weak) IBOutlet NSMenu *displayTypeMenu;
+@property (weak) IBOutlet EmulatorViewController *emulatorVC;
+@property (strong) PreferencesWindowController *preferencesWC;
+@property (weak) IBOutlet NSImageView *drive1LightView;
+@property (weak) IBOutlet NSPopUpButton *drive1PopUpButton;
+@property (weak) IBOutlet NSImageView *drive2LightView;
+@property (weak) IBOutlet NSPopUpButton *drive2PopUpButton;
+@property (weak) IBOutlet NSButton *volumeToggleButton;
 
 @property NSTimer *timer;
 @property Initialisation *initialisation;
@@ -117,7 +124,9 @@ FrameBuffer frameBuffer;
 }
 
 - (void)timerFired {
-    sa2::writeAudio();
+    if (self.volumeToggleButton.state == NSControlStateValueOn) {
+        sa2::writeAudio();
+    }
     
     bool quit = false;
     frame->ProcessEvents(quit);
@@ -141,6 +150,15 @@ FrameBuffer frameBuffer;
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
     return YES;
+}
+
+#pragma mark - App menu actions
+
+- (IBAction)preferencesAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Preferences" bundle:nil];
+    self.preferencesWC = [storyboard instantiateInitialController];
+    [self.preferencesWC showWindow:sender];
 }
 
 #pragma mark - File menu actions
@@ -177,6 +195,22 @@ FrameBuffer frameBuffer;
     }
 }
 
+#pragma mark - Main window actions
+
+- (IBAction)screenshotTaken:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (IBAction)volumeToggled:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    if (self.volumeToggleButton.state == NSControlStateValueOn) {
+        self.volumeToggleButton.state == NSControlStateValueOff;
+    }
+    else {
+        self.volumeToggleButton.state == NSControlStateValueOn;
+    }
+}
+
 #pragma mark - Utilties
 
 - (NSString *)localizedVideoType:(NSInteger)videoType {
@@ -196,7 +230,7 @@ FrameBuffer frameBuffer;
         };
     });
     
-    NSString *name = [videoTypeNames objectForKey:[NSNumber numberWithInt:videoType]];
+    NSString *name = [videoTypeNames objectForKey:[NSNumber numberWithInt:(int)videoType]];
     return (name != nil) ? name : NSLocalizedString(@"Unknown", @"");
 }
 

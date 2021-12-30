@@ -58,6 +58,11 @@
 		B049E8AC277C880800FC14A3 /* EmulatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = B049E8AA277C880800FC14A3 /* EmulatorView.h */; };
 		B049E8AD277C880800FC14A3 /* EmulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E8AB277C880800FC14A3 /* EmulatorView.mm */; };
 		B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
+		B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */; };
+		B0927416277D9399003FFB79 /* PreferencesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B0927414277D9399003FFB79 /* PreferencesViewController.h */; };
+		B0927417277D9399003FFB79 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.m */; };
+		B092741A277D9403003FFB79 /* PreferencesWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = B0927418277D9403003FFB79 /* PreferencesWindowController.h */; };
+		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
 		B09AB655277A14DB0002A6C3 /* Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5E7277A14DA0002A6C3 /* Core.cpp */; };
 		B09AB657277A14DB0002A6C3 /* CardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5EC277A14DA0002A6C3 /* CardManager.cpp */; };
 		B09AB658277A14DB0002A6C3 /* RGBMonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB5ED277A14DA0002A6C3 /* RGBMonitor.cpp */; };
@@ -265,6 +270,11 @@
 		B049E8AA277C880800FC14A3 /* EmulatorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorView.h; sourceTree = "<group>"; };
 		B049E8AB277C880800FC14A3 /* EmulatorView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EmulatorView.mm; sourceTree = "<group>"; };
 		B049E8AE277C9A8000FC14A3 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
+		B0927414277D9399003FFB79 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
+		B0927415277D9399003FFB79 /* PreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
+		B0927418277D9403003FFB79 /* PreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
+		B0927419277D9403003FFB79 /* PreferencesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
 		B09AB5E5277A14DA0002A6C3 /* Peripheral_Clock_Generic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Peripheral_Clock_Generic.cpp; path = source/Peripheral_Clock_Generic.cpp; sourceTree = SOURCE_ROOT; };
 		B09AB5E6277A14DA0002A6C3 /* SerialComms.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SerialComms.cpp; path = source/SerialComms.cpp; sourceTree = SOURCE_ROOT; };
 		B09AB5E7277A14DA0002A6C3 /* Core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Core.cpp; path = source/Core.cpp; sourceTree = SOURCE_ROOT; };
@@ -581,10 +591,15 @@
 				B049E8AB277C880800FC14A3 /* EmulatorView.mm */,
 				B049E89C277C43BF00FC14A3 /* EmulatorViewController.h */,
 				B049E89D277C43BF00FC14A3 /* EmulatorViewController.m */,
+				B0927414277D9399003FFB79 /* PreferencesViewController.h */,
+				B0927415277D9399003FFB79 /* PreferencesViewController.m */,
+				B0927418277D9403003FFB79 /* PreferencesWindowController.h */,
+				B0927419277D9403003FFB79 /* PreferencesWindowController.m */,
 				B049E8A4277C4F0E00FC14A3 /* ShaderTypes.h */,
 				B049E8A6277C4F6D00FC14A3 /* Shaders.metal */,
 				B032DE27277A0C24006DC0F7 /* Assets.xcassets */,
 				B032DE29277A0C24006DC0F7 /* MainMenu.xib */,
+				B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */,
 				B032DE2C277A0C24006DC0F7 /* main.m */,
 				B032DE2E277A0C24006DC0F7 /* mariani.entitlements */,
 				B09AB703277A19870002A6C3 /* PrefixHeader.pch */,
@@ -1029,6 +1044,7 @@
 			files = (
 				B049E85A277B714800FC14A3 /* gamepad.h in Headers */,
 				B049E846277B677400FC14A3 /* sdlrendererframe.h in Headers */,
+				B0927416277D9399003FFB79 /* PreferencesViewController.h in Headers */,
 				B049E84A277B6D4B00FC14A3 /* Interface.h in Headers */,
 				B049E89E277C43BF00FC14A3 /* EmulatorViewController.h in Headers */,
 				B049E83B277B61A100FC14A3 /* utils.h in Headers */,
@@ -1039,6 +1055,7 @@
 				B049E8A2277C44B100FC14A3 /* EmulatorRenderer.h in Headers */,
 				B049E851277B6FFE00FC14A3 /* fileregistry.h in Headers */,
 				B049E83E277B61AC00FC14A3 /* utils.h in Headers */,
+				B092741A277D9403003FFB79 /* PreferencesWindowController.h in Headers */,
 				B049E821277B512500FC14A3 /* sdirectsound.h in Headers */,
 				B049E827277B52B200FC14A3 /* sdlframe.h in Headers */,
 				B049E8A9277C59D500FC14A3 /* CommonTypes.h in Headers */,
@@ -1162,6 +1179,7 @@
 				B09AB7B2277A20FA0002A6C3 /* config.h.in in Resources */,
 				B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */,
 				B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */,
+				B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */,
 				B09AB7AF277A20FA0002A6C3 /* build.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1257,6 +1275,7 @@
 				B09AB687277A14DB0002A6C3 /* CPU.cpp in Sources */,
 				B09AB736277A1BA40002A6C3 /* Debug.cpp in Sources */,
 				B049E855277B702100FC14A3 /* ptreeregistry.cpp in Sources */,
+				B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */,
 				B09AB664277A14DB0002A6C3 /* MouseInterface.cpp in Sources */,
 				B09AB738277A1BA40002A6C3 /* Debugger_Help.cpp in Sources */,
 				B09AB7BC277A20FA0002A6C3 /* version.cpp in Sources */,
@@ -1298,6 +1317,7 @@
 				B09AB724277A1BA40002A6C3 /* Debugger_Disassembler.cpp in Sources */,
 				B09AB65B277A14DB0002A6C3 /* LanguageCard.cpp in Sources */,
 				B09AB801277A21410002A6C3 /* dmusicc.cpp in Sources */,
+				B0927417277D9399003FFB79 /* PreferencesViewController.m in Sources */,
 				B09AB655277A14DB0002A6C3 /* Core.cpp in Sources */,
 				B09AB680277A14DB0002A6C3 /* StdAfx.cpp in Sources */,
 				B09AB666277A14DB0002A6C3 /* Utilities.cpp in Sources */,

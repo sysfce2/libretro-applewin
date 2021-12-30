@@ -15,7 +15,12 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="displayTypeMenu" destination="eeY-Un-lEj" id="N54-FR-NAN"/>
+                <outlet property="drive1LightView" destination="Jep-8c-ge7" id="fbx-kg-uhj"/>
+                <outlet property="drive1PopUpButton" destination="NFE-Ec-0Zy" id="MbE-mt-vxb"/>
+                <outlet property="drive2LightView" destination="LBE-qe-VZM" id="WlF-1e-gQm"/>
+                <outlet property="drive2PopUpButton" destination="GCb-ez-hhk" id="ghy-vW-8JH"/>
                 <outlet property="emulatorVC" destination="S0z-N3-T9h" id="XAc-8o-NgU"/>
+                <outlet property="volumeToggleButton" destination="cQ9-oO-i17" id="JYX-Xo-KGm"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -38,7 +43,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                <connections>
+                                    <action selector="preferencesAction:" target="Voe-Tx-rLC" id="1Hw-i2-VAj"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -715,24 +724,91 @@
                     </menu>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-260" y="-85"/>
+            <point key="canvasLocation" x="-670" y="-478"/>
         </menu>
         <window title="Mariani" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="1120" height="740"/>
+            <rect key="contentRect" x="196" y="204" width="1120" height="752"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="1120" height="740"/>
+                <rect key="frame" x="0.0" y="0.0" width="1120" height="752"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView id="56G-Jx-bov" customClass="EmulatorView">
-                        <rect key="frame" x="0.0" y="20" width="1120" height="720"/>
+                        <rect key="frame" x="0.0" y="32" width="1120" height="720"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </customView>
+                    <button toolTip="Toggle audio on or off" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-oO-i17">
+                        <rect key="frame" x="1029" y="-0.5" width="31" height="32.5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="speaker.slash" catalog="system" imagePosition="only" alignment="center" alternateImage="speaker" state="on" imageScaling="proportionallyDown" inset="2" id="JHc-Xt-b47">
+                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system" size="18"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="volumeToggled:" target="Voe-Tx-rLC" id="Aam-Po-SU0"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lMj-oj-jRW">
+                        <rect key="frame" x="1068" y="0.0" width="32" height="32.5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="camera" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="DW1-i4-Q4j">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="18"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="screenshotTaken:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
+                        </connections>
+                    </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jep-8c-ge7">
+                        <rect key="frame" x="20" y="0.0" width="32" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="circle.fill" catalog="system" id="KXw-cp-Xbb"/>
+                    </imageView>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NFE-Ec-0Zy">
+                        <rect key="frame" x="47" y="2" width="150" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="uyc-hU-ww4" id="6ux-jO-v9L">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="WLA-sV-1MJ">
+                                <items>
+                                    <menuItem title="Item 1" state="on" id="uyc-hU-ww4"/>
+                                    <menuItem title="Item 2" id="8Ii-Ix-qDp"/>
+                                    <menuItem title="Item 3" id="pDD-Xe-yTD"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LBE-qe-VZM">
+                        <rect key="frame" x="216" y="0.0" width="32" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="circle.fill" catalog="system" id="r4m-wI-eQH"/>
+                    </imageView>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GCb-ez-hhk">
+                        <rect key="frame" x="243" y="2" width="150" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="EA5-tg-tqq" id="Lx5-5e-h9O">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="q5q-Cn-oI1">
+                                <items>
+                                    <menuItem title="Item 1" state="on" id="EA5-tg-tqq"/>
+                                    <menuItem title="Item 2" id="GED-Zy-xh4"/>
+                                    <menuItem title="Item 3" id="KFw-sO-qHf"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="98" y="400"/>
+            <point key="canvasLocation" x="-312" y="180"/>
         </window>
     </objects>
+    <resources>
+        <image name="camera" catalog="system" width="19" height="15"/>
+        <image name="circle.fill" catalog="system" width="15" height="15"/>
+        <image name="speaker" catalog="system" width="14" height="14"/>
+        <image name="speaker.slash" catalog="system" width="13" height="15"/>
+    </resources>
 </document>
