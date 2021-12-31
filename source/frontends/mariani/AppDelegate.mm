@@ -293,7 +293,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     [menu addItemWithTitle:NSLocalizedString(@"Other…", @"open another disk image")
                     action:@selector(openOtherDisk:)
              keyEquivalent:@""];
-    [menu popUpMenuPositioningItem:nil atLocation:CGPointMake(0, 0) inView:sender];
+    [menu popUpMenuPositioningItem:nil atLocation:CGPointZero inView:view];
 }
 
 - (void)ejectDisk:(id)sender {
