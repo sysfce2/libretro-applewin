@@ -126,8 +126,8 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="081-d1-Gfw"/>
-                            <menuItem title="Control-Reset" id="dm4-pj-VNI">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Control-Reset" keyEquivalent="" id="dm4-pj-VNI">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="controlResetAction:" target="Voe-Tx-rLC" id="YbO-lB-ePv"/>
                                 </connections>
@@ -651,6 +651,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="8hY-E0-rc2"/>
+                            <menuItem title="Hide Status Bar" keyEquivalent="/" id="Qa1-0n-abD">
+                                <connections>
+                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="tnh-xB-hop"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="xne-Qz-zzG"/>
                             <menuItem title="Display Type" id="WpN-hG-YWg">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" id="eeY-Un-lEj"/>
@@ -772,7 +778,7 @@
     </objects>
     <resources>
         <image name="camera" catalog="system" width="19" height="15"/>
-        <image name="circle" width="128" height="128"/>
+        <image name="circle" catalog="system" width="15" height="15"/>
         <image name="circle.fill" catalog="system" width="15" height="15"/>
         <image name="speaker" catalog="system" width="14" height="14"/>
         <image name="speaker.slash" catalog="system" width="13" height="15"/>

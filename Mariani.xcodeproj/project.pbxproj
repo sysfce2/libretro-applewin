@@ -450,7 +450,6 @@
 		B09AB6D9277A16600002A6C3 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = zip_lib/crypt.h; sourceTree = "<group>"; };
 		B09AB6DA277A16600002A6C3 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zip.h; path = zip_lib/zip.h; sourceTree = "<group>"; };
 		B09AB701277A18540002A6C3 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = win32/config.h; sourceTree = "<group>"; };
-		B09AB703277A19870002A6C3 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B09AB706277A1BA30002A6C3 /* Debugger_Disassembler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Debugger_Disassembler.cpp; path = source/Debugger/Debugger_Disassembler.cpp; sourceTree = "<group>"; };
 		B09AB707277A1BA30002A6C3 /* Debugger_DisassemblerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Debugger_DisassemblerData.h; path = source/Debugger/Debugger_DisassemblerData.h; sourceTree = "<group>"; };
 		B09AB708277A1BA30002A6C3 /* Debugger_Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Debugger_Parser.h; path = source/Debugger/Debugger_Parser.h; sourceTree = "<group>"; };
@@ -658,7 +657,6 @@
 				B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */,
 				B032DE2C277A0C24006DC0F7 /* main.m */,
 				B032DE2E277A0C24006DC0F7 /* mariani.entitlements */,
-				B09AB703277A19870002A6C3 /* PrefixHeader.pch */,
 			);
 			name = mariani;
 			path = source/frontends/mariani;
@@ -1688,7 +1686,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = source/frontends/mariani/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1729,7 +1727,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = source/frontends/mariani/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (

@@ -109,6 +109,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         frameBuffer.pixelHeight = video.GetFrameBufferBorderlessHeight();
         [self.emulatorVC createScreen:&frameBuffer];
         
+        self.window.delegate = self;
+        
         // populate the Display Type menu with options
         const VideoType_e currentVideoType = video.GetVideoType();
         for (NSInteger videoType = VT_MONO_CUSTOM; videoType < NUM_VIDEO_MODES; videoType++) {
@@ -177,6 +179,16 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return YES;
+}
+
+#pragma mark - NSWindowDelegate
+
+- (void)windowWillClose:(NSNotification *)notification {
+    // needed despite applicationShouldTerminateAfterLastWindowClosed: because
+    // the preferences window may be open
+    if (notification.object == self.window) {
+        [NSApp terminate:self];
+    }
 }
 
 #pragma mark - App menu actions
