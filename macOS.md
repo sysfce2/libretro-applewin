@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is intended to be a native macOS UI for AppleWin, by way of [Andrea](https://github.com/audetto)'s [Raspberry Pi port](https://github.com/audetto/AppleWin). You can build a macOS command-line app from Andrea's repo with the instructions below.
+This is intended to be a native macOS UI for [AppleWin](https://github.com/AppleWin/AppleWin), by way of [Andrea](https://github.com/audetto)'s [Raspberry Pi port](https://github.com/audetto/AppleWin). You can build a macOS command-line app from Andrea's repo with the instructions below.
 
 The rationale for this fork is to experiment with a native macOS UI, but you should be able to build [sa2](source/frontends/sdl/README.md) from here as well. You can check out the work-in-progress by opening Mariani.xcodeproj in Xcode.
 
