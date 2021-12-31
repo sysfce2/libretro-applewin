@@ -328,7 +328,7 @@
                                     <menu key="menu" id="pvH-H2-JGi"/>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="slotAction:" target="cWg-fO-BCh" id="4ZV-ae-qrV"/>
+                                    <action selector="expansionSlotAction:" target="cWg-fO-BCh" id="qCA-Si-r18"/>
                                 </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="syt-ld-aZT">
@@ -349,7 +349,7 @@
                                     <menu key="menu" id="Jp9-KS-a4F"/>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="slotAction:" target="cWg-fO-BCh" id="HZT-wd-XJ3"/>
+                                    <action selector="pcapSlotAction:" target="cWg-fO-BCh" id="aip-qq-0Fb"/>
                                 </connections>
                             </popUpButton>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nN3-kc-Igy">

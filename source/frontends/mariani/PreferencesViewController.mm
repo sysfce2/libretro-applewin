@@ -24,8 +24,11 @@
 #import "Core.h"
 #import "Interface.h"
 #import "Memory.h"
+void CreateLanguageCard(void); // should be in Memory.h
 #import "Mockingboard.h"
 #import "Speaker.h"
+#import "Tfe.h"
+#import "tfesupp.h"
 
 #import "linux/registry.h"
 
@@ -135,6 +138,8 @@ const SS_CARDTYPE *slotTypes[] = {
     slot6Types, slot7Types,
 };
 
+const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT_Saturn128K, CT_RamWorksIII, CT_Empty };
+
 - (void)configureComputer {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     // emulation computer types
@@ -171,6 +176,31 @@ const SS_CARDTYPE *slotTypes[] = {
             
             // show the current item as selected
             [slotButton selectItemWithTag:manager.QuerySlot(slot)];
+        }
+        
+        // expansion slot
+        [self.computerExansionSlotButton addItemWithTitle:[cardNames objectForKey:@(CT_Empty)]];
+        self.computerExansionSlotButton.lastItem.tag = CT_Empty;
+        for (int i = 0; expansionSlotTypes[i] != CT_Empty; i++) {
+            [self.computerExansionSlotButton addItemWithTitle:[cardNames objectForKey:@(expansionSlotTypes[i])]];
+            self.computerExansionSlotButton.lastItem.tag = expansionSlotTypes[i];
+        }
+        [self.computerExansionSlotButton selectItemWithTag:GetCurrentExpansionMemType()];
+        
+        // pcap
+        if (tfe_enumadapter_open()) {
+            char *name;
+            char *description;
+            
+            while (tfe_enumadapter(&name, &description)) {
+                [self.computerPcapSlotButton addItemWithTitle:[NSString stringWithUTF8String:name]];
+                lib_free(name);
+                lib_free(description);
+            }
+            tfe_enumadapter_close();
+            
+            const std::string currentInterface = get_tfe_interface();
+            [self.computerPcapSlotButton selectItemWithTitle:[NSString stringWithUTF8String:currentInterface.c_str()]];
         }
     }
 }
@@ -228,7 +258,6 @@ const SS_CARDTYPE *slotTypes[] = {
 
 - (IBAction)slotAction:(id)sender {
     NSLog(@"%s (%ld)", __PRETTY_FUNCTION__, (long)[(NSView *)sender tag]);
-    NSLog(@"sender is %@, tag %ld", sender, [(NSView *)sender tag]);
     
     if ([sender isKindOfClass:[NSPopUpButton class]]) {
         NSPopUpButton *slotButton = (NSPopUpButton *)sender;
@@ -239,7 +268,7 @@ const SS_CARDTYPE *slotTypes[] = {
         
         // special teardown if a VidHD card was removed
         const BOOL oldHasVidHD = video.HasVidHD();
-        const BOOL newHasVidHD = (slotButton.selectedItem.tag == CT_VidHD);
+        const BOOL newHasVidHD = (slotButton.selectedTag == CT_VidHD);
         if (oldHasVidHD == YES && newHasVidHD == NO) {
             video.SetVidHD(false);
         }
@@ -248,13 +277,13 @@ const SS_CARDTYPE *slotTypes[] = {
         
         // Mockingboard takes both slots, so inserting in the other available
         // slot than was specified and remove both if removing either
-        if (slotButton.selectedItem.tag == CT_MockingboardC) {
+        if (slotButton.selectedTag == CT_MockingboardC) {
             // find the other slot and set it to MockingBoard
             for (NSInteger slot = SLOT1; slot < NUM_SLOTS; slot++) {
                 for (int i = 0; slotTypes[slot][i] != CT_Empty; i++) {
                     if (slotTypes[slot][i] == CT_MockingboardC && slot != currentSlot) {
-                        cardManager.Insert((SLOTS)slot, (SS_CARDTYPE)slotButton.selectedItem.tag);
-                        [slotButtons[slot] selectItemWithTag:slotButton.selectedItem.tag];
+                        cardManager.Insert((SLOTS)slot, (SS_CARDTYPE)slotButton.selectedTag);
+                        [slotButtons[slot] selectItemWithTag:slotButton.selectedTag];
                     }
                 }
             }
@@ -271,7 +300,7 @@ const SS_CARDTYPE *slotTypes[] = {
             }
         }
         
-        cardManager.Insert((SLOTS)currentSlot, (SS_CARDTYPE)slotButton.selectedItem.tag);
+        cardManager.Insert((SLOTS)currentSlot, (SS_CARDTYPE)slotButton.selectedTag);
         
         MemInitializeIO();
         
@@ -282,6 +311,28 @@ const SS_CARDTYPE *slotTypes[] = {
 
         self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
     }
+}
+
+- (IBAction)expansionSlotAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    SetExpansionMemType((SS_CARDTYPE)self.computerExansionSlotButton.selectedTag);
+    CreateLanguageCard();
+    MemInitializeIO();
+    
+    self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
+}
+
+- (IBAction)pcapSlotAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    if ([sender isKindOfClass:[NSPopUpButton class]]) {
+        NSPopUpButton *slotButton = (NSPopUpButton *)sender;
+        const std::string newInterface([slotButton.selectedItem.title cStringUsingEncoding:NSUTF8StringEncoding]);
+
+        update_tfe_interface(newInterface);
+        tfe_SetRegistryInterface(SLOT3, newInterface);
+    }
+    
+    self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
 }
 
 - (IBAction)rebootEmulatorAction:(id)sender {
