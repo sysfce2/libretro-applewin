@@ -73,7 +73,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     common2::EmulatorOptions options;
 
-    Video & video = GetVideo();
+    Video &video = GetVideo();
     const int sw = video.GetFrameBufferBorderlessWidth();
     const int sh = video.GetFrameBufferBorderlessHeight();
 
@@ -100,7 +100,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         const int fps = [self getRefreshRate];
         NSLog(@"Video refresh rate: %d Hz, %f", fps, 1000.0 / fps);
         
-        Video & video = GetVideo();
+        Video &video = GetVideo();
         frameBuffer.borderWidth = video.GetFrameBufferBorderWidth();
         frameBuffer.borderHeight = video.GetFrameBufferBorderHeight();
         frameBuffer.bufferWidth = video.GetFrameBufferWidth();
@@ -126,7 +126,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         self.driveLightButtonTemplateArchive = [self archiveFromTemplateView:self.driveLightButtonTemplate];
         [self createDriveLightButtons];
         
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+        [self startEmulationTimer];
     }
 }
 
@@ -181,6 +181,14 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     return YES;
 }
 
+- (void)applicationDidHide:(NSNotification *)notification {
+    [self.timer invalidate];
+}
+
+- (void)applicationWillUnhide:(NSNotification *)notification {
+    [self startEmulationTimer];
+}
+
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
@@ -218,7 +226,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
     if ([sender isKindOfClass:[NSMenuItem class]]) {
-        Video & video = GetVideo();
+        Video &video = GetVideo();
         
         // clear the selected state of the old item
         const VideoType_e currentVideoType = video.GetVideoType();
@@ -336,6 +344,10 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
     
     self.driveLightButtons = driveLightButtons;
+}
+
+- (void)startEmulationTimer {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
 }
 
 @end
