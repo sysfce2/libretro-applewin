@@ -9,9 +9,11 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
+- (void)applyVideoModeChange;
 - (BOOL)emulationHardwareChanged;
 - (IBAction)rebootEmulatorAction:(id)sender;
-- (void)applyVideoModeChange;
+- (void)restartFrame;
+- (void)updateDrives;
 
 @end
 

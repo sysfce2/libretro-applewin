@@ -2,7 +2,7 @@
 //  PreferencesViewController.mm
 //  Mariani
 //
-//  Created by Steven Huang on 12/30/21.
+//  Created by sh95014 on 12/30/21.
 //
 
 // This controller handles all the preferences panes, but there's one instance
@@ -23,6 +23,7 @@
 #import "Common.h"
 #import "Core.h"
 #import "Interface.h"
+#import "Memory.h"
 #import "Mockingboard.h"
 #import "Speaker.h"
 
@@ -153,22 +154,23 @@ const SS_CARDTYPE *slotTypes[] = {
         CardManager &manager = GetCardMgr();
         NSDictionary *cardNames = [self localizedCardNameMap];
         for (int slot = SLOT1; slot < NUM_SLOTS; slot++) {
-            const SS_CARDTYPE current = manager.QuerySlot(slot);
             NSPopUpButton *slotButton = [[self slotButtonsArray] objectAtIndex:slot];
+            
+            // already set up that way in Preferences.storyboard but let's be
+            // explicit because slotAction: relies on it.
+            slotButton.tag = slot;
             
             // always start with "Empty" as an option
             [slotButton addItemWithTitle:[cardNames objectForKey:@(CT_Empty)]];
-            if (current == CT_Empty) {
-                [slotButton selectItemAtIndex:0];
-            }
+            slotButton.lastItem.tag = CT_Empty;
             
             for (int i = 0; slotTypes[slot][i] != CT_Empty; i++) {
                 [slotButton addItemWithTitle:[cardNames objectForKey:@(slotTypes[slot][i])]];
-                if (slotTypes[slot][i] == current) {
-                    // account for "Empty" above
-                    [slotButton selectItemAtIndex:i + 1];
-                }
+                slotButton.lastItem.tag = slotTypes[slot][i];
             }
+            
+            // show the current item as selected
+            [slotButton selectItemWithTag:manager.QuerySlot(slot)];
         }
     }
 }
@@ -226,6 +228,60 @@ const SS_CARDTYPE *slotTypes[] = {
 
 - (IBAction)slotAction:(id)sender {
     NSLog(@"%s (%ld)", __PRETTY_FUNCTION__, (long)[(NSView *)sender tag]);
+    NSLog(@"sender is %@, tag %ld", sender, [(NSView *)sender tag]);
+    
+    if ([sender isKindOfClass:[NSPopUpButton class]]) {
+        NSPopUpButton *slotButton = (NSPopUpButton *)sender;
+        const NSInteger currentSlot = slotButton.tag;
+        
+        CardManager &cardManager = GetCardMgr();
+        Video &video = GetVideo();
+        
+        // special teardown if a VidHD card was removed
+        const BOOL oldHasVidHD = video.HasVidHD();
+        const BOOL newHasVidHD = (slotButton.selectedItem.tag == CT_VidHD);
+        if (oldHasVidHD == YES && newHasVidHD == NO) {
+            video.SetVidHD(false);
+        }
+        
+        NSArray *slotButtons = [self slotButtonsArray];
+        
+        // Mockingboard takes both slots, so inserting in the other available
+        // slot than was specified and remove both if removing either
+        if (slotButton.selectedItem.tag == CT_MockingboardC) {
+            // find the other slot and set it to MockingBoard
+            for (NSInteger slot = SLOT1; slot < NUM_SLOTS; slot++) {
+                for (int i = 0; slotTypes[slot][i] != CT_Empty; i++) {
+                    if (slotTypes[slot][i] == CT_MockingboardC && slot != currentSlot) {
+                        cardManager.Insert((SLOTS)slot, (SS_CARDTYPE)slotButton.selectedItem.tag);
+                        [slotButtons[slot] selectItemWithTag:slotButton.selectedItem.tag];
+                    }
+                }
+            }
+        }
+        else if (cardManager.QuerySlot((SLOTS)currentSlot) == CT_MockingboardC) {
+            // find the other slot and set it to empty
+            for (NSInteger slot = SLOT1; slot < NUM_SLOTS; slot++) {
+                for (int i = 0; slotTypes[slot][i] != CT_Empty; i++) {
+                    if (slotTypes[slot][i] == CT_MockingboardC && slot != currentSlot) {
+                        cardManager.Insert((SLOTS)slot, CT_Empty);
+                        [slotButtons[slot] selectItemWithTag:CT_Empty];
+                    }
+                }
+            }
+        }
+        
+        cardManager.Insert((SLOTS)currentSlot, (SS_CARDTYPE)slotButton.selectedItem.tag);
+        
+        MemInitializeIO();
+        
+        [theAppDelegate updateDrives];
+        if (oldHasVidHD != video.HasVidHD()) {
+            [theAppDelegate restartFrame];
+        }
+
+        self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
+    }
 }
 
 - (IBAction)rebootEmulatorAction:(id)sender {

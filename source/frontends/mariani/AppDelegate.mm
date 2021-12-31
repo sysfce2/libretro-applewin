@@ -262,6 +262,15 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     frame->ApplyVideoModeChange();
 }
 
+- (void)restartFrame {
+    frame->Destroy();
+    frame->Initialize(true);
+}
+
+- (void)updateDrives {
+    [self createDriveLightButtons];
+}
+
 #pragma mark - Utilities
 
 - (NSString *)localizedVideoType:(NSInteger)videoType {

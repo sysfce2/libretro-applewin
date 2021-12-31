@@ -2,7 +2,7 @@
 //  PreferencesViewController.h
 //  Mariani
 //
-//  Created by Steven Huang on 12/30/21.
+//  Created by sh95014 on 12/30/21.
 //
 
 #import <Cocoa/Cocoa.h>
