@@ -133,19 +133,25 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 - (void)timerFired {
     for (NSButton *driveLightButton in self.driveLightButtons) {
         CardManager & cardManager = GetCardMgr();
-        UINT slot = (UINT)driveLightButton.tag / 10;
-        NSInteger drive = driveLightButton.tag % 10;
-        Disk2InterfaceCard * card2 = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
-        Disk_Status_e status[NUM_DRIVES];
-        card2->GetLightStatus(&status[0], &status[1]);
-        const BOOL active = (status[drive] == DISK_STATUS_READ || status[drive] == DISK_STATUS_WRITE);
-        if (active) {
-            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
-            driveLightButton.contentTintColor = [NSColor controlAccentColor];
+        const UINT slot = (UINT)driveLightButton.tag / 10;
+        const int drive = driveLightButton.tag % 10;
+        Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+        if (card->IsDriveEmpty(drive)) {
+            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
+            driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
         }
         else {
-            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
-            driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
+            Disk_Status_e status[NUM_DRIVES];
+            card->GetLightStatus(&status[0], &status[1]);
+            const BOOL active = (status[drive] == DISK_STATUS_READ || status[drive] == DISK_STATUS_WRITE);
+            if (active) {
+                driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
+                driveLightButton.contentTintColor = [NSColor controlAccentColor];
+            }
+            else {
+                driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
+                driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
+            }
         }
     }
     
@@ -199,6 +205,20 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
 }
 
+#pragma mark - NSOpenSavePanelDelegate
+
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
+    // always allow navigation into directories
+    NSNumber *isDirectory;
+    if ([url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil] &&
+        [isDirectory boolValue]) {
+        return YES;
+    }
+    
+    NSArray *supportedTypes = @[ @"BIN", @"DO", @"DSK", @"NIB", @"PO", @"WOZ", @"ZIP", @"GZIP", @"GZ" ];
+    return [supportedTypes containsObject:url.pathExtension.uppercaseString];
+}
+
 #pragma mark - App menu actions
 
 - (IBAction)preferencesAction:(id)sender {
@@ -250,6 +270,80 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (IBAction)driveLightAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    NSView *view = (NSView *)sender;
+    const int slot = (int)(view.tag / 10);
+    const int drive = (int)(view.tag % 10);
+    // menu doesn't have a tag, so we stash the slot/drive in the title
+    NSMenu *menu = [[NSMenu alloc] initWithTitle:[NSString stringWithFormat:@"%ld", view.tag]];
+    menu.minimumWidth = 200;
+    
+    // if there's a disk in the drive, show it
+    CardManager &cardManager = GetCardMgr();
+    Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+    NSString *diskName = [NSString stringWithUTF8String:card->GetFullDiskFilename(drive).c_str()];
+    if ([diskName length] > 0) {
+        [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
+        [menu addItemWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
+                        action:@selector(ejectDisk:)
+                 keyEquivalent:@""];
+        [menu addItem:[NSMenuItem separatorItem]];
+    }
+    
+    [menu addItemWithTitle:NSLocalizedString(@"Other…", @"open another disk image")
+                    action:@selector(openOtherDisk:)
+             keyEquivalent:@""];
+    [menu popUpMenuPositioningItem:nil atLocation:CGPointMake(0, 0) inView:sender];
+}
+
+- (void)ejectDisk:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    if ([sender isKindOfClass:[NSMenuItem class]]) {
+        NSMenuItem *menuItem = (NSMenuItem *)sender;
+        const int tag = [menuItem.menu.title intValue];
+        const int slot = tag / 10;
+        const int drive = tag % 10;
+        
+        CardManager &cardManager = GetCardMgr();
+        Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+        card->EjectDisk(drive);
+    }
+}
+
+- (void)openOtherDisk:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    if ([sender isKindOfClass:[NSMenuItem class]]) {
+        NSMenuItem *menuItem = (NSMenuItem *)sender;
+        const int tag = [menuItem.menu.title intValue];
+        const int slot = tag / 10;
+        const int drive = tag % 10;
+        
+        NSOpenPanel *panel = [NSOpenPanel openPanel];
+        panel.canChooseFiles = YES;
+        panel.canChooseDirectories = NO;
+        panel.allowsMultipleSelection = NO;
+        panel.canDownloadUbiquitousContents = YES;
+        panel.delegate = self;
+        
+        if ([panel runModal] == NSModalResponseOK) {
+            const char *fileSystemRepresentation = [panel.URL fileSystemRepresentation];
+            std::string filename(fileSystemRepresentation);
+            CardManager &cardManager = GetCardMgr();
+            Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+            const ImageError_e error = card->InsertDisk(drive, filename, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_DONT_CREATE);
+            if (error == eIMAGE_ERROR_NONE) {
+                NSLog(@"Loaded '%s' into slot %d drive %d",
+                      fileSystemRepresentation, slot, drive);
+            }
+            else {
+                NSLog(@"Failed to load '%s' into slot %d drive %d due to error %d",
+                      fileSystemRepresentation, slot, drive, error);
+                card->NotifyInvalidImage(drive, fileSystemRepresentation, error);
+            }
+        }
+    }
 }
 
 #pragma mark - Helpers because I can't figure out how to make 'frame' properly global
