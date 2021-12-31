@@ -10,6 +10,7 @@
 // attribute to disambiguate.
 
 #import "PreferencesViewController.h"
+#import "AppDelegate.h"
 
 // AppleWin
 #include "StdAfx.h"
@@ -19,6 +20,9 @@
 #import "winhandles.h"
 #import "Common.h"
 #import "Core.h"
+#import "Interface.h"
+#import "Mockingboard.h"
+#import "Speaker.h"
 
 #import "linux/registry.h"
 
@@ -90,8 +94,25 @@ const eApple2Type computerTypes[] = {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // causes the preferences window to resize depending on the preferred size
+    // of each pane
     self.preferredContentSize = self.view.frame.size;
     
+    [self configureGeneral];
+    [self configureAudio];
+    [self configureVideo];
+}
+
+- (void)viewDidAppear {
+    [super viewDidAppear];
+    
+    self.view.window.title = self.title;
+}
+
+#pragma mark - Configuration
+
+- (void)configureGeneral {
+    // emulation computer types
     NSString *vcId = [self valueForKey:@"vcId"];
     if ([vcId isEqualToString:@"computer"]) {
         const eApple2Type computerType = GetApple2Type();
@@ -106,11 +127,29 @@ const eApple2Type computerTypes[] = {
     }
 }
 
-- (void)viewDidAppear {
-    [super viewDidAppear];
+- (void)configureAudio {
+    // speaker volume slider. for some reason lower numbers are quieter so we
+    // need to get the complements
+    const int volumeMax = GetPropertySheet().GetVolumeMax();
+    self.audioSpeakerVolumeSlider.maxValue = volumeMax;
+    self.audioSpeakerVolumeSlider.intValue = volumeMax - SpkrGetVolume();
     
-    self.view.window.title = self.title;
+    // Mockingboard volume slider
+    self.audioMockingboardVolumeSlider.maxValue = volumeMax;
+    self.audioMockingboardVolumeSlider.intValue = volumeMax - MB_GetVolume();
 }
+
+- (void)configureVideo {
+    Video & video = GetVideo();
+
+    // Custom Monochrome color
+    self.videoCustomColorWell.color = [self colorWithColorRef:video.GetMonochromeRGB()];
+    
+    // 50% Scan Lines
+    self.video50PercentScanLinesButton.state = video.IsVideoStyle(VS_HALF_SCANLINES) ? NSControlStateValueOn : NSControlStateValueOff;
+}
+
+#pragma mark - Actions
 
 - (IBAction)toggleDeveloperTools:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -127,7 +166,7 @@ const eApple2Type computerTypes[] = {
     SetApple2Type(computerTypes[index]);
     RegSaveValue(REG_CONFIG, REGVALUE_APPLE2_TYPE, true, computerTypes[index]);
     
-//    self.computerRebootEmulatorButton.enabled = frame->HardwareChanged();
+    self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
 }
 
 - (IBAction)slotAction:(id)sender {
@@ -136,22 +175,45 @@ const eApple2Type computerTypes[] = {
 
 - (IBAction)rebootEmulatorAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    self.computerRebootEmulatorButton.enabled = NO;
+    [theAppDelegate rebootEmulatorAction:sender];
 }
 
 - (IBAction)toggle50PercentScanLines:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    if (self.video50PercentScanLinesButton.state == NSControlStateValueOn) {
+        [self setVideoStyle:VS_HALF_SCANLINES enabled:YES];
+    }
+    else {
+        [self setVideoStyle:VS_HALF_SCANLINES enabled:NO];
+    }
+    [theAppDelegate applyVideoModeChange];
 }
 
 - (IBAction)customColorWellAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    Video & video = GetVideo();
+    const int r = self.videoCustomColorWell.color.redComponent * 0xFF;
+    const int g = self.videoCustomColorWell.color.greenComponent * 0xFF;
+    const int b = self.videoCustomColorWell.color.blueComponent * 0xFF;
+    video.SetMonochromeRGB(RGB(r, g, b));
+    [theAppDelegate applyVideoModeChange];
 }
 
 - (IBAction)speakerVolumeSliderAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    const int volumeMax = GetPropertySheet().GetVolumeMax();
+    const int volume = volumeMax - self.audioSpeakerVolumeSlider.intValue;
+    SpkrSetVolume(volume, volumeMax);
+    RegSaveValue(REG_CONFIG, REGVALUE_SPKR_VOLUME, true, volume);
 }
 
 - (IBAction)mockingboardVolumeSliderAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    const int volumeMax = GetPropertySheet().GetVolumeMax();
+    const int volume = volumeMax - self.audioMockingboardVolumeSlider.intValue;
+    MB_SetVolume(volume, volumeMax);
+    RegSaveValue(REG_CONFIG, REGVALUE_MB_VOLUME, true, volume);
 }
 
 - (IBAction)diskAction:(id)sender {
@@ -164,6 +226,27 @@ const eApple2Type computerTypes[] = {
 
 - (IBAction)toggleDiskEnhancedSpeed:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+#pragma mark - Utilities
+
+- (NSColor *)colorWithColorRef:(DWORD)colorRef {
+    return [NSColor colorWithRed:(colorRef & 0xFF) / 255.0
+                           green:((colorRef >> 8) & 0xFF) / 255.0
+                            blue:((colorRef >> 16) & 0xFF) / 255.0
+                           alpha:1];
+}
+
+- (void)setVideoStyle:(VideoStyle_e)style enabled:(BOOL)enabled {
+    Video & video = GetVideo();
+    VideoStyle_e currentVideoStyle = video.GetVideoStyle();
+    if (enabled) {
+      currentVideoStyle = VideoStyle_e(currentVideoStyle | style);
+    }
+    else {
+      currentVideoStyle = VideoStyle_e(currentVideoStyle & (~style));
+    }
+    video.SetVideoStyle(currentVideoStyle);
 }
 
 @end

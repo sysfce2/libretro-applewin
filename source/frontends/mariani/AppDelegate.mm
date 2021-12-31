@@ -244,7 +244,17 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
-#pragma mark - Utilties
+#pragma mark - Helpers because I can't figure out how to make 'frame' properly global
+
+- (BOOL)emulationHardwareChanged {
+    return frame->HardwareChanged();
+}
+
+- (void)applyVideoModeChange {
+    frame->ApplyVideoModeChange();
+}
+
+#pragma mark - Utilities
 
 - (NSString *)localizedVideoType:(NSInteger)videoType {
     static NSDictionary *videoTypeNames;

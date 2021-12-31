@@ -9,6 +9,10 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
+- (BOOL)emulationHardwareChanged;
+- (IBAction)rebootEmulatorAction:(id)sender;
+- (void)applyVideoModeChange;
 
 @end
 
+#define theAppDelegate ((AppDelegate *)[[NSApplication sharedApplication] delegate])
