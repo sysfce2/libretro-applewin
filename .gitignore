@@ -253,5 +253,6 @@ CMakeLists.txt.user*
 *.mode2v3
 *.perspectivev3
 *.xcuserstate
+*.xcscheme
 project.xcworkspace/
 xcuserdata/
