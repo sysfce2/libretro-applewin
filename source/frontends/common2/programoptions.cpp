@@ -117,7 +117,6 @@ namespace common2
       ;
     desc.add(paddleDesc);
 
-#ifndef MARIANI
     po::variables_map vm;
     try
     {
@@ -206,9 +205,6 @@ namespace common2
       std::cerr << "ERROR: " << e.what() << std::endl;
       return false;
     }
-#else
-    return true;
-#endif // MARIANI
   }
 
   void applyOptions(const EmulatorOptions & options)

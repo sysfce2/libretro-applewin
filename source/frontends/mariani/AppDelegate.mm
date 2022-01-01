@@ -15,7 +15,7 @@
 #import "gamepad.h"
 #import "programoptions.h"
 #import "sdirectsound.h"
-#import "sdlrendererframe.h"
+#import "sdldummyframe.hpp"
 #import "utils.h"
 
 // AppleWin
@@ -73,68 +73,49 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     _hasStatusBar = YES;
     
-    const Uint32 flags = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO | SDL_INIT_TIMER;
+    const Uint32 flags = SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO;
     if (SDL_Init(flags) != 0) {
         NSLog(@"SDL_Init error %s", SDL_GetError());
     }
     
     common2::EmulatorOptions options;
+    self.logger = new LoggerContext(options.log);
+    self.registryContext = new RegistryContext(CreateFileRegistry(options));
 
-    Video &video = GetVideo();
-    const int sw = video.GetFrameBufferBorderlessWidth();
-    const int sh = video.GetFrameBufferBorderlessHeight();
+    frame.reset(new sa2::SDLDummyFrame(options));
 
-    options.geometry.empty = true;
-    options.geometry.width = sw * 2;
-    options.geometry.height = sh * 2;
-    options.geometry.x = SDL_WINDOWPOS_UNDEFINED;
-    options.geometry.y = SDL_WINDOWPOS_UNDEFINED;
-    const bool run = getEmulatorOptions(0, NULL, "macOS", options);
+    std::shared_ptr<Paddle> paddle(new sa2::Gamepad(0));
+    self.initialisation = new Initialisation(frame, paddle);
+    applyOptions(options);
+    frame->Begin();
     
-    if (run) {
-        self.logger = new LoggerContext(options.log);
-        self.registryContext = new RegistryContext(CreateFileRegistry(options));
-
-        frame.reset(new sa2::SDLRendererFrame(options));
-
-        std::shared_ptr<Paddle> paddle(new sa2::Gamepad(0));
-        self.initialisation = new Initialisation(frame, paddle);
-        applyOptions(options);
-        frame->Begin();
-        
-        NSLog(@"Default GL swap interval: %d", SDL_GL_GetSwapInterval());
-        
-        const int fps = [self getRefreshRate];
-        NSLog(@"Video refresh rate: %d Hz, %f", fps, 1000.0 / fps);
-        
-        Video &video = GetVideo();
-        frameBuffer.borderWidth = video.GetFrameBufferBorderWidth();
-        frameBuffer.borderHeight = video.GetFrameBufferBorderHeight();
-        frameBuffer.bufferWidth = video.GetFrameBufferWidth();
-        frameBuffer.bufferHeight = video.GetFrameBufferHeight();
-        frameBuffer.pixelWidth = video.GetFrameBufferBorderlessWidth();
-        frameBuffer.pixelHeight = video.GetFrameBufferBorderlessHeight();
-        [self.emulatorVC createScreen:&frameBuffer];
-        
-        self.window.delegate = self;
-        
-        // populate the Display Type menu with options
-        const VideoType_e currentVideoType = video.GetVideoType();
-        for (NSInteger videoType = VT_MONO_CUSTOM; videoType < NUM_VIDEO_MODES; videoType++) {
-            NSString *itemTitle = [self localizedVideoType:videoType];
-            NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:itemTitle
-                                                          action:@selector(displayTypeAction:)
-                                                   keyEquivalent:@""];
-            item.tag = videoType;
-            item.state = (currentVideoType == videoType) ? NSControlStateValueOn : NSControlStateValueOff;
-            [self.displayTypeMenu addItem:item];
-        }
-        
-        self.driveLightButtonTemplateArchive = [self archiveFromTemplateView:self.driveLightButtonTemplate];
-        [self createDriveLightButtons];
-        
-        [self startEmulationTimer];
+    Video &video = GetVideo();
+    frameBuffer.borderWidth = video.GetFrameBufferBorderWidth();
+    frameBuffer.borderHeight = video.GetFrameBufferBorderHeight();
+    frameBuffer.bufferWidth = video.GetFrameBufferWidth();
+    frameBuffer.bufferHeight = video.GetFrameBufferHeight();
+    frameBuffer.pixelWidth = video.GetFrameBufferBorderlessWidth();
+    frameBuffer.pixelHeight = video.GetFrameBufferBorderlessHeight();
+    [self.emulatorVC createScreen:&frameBuffer];
+    
+    self.window.delegate = self;
+    
+    // populate the Display Type menu with options
+    const VideoType_e currentVideoType = video.GetVideoType();
+    for (NSInteger videoType = VT_MONO_CUSTOM; videoType < NUM_VIDEO_MODES; videoType++) {
+        NSString *itemTitle = [self localizedVideoType:videoType];
+        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:itemTitle
+                                                      action:@selector(displayTypeAction:)
+                                               keyEquivalent:@""];
+        item.tag = videoType;
+        item.state = (currentVideoType == videoType) ? NSControlStateValueOn : NSControlStateValueOff;
+        [self.displayTypeMenu addItem:item];
     }
+    
+    self.driveLightButtonTemplateArchive = [self archiveFromTemplateView:self.driveLightButtonTemplate];
+    [self createDriveLightButtons];
+    
+    [self startEmulationTimer];
 }
 
 - (void)timerFired {

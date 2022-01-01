@@ -14,7 +14,6 @@ namespace sa2
   SDLRendererFrame::SDLRendererFrame(const common2::EmulatorOptions & options)
     : SDLFrame(options)
   {
-#ifndef MARIANI
     const common2::Geometry & geometry = options.geometry;
 
     myWindow.reset(SDL_CreateWindow(g_pAppTitle.c_str(), geometry.x, geometry.y, geometry.width, geometry.height, SDL_WINDOW_RESIZABLE), SDL_DestroyWindow);
@@ -32,7 +31,6 @@ namespace sa2
     }
 
     printRendererInfo(std::cerr, myRenderer, ourFormat, options.sdlDriver);
-#endif // MARIANI
   }
 
   void SDLRendererFrame::Initialize(bool resetVideoState)
@@ -56,11 +54,9 @@ namespace sa2
 
   void SDLRendererFrame::VideoPresentScreen()
   {
-#ifdef MARIANI
     SDL_UpdateTexture(myTexture.get(), nullptr, myFramebuffer.data(), myPitch);
     SDL_RenderCopyEx(myRenderer.get(), myTexture.get(), &myRect, nullptr, 0.0, nullptr, SDL_FLIP_VERTICAL);
     SDL_RenderPresent(myRenderer.get());
-#endif // MARIANI
   }
 
   void SDLRendererFrame::GetRelativeMousePosition(const SDL_MouseMotionEvent & motion, double & x, double & y) const
