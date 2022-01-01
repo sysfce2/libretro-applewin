@@ -586,7 +586,9 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (void)startEmulationTimer {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+    self.timer = [NSTimer timerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+    
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
 - (double)statusBarHeight {
