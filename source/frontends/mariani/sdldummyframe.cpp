@@ -29,5 +29,12 @@ namespace sa2
   {
   }
 
+  void SDLDummyFrame::ProcessKeyDown(const SDL_KeyboardEvent & key)
+  {
+  }
+
+  void SDLDummyFrame::ProcessText(const SDL_TextInputEvent & text)
+  {
+  }
 
 }

@@ -25,6 +25,9 @@ namespace sa2
     void VideoPresentScreen() override;
     void Initialize(bool resetVideoState) override;
 
+    void ProcessKeyDown(const SDL_KeyboardEvent & key);
+    void ProcessText(const SDL_TextInputEvent & text);
+
   protected:
     void GetRelativeMousePosition(const SDL_MouseMotionEvent & motion, double & x, double & y) const override;
 

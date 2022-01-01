@@ -112,9 +112,7 @@ namespace
 
     if (ch)
     {
-#ifndef MARIANI
       addKeyToBuffer(ch);
-#endif
 #ifdef KEY_LOGGING_VERBOSE
       LogOutput("SDL KeyboardEvent: %02x\n", ch);
 #endif
@@ -560,9 +558,7 @@ namespace sa2
         {
           // not the letters
           // this is very simple, but one cannot handle CRTL-key combination.
-#ifndef MARIANI
           addKeyToBuffer(key);
-#endif
 #ifdef KEY_LOGGING_VERBOSE
           LogOutput("SDL TextInputEvent: %02x\n", key);
 #endif
