@@ -45,6 +45,7 @@
 @property RegistryContext *registryContext;
 @property NSArray *driveLightButtons;
 @property NSData *driveLightButtonTemplateArchive;
+@property (readonly) double statusBarHeight;
 
 @end
 
@@ -242,6 +243,10 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 #pragma mark - View menu actions
 
+- (IBAction)toggleStatusBarAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
 - (IBAction)displayTypeAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
@@ -260,6 +265,32 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         frame->ApplyVideoModeChange();
         NSLog(@"Set video type to %ld", (long)newItem.tag);
     }
+}
+
+- (IBAction)actualSizeAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+    CGRect frame = [self windowRectAtScale:1];
+    [self.window setFrame:frame display:YES animate:NO];
+}
+
+- (IBAction)doubleSizeAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+    CGRect frame = [self windowRectAtScale:2];
+    [self.window setFrame:frame display:YES animate:NO];
+}
+
+- (IBAction)increaseSizeAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+    [self scaleWindowByFactor:1.2];
+}
+
+- (IBAction)decreaseSizeAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+    [self scaleWindowByFactor:0.8];
 }
 
 #pragma mark - Main window actions
@@ -417,6 +448,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     // only using as template, never actually show this button
     self.driveLightButtonTemplate.hidden = YES;
     
+    const NSInteger oldDriveLightButtonsCount = self.driveLightButtons.count;
+    
     // remove the old light buttons, if any
     for (NSView *button in self.driveLightButtons) {
         [button removeFromSuperview];
@@ -447,10 +480,77 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
     
     self.driveLightButtons = driveLightButtons;
+    
+    if (self.driveLightButtons.count != oldDriveLightButtonsCount) {
+        // constrain our window to not allow it to be resized so small that our
+        // status bar buttons overlap
+        [self.window setContentMinSize:[self minimumContentSizeAtScale:1]];
+    }
+}
+
+- (CGSize)minimumContentSizeAtScale:(double)scale {
+    NSSize minimumSize;
+    // width of all the things in the status bar...
+    minimumSize.width =
+        self.driveLightButtonTemplate.frame.origin.x +                                      // left margin
+        self.driveLightButtonTemplate.frame.size.width * self.driveLightButtons.count +     // drive light buttons
+        40 +                                                                                // a healthy margin
+        (self.window.frame.size.width - self.volumeToggleButton.frame.origin.x);            // buttons on the right
+    // ...but no less than 2 pt per Apple ][ pixel
+    Video &video = GetVideo();
+    if (minimumSize.width < video.GetFrameBufferBorderlessWidth() * scale) {
+        minimumSize.width = video.GetFrameBufferBorderlessWidth() * scale;
+    }
+    minimumSize.height = video.GetFrameBufferBorderlessHeight() * scale + self.statusBarHeight;  // status bar height
+    return minimumSize;
+}
+
+- (CGRect)windowRectAtScale:(double)scale {
+    CGRect windowFrame = self.window.frame;
+    CGRect contentFrame = self.window.contentLayoutRect;
+
+    CGRect frame;
+    frame.size = [self minimumContentSizeAtScale:scale];
+    frame.size.height += windowFrame.size.height - contentFrame.size.height;  // window chrome?
+
+    // center the new window at the center of the old one
+    frame.origin.x = windowFrame.origin.x + (windowFrame.size.width - frame.size.width) / 2;
+    frame.origin.y = windowFrame.origin.y + (windowFrame.size.height - frame.size.height) / 2;
+    
+    return frame;
+}
+
+- (void)scaleWindowByFactor:(double)factor {
+    CGRect windowFrame = self.window.frame;
+    CGRect contentFrame = self.window.contentLayoutRect;
+    
+    CGRect frame;
+    frame.size.width = contentFrame.size.width * factor;
+    // keep status bar out of the scaling because it's fixed height
+    frame.size.height = (contentFrame.size.height - [self statusBarHeight]) * factor;
+    frame.size.height += [self statusBarHeight];
+
+    // but no smaller than minimum
+    CGSize minimumSize = [self minimumContentSizeAtScale:1];
+    if (frame.size.width < minimumSize.width || frame.size.height < minimumSize.height) {
+        frame.size = minimumSize;
+    }
+    
+    frame.size.height += windowFrame.size.height - contentFrame.size.height;  // window chrome?
+    
+    // center the new window at the center of the old one
+    frame.origin.x = windowFrame.origin.x + (windowFrame.size.width - frame.size.width) / 2;
+    frame.origin.y = windowFrame.origin.y + (windowFrame.size.height - frame.size.height) / 2;
+    
+    [self.window setFrame:frame display:YES animate:NO];
 }
 
 - (void)startEmulationTimer {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+}
+
+- (double)statusBarHeight {
+    return 32;
 }
 
 @end

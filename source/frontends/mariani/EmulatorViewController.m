@@ -43,27 +43,28 @@
     _view = (MTKView *)self.view;
     _view.enableSetNeedsDisplay = NO;
     _view.device = MTLCreateSystemDefaultDevice();
-    _view.clearColor = MTLClearColorMake(0.0, 0.5, 1.0, 1.0);
-
-    _renderer = [[EmulatorRenderer alloc] initWithMetalKitView:_view];
-    if (_renderer == nil)
-    {
-        NSLog(@"Renderer initialization failed");
-        return;
-    }
-
-    // Initialize the renderer with the view size.
-    [_renderer mtkView:_view drawableSizeWillChange:_view.drawableSize];
-    
-    _view.delegate = _renderer;
 }
 
 - (void)createScreen:(FrameBuffer *)frameBuffer {
-    [_renderer createTexture:frameBuffer];
+    if (_renderer == nil) {
+        _renderer = [[EmulatorRenderer alloc] initWithMetalKitView:_view frameBuffer:frameBuffer];
+        if (_renderer == nil)
+        {
+            NSLog(@"Renderer initialization failed");
+            return;
+        }
+
+        // Initialize the renderer with the view size.
+        [_renderer mtkView:_view drawableSizeWillChange:_view.drawableSize];
+        
+        _view.delegate = _renderer;
+    }
+    
+    [_renderer createTexture];
 }
 
 - (void)updateScreen:(FrameBuffer *)frameBuffer {
-    [_renderer updateTexture:frameBuffer];
+    [_renderer updateTextureWithData:frameBuffer->data];
 }
 
 @end

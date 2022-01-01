@@ -31,10 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EmulatorRenderer : NSObject<MTKViewDelegate>
 
-- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)mtkView;
+- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)mtkView frameBuffer:(FrameBuffer *)frameBuffer;
 
-- (void)createTexture:(FrameBuffer *)frameBuffer;
-- (void)updateTexture:(FrameBuffer *)frameBuffer;
+- (void)createTexture;
+- (void)updateTextureWithData:(void *)data;
 
 @end
 

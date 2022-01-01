@@ -26,6 +26,9 @@
 #import "EmulatorRenderer.h"
 #import "ShaderTypes.h"
 
+// how much of the overscan area to display
+#define OVERSCAN                0.1
+
 @implementation EmulatorRenderer {
     // The device (aka GPU) used to render
     id<MTLDevice> _device;
@@ -46,9 +49,11 @@
 
     // The current size of the view.
     vector_uint2 _viewportSize;
+    
+    FrameBuffer _frameBuffer;
 }
 
-- (void)createTexture:(FrameBuffer *)frameBuffer {
+- (void)createTexture {
     MTLTextureDescriptor *textureDescriptor = [[MTLTextureDescriptor alloc] init];
     
     // Indicate that each pixel has a blue, green, red, and alpha channel, where each channel is
@@ -56,57 +61,38 @@
     textureDescriptor.pixelFormat = MTLPixelFormatBGRA8Unorm;
     
     // Set the pixel dimensions of the texture
-    textureDescriptor.width = frameBuffer->pixelWidth + frameBuffer->borderWidth * 2;
-    textureDescriptor.height = frameBuffer->pixelHeight + frameBuffer->borderHeight * 2;
+    textureDescriptor.width = _frameBuffer.pixelWidth + _frameBuffer.borderWidth * 2;
+    textureDescriptor.height = _frameBuffer.pixelHeight + _frameBuffer.borderHeight * 2;
     
     // Create the texture from the device by using the descriptor
     _texture = [_device newTextureWithDescriptor:textureDescriptor];
 }
 
-- (void)updateTexture:(FrameBuffer *)frameBuffer {
+- (void)updateTextureWithData:(void *)data {
     // Calculate the number of bytes per row in the image.
-    NSUInteger bytesPerRow = frameBuffer->bufferWidth * 4;
-    NSUInteger width = frameBuffer->pixelWidth + frameBuffer->borderWidth * 2;
-    NSUInteger height = frameBuffer->pixelHeight + frameBuffer->borderHeight * 2;
+    const NSUInteger bytesPerRow = _frameBuffer.bufferWidth * 4;
     
     MTLRegion region = {
         { 0, 0, 0 },    // MTLOrigin
-        { width, height, 1 }  // MTLSize
+        { _frameBuffer.bufferWidth, _frameBuffer.bufferHeight, 1 }  // MTLSize
     };
     
     // Copy the bytes from the data object into the texture
     [_texture replaceRegion:region
                 mipmapLevel:0
-                  withBytes:frameBuffer->data
+                  withBytes:data
                 bytesPerRow:bytesPerRow];
 }
 
-- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)mtkView {
+- (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)mtkView frameBuffer:(FrameBuffer *)frameBuffer {
     if ((self = [super init]) != nil) {
         _device = mtkView.device;
-
-        // Set up a simple MTLBuffer with vertices which include texture coordinates
-        static const Vertex quadVertices[] =
-        {
-            // Pixel positions, Texture coordinates
-            { {  1120,  -768 },  { 1.f, 0.f } },
-            { { -1120,  -768 },  { 0.f, 0.f } },
-            { { -1120,   768 },  { 0.f, 1.f } },
-
-            { {  1120,  -768 },  { 1.f, 0.f } },
-            { { -1120,   768 },  { 0.f, 1.f } },
-            { {  1120,   768 },  { 1.f, 1.f } },
-        };
-
-        // Create a vertex buffer, and initialize it with the quadVertices array
-        _vertices = [_device newBufferWithBytes:quadVertices
-                                         length:sizeof(quadVertices)
-                                        options:MTLResourceStorageModeShared];
-
-        // Calculate the number of vertices by dividing the byte length by the size of each vertex
-        _numVertices = sizeof(quadVertices) / sizeof(Vertex);
-
-        /// Create the render pipeline.
+        
+        // keep a copy of the geometry but we don't need the data
+        _frameBuffer = *frameBuffer;
+        _frameBuffer.data = NULL;
+        
+        // Create the render pipeline.
 
         // Load the shaders from the default library
         id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
@@ -132,6 +118,11 @@
 }
 
 - (void)drawInMTKView:(nonnull MTKView *)view {
+    if (_numVertices == 0) {
+        // not set up yet, do nothing
+        return;
+    }
+    
     // Create a new command buffer for each render pass to the current drawable
     id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
     commandBuffer.label = @"MyCommand";
@@ -139,7 +130,7 @@
     // Obtain a renderPassDescriptor generated from the view's drawable textures
     MTLRenderPassDescriptor *renderPassDescriptor = view.currentRenderPassDescriptor;
 
-    if(renderPassDescriptor != nil)
+    if (renderPassDescriptor != nil)
     {
         id<MTLRenderCommandEncoder> renderEncoder =
         [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
@@ -177,12 +168,54 @@
 
     // Finalize rendering here & push the command buffer to the GPU
     [commandBuffer commit];
-
 }
 
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size {
     _viewportSize.x = size.width;
     _viewportSize.y = size.height;
+    
+    const double borderWidth = _frameBuffer.borderWidth * (1.0 - OVERSCAN);
+    const double borderHeight = _frameBuffer.borderHeight * (1.0 - OVERSCAN);
+    const double borderWidthRatio = borderWidth / _frameBuffer.bufferWidth;
+    const double borderHeightRatio = borderHeight / _frameBuffer.bufferHeight;
+    
+    // scale the quad to fit inside the view
+    const double frameBufferAspectRatio = (double)_frameBuffer.pixelWidth / _frameBuffer.pixelHeight;
+    const double viewportAspectRatio = (double)_viewportSize.x / _viewportSize.y;
+    double widthScale, heightScale;
+    if (frameBufferAspectRatio > viewportAspectRatio) {
+        // letterbox
+        widthScale = 1.0;
+        heightScale = viewportAspectRatio / frameBufferAspectRatio;
+    }
+    else {
+        // pillarbox
+        widthScale = frameBufferAspectRatio / viewportAspectRatio;
+        heightScale = 1.0;
+    }
+    const double halfViewWidth = floor((_viewportSize.x * widthScale) / 2);
+    const double halfViewHeight = floor((_viewportSize.y * heightScale) / 2);
+
+    // Set up a simple MTLBuffer with vertices which include texture coordinates
+    const Vertex quadVertices[] =
+    {
+        // Pixel positions,                    Texture coordinates
+        { {  halfViewWidth, -halfViewHeight }, { 1.f - borderWidthRatio, borderHeightRatio } },
+        { { -halfViewWidth, -halfViewHeight }, { borderWidthRatio, borderHeightRatio } },
+        { { -halfViewWidth,  halfViewHeight }, { borderWidthRatio, 1.f - borderHeightRatio } },
+
+        { {  halfViewWidth, -halfViewHeight }, { 1.f - borderWidthRatio, borderHeightRatio } },
+        { { -halfViewWidth,  halfViewHeight }, { borderWidthRatio, 1.f - borderHeightRatio } },
+        { {  halfViewWidth,  halfViewHeight }, { 1.f - borderWidthRatio, 1.f - borderHeightRatio } },
+    };
+
+    // Create a vertex buffer, and initialize it with the quadVertices array
+    _vertices = [_device newBufferWithBytes:quadVertices
+                                     length:sizeof(quadVertices)
+                                    options:MTLResourceStorageModeShared];
+
+    // Calculate the number of vertices by dividing the byte length by the size of each vertex
+    _numVertices = sizeof(quadVertices) / sizeof(Vertex);
 }
 
 @end
