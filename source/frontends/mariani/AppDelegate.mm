@@ -29,6 +29,7 @@
 #import "PreferencesWindowController.h"
 
 #define TARGET_FPS          60
+#define STATUS_BAR_HEIGHT   32
 
 @interface AppDelegate ()
 
@@ -38,6 +39,7 @@
 @property (strong) PreferencesWindowController *preferencesWC;
 @property (weak) IBOutlet NSButton *driveLightButtonTemplate;
 @property (weak) IBOutlet NSButton *volumeToggleButton;
+@property (weak) IBOutlet NSMenuItem *showHideStatusBarMenuItem;
 
 @property NSTimer *timer;
 @property Initialisation *initialisation;
@@ -45,7 +47,9 @@
 @property RegistryContext *registryContext;
 @property NSArray *driveLightButtons;
 @property NSData *driveLightButtonTemplateArchive;
+@property BOOL hasStatusBar;
 @property (readonly) double statusBarHeight;
+@property (weak) IBOutlet NSView *statusBarView;
 
 @end
 
@@ -67,6 +71,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    _hasStatusBar = YES;
+    
     const Uint32 flags = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO | SDL_INIT_TIMER;
     if (SDL_Init(flags) != 0) {
         NSLog(@"SDL_Init error %s", SDL_GetError());
@@ -245,6 +251,40 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (IBAction)toggleStatusBarAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    self.hasStatusBar = !self.hasStatusBar;
+    self.statusBarView.hidden = !_hasStatusBar;
+    
+    CGRect emulatorFrame = self.emulatorVC.view.frame;
+    CGRect windowFrame = self.window.frame;
+    if (self.window.styleMask & NSWindowStyleMaskFullScreen) {
+        emulatorFrame = windowFrame;
+        if (self.hasStatusBar) {
+            emulatorFrame.size.height -= STATUS_BAR_HEIGHT;
+            emulatorFrame.origin.y += STATUS_BAR_HEIGHT;
+        }
+    }
+    else {
+        // windowed
+        const double statusBarHeight = STATUS_BAR_HEIGHT;
+        if (self.hasStatusBar) {
+            self.showHideStatusBarMenuItem.title = NSLocalizedString(@"Hide Status Bar", @"");
+            emulatorFrame.origin.y = statusBarHeight;
+            windowFrame.size.height += statusBarHeight;
+            windowFrame.origin.y -= statusBarHeight;
+        }
+        else {
+            self.showHideStatusBarMenuItem.title = NSLocalizedString(@"Show Status Bar", @"");
+            emulatorFrame.origin.y = 0;
+            windowFrame.size.height -= statusBarHeight;
+            windowFrame.origin.y += statusBarHeight;
+        }
+        
+        // need to resize the window before the emulator view because the window
+        // tries to resize its children when it's being resized.
+        [self.window setFrame:windowFrame display:YES animate:NO];
+    }
+    [self.emulatorVC.view setFrame:emulatorFrame];
 }
 
 - (IBAction)displayTypeAction:(id)sender {
@@ -550,7 +590,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (double)statusBarHeight {
-    return 32;
+    return self.hasStatusBar ? STATUS_BAR_HEIGHT : 0;
 }
 
 @end

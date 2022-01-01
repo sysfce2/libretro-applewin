@@ -43,6 +43,11 @@
     _view = (MTKView *)self.view;
     _view.enableSetNeedsDisplay = NO;
     _view.device = MTLCreateSystemDefaultDevice();
+    
+#ifdef DEBUG
+    //  useful for debugging quad sizing issues.
+    _view.clearColor = MTLClearColorMake(0.0, 0.15, 0.3, 0.3);
+#endif
 }
 
 - (void)createScreen:(FrameBuffer *)frameBuffer {

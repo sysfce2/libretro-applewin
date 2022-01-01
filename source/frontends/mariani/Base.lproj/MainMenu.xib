@@ -17,6 +17,8 @@
                 <outlet property="displayTypeMenu" destination="eeY-Un-lEj" id="N54-FR-NAN"/>
                 <outlet property="driveLightButtonTemplate" destination="NGY-eR-Avg" id="DBE-ke-cr3"/>
                 <outlet property="emulatorVC" destination="S0z-N3-T9h" id="XAc-8o-NgU"/>
+                <outlet property="showHideStatusBarMenuItem" destination="Qa1-0n-abD" id="jQF-tx-pGh"/>
+                <outlet property="statusBarView" destination="Mnw-rf-Y9b" id="vHG-8g-HKh"/>
                 <outlet property="volumeToggleButton" destination="cQ9-oO-i17" id="JYX-Xo-KGm"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -276,36 +278,42 @@
                         <rect key="frame" x="0.0" y="32" width="840" height="576"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </customView>
-                    <button toolTip="Toggle audio on or off" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-oO-i17">
-                        <rect key="frame" x="759" y="-1.5" width="31.5" height="33.5"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="speaker.slash" catalog="system" imagePosition="only" alignment="center" alternateImage="speaker" state="on" imageScaling="proportionallyDown" inset="2" id="JHc-Xt-b47">
-                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="18"/>
-                        </buttonCell>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lMj-oj-jRW">
-                        <rect key="frame" x="798" y="0.0" width="32" height="32.5"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="camera" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="DW1-i4-Q4j">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="18"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="screenshotTaken:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NGY-eR-Avg">
-                        <rect key="frame" x="5" y="1" width="32" height="29"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="circle.fill" catalog="system" imagePosition="only" alignment="center" alternateImage="circle" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aaU-Lx-Ohf">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="driveLightAction:" target="Voe-Tx-rLC" id="sbG-RH-fSd"/>
-                        </connections>
-                    </button>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mnw-rf-Y9b">
+                        <rect key="frame" x="0.0" y="0.0" width="840" height="32"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NGY-eR-Avg">
+                                <rect key="frame" x="5" y="1" width="32" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="circle.fill" catalog="system" imagePosition="only" alignment="center" alternateImage="circle" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aaU-Lx-Ohf">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="driveLightAction:" target="Voe-Tx-rLC" id="sbG-RH-fSd"/>
+                                </connections>
+                            </button>
+                            <button toolTip="Toggle audio on or off" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-oO-i17">
+                                <rect key="frame" x="759" y="-1.5" width="33.5" height="33.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="speaker.slash" catalog="system" imagePosition="only" alignment="center" alternateImage="speaker" state="on" imageScaling="proportionallyDown" inset="2" id="JHc-Xt-b47">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system" size="18"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lMj-oj-jRW">
+                                <rect key="frame" x="798" y="0.0" width="32" height="34.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="camera" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="DW1-i4-Q4j">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="18"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="screenshotTaken:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </customView>
                 </subviews>
             </view>
             <point key="canvasLocation" x="-312" y="180"/>
