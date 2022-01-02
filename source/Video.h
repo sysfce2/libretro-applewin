@@ -82,13 +82,9 @@ enum AppleFont_e
 	APPLE_FONT_Y_APPLE_40COL = 512, // ][
 };
 
-#ifdef _MSC_VER
-	// turn of MSVC struct member padding
-	#pragma pack(push,1)
-	#define PACKED
-#else
-	#define PACKED // TODO: FIXME: gcc/clang __attribute__
-#endif
+
+// turn on struct member padding
+#pragma pack(push,1)
 
 // TODO: Replace with WinGDI.h / RGBQUAD
 struct bgra_t
@@ -99,8 +95,6 @@ struct bgra_t
 	uint8_t a; // reserved on Win32
 };
 
-#pragma pack(push)
-#pragma pack(1)
 struct WinBmpHeader_t
 {
 	// BITMAPFILEHEADER     // Addr Size
@@ -128,7 +122,6 @@ struct WinBmpHeader_t
 	// RGBQUAD
 	// pixelmap
 };
-#pragma pack(pop)
 
 struct WinCIEXYZ
 {
@@ -177,10 +170,7 @@ struct WinBmpHeader4_t
 	uint32_t nBlueGamma      ; // 0x76 0x04
 };
 
-#ifdef _MSC_VER
-	#pragma pack(pop)
-#endif
-
+#pragma pack(pop)
 //
 
 class Video
