@@ -178,6 +178,8 @@
 		B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */; };
 		B0689D0A2780B9B60029EB7D /* sdldummyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* sdldummyframe.cpp */; };
 		B0689D0D2780C85F0029EB7D /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
+		B0689D172781984F0029EB7D /* UserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B0689D152781984F0029EB7D /* UserDefaults.h */; };
+		B0689D182781984F0029EB7D /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
 		B09AB674277A14DB0002A6C3 /* Speech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB626277A14DB0002A6C3 /* Speech.cpp */; };
@@ -319,6 +321,8 @@
 		B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		B0689D082780B9B60029EB7D /* sdldummyframe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdldummyframe.cpp; sourceTree = "<group>"; };
 		B0689D092780B9B60029EB7D /* sdldummyframe.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdldummyframe.hpp; sourceTree = "<group>"; };
+		B0689D152781984F0029EB7D /* UserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefaults.h; sourceTree = "<group>"; };
+		B0689D162781984F0029EB7D /* UserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
 		B0927414277D9399003FFB79 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
 		B0927415277D9399003FFB79 /* PreferencesViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PreferencesViewController.mm; sourceTree = "<group>"; };
 		B0927418277D9403003FFB79 /* PreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
@@ -652,6 +656,8 @@
 				B0927419277D9403003FFB79 /* PreferencesWindowController.m */,
 				B049E8A4277C4F0E00FC14A3 /* ShaderTypes.h */,
 				B049E8A6277C4F6D00FC14A3 /* Shaders.metal */,
+				B0689D152781984F0029EB7D /* UserDefaults.h */,
+				B0689D162781984F0029EB7D /* UserDefaults.m */,
 				B032DE27277A0C24006DC0F7 /* Assets.xcassets */,
 				B032DE29277A0C24006DC0F7 /* MainMenu.xib */,
 				B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */,
@@ -1169,6 +1175,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0689D172781984F0029EB7D /* UserDefaults.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,6 +1416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B09AB80D277A21410002A6C3 /* guiddef.cpp in Sources */,
+				B0689D182781984F0029EB7D /* UserDefaults.m in Sources */,
 				B049E820277B512500FC14A3 /* sdirectsound.cpp in Sources */,
 				B09AB7D2277A21180002A6C3 /* Joystick.cpp in Sources */,
 				B0689D0A2780B9B60029EB7D /* sdldummyframe.cpp in Sources */,

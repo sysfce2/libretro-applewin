@@ -27,9 +27,12 @@
 #import "CommonTypes.h"
 #import "EmulatorViewController.h"
 #import "PreferencesWindowController.h"
+#import "UserDefaults.h"
 
 #define TARGET_FPS          60
 #define STATUS_BAR_HEIGHT   32
+
+#define SCREENSHOT_FILE_NAME @"Mariani Screen Shot"
 
 @interface AppDelegate ()
 
@@ -132,7 +135,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     if (self.hasStatusBar) {
         for (NSButton *driveLightButton in self.driveLightButtons) {
-            CardManager & cardManager = GetCardMgr();
+            CardManager &cardManager = GetCardMgr();
             const UINT slot = (UINT)driveLightButton.tag / 10;
             const int drive = driveLightButton.tag % 10;
             Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
@@ -386,12 +389,13 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
         [newRep setSize:[image size]];
         NSData *pngData = [newRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-        [pngData writeToFile:@"/tmp/Mariani-screenshot.png" atomically:YES];
+        [pngData writeToURL:[self composeScreenshotPath] atomically:YES];
         free(buffer);
 #ifdef DEBUG
     NSTimeInterval duration = -[start timeIntervalSinceNow];
     NSLog(@"PNG conversion took: %f ms", duration * 1000);
 #endif // DEBUG
+        [[NSSound soundNamed:@"Blow"] play];
     });
 }
 
@@ -632,7 +636,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     NSMutableArray *driveLightButtons = [NSMutableArray array];
     NSInteger position = 0;
-    CardManager & cardManager = GetCardMgr();
+    CardManager &cardManager = GetCardMgr();
     for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
         if (cardManager.QuerySlot(slot) == CT_Disk2) {
             for (int drive = DRIVE_1; drive < NUM_DRIVES; drive++) {
@@ -726,6 +730,33 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (double)statusBarHeight {
     return self.hasStatusBar ? STATUS_BAR_HEIGHT : 0;
+}
+
+- (NSURL *)composeScreenshotPath {
+    NSURL *folder = [[UserDefaults sharedInstance] screenshotsFolder];
+    
+    // walk through the folder to make a set of files that have our prefix
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
+        enumeratorAtURL:folder
+        includingPropertiesForKeys:nil
+        options:(NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles)
+        errorHandler:^(NSURL *url, NSError *error) { return YES; }];
+    NSMutableSet *set = [NSMutableSet set];
+    for (NSURL *url in enumerator) {
+        NSString *filename = [url lastPathComponent];
+        if ([filename hasPrefix:SCREENSHOT_FILE_NAME]) {
+            [set addObject:filename];
+        }
+    }
+    
+    // starting from "1", let's find one that's not already used
+    NSString *filename = [NSString stringWithFormat:@"%@.png", SCREENSHOT_FILE_NAME];
+    NSInteger index = 2;
+    while ([set containsObject:filename]) {
+        filename = [NSString stringWithFormat:@"%@ %ld.png", SCREENSHOT_FILE_NAME, index++];
+    }
+    
+    return [folder URLByAppendingPathComponent:filename];
 }
 
 @end

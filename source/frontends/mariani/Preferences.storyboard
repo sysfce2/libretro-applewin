@@ -80,24 +80,6 @@
                                     <action selector="toggleDeveloperTools:" target="FE3-Py-9oA" id="9CA-oJ-Xel"/>
                                 </connections>
                             </button>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5S9-PS-cOu">
-                                <rect key="frame" x="146" y="16" width="288" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Q6M-nb-2DR" id="jfB-Kl-yoh">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="9gP-Yu-lif">
-                                        <items>
-                                            <menuItem title="Item 1" state="on" id="Q6M-nb-2DR"/>
-                                            <menuItem title="Item 2" id="tKt-8M-33c"/>
-                                            <menuItem title="Item 3" id="19j-Aw-VIj"/>
-                                        </items>
-                                    </menu>
-                                </popUpButtonCell>
-                                <connections>
-                                    <action selector="screenshotFolderAction:" target="FE3-Py-9oA" id="n2u-HA-iSU"/>
-                                </connections>
-                            </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jL-0T-Ueg">
                                 <rect key="frame" x="18" y="22" width="120" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -107,6 +89,17 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kMV-5F-R0o">
+                                <rect key="frame" x="144" y="19" width="286" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="roundRect" title="Button" bezelStyle="roundedRect" image="folder" catalog="system" imagePosition="trailing" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5k3-sD-Bqh">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="cellTitle"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="screenshotsFolderAction:" target="FE3-Py-9oA" id="Un2-Ds-UkR"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <userDefinedRuntimeAttributes>
@@ -114,7 +107,8 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="generalDeveloperToolsButton" destination="3Sk-BC-urJ" id="e42-jh-Eku"/>
-                        <outlet property="generalScreenshotsFolderButton" destination="5S9-PS-cOu" id="fs6-x2-uqB"/>
+                        <outlet property="generalScreenshotsButton" destination="kMV-5F-R0o" id="oDJ-Bx-SrE"/>
+                        <outlet property="generalScreenshotsFolderButton" destination="kMV-5F-R0o" id="qGw-Au-yr8"/>
                     </connections>
                 </viewController>
                 <customObject id="Y15-Zv-W4e" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -610,6 +604,7 @@
     <resources>
         <image name="display" catalog="system" width="19" height="15"/>
         <image name="eject" catalog="system" width="16" height="14"/>
+        <image name="folder" catalog="system" width="18" height="14"/>
         <image name="gearshape" catalog="system" width="16" height="16"/>
         <image name="memorychip" catalog="system" width="17" height="15"/>
         <image name="opticaldiscdrive" catalog="system" width="18" height="13"/>

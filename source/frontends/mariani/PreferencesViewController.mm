@@ -11,6 +11,7 @@
 
 #import "PreferencesViewController.h"
 #import "AppDelegate.h"
+#import "UserDefaults.h"
 
 // AppleWin
 #include "StdAfx.h"
@@ -41,7 +42,7 @@ void CreateLanguageCard(void); // should be in Memory.h
 @interface PreferencesViewController ()
 
 @property (weak) IBOutlet NSButton *generalDeveloperToolsButton;
-@property (weak) IBOutlet NSPopUpButton *generalScreenshotsFolderButton;
+@property (weak) IBOutlet NSButton *generalScreenshotsFolderButton;
 
 @property (weak) IBOutlet NSPopUpButton *computerMainBoardButton;
 @property (weak) IBOutlet NSPopUpButton *computerSlot1Button;
@@ -78,6 +79,9 @@ BOOL configured;
     // the views for everybody
     if (!self.configured) {
         NSString *vcId = [self valueForKey:@"vcId"];
+        if ([vcId isEqualToString:GENERAL_PANE_ID]) {
+            [self configureGeneral];
+        }
         if ([vcId isEqualToString:COMPUTER_PANE_ID]) {
             [self configureComputer];
         }
@@ -115,6 +119,16 @@ BOOL configured;
 }
 
 #pragma mark - Configuration
+
+- (void)configureGeneral {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    self.generalDeveloperToolsButton.state = NSControlStateValueOff;
+    self.generalDeveloperToolsButton.enabled = NO;
+
+    NSURL *folder = [[UserDefaults sharedInstance] screenshotsFolder];
+    self.generalScreenshotsFolderButton.title = [NSString stringWithUTF8String:[folder fileSystemRepresentation]];
+}
 
 // types of main boards, ordered as we want them to appear in UI
 const eApple2Type computerTypes[] = {
@@ -239,8 +253,19 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
-- (IBAction)screenshotFolderAction:(id)sender {
+- (IBAction)screenshotsFolderAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.canChooseFiles = NO;
+    panel.canChooseDirectories = YES;
+    panel.allowsMultipleSelection = NO;
+    panel.canDownloadUbiquitousContents = YES;
+    
+    if ([panel runModal] == NSModalResponseOK) {
+        self.generalScreenshotsFolderButton.title = [NSString stringWithUTF8String:[panel.URL fileSystemRepresentation]];
+        [[UserDefaults sharedInstance] setScreenshotsFolder:panel.URL];
+    }
 }
 
 - (IBAction)mainBoardAction:(id)sender {
