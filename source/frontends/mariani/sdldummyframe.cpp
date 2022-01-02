@@ -7,6 +7,7 @@
 
 #include "StdAfx.h"
 #include "sdldummyframe.hpp"
+#include "AppDelegate.h"
 
 namespace sa2
 {
@@ -35,6 +36,13 @@ namespace sa2
 
   void SDLDummyFrame::ProcessText(const SDL_TextInputEvent & text)
   {
+  }
+
+  int SDLDummyFrame::FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType)
+  {
+    int returnValue = ShowModalAlertOfType(uType, lpCaption, lpText);
+    ResetSpeed();
+    return returnValue;
   }
 
 }

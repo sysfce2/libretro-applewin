@@ -28,6 +28,8 @@ namespace sa2
     void ProcessKeyDown(const SDL_KeyboardEvent & key);
     void ProcessText(const SDL_TextInputEvent & text);
 
+    int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;
+
   protected:
     void GetRelativeMousePosition(const SDL_MouseMotionEvent & motion, double & x, double & y) const override;
 

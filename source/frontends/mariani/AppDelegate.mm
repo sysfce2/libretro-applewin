@@ -53,6 +53,13 @@
 
 @end
 
+@interface NSAlert (Synchronous)
+
+- (NSModalResponse)runModalSheetForWindow:(NSWindow *)aWindow;
+- (NSModalResponse)runModalSheet;
+
+@end // NSAlert (Synchronous)
+
 @implementation AppDelegate
 
 std::shared_ptr<sa2::SDLFrame> frame;
@@ -431,6 +438,85 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     [self createDriveLightButtons];
 }
 
+- (int)showModalAlertofType:(int)type
+                withMessage:(const char *)message
+                information:(const char *)information
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    
+    if (message != NULL) {
+        alert.messageText = [NSString stringWithUTF8String:message];
+    }
+    if (information != NULL) {
+        alert.informativeText = [NSString stringWithUTF8String:information];
+    }
+
+    // the #defines unfortunately don't have bitmasks defined, but we'll
+    // assume that's the intention.
+    
+    switch (type & 0x000000F0) {
+        case MB_ICONINFORMATION:  // also MB_ICONASTERISK
+            alert.alertStyle = NSAlertStyleInformational;
+            alert.icon = [NSImage imageWithSystemSymbolName:@"info.circle" accessibilityDescription:@""];
+            break;
+        case MB_ICONSTOP:  // also MB_ICONHAND
+            alert.alertStyle = NSAlertStyleCritical;
+            // NSAlertStyleCritical comes with its own image already
+            break;
+        case MB_ICONQUESTION:
+            alert.alertStyle = NSAlertStyleWarning;
+            alert.icon = [NSImage imageWithSystemSymbolName:@"questionmark.circle" accessibilityDescription:@""];
+            break;
+        default:  // MB_ICONWARNING
+            alert.alertStyle = NSAlertStyleWarning;
+            alert.icon = [NSImage imageWithSystemSymbolName:@"exclamationmark.triangle" accessibilityDescription:@""];
+            break;
+    }
+    
+    switch (type & 0x0000000F) {
+        case MB_YESNO:
+            [alert addButtonWithTitle:NSLocalizedString(@"Yes", @"")];
+            [alert addButtonWithTitle:NSLocalizedString(@"No", @"")];
+            break;
+        case MB_YESNOCANCEL:
+            [alert addButtonWithTitle:NSLocalizedString(@"Yes", @"")];
+            [alert addButtonWithTitle:NSLocalizedString(@"No", @"")];
+            [alert addButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+            break;
+        case MB_OKCANCEL:
+            [alert addButtonWithTitle:NSLocalizedString(@"OK", @"")];
+            [alert addButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+            break;
+        case MB_OK:
+        default:
+            [alert addButtonWithTitle:NSLocalizedString(@"OK", @"")];
+            break;
+    }
+    
+    NSModalResponse returnCode = [alert runModalSheet];
+    
+    switch (type & 0x0000000F) {
+        case MB_YESNO:
+            return (returnCode == NSAlertFirstButtonReturn) ? IDYES : IDNO;
+        case MB_YESNOCANCEL:
+            if (returnCode == NSAlertFirstButtonReturn) {
+                return IDYES;
+            }
+            else if (returnCode == NSAlertSecondButtonReturn) {
+                return IDNO;
+            }
+            else {
+                return IDCANCEL;
+            }
+        case MB_OK:
+            return IDOK;
+        case MB_OKCANCEL:
+            return (returnCode == NSAlertFirstButtonReturn) ? IDOK : IDCANCEL;
+    }
+    return IDOK;
+
+}
+
 #pragma mark - Utilities
 
 - (NSString *)localizedVideoType:(NSInteger)videoType {
@@ -589,3 +675,28 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 @end
+
+#pragma mark - Categories
+
+@implementation NSAlert (Synchronous)
+
+- (NSModalResponse)runModalSheetForWindow:(NSWindow *)aWindow
+{
+    [self beginSheetModalForWindow:aWindow completionHandler:^(NSModalResponse returnCode) {
+        [NSApp stopModalWithCode:returnCode];
+    }];
+    NSModalResponse modalCode = [NSApp runModalForWindow:[self window]];
+    return modalCode;
+}
+
+- (NSModalResponse)runModalSheet {
+    return [self runModalSheetForWindow:[NSApp mainWindow]];
+}
+
+@end // NSAlert (Synchronous)
+
+#pragma mark - C++ Helpers
+
+int ShowModalAlertOfType(int type, const char *message, const char *information) {
+    return [theAppDelegate showModalAlertofType:type withMessage:message information:information];
+}
