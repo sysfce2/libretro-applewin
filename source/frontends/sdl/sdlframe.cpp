@@ -182,12 +182,14 @@ namespace sa2
 
   void SDLFrame::SetApplicationIcon()
   {
+#ifndef MARIANI
     const std::string path = myResourcePath + "APPLEWIN.ICO";
     std::shared_ptr<SDL_Surface> icon(IMG_Load(path.c_str()), SDL_FreeSurface);
     if (icon)
     {
       SDL_SetWindowIcon(myWindow.get(), icon.get());
     }
+#endif // MARIANI
   }
 
   const std::shared_ptr<SDL_Window> & SDLFrame::GetWindow() const

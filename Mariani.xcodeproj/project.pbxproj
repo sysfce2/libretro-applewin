@@ -161,7 +161,6 @@
 		B049E820277B512500FC14A3 /* sdirectsound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E81E277B512500FC14A3 /* sdirectsound.cpp */; };
 		B049E823277B517700FC14A3 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E822277B517700FC14A3 /* libSDL2.a */; };
 		B049E826277B52B200FC14A3 /* sdlframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E824277B52B200FC14A3 /* sdlframe.cpp */; };
-		B049E829277B531F00FC14A3 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E828277B531F00FC14A3 /* libSDL2_image.a */; };
 		B049E832277B5E3700FC14A3 /* commonframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E830277B5E3700FC14A3 /* commonframe.cpp */; };
 		B049E836277B614900FC14A3 /* processfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E834277B614900FC14A3 /* processfile.cpp */; };
 		B049E83A277B61A100FC14A3 /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E838277B61A100FC14A3 /* utils.cpp */; };
@@ -585,7 +584,6 @@
 				B0098CF3277E187900F38E0C /* libAppleWin.a in Frameworks */,
 				B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */,
 				B049E84E277B6F4A00FC14A3 /* libboost_program_options.a in Frameworks */,
-				B049E829277B531F00FC14A3 /* libSDL2_image.a in Frameworks */,
 				B049E823277B517700FC14A3 /* libSDL2.a in Frameworks */,
 				B049E81B277A394500FC14A3 /* libslirp.a in Frameworks */,
 				B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */,

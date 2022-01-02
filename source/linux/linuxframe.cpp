@@ -77,7 +77,7 @@ void LinuxFrame::Destroy()
 void *LinuxFrame::FrameBufferData() {
     return myFramebuffer.data();
 }
-#endif
+#endif // ENDIF
 
 void LinuxFrame::ApplyVideoModeChange()
 {

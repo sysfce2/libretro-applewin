@@ -4,7 +4,7 @@
 #include "linux/config.h"
 #else
 #define SLIRP_FOUND "1"
-#endif
+#endif // MARIANI
 
 #ifdef SLIRP_FOUND
 // disable to use libpcap in all cases
