@@ -24,7 +24,8 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSURL *folder = [defaults URLForKey:SCREENSHOTS_FOLDER_KEY];
     if (folder == nil) {
-        folder = [NSURL fileURLWithPath:NSHomeDirectory()];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
+        folder = [NSURL fileURLWithPath:[paths objectAtIndex:0]];
     }
     return folder;
 }
