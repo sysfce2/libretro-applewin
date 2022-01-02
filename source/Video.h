@@ -99,6 +99,8 @@ struct bgra_t
 	uint8_t a; // reserved on Win32
 };
 
+#pragma pack(push)
+#pragma pack(1)
 struct WinBmpHeader_t
 {
 	// BITMAPFILEHEADER     // Addr Size
@@ -126,6 +128,7 @@ struct WinBmpHeader_t
 	// RGBQUAD
 	// pixelmap
 };
+#pragma pack(pop)
 
 struct WinCIEXYZ
 {

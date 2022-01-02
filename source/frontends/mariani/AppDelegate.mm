@@ -155,29 +155,49 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             }
         }
     }
+#ifdef DEBUG
+    NSTimeInterval driveLightButtonsUpdateTimeOffset = -[start timeIntervalSinceNow];
+#endif
     
     if (self.volumeToggleButton.state == NSControlStateValueOn) {
         sa2::writeAudio();
     }
-    
+#ifdef DEBUG
+    NSTimeInterval audioWriteTimeOffset = -[start timeIntervalSinceNow];
+#endif
+
     bool quit = false;
     frame->ProcessEvents(quit);
     if (quit) {
         [NSApp terminate:self];
     }
-    
+#ifdef DEBUG
+    NSTimeInterval eventProcessingTimeOffset = -[start timeIntervalSinceNow];
+#endif
+
     frame->ExecuteOneFrame(1000.0 / TARGET_FPS);
-    
+#ifdef DEBUG
+    NSTimeInterval executionTimeOffset = -[start timeIntervalSinceNow];
+#endif
+
     frame->VideoPresentScreen();
-    
+
     frameBuffer.data = frame->FrameBufferData();
     [self.emulatorVC updateScreen:&frameBuffer];
+#ifdef DEBUG
+    NSTimeInterval screenPresentationTimeOffset = -[start timeIntervalSinceNow];
+#endif
 
 #ifdef DEBUG
     NSTimeInterval duration = -[start timeIntervalSinceNow];
     if (duration > 1.0 / TARGET_FPS) {
         // oops, took too long
         NSLog(@"Frame time exceeded: %f ms", duration * 1000);
+        NSLog(@"    Update drive light buttons: %f ms", driveLightButtonsUpdateTimeOffset * 1000);
+        NSLog(@"    Write audio:                %f ms", (audioWriteTimeOffset - driveLightButtonsUpdateTimeOffset) * 1000);
+        NSLog(@"    Process events:             %f ms", (eventProcessingTimeOffset - audioWriteTimeOffset) * 1000);
+        NSLog(@"    Execute:                    %f ms", (executionTimeOffset - eventProcessingTimeOffset) * 1000);
+        NSLog(@"    Present screen:             %f ms", (screenPresentationTimeOffset - executionTimeOffset) * 1000);
     }
 #endif // DEBUG
 }
@@ -339,6 +359,40 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (IBAction)screenshotTaken:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+
+#ifdef DEBUG
+    NSDate *start = [NSDate now];
+#endif
+    
+    // have the BMP screenshot written to a memory stream instead of a file...
+    char *buffer;
+    size_t bufferSize;
+    FILE *memStream = open_memstream(&buffer, &bufferSize);
+    GetVideo().Video_MakeScreenShot(memStream, Video::SCREENSHOT_560x384);
+    fclose(memStream);
+
+#ifdef DEBUG
+    NSTimeInterval duration = -[start timeIntervalSinceNow];
+    NSLog(@"Screenshot took: %f ms", duration * 1000);
+#endif // DEBUG
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+#ifdef DEBUG
+        NSDate *start = [NSDate now];
+#endif
+        // ...and then convert it to PNG for saving
+        NSImage *image = [[NSImage alloc] initWithData:[NSData dataWithBytes:buffer length:bufferSize]];
+        CGImageRef cgRef = [image CGImageForProposedRect:NULL context:nil hints:nil];
+        NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
+        [newRep setSize:[image size]];
+        NSData *pngData = [newRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
+        [pngData writeToFile:@"/tmp/Mariani-screenshot.png" atomically:YES];
+        free(buffer);
+#ifdef DEBUG
+    NSTimeInterval duration = -[start timeIntervalSinceNow];
+    NSLog(@"PNG conversion took: %f ms", duration * 1000);
+#endif // DEBUG
+    });
 }
 
 - (IBAction)driveLightAction:(id)sender {
