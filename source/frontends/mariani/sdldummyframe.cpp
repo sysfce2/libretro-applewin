@@ -45,4 +45,9 @@ namespace sa2
     return returnValue;
   }
 
+  void SDLDummyFrame::FrameDrawDiskLEDS()
+  {
+    UpdateDriveLights();
+  }
+
 }

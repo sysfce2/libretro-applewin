@@ -133,35 +133,6 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSDate *start = [NSDate now];
 #endif
     
-    if (self.hasStatusBar) {
-        for (NSButton *driveLightButton in self.driveLightButtons) {
-            CardManager &cardManager = GetCardMgr();
-            const UINT slot = (UINT)driveLightButton.tag / 10;
-            const int drive = driveLightButton.tag % 10;
-            Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
-            if (card->IsDriveEmpty(drive)) {
-                driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
-                driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
-            }
-            else {
-                Disk_Status_e status[NUM_DRIVES];
-                card->GetLightStatus(&status[0], &status[1]);
-                const BOOL active = (status[drive] == DISK_STATUS_READ || status[drive] == DISK_STATUS_WRITE);
-                if (active) {
-                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
-                    driveLightButton.contentTintColor = [NSColor controlAccentColor];
-                }
-                else {
-                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
-                    driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
-                }
-            }
-        }
-    }
-#ifdef DEBUG
-    NSTimeInterval driveLightButtonsUpdateTimeOffset = -[start timeIntervalSinceNow];
-#endif
-    
     if (self.volumeToggleButton.state == NSControlStateValueOn) {
         sa2::writeAudio();
     }
@@ -196,8 +167,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     if (duration > 1.0 / TARGET_FPS) {
         // oops, took too long
         NSLog(@"Frame time exceeded: %f ms", duration * 1000);
-        NSLog(@"    Update drive light buttons: %f ms", driveLightButtonsUpdateTimeOffset * 1000);
-        NSLog(@"    Write audio:                %f ms", (audioWriteTimeOffset - driveLightButtonsUpdateTimeOffset) * 1000);
+        NSLog(@"    Write audio:                %f ms", (audioWriteTimeOffset * 1000));
         NSLog(@"    Process events:             %f ms", (eventProcessingTimeOffset - audioWriteTimeOffset) * 1000);
         NSLog(@"    Execute:                    %f ms", (executionTimeOffset - eventProcessingTimeOffset) * 1000);
         NSLog(@"    Present screen:             %f ms", (screenPresentationTimeOffset - executionTimeOffset) * 1000);
@@ -279,6 +249,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     self.hasStatusBar = !self.hasStatusBar;
     self.statusBarView.hidden = !_hasStatusBar;
+    [self updateDriveLights];
     
     CGRect emulatorFrame = self.emulatorVC.view.frame;
     CGRect windowFrame = self.window.frame;
@@ -492,7 +463,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     frame->Initialize(true);
 }
 
-- (void)updateDrives {
+- (void)reconfigureDrives {
     [self createDriveLightButtons];
 }
 
@@ -573,6 +544,34 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
     return IDOK;
 
+}
+
+- (void)updateDriveLights {
+    if (self.hasStatusBar) {
+        for (NSButton *driveLightButton in self.driveLightButtons) {
+            CardManager &cardManager = GetCardMgr();
+            const UINT slot = (UINT)driveLightButton.tag / 10;
+            const int drive = driveLightButton.tag % 10;
+            Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+            if (card->IsDriveEmpty(drive)) {
+                driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
+                driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
+            }
+            else {
+                Disk_Status_e status[NUM_DRIVES];
+                card->GetLightStatus(&status[0], &status[1]);
+                const BOOL active = (status[drive] == DISK_STATUS_READ || status[drive] == DISK_STATUS_WRITE);
+                if (active) {
+                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
+                    driveLightButton.contentTintColor = [NSColor controlAccentColor];
+                }
+                else {
+                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
+                    driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
+                }
+            }
+        }
+    }
 }
 
 #pragma mark - Utilities
@@ -784,4 +783,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 int ShowModalAlertOfType(int type, const char *message, const char *information) {
     return [theAppDelegate showModalAlertofType:type withMessage:message information:information];
+}
+
+void UpdateDriveLights() {
+    [theAppDelegate updateDriveLights];
 }

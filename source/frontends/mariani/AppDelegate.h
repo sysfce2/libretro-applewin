@@ -15,8 +15,9 @@
 - (BOOL)emulationHardwareChanged;
 - (IBAction)rebootEmulatorAction:(id)sender;
 - (void)restartFrame;
-- (void)updateDrives;
+- (void)reconfigureDrives;
 - (int)showModalAlertofType:(int)type withMessage:(const char *)message information:(const char *)information;
+- (void)updateDriveLights;
 
 @end
 
@@ -26,3 +27,4 @@
 
 // for calling into AppDelegate from C++
 int ShowModalAlertOfType(int type, const char *message, const char *information);
+void UpdateDriveLights();

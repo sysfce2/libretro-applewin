@@ -329,7 +329,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         
         MemInitializeIO();
         
-        [theAppDelegate updateDrives];
+        [theAppDelegate reconfigureDrives];
         if (oldHasVidHD != video.HasVidHD()) {
             [theAppDelegate restartFrame];
         }
