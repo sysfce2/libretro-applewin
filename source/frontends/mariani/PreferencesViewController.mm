@@ -61,9 +61,8 @@ void CreateLanguageCard(void); // should be in Memory.h
 @property (weak) IBOutlet NSSlider *audioSpeakerVolumeSlider;
 @property (weak) IBOutlet NSSlider *audioMockingboardVolumeSlider;
 
-@property (weak) IBOutlet NSPopUpButton *storageDisk1Button;
-@property (weak) IBOutlet NSPopUpButton *storageDisk2Button;
 @property (weak) IBOutlet NSButton *storageEnhancedSpeedButton;
+@property (weak) IBOutlet NSButton *storageHardDiskFolderButton;
 
 @property NSMutableDictionary *keyValueStore;
 @property BOOL configured;
@@ -88,6 +87,9 @@ BOOL configured;
         else if ([vcId isEqualToString:AUDIO_VIDEO_PANE_ID]) {
             [self configureAudio];
             [self configureVideo];
+        }
+        else if ([vcId isEqualToString:STORAGE_PANE_ID]) {
+            [self configureStorage];
         }
         self.configured = YES;
     }
@@ -245,6 +247,16 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         // 50% Scan Lines
         self.video50PercentScanLinesButton.state = video.IsVideoStyle(VS_HALF_SCANLINES) ? NSControlStateValueOn : NSControlStateValueOff;
     }
+}
+
+- (void)configureStorage {
+    CardManager &cardManager = GetCardMgr();
+
+    // Enhanced speed for floppy drives
+    self.storageEnhancedSpeedButton.state = cardManager.GetDisk2CardMgr().GetEnhanceDisk() ? NSControlStateValueOn : NSControlStateValueOff;
+
+    // Hard disk
+    self.storageHardDiskFolderButton.enabled = NO;
 }
 
 #pragma mark - Actions
@@ -417,6 +429,15 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 }
 
 - (IBAction)toggleDiskEnhancedSpeed:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    CardManager &cardManager = GetCardMgr();
+    BOOL enhancedDisk = (self.storageEnhancedSpeedButton.state == NSControlStateValueOn);
+    cardManager.GetDisk2CardMgr().SetEnhanceDisk(enhancedDisk);
+    RegSaveValue(REG_CONFIG, REGVALUE_ENHANCE_DISK_SPEED, true, enhancedDisk);
+}
+
+- (IBAction)hardDiskFolderAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
