@@ -11,6 +11,7 @@
 #import "context.h"
 
 #import <SDL.h>
+#import "benchmark.h"
 #import "fileregistry.h"
 #import "gamepad.h"
 #import "programoptions.h"
@@ -20,7 +21,9 @@
 
 // AppleWin
 #import "Card.h"
+#import "CPU.h"
 #import "Interface.h"
+#import "NTSC.h"
 #import "Utilities.h"
 #import "Video.h"
 
@@ -43,6 +46,7 @@
 @property (weak) IBOutlet NSButton *driveLightButtonTemplate;
 @property (weak) IBOutlet NSButton *volumeToggleButton;
 @property (weak) IBOutlet NSMenuItem *showHideStatusBarMenuItem;
+@property (weak) IBOutlet NSTextField *statusLabel;
 
 @property NSTimer *timer;
 @property Initialisation *initialisation;
@@ -53,6 +57,9 @@
 @property BOOL hasStatusBar;
 @property (readonly) double statusBarHeight;
 @property (weak) IBOutlet NSView *statusBarView;
+@property NSDate *samplePeriodBeginClockTime;
+@property unsigned __int64 samplePeriodBeginCumulativeCycles;
+@property NSInteger frameCount;
 
 @end
 
@@ -82,6 +89,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     _hasStatusBar = YES;
+    self.driveLightButtonTemplate.hidden = YES;
+    self.statusLabel.stringValue = @"";
     
     const Uint32 flags = SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO;
     if (SDL_Init(flags) != 0) {
@@ -125,6 +134,11 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     self.driveLightButtonTemplateArchive = [self archiveFromTemplateView:self.driveLightButtonTemplate];
     [self createDriveLightButtons];
     
+    // reset the effective CPU clock speed meters
+    self.samplePeriodBeginClockTime = [NSDate now];
+    self.samplePeriodBeginCumulativeCycles = g_nCumulativeCycles;
+    self.frameCount = 0;
+    
     [self startEmulationTimer];
 }
 
@@ -162,6 +176,13 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSTimeInterval screenPresentationTimeOffset = -[start timeIntervalSinceNow];
 #endif
 
+    if (++self.frameCount > TARGET_FPS) {
+        [self updateStatusLabel];
+        self.samplePeriodBeginClockTime = [NSDate now];
+        self.samplePeriodBeginCumulativeCycles = g_nCumulativeCycles;
+        self.frameCount = 0;
+    }
+    
 #ifdef DEBUG
     NSTimeInterval duration = -[start timeIntervalSinceNow];
     if (duration > 1.0 / TARGET_FPS) {
@@ -569,6 +590,22 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
 }
 
+- (void)runBenchmark {
+    Video &video = GetVideo();
+    
+    const auto redraw = []{
+                          frame->VideoPresentScreen();
+                        };
+
+    const auto refresh = [redraw, &video]{
+                           NTSC_SetVideoMode( video.GetVideoMode() );
+                           NTSC_VideoRedrawWholeScreen();
+                           redraw();
+                         };
+
+    VideoBenchmark(redraw, refresh);
+}
+
 #pragma mark - Utilities
 
 - (NSString *)localizedVideoType:(NSInteger)videoType {
@@ -618,6 +655,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (void)createDriveLightButtons {
+    NSInteger driveLightsRightEdge = self.driveLightButtonTemplate.frame.origin.x;
+    
     // only using as template, never actually show this button
     self.driveLightButtonTemplate.hidden = YES;
     
@@ -643,6 +682,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
                 CGRect driveLightButtonFrame = driveLightButton.frame;
                 driveLightButtonFrame.origin.x = self.driveLightButtonTemplate.frame.origin.x + position * self.driveLightButtonTemplate.frame.size.width;
                 driveLightButton.frame = driveLightButtonFrame;
+                driveLightsRightEdge = CGRectGetMaxX(driveLightButtonFrame);
                 
                 driveLightButton.tag = slot * 10 + drive;
                 driveLightButton.hidden = NO;
@@ -653,6 +693,11 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
     
     self.driveLightButtons = driveLightButtons;
+    
+    CGRect statusLabelFrame = self.statusLabel.frame;
+    statusLabelFrame.origin.x = driveLightsRightEdge + 5;
+    statusLabelFrame.size.width = self.volumeToggleButton.frame.origin.x - statusLabelFrame.origin.x - 5;
+    self.statusLabel.frame = statusLabelFrame;
     
     if (self.driveLightButtons.count != oldDriveLightButtonsCount) {
         // constrain our window to not allow it to be resized so small that our
@@ -751,6 +796,16 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
     
     return [folder URLByAppendingPathComponent:filename];
+}
+
+- (void)updateStatusLabel {
+    NSArray *cpus = @[ @"", @"6502", @"65C02", @"Z80" ];
+    double clockSpeed =
+        (double)(g_nCumulativeCycles - self.samplePeriodBeginCumulativeCycles) /
+        -[self.samplePeriodBeginClockTime timeIntervalSinceNow];
+    self.statusLabel.stringValue = [NSString stringWithFormat:@"%@@%.3f MHz",
+                                    cpus[GetActiveCpu()],
+                                    clockSpeed / 1000000];
 }
 
 @end

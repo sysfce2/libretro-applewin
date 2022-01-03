@@ -19,6 +19,7 @@
                 <outlet property="emulatorVC" destination="S0z-N3-T9h" id="XAc-8o-NgU"/>
                 <outlet property="showHideStatusBarMenuItem" destination="Qa1-0n-abD" id="jQF-tx-pGh"/>
                 <outlet property="statusBarView" destination="Mnw-rf-Y9b" id="vHG-8g-HKh"/>
+                <outlet property="statusLabel" destination="v5N-tl-es5" id="dzw-S4-KXI"/>
                 <outlet property="volumeToggleButton" destination="cQ9-oO-i17" id="JYX-Xo-KGm"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -293,6 +294,15 @@
                                     <action selector="takeScreenshotAction:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v5N-tl-es5">
+                                <rect key="frame" x="43" y="9" width="710" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="GCW-F3-7D6">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </customView>
                 </subviews>
