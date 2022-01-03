@@ -331,7 +331,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 #pragma mark - Main window actions
 
-- (IBAction)screenshotTaken:(id)sender {
+- (IBAction)takeScreenshotAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
 #ifdef DEBUG
@@ -468,17 +468,13 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (int)showModalAlertofType:(int)type
-                withMessage:(const char *)message
-                information:(const char *)information
+                withMessage:(NSString *)message
+                information:(NSString *)information
 {
     NSAlert *alert = [[NSAlert alloc] init];
     
-    if (message != NULL) {
-        alert.messageText = [NSString stringWithUTF8String:message];
-    }
-    if (information != NULL) {
-        alert.informativeText = [NSString stringWithUTF8String:information];
-    }
+    alert.messageText = message;
+    alert.informativeText = information;
 
     // the #defines unfortunately don't have bitmasks defined, but we'll
     // assume that's the intention.
@@ -543,7 +539,6 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             return (returnCode == NSAlertFirstButtonReturn) ? IDOK : IDCANCEL;
     }
     return IDOK;
-
 }
 
 - (void)updateDriveLights {
@@ -782,9 +777,29 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 #pragma mark - C++ Helpers
 
 int ShowModalAlertOfType(int type, const char *message, const char *information) {
-    return [theAppDelegate showModalAlertofType:type withMessage:message information:information];
+    return [theAppDelegate showModalAlertofType:type
+                                    withMessage:[NSString stringWithUTF8String:message]
+                                    information:[NSString stringWithUTF8String:information]];
 }
 
 void UpdateDriveLights() {
     [theAppDelegate updateDriveLights];
 }
+
+const void *ResourceNamed(const char *name, size_t expectedSize) {
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSURL *url = [bundle URLForResource:[NSString stringWithUTF8String:name] withExtension:nil];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSLog(@"Found '%s' at %@, size %lu, expected %lu", name, url, data.length, expectedSize);
+    if (data.length != expectedSize) {
+        return NULL;
+    }
+    return data.bytes;
+}
+
+const char *PathToResourceNamed(const char *name) {
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path = [bundle pathForResource:[NSString stringWithUTF8String:name] ofType:nil];
+    return (path != nil) ? [path UTF8String] : NULL;
+}
+

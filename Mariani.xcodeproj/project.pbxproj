@@ -156,6 +156,31 @@
 		B032DE38277A0C24006DC0F7 /* marianiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE37277A0C24006DC0F7 /* marianiTests.m */; };
 		B032DE42277A0C24006DC0F7 /* marianiUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE41277A0C24006DC0F7 /* marianiUITests.m */; };
 		B032DE44277A0C24006DC0F7 /* marianiUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */; };
+		B045FE722782984F006E36F9 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5C2782984E006E36F9 /* Apple2e.rom */; };
+		B045FE732782984F006E36F9 /* Apple2_Plus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */; };
+		B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */; };
+		B045FE752782984F006E36F9 /* MouseInterface.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5F2782984E006E36F9 /* MouseInterface.rom */; };
+		B045FE762782984F006E36F9 /* Hddrvr.bin in Resources */ = {isa = PBXBuildFile; fileRef = B045FE602782984E006E36F9 /* Hddrvr.bin */; };
+		B045FE772782984F006E36F9 /* PRAVETS8M.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE612782984E006E36F9 /* PRAVETS8M.ROM */; };
+		B045FE782782984F006E36F9 /* TK3000e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE622782984E006E36F9 /* TK3000e.rom */; };
+		B045FE792782984F006E36F9 /* TKClock.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE632782984E006E36F9 /* TKClock.rom */; };
+		B045FE7A2782984F006E36F9 /* Base64A_German_Video.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE642782984E006E36F9 /* Base64A_German_Video.rom */; };
+		B045FE7B2782984F006E36F9 /* DISK2.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE652782984E006E36F9 /* DISK2.rom */; };
+		B045FE7D2782984F006E36F9 /* Apple2_JPlus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE672782984E006E36F9 /* Apple2_JPlus.rom */; };
+		B045FE7E2782984F006E36F9 /* Base64A.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE682782984E006E36F9 /* Base64A.rom */; };
+		B045FE7F2782984F006E36F9 /* PRAVETS8C.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE692782984E006E36F9 /* PRAVETS8C.ROM */; };
+		B045FE802782984F006E36F9 /* PRAVETS82.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6A2782984E006E36F9 /* PRAVETS82.ROM */; };
+		B045FE812782984F006E36F9 /* SSC.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6B2782984E006E36F9 /* SSC.rom */; };
+		B045FE822782984F006E36F9 /* Apple2_JPlus_Video.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6C2782984E006E36F9 /* Apple2_JPlus_Video.rom */; };
+		B045FE832782984F006E36F9 /* Parallel.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6D2782984E006E36F9 /* Parallel.rom */; };
+		B045FE842782984F006E36F9 /* ThunderClockPlus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6E2782984E006E36F9 /* ThunderClockPlus.rom */; };
+		B045FE852782984F006E36F9 /* Apple2.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6F2782984E006E36F9 /* Apple2.rom */; };
+		B045FE862782984F006E36F9 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE702782984E006E36F9 /* Apple2e_Enhanced.rom */; };
+		B045FE872782984F006E36F9 /* Mockingboard-D.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE712782984F006E36F9 /* Mockingboard-D.rom */; };
+		B045FE8C2782B9B3006E36F9 /* CHARSET4.BMP in Resources */ = {isa = PBXBuildFile; fileRef = B045FE882782B9B3006E36F9 /* CHARSET4.BMP */; };
+		B045FE8D2782B9B3006E36F9 /* CHARSET8C.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */; };
+		B045FE8E2782B9B3006E36F9 /* CHARSET82.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */; };
+		B045FE8F2782B9B3006E36F9 /* CHARSET8M.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */; };
 		B049E800277A36CE00FC14A3 /* PropertySheetHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7EA277A36CE00FC14A3 /* PropertySheetHelper.cpp */; };
 		B049E81B277A394500FC14A3 /* libslirp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E81A277A394500FC14A3 /* libslirp.a */; };
 		B049E820277B512500FC14A3 /* sdirectsound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E81E277B512500FC14A3 /* sdirectsound.cpp */; };
@@ -251,6 +276,31 @@
 		B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarianiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE41277A0C24006DC0F7 /* marianiUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITests.m; sourceTree = "<group>"; };
 		B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITestsLaunchTests.m; sourceTree = "<group>"; };
+		B045FE5C2782984E006E36F9 /* Apple2e.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e.rom; path = resource/Apple2e.rom; sourceTree = SOURCE_ROOT; };
+		B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2_Plus.rom; path = resource/Apple2_Plus.rom; sourceTree = SOURCE_ROOT; };
+		B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DISK2-13sector.rom"; path = "resource/DISK2-13sector.rom"; sourceTree = SOURCE_ROOT; };
+		B045FE5F2782984E006E36F9 /* MouseInterface.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = MouseInterface.rom; path = resource/MouseInterface.rom; sourceTree = SOURCE_ROOT; };
+		B045FE602782984E006E36F9 /* Hddrvr.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = Hddrvr.bin; path = resource/Hddrvr.bin; sourceTree = SOURCE_ROOT; };
+		B045FE612782984E006E36F9 /* PRAVETS8M.ROM */ = {isa = PBXFileReference; lastKnownFileType = file; name = PRAVETS8M.ROM; path = resource/PRAVETS8M.ROM; sourceTree = SOURCE_ROOT; };
+		B045FE622782984E006E36F9 /* TK3000e.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = TK3000e.rom; path = resource/TK3000e.rom; sourceTree = SOURCE_ROOT; };
+		B045FE632782984E006E36F9 /* TKClock.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = TKClock.rom; path = resource/TKClock.rom; sourceTree = SOURCE_ROOT; };
+		B045FE642782984E006E36F9 /* Base64A_German_Video.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base64A_German_Video.rom; path = resource/Base64A_German_Video.rom; sourceTree = SOURCE_ROOT; };
+		B045FE652782984E006E36F9 /* DISK2.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = DISK2.rom; path = resource/DISK2.rom; sourceTree = SOURCE_ROOT; };
+		B045FE672782984E006E36F9 /* Apple2_JPlus.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2_JPlus.rom; path = resource/Apple2_JPlus.rom; sourceTree = SOURCE_ROOT; };
+		B045FE682782984E006E36F9 /* Base64A.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base64A.rom; path = resource/Base64A.rom; sourceTree = SOURCE_ROOT; };
+		B045FE692782984E006E36F9 /* PRAVETS8C.ROM */ = {isa = PBXFileReference; lastKnownFileType = file; name = PRAVETS8C.ROM; path = resource/PRAVETS8C.ROM; sourceTree = SOURCE_ROOT; };
+		B045FE6A2782984E006E36F9 /* PRAVETS82.ROM */ = {isa = PBXFileReference; lastKnownFileType = file; name = PRAVETS82.ROM; path = resource/PRAVETS82.ROM; sourceTree = SOURCE_ROOT; };
+		B045FE6B2782984E006E36F9 /* SSC.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = SSC.rom; path = resource/SSC.rom; sourceTree = SOURCE_ROOT; };
+		B045FE6C2782984E006E36F9 /* Apple2_JPlus_Video.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2_JPlus_Video.rom; path = resource/Apple2_JPlus_Video.rom; sourceTree = SOURCE_ROOT; };
+		B045FE6D2782984E006E36F9 /* Parallel.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Parallel.rom; path = resource/Parallel.rom; sourceTree = SOURCE_ROOT; };
+		B045FE6E2782984E006E36F9 /* ThunderClockPlus.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = ThunderClockPlus.rom; path = resource/ThunderClockPlus.rom; sourceTree = SOURCE_ROOT; };
+		B045FE6F2782984E006E36F9 /* Apple2.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2.rom; path = resource/Apple2.rom; sourceTree = SOURCE_ROOT; };
+		B045FE702782984E006E36F9 /* Apple2e_Enhanced.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e_Enhanced.rom; path = resource/Apple2e_Enhanced.rom; sourceTree = SOURCE_ROOT; };
+		B045FE712782984F006E36F9 /* Mockingboard-D.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mockingboard-D.rom"; path = "resource/Mockingboard-D.rom"; sourceTree = SOURCE_ROOT; };
+		B045FE882782B9B3006E36F9 /* CHARSET4.BMP */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET4.BMP; path = resource/CHARSET4.BMP; sourceTree = SOURCE_ROOT; };
+		B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8C.bmp; path = resource/CHARSET8C.bmp; sourceTree = SOURCE_ROOT; };
+		B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET82.bmp; path = resource/CHARSET82.bmp; sourceTree = SOURCE_ROOT; };
+		B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8M.bmp; path = resource/CHARSET8M.bmp; sourceTree = SOURCE_ROOT; };
 		B049E7CA277A339600FC14A3 /* z80mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = z80mem.h; path = source/Z80VICE/z80mem.h; sourceTree = "<group>"; };
 		B049E7CB277A339600FC14A3 /* daa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = daa.h; path = source/Z80VICE/daa.h; sourceTree = "<group>"; };
 		B049E7CC277A339600FC14A3 /* z80.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = z80.cpp; path = source/Z80VICE/z80.cpp; sourceTree = "<group>"; };
@@ -659,6 +709,7 @@
 				B0689D152781984F0029EB7D /* UserDefaults.h */,
 				B0689D162781984F0029EB7D /* UserDefaults.m */,
 				B032DE27277A0C24006DC0F7 /* Assets.xcassets */,
+				B045FE5B278297F8006E36F9 /* Resources */,
 				B032DE29277A0C24006DC0F7 /* MainMenu.xib */,
 				B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */,
 				B032DE2C277A0C24006DC0F7 /* main.m */,
@@ -687,6 +738,38 @@
 			);
 			name = marianiUITests;
 			path = source/frontends/mariani/marianiUITests;
+			sourceTree = "<group>";
+		};
+		B045FE5B278297F8006E36F9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B045FE6C2782984E006E36F9 /* Apple2_JPlus_Video.rom */,
+				B045FE672782984E006E36F9 /* Apple2_JPlus.rom */,
+				B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */,
+				B045FE6F2782984E006E36F9 /* Apple2.rom */,
+				B045FE702782984E006E36F9 /* Apple2e_Enhanced.rom */,
+				B045FE5C2782984E006E36F9 /* Apple2e.rom */,
+				B045FE642782984E006E36F9 /* Base64A_German_Video.rom */,
+				B045FE682782984E006E36F9 /* Base64A.rom */,
+				B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */,
+				B045FE652782984E006E36F9 /* DISK2.rom */,
+				B045FE602782984E006E36F9 /* Hddrvr.bin */,
+				B045FE712782984F006E36F9 /* Mockingboard-D.rom */,
+				B045FE5F2782984E006E36F9 /* MouseInterface.rom */,
+				B045FE6D2782984E006E36F9 /* Parallel.rom */,
+				B045FE692782984E006E36F9 /* PRAVETS8C.ROM */,
+				B045FE612782984E006E36F9 /* PRAVETS8M.ROM */,
+				B045FE6A2782984E006E36F9 /* PRAVETS82.ROM */,
+				B045FE6B2782984E006E36F9 /* SSC.rom */,
+				B045FE6E2782984E006E36F9 /* ThunderClockPlus.rom */,
+				B045FE622782984E006E36F9 /* TK3000e.rom */,
+				B045FE632782984E006E36F9 /* TKClock.rom */,
+				B045FE882782B9B3006E36F9 /* CHARSET4.BMP */,
+				B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */,
+				B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */,
+				B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		B049E7C9277A338B00FC14A3 /* Z80VICE */ = {
@@ -1304,9 +1387,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B045FE802782984F006E36F9 /* PRAVETS82.ROM in Resources */,
+				B045FE8F2782B9B3006E36F9 /* CHARSET8M.bmp in Resources */,
+				B045FE8C2782B9B3006E36F9 /* CHARSET4.BMP in Resources */,
+				B045FE772782984F006E36F9 /* PRAVETS8M.ROM in Resources */,
+				B045FE792782984F006E36F9 /* TKClock.rom in Resources */,
+				B045FE7F2782984F006E36F9 /* PRAVETS8C.ROM in Resources */,
+				B045FE842782984F006E36F9 /* ThunderClockPlus.rom in Resources */,
+				B045FE752782984F006E36F9 /* MouseInterface.rom in Resources */,
+				B045FE722782984F006E36F9 /* Apple2e.rom in Resources */,
 				B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */,
+				B045FE7A2782984F006E36F9 /* Base64A_German_Video.rom in Resources */,
+				B045FE762782984F006E36F9 /* Hddrvr.bin in Resources */,
+				B045FE8D2782B9B3006E36F9 /* CHARSET8C.bmp in Resources */,
+				B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */,
+				B045FE7B2782984F006E36F9 /* DISK2.rom in Resources */,
 				B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */,
+				B045FE822782984F006E36F9 /* Apple2_JPlus_Video.rom in Resources */,
 				B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */,
+				B045FE782782984F006E36F9 /* TK3000e.rom in Resources */,
+				B045FE872782984F006E36F9 /* Mockingboard-D.rom in Resources */,
+				B045FE7E2782984F006E36F9 /* Base64A.rom in Resources */,
+				B045FE732782984F006E36F9 /* Apple2_Plus.rom in Resources */,
+				B045FE812782984F006E36F9 /* SSC.rom in Resources */,
+				B045FE852782984F006E36F9 /* Apple2.rom in Resources */,
+				B045FE832782984F006E36F9 /* Parallel.rom in Resources */,
+				B045FE862782984F006E36F9 /* Apple2e_Enhanced.rom in Resources */,
+				B045FE7D2782984F006E36F9 /* Apple2_JPlus.rom in Resources */,
+				B045FE8E2782B9B3006E36F9 /* CHARSET82.bmp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -197,10 +197,15 @@ namespace sa2
     return myWindow;
   }
 
-  void SDLFrame::GetBitmap(LPCSTR lpBitmapName, LONG cb, LPVOID lpvBits)
+  const std::string SDLFrame::GetBitmapFilename(LPCSTR lpBitmapName)
   {
     const std::string filename = getBitmapFilename(lpBitmapName);
-    const std::string path = myResourcePath + filename;
+    return myResourcePath + filename;
+  }
+
+  void SDLFrame::GetBitmap(LPCSTR lpBitmapName, LONG cb, LPVOID lpvBits)
+  {
+    const std::string path = GetBitmapFilename(lpBitmapName);
 
     std::shared_ptr<SDL_Surface> surface(SDL_LoadBMP(path.c_str()), SDL_FreeSurface);
     if (surface)

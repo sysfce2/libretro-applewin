@@ -290,7 +290,7 @@
                                     <font key="font" metaFont="system" size="18"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="screenshotTaken:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
+                                    <action selector="takeScreenshotAction:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
                                 </connections>
                             </button>
                         </subviews>

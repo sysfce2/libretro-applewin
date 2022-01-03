@@ -31,6 +31,10 @@ namespace sa2
     int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;
 
     void FrameDrawDiskLEDS() override;
+      
+    BYTE* GetResource(WORD id, LPCSTR lpType, DWORD expectedSize) override;
+    const std::string GetBitmapFilename(LPCSTR lpBitmapName) override;
+
   protected:
     void GetRelativeMousePosition(const SDL_MouseMotionEvent & motion, double & x, double & y) const override;
 

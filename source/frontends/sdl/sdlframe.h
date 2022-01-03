@@ -24,6 +24,7 @@ namespace sa2
 
     void FrameRefreshStatus(int drawflags) override;
     int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;
+    virtual const std::string GetBitmapFilename(LPCSTR lpBitmapName);
     void GetBitmap(LPCSTR lpBitmapName, LONG cb, LPVOID lpvBits) override;
 
     void ProcessEvents(bool &quit);

@@ -14,13 +14,14 @@
 #ifndef MARIANI
 #include "config.h"
 #else
-// relative path from executable to resources
-#define ROOT_PATH "../"
-#define SHARE_PATH "../share/applewin"
-
-// this one is a bit of a hack, until resources are embedded in the retro core
-#define CMAKE_SOURCE_DIR "/Users/sh95014/Developer/AppleWin"  // FIXME
+// Not actually used. Mariani loads resources from the app bundle
+#define ROOT_PATH ""
+#define SHARE_PATH ""
+#define CMAKE_SOURCE_DIR ""
 #endif // MARIANI
+#ifdef __APPLE__
+#include "mach-o/dyld.h"
+#endif
 
 namespace
 {
@@ -44,7 +45,12 @@ namespace
     std::vector<std::string> paths;
 
     char self[1024] = {0};
+#ifdef __APPLE__
+    uint32_t size = sizeof(self);
+    const int ch = _NSGetExecutablePath(self, &size);
+#else
     const int ch = readlink("/proc/self/exe", self,  sizeof(self));
+#endif
     if (ch != -1)
     {
       const char * path = dirname(self);
@@ -72,7 +78,11 @@ namespace
       }
     }
 
+#ifndef MARIANI
     throw std::runtime_error("Cannot found the resource path: " + target);
+#else
+    return {};
+#endif // MARIANI
   }
 
 }

@@ -16,7 +16,7 @@
 - (IBAction)rebootEmulatorAction:(id)sender;
 - (void)restartFrame;
 - (void)reconfigureDrives;
-- (int)showModalAlertofType:(int)type withMessage:(const char *)message information:(const char *)information;
+- (int)showModalAlertofType:(int)type withMessage:(NSString *)message information:(NSString *)information;
 - (void)updateDriveLights;
 
 @end
@@ -28,3 +28,5 @@
 // for calling into AppDelegate from C++
 int ShowModalAlertOfType(int type, const char *message, const char *information);
 void UpdateDriveLights();
+const void *ResourceNamed(const char *name, size_t expectedSize);
+const char *PathToResourceNamed(const char *name);
