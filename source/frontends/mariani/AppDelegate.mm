@@ -37,6 +37,12 @@
 
 #define SCREENSHOT_FILE_NAME @"Mariani Screen Shot"
 
+// encode the slot-drive tuple into a single number (suitable for use as a
+// NSView tag, or decode from it
+#define ENCODE_SLOT_DRIVE(s, d) ((char)((s) * 10 + (d)))
+#define DECODE_SLOT(t)          ((char)((t) / 10))
+#define DECODE_DRIVE(t)         ((char)((t) % 10))
+
 @interface AppDelegate ()
 
 @property (strong) IBOutlet NSWindow *window;
@@ -47,6 +53,7 @@
 @property (weak) IBOutlet NSButton *volumeToggleButton;
 @property (weak) IBOutlet NSMenuItem *showHideStatusBarMenuItem;
 @property (weak) IBOutlet NSTextField *statusLabel;
+@property (weak) IBOutlet NSMenu *openDiskImageMenu;
 
 @property NSTimer *timer;
 @property Initialisation *initialisation;
@@ -132,7 +139,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
     
     self.driveLightButtonTemplateArchive = [self archiveFromTemplateView:self.driveLightButtonTemplate];
-    [self createDriveLightButtons];
+    [self reconfigureDrives];
     
     // reset the effective CPU clock speed meters
     self.samplePeriodBeginClockTime = [NSDate now];
@@ -395,8 +402,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
     NSView *view = (NSView *)sender;
-    const int slot = (int)(view.tag / 10);
-    const int drive = (int)(view.tag % 10);
+    const int slot = DECODE_SLOT(view.tag);
+    const int drive = DECODE_DRIVE(view.tag);
     // menu doesn't have a tag, so we stash the slot/drive in the title
     NSMenu *menu = [[NSMenu alloc] initWithTitle:[NSString stringWithFormat:@"%ld", view.tag]];
     menu.minimumWidth = 200;
@@ -413,9 +420,12 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         [menu addItem:[NSMenuItem separatorItem]];
     }
     
-    [menu addItemWithTitle:NSLocalizedString(@"Other…", @"open another disk image")
-                    action:@selector(openOtherDisk:)
-             keyEquivalent:@""];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Other…", @"open another disk image")
+                                                  action:@selector(openDiskImage:)
+                                           keyEquivalent:@""];
+    item.tag = ENCODE_SLOT_DRIVE(slot, drive);
+    [menu addItem:item];
+
     [menu popUpMenuPositioningItem:nil atLocation:CGPointZero inView:view];
 }
 
@@ -425,23 +435,23 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = (NSMenuItem *)sender;
         const int tag = [menuItem.menu.title intValue];
-        const int slot = tag / 10;
-        const int drive = tag % 10;
+        const int slot = DECODE_SLOT(tag);
+        const int drive = DECODE_DRIVE(tag);
         
         CardManager &cardManager = GetCardMgr();
         Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
         card->EjectDisk(drive);
+        [self updateDriveLights];
     }
 }
 
-- (void)openOtherDisk:(id)sender {
+- (void)openDiskImage:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = (NSMenuItem *)sender;
-        const int tag = [menuItem.menu.title intValue];
-        const int slot = tag / 10;
-        const int drive = tag % 10;
+        const int slot = DECODE_SLOT(menuItem.tag);
+        const int drive = DECODE_DRIVE(menuItem.tag);
         
         NSOpenPanel *panel = [NSOpenPanel openPanel];
         panel.canChooseFiles = YES;
@@ -459,6 +469,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             if (error == eIMAGE_ERROR_NONE) {
                 NSLog(@"Loaded '%s' into slot %d drive %d",
                       fileSystemRepresentation, slot, drive);
+                [self updateDriveLights];
             }
             else {
                 NSLog(@"Failed to load '%s' into slot %d drive %d due to error %d",
@@ -485,7 +496,64 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (void)reconfigureDrives {
-    [self createDriveLightButtons];
+    NSInteger driveLightsRightEdge = self.driveLightButtonTemplate.frame.origin.x;
+    
+    // only using as template, never actually show this button
+    self.driveLightButtonTemplate.hidden = YES;
+    
+    const NSInteger oldDriveLightButtonsCount = self.driveLightButtons.count;
+    
+    // remove the old light buttons, if any
+    for (NSView *button in self.driveLightButtons) {
+        [button removeFromSuperview];
+    }
+    [self.openDiskImageMenu removeAllItems];
+    
+    NSMutableArray *driveLightButtons = [NSMutableArray array];
+    NSInteger position = 0;
+    CardManager &cardManager = GetCardMgr();
+    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
+        if (cardManager.QuerySlot(slot) == CT_Disk2) {
+            for (int drive = DRIVE_1; drive < NUM_DRIVES; drive++) {
+                NSButton *driveLightButton = (NSButton *)[self viewCopyFromArchive:self.driveLightButtonTemplateArchive];
+
+                [driveLightButtons addObject:driveLightButton];
+                [[self.driveLightButtonTemplate superview] addSubview:driveLightButton];
+                
+                // offset each drive light button from the left
+                CGRect driveLightButtonFrame = driveLightButton.frame;
+                driveLightButtonFrame.origin.x = self.driveLightButtonTemplate.frame.origin.x + position * self.driveLightButtonTemplate.frame.size.width;
+                driveLightButton.frame = driveLightButtonFrame;
+                driveLightsRightEdge = CGRectGetMaxX(driveLightButtonFrame);
+                
+                driveLightButton.tag = ENCODE_SLOT_DRIVE(slot, drive);
+                driveLightButton.hidden = NO;
+
+                NSString *driveName = [NSString stringWithFormat:NSLocalizedString(@"Slot %d Drive %d", @""), slot, drive + 1];
+                NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:driveName
+                                                              action:@selector(openDiskImage:)
+                                                       keyEquivalent:@""];
+                item.tag = ENCODE_SLOT_DRIVE(slot, drive);
+                [self.openDiskImageMenu addItem:item];
+                driveLightButton.toolTip = driveName;
+
+                position++;
+            }
+        }
+    }
+    
+    self.driveLightButtons = driveLightButtons;
+    
+    CGRect statusLabelFrame = self.statusLabel.frame;
+    statusLabelFrame.origin.x = driveLightsRightEdge + 5;
+    statusLabelFrame.size.width = self.volumeToggleButton.frame.origin.x - statusLabelFrame.origin.x - 5;
+    self.statusLabel.frame = statusLabelFrame;
+    
+    if (self.driveLightButtons.count != oldDriveLightButtonsCount) {
+        // constrain our window to not allow it to be resized so small that our
+        // status bar buttons overlap
+        [self.window setContentMinSize:[self minimumContentSizeAtScale:1]];
+    }
 }
 
 - (int)showModalAlertofType:(int)type
@@ -566,8 +634,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     if (self.hasStatusBar) {
         for (NSButton *driveLightButton in self.driveLightButtons) {
             CardManager &cardManager = GetCardMgr();
-            const UINT slot = (UINT)driveLightButton.tag / 10;
-            const int drive = driveLightButton.tag % 10;
+            const UINT slot = DECODE_SLOT(driveLightButton.tag);
+            const int drive = DECODE_DRIVE(driveLightButton.tag);
             Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
             if (card->IsDriveEmpty(drive)) {
                 driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
@@ -652,58 +720,6 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         NSLog(@"%s: %@", __PRETTY_FUNCTION__, error.localizedDescription);
     }
     return view;
-}
-
-- (void)createDriveLightButtons {
-    NSInteger driveLightsRightEdge = self.driveLightButtonTemplate.frame.origin.x;
-    
-    // only using as template, never actually show this button
-    self.driveLightButtonTemplate.hidden = YES;
-    
-    const NSInteger oldDriveLightButtonsCount = self.driveLightButtons.count;
-    
-    // remove the old light buttons, if any
-    for (NSView *button in self.driveLightButtons) {
-        [button removeFromSuperview];
-    }
-    
-    NSMutableArray *driveLightButtons = [NSMutableArray array];
-    NSInteger position = 0;
-    CardManager &cardManager = GetCardMgr();
-    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
-        if (cardManager.QuerySlot(slot) == CT_Disk2) {
-            for (int drive = DRIVE_1; drive < NUM_DRIVES; drive++) {
-                NSButton *driveLightButton = (NSButton *)[self viewCopyFromArchive:self.driveLightButtonTemplateArchive];
-
-                [driveLightButtons addObject:driveLightButton];
-                [[self.driveLightButtonTemplate superview] addSubview:driveLightButton];
-                
-                // offset each drive light button from the left
-                CGRect driveLightButtonFrame = driveLightButton.frame;
-                driveLightButtonFrame.origin.x = self.driveLightButtonTemplate.frame.origin.x + position * self.driveLightButtonTemplate.frame.size.width;
-                driveLightButton.frame = driveLightButtonFrame;
-                driveLightsRightEdge = CGRectGetMaxX(driveLightButtonFrame);
-                
-                driveLightButton.tag = slot * 10 + drive;
-                driveLightButton.hidden = NO;
-                
-                position++;
-            }
-        }
-    }
-    
-    self.driveLightButtons = driveLightButtons;
-    
-    CGRect statusLabelFrame = self.statusLabel.frame;
-    statusLabelFrame.origin.x = driveLightsRightEdge + 5;
-    statusLabelFrame.size.width = self.volumeToggleButton.frame.origin.x - statusLabelFrame.origin.x - 5;
-    self.statusLabel.frame = statusLabelFrame;
-    
-    if (self.driveLightButtons.count != oldDriveLightButtonsCount) {
-        // constrain our window to not allow it to be resized so small that our
-        // status bar buttons overlap
-        [self.window setContentMinSize:[self minimumContentSizeAtScale:1]];
-    }
 }
 
 - (CGSize)minimumContentSizeAtScale:(double)scale {
