@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "frontends/common2/commonframe.h"
 #include "frontends/common2/utils.h"
+#include "frontends/common2/fileregistry.h"
 #include "linux/resources.h"
 #include "linux/context.h"
 
@@ -8,6 +9,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <libgen.h>
+
+#ifdef __APPLE__
+#include "mach-o/dyld.h"
+#endif
 
 #include "Log.h"
 #include "Core.h"
@@ -19,9 +24,6 @@
 #define SHARE_PATH ""
 #define CMAKE_SOURCE_DIR ""
 #endif // MARIANI
-#ifdef __APPLE__
-#include "mach-o/dyld.h"
-#endif
 
 namespace
 {
@@ -45,12 +47,14 @@ namespace
     std::vector<std::string> paths;
 
     char self[1024] = {0};
+
 #ifdef __APPLE__
     uint32_t size = sizeof(self);
     const int ch = _NSGetExecutablePath(self, &size);
 #else
     const int ch = readlink("/proc/self/exe", self,  sizeof(self));
 #endif
+
     if (ch != -1)
     {
       const char * path = dirname(self);
@@ -138,6 +142,11 @@ namespace common2
     if (resource == "CHARSET8C") return "CHARSET8C.bmp";
 
     return resource;
+  }
+
+  std::string CommonFrame::Video_GetScreenShotFolder()
+  {
+    return GetHomeDir() + "/Pictures/";
   }
 
 }
