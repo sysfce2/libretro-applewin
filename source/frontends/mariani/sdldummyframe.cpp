@@ -8,6 +8,7 @@
 #include "StdAfx.h"
 #include "sdldummyframe.hpp"
 #include "linux/resources.h"
+#include "ParallelPrinter.h"
 #include "AppDelegate.h"
 
 namespace sa2
@@ -16,6 +17,7 @@ namespace sa2
   SDLDummyFrame::SDLDummyFrame(const common2::EmulatorOptions & options)
     : SDLFrame(options)
   {
+    g_sProgramDir = GetSupportDirectory();
   }
 
   void SDLDummyFrame::Initialize(bool resetVideoState)

@@ -18,6 +18,7 @@
 - (void)reconfigureDrives;
 - (int)showModalAlertofType:(int)type withMessage:(NSString *)message information:(NSString *)information;
 - (void)updateDriveLights;
+- (void)terminateWithReason:(NSString *)reason;
 
 @end
 
@@ -27,5 +28,6 @@
 
 // for calling into AppDelegate from C++
 int ShowModalAlertOfType(int type, const char *message, const char *information);
-void UpdateDriveLights();
+void UpdateDriveLights(void);
 const char *PathToResourceNamed(const char *name);
+const char *GetSupportDirectory(void);

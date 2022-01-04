@@ -164,7 +164,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     bool quit = false;
     frame->ProcessEvents(quit);
     if (quit) {
-        [NSApp terminate:self];
+        [self terminateWithReason:@"requested by frame"];
     }
 #ifdef DEBUG
     NSTimeInterval eventProcessingTimeOffset = -[start timeIntervalSinceNow];
@@ -205,7 +205,9 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     [self.timer invalidate];
-    frame->End();
+    if (frame != NULL) {
+        frame->End();
+    }
     SDL_Quit();
 }
 
@@ -231,7 +233,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     // needed despite applicationShouldTerminateAfterLastWindowClosed: because
     // the preferences window may be open
     if (notification.object == self.window) {
-        [NSApp terminate:self];
+        [self terminateWithReason:@"main window closed"];
     }
 }
 
@@ -824,6 +826,11 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
                                     clockSpeed / 1000000];
 }
 
+- (void)terminateWithReason:(NSString *)reason {
+    NSLog(@"Terminating due to '%@'", reason);
+    [NSApp terminate:self];
+}
+
 @end
 
 #pragma mark - Categories
@@ -860,5 +867,21 @@ void UpdateDriveLights() {
 const char *PathToResourceNamed(const char *name) {
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *path = [bundle pathForResource:[NSString stringWithUTF8String:name] ofType:nil];
-    return (path != nil) ? [path UTF8String] : NULL;
+    return (path != nil) ? path.UTF8String : NULL;
+}
+
+const char *GetSupportDirectory() {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *supportDirectoryPath = [NSString stringWithFormat:@"%@/%@/", paths.firstObject, bundleId];
+    NSURL *url = [NSURL fileURLWithPath:supportDirectoryPath isDirectory:YES];
+
+    NSError *error;
+    [[NSFileManager defaultManager] createDirectoryAtURL:url withIntermediateDirectories:YES attributes:nil error:&error];
+    if (error != nil) {
+        NSLog(@"Failed to create support directory: %@", error.localizedDescription);
+        [theAppDelegate terminateWithReason:@"no app support directory"];
+    }
+    
+    return supportDirectoryPath.UTF8String;
 }
