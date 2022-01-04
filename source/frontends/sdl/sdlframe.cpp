@@ -183,7 +183,7 @@ namespace sa2
   void SDLFrame::SetApplicationIcon()
   {
 #ifndef MARIANI
-    const std::string path = myResourcePath + "APPLEWIN.ICO";
+    const std::string path = getResourcePath("APPLEWIN.ICO");
     std::shared_ptr<SDL_Surface> icon(IMG_Load(path.c_str()), SDL_FreeSurface);
     if (icon)
     {
@@ -197,15 +197,10 @@ namespace sa2
     return myWindow;
   }
 
-  const std::string SDLFrame::GetBitmapFilename(LPCSTR lpBitmapName)
-  {
-    const std::string filename = getBitmapFilename(lpBitmapName);
-    return myResourcePath + filename;
-  }
-
   void SDLFrame::GetBitmap(LPCSTR lpBitmapName, LONG cb, LPVOID lpvBits)
   {
-    const std::string path = GetBitmapFilename(lpBitmapName);
+    const std::string filename = getBitmapFilename(lpBitmapName);
+    const std::string path = getResourcePath(filename);
 
     std::shared_ptr<SDL_Surface> surface(SDL_LoadBMP(path.c_str()), SDL_FreeSurface);
     if (surface)

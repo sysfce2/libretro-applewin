@@ -32,11 +32,12 @@ namespace sa2
 
     void FrameDrawDiskLEDS() override;
       
-    BYTE* GetResource(WORD id, LPCSTR lpType, DWORD expectedSize) override;
-    const std::string GetBitmapFilename(LPCSTR lpBitmapName) override;
+    virtual std::string Video_GetScreenShotFolder() override;
 
   protected:
     void GetRelativeMousePosition(const SDL_MouseMotionEvent & motion, double & x, double & y) const override;
+
+    virtual std::string getResourcePath(const std::string & filename) override;
 
   private:
     // FIXME: without this hack the app crashes randomly elsewhere

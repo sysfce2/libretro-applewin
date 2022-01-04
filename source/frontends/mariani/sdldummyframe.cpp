@@ -51,16 +51,14 @@ namespace sa2
     UpdateDriveLights();
   }
 
-  BYTE *SDLDummyFrame::GetResource(WORD id, LPCSTR lpType, DWORD expectedSize)
+  std::string SDLDummyFrame::getResourcePath(const std::string & filename)
   {
-    const std::string &filename = getResourceName(id);
-    return (BYTE *)ResourceNamed(filename.c_str(), expectedSize);
+    return std::string(PathToResourceNamed(filename.c_str()));
   }
 
-  const std::string SDLDummyFrame::GetBitmapFilename(LPCSTR lpBitmapName)
+  std::string SDLDummyFrame::Video_GetScreenShotFolder()
   {
-    const std::string filename = getBitmapFilename(lpBitmapName);
-    return std::string(PathToResourceNamed(filename.c_str()));
+    return {};
   }
 
 }

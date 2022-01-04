@@ -28,5 +28,4 @@
 // for calling into AppDelegate from C++
 int ShowModalAlertOfType(int type, const char *message, const char *information);
 void UpdateDriveLights();
-const void *ResourceNamed(const char *name, size_t expectedSize);
 const char *PathToResourceNamed(const char *name);

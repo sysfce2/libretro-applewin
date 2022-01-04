@@ -301,6 +301,8 @@
 		B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8C.bmp; path = resource/CHARSET8C.bmp; sourceTree = SOURCE_ROOT; };
 		B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET82.bmp; path = resource/CHARSET82.bmp; sourceTree = SOURCE_ROOT; };
 		B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8M.bmp; path = resource/CHARSET8M.bmp; sourceTree = SOURCE_ROOT; };
+		B045FE9027848272006E36F9 /* gnuframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gnuframe.h; path = source/frontends/common2/gnuframe.h; sourceTree = "<group>"; };
+		B045FE9127848272006E36F9 /* gnuframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gnuframe.cpp; path = source/frontends/common2/gnuframe.cpp; sourceTree = "<group>"; };
 		B049E7CA277A339600FC14A3 /* z80mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = z80mem.h; path = source/Z80VICE/z80mem.h; sourceTree = "<group>"; };
 		B049E7CB277A339600FC14A3 /* daa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = daa.h; path = source/Z80VICE/daa.h; sourceTree = "<group>"; };
 		B049E7CC277A339600FC14A3 /* z80.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = z80.cpp; path = source/Z80VICE/z80.cpp; sourceTree = "<group>"; };
@@ -841,6 +843,8 @@
 				B049E831277B5E3700FC14A3 /* commonframe.h */,
 				B049E850277B6FFE00FC14A3 /* fileregistry.cpp */,
 				B049E84F277B6FFE00FC14A3 /* fileregistry.h */,
+				B045FE9127848272006E36F9 /* gnuframe.cpp */,
+				B045FE9027848272006E36F9 /* gnuframe.h */,
 				B049E84B277B6DE300FC14A3 /* programoptions.cpp */,
 				B049E848277B68E900FC14A3 /* programoptions.h */,
 				B049E853277B702000FC14A3 /* ptreeregistry.cpp */,

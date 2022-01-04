@@ -841,20 +841,8 @@ void UpdateDriveLights() {
     [theAppDelegate updateDriveLights];
 }
 
-const void *ResourceNamed(const char *name, size_t expectedSize) {
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSURL *url = [bundle URLForResource:[NSString stringWithUTF8String:name] withExtension:nil];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSLog(@"Found '%s' at %@, size %lu, expected %lu", name, url, data.length, expectedSize);
-    if (data.length != expectedSize) {
-        return NULL;
-    }
-    return data.bytes;
-}
-
 const char *PathToResourceNamed(const char *name) {
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *path = [bundle pathForResource:[NSString stringWithUTF8String:name] ofType:nil];
     return (path != nil) ? [path UTF8String] : NULL;
 }
-
