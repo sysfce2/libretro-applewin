@@ -234,15 +234,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button toolTip="Toggle audio on or off" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-oO-i17">
-                                <rect key="frame" x="718" y="-1.5" width="33.5" height="33.5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="speaker.slash" catalog="system" imagePosition="only" alignment="center" alternateImage="speaker" state="on" imageScaling="proportionallyDown" inset="2" id="JHc-Xt-b47">
-                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system" size="18"/>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DSR-xi-Jep">
+                            <button toolTip="Record screen" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DSR-xi-Jep">
                                 <rect key="frame" x="758" y="1" width="32.5" height="32.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="video" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="SSU-IM-3QB">
@@ -253,7 +245,7 @@
                                     <action selector="recordScreenAction:" target="Voe-Tx-rLC" id="pjR-1B-e3v"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lMj-oj-jRW">
+                            <button toolTip="Take screenshot" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lMj-oj-jRW">
                                 <rect key="frame" x="798" y="0.0" width="32" height="34.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="camera" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="DW1-i4-Q4j">
@@ -263,6 +255,14 @@
                                 <connections>
                                     <action selector="takeScreenshotAction:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
                                 </connections>
+                            </button>
+                            <button toolTip="Toggle audio on or off" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-oO-i17">
+                                <rect key="frame" x="718" y="-0.5" width="33.5" height="33.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="speaker.slash" catalog="system" imagePosition="only" alignment="center" alternateImage="speaker" state="on" imageScaling="proportionallyDown" inset="2" id="JHc-Xt-b47">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system" size="18"/>
+                                </buttonCell>
                             </button>
                         </subviews>
                     </customView>

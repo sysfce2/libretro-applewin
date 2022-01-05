@@ -1,4 +1,3 @@
-
 /* Class = "NSMenuItem"; title = "Double Size"; ObjectID = "0la-AK-P3R"; */
 "0la-AK-P3R.title" = "雙倍大小";
 
@@ -83,9 +82,6 @@
 /* Class = "NSMenuItem"; title = "Display Type"; ObjectID = "WpN-hG-YWg"; */
 "WpN-hG-YWg.title" = "顯示器類型";
 
-/* Class = "NSMenuItem"; title = "Print…"; ObjectID = "aTl-1u-JFS"; */
-"aTl-1u-JFS.title" = "Print…";
-
 /* Class = "NSMenuItem"; title = "Window"; ObjectID = "aUF-d1-5bR"; */
 "aUF-d1-5bR.title" = "視窗";
 
@@ -113,11 +109,14 @@
 /* Class = "NSMenuItem"; title = "Reboot Emulator"; ObjectID = "ptn-P3-scg"; */
 "ptn-P3-scg.title" = "重啟模擬器";
 
-/* Class = "NSMenuItem"; title = "Page Setup…"; ObjectID = "qIS-W8-SiK"; */
-"qIS-W8-SiK.title" = "Page Setup…";
-
 /* Class = "NSMenu"; title = "Mariani"; ObjectID = "uQy-DD-JDr"; */
 "uQy-DD-JDr.title" = "Mariani";
 
 /* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
 "wpr-3q-Mcd.title" = "輔助說明";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Record screen"; ObjectID = "DSR-xi-Jep"; */
+"DSR-xi-Jep.ibShadowedToolTip" = "螢幕錄影";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Take screenshot"; ObjectID = "lMj-oj-jRW"; */
+"lMj-oj-jRW.ibShadowedToolTip" = "螢幕快照";
