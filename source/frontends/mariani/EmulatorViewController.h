@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)createScreen:(FrameBuffer *)frameBuffer;
 - (void)updateScreen:(FrameBuffer *)frameBuffer;
+- (void)displayTypeDidChange;
 
 @end
 

@@ -25,9 +25,8 @@
 
 #import "EmulatorRenderer.h"
 #import "ShaderTypes.h"
-
-// how much of the overscan area to display
-#define OVERSCAN                0.1
+#import "CommonTypes.h"
+#import "AppDelegate.h"
 
 @implementation EmulatorRenderer {
     // The device (aka GPU) used to render
@@ -174,8 +173,9 @@
     _viewportSize.x = size.width;
     _viewportSize.y = size.height;
     
-    const double borderWidth = _frameBuffer.borderWidth * (1.0 - OVERSCAN);
-    const double borderHeight = _frameBuffer.borderHeight * (1.0 - OVERSCAN);
+    const BOOL shouldOverscan = [theAppDelegate shouldOverscan];
+    const double borderWidth = shouldOverscan ? _frameBuffer.borderWidth * (1.0 - OVERSCAN) : _frameBuffer.borderWidth;
+    const double borderHeight = shouldOverscan ? _frameBuffer.borderHeight * (1.0 - OVERSCAN) : _frameBuffer.borderHeight;
     const double borderWidthRatio = borderWidth / _frameBuffer.bufferWidth;
     const double borderHeightRatio = borderHeight / _frameBuffer.bufferHeight;
     

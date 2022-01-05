@@ -19,6 +19,7 @@
 - (int)showModalAlertofType:(int)type withMessage:(NSString *)message information:(NSString *)information;
 - (void)updateDriveLights;
 - (void)terminateWithReason:(NSString *)reason;
+- (BOOL)shouldOverscan;
 
 @end
 

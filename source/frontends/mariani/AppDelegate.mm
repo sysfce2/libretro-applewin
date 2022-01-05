@@ -32,10 +32,14 @@
 #import "PreferencesWindowController.h"
 #import "UserDefaults.h"
 
+#import <AVFoundation/AVFoundation.h>
+
 #define TARGET_FPS          60
+#define CMTIME_BASE         600
 #define STATUS_BAR_HEIGHT   32
 
 #define SCREENSHOT_FILE_NAME @"Mariani Screen Shot"
+#define SCREEN_RECORDING_FILE_NAME @"Mariani Recording"
 
 // encode the slot-drive tuple into a single number (suitable for use as a
 // NSView tag, or decode from it
@@ -45,16 +49,18 @@
 
 @interface AppDelegate ()
 
+@property (strong) IBOutlet EmulatorViewController *emulatorVC;
 @property (strong) IBOutlet NSWindow *window;
-@property (weak) IBOutlet NSMenu *displayTypeMenu;
-@property (weak) IBOutlet EmulatorViewController *emulatorVC;
-@property (strong) PreferencesWindowController *preferencesWC;
-@property (weak) IBOutlet NSButton *driveLightButtonTemplate;
-@property (weak) IBOutlet NSButton *volumeToggleButton;
-@property (weak) IBOutlet NSMenuItem *showHideStatusBarMenuItem;
-@property (weak) IBOutlet NSTextField *statusLabel;
-@property (weak) IBOutlet NSMenu *openDiskImageMenu;
+@property (strong) IBOutlet NSMenu *openDiskImageMenu;
+@property (strong) IBOutlet NSMenuItem *showHideStatusBarMenuItem;
+@property (strong) IBOutlet NSMenu *displayTypeMenu;
+@property (strong) IBOutlet NSView *statusBarView;
+@property (strong) IBOutlet NSButton *driveLightButtonTemplate;
+@property (strong) IBOutlet NSTextField *statusLabel;
+@property (strong) IBOutlet NSButton *volumeToggleButton;
+@property (strong) IBOutlet NSButton *screenRecordingButton;
 
+@property (strong) PreferencesWindowController *preferencesWC;
 @property NSTimer *timer;
 @property Initialisation *initialisation;
 @property LoggerContext *logger;
@@ -63,10 +69,15 @@
 @property NSData *driveLightButtonTemplateArchive;
 @property BOOL hasStatusBar;
 @property (readonly) double statusBarHeight;
-@property (weak) IBOutlet NSView *statusBarView;
 @property NSDate *samplePeriodBeginClockTime;
 @property unsigned __int64 samplePeriodBeginCumulativeCycles;
 @property NSInteger frameCount;
+
+@property AVAssetWriter *videoWriter;
+@property AVAssetWriterInput *videoWriterInput;
+@property AVAssetWriterInputPixelBufferAdaptor *videoWriterAdaptor;
+@property int64_t videoWriterFrameNumber;
+@property (getter=isRecordingScreen) BOOL recordingScreen;
 
 @end
 
@@ -183,6 +194,54 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSTimeInterval screenPresentationTimeOffset = -[start timeIntervalSinceNow];
 #endif
 
+    if (self.videoWriterInput.readyForMoreMediaData) {
+        if (!self.isRecordingScreen) {
+            self.screenRecordingButton.contentTintColor = [NSColor controlAccentColor];
+            self.recordingScreen = YES;
+        }
+        
+        // make a CVPixelBuffer and point the frame buffer to it
+        CVPixelBufferRef pixelBuffer = NULL;
+        CVReturn status = CVPixelBufferCreateWithBytes(kCFAllocatorDefault,
+                                                       frameBuffer.bufferWidth,
+                                                       frameBuffer.bufferHeight,
+                                                       kCVPixelFormatType_32BGRA,
+                                                       frameBuffer.data,
+                                                       frameBuffer.bufferWidth * 4,
+                                                       NULL,
+                                                       NULL,
+                                                       NULL,
+                                                       &pixelBuffer);
+        if (status == kCVReturnSuccess && pixelBuffer != NULL) {
+            // append the CVPixelBuffer into the output stream
+            [self.videoWriterAdaptor appendPixelBuffer:pixelBuffer
+                                  withPresentationTime:CMTimeMake(self.videoWriterFrameNumber * (CMTIME_BASE / TARGET_FPS), CMTIME_BASE)];
+            CVPixelBufferRelease(pixelBuffer);
+            
+            // if we realize that we've skipped a frame (i.e., videoWriter is
+            // not nil but readyForMoreMediaData is false) should we also
+            // increment videoWriterFrameNumber?
+            self.videoWriterFrameNumber++;
+        }
+    }
+#ifdef DEBUG
+    else if (self.videoWriter != nil) {
+        NSLog(@"Screen Recording: skipped a frame");
+    }
+#endif
+    if (self.isRecordingScreen) {
+        // blink the screen recording button
+        if (self.videoWriterFrameNumber % TARGET_FPS == 0) {
+            self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"video.fill" accessibilityDescription:@""];
+        }
+        else if (self.videoWriterFrameNumber % TARGET_FPS == TARGET_FPS / 2) {
+            self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"video" accessibilityDescription:@""];
+        }
+    }
+#ifdef DEBUG
+    NSTimeInterval screenRecordingTimeOffset = -[start timeIntervalSinceNow];
+#endif
+
     if (++self.frameCount > TARGET_FPS) {
         [self updateStatusLabel];
         self.samplePeriodBeginClockTime = [NSDate now];
@@ -199,6 +258,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         NSLog(@"    Process events:             %f ms", (eventProcessingTimeOffset - audioWriteTimeOffset) * 1000);
         NSLog(@"    Execute:                    %f ms", (executionTimeOffset - eventProcessingTimeOffset) * 1000);
         NSLog(@"    Present screen:             %f ms", (screenPresentationTimeOffset - executionTimeOffset) * 1000);
+        NSLog(@"    Record screen:              %f ms", (screenRecordingTimeOffset - screenPresentationTimeOffset) * 1000);
     }
 #endif // DEBUG
 }
@@ -329,6 +389,9 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         newItem.state = NSControlStateValueOn;
         video.SetVideoType(VideoType_e(newItem.tag));
         frame->ApplyVideoModeChange();
+        
+        [self.emulatorVC displayTypeDidChange];
+        
         NSLog(@"Set video type to %ld", (long)newItem.tag);
     }
 }
@@ -360,45 +423,6 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 #pragma mark - Main window actions
-
-- (IBAction)takeScreenshotAction:(id)sender {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-
-#ifdef DEBUG
-    NSDate *start = [NSDate now];
-#endif
-    
-    // have the BMP screenshot written to a memory stream instead of a file...
-    char *buffer;
-    size_t bufferSize;
-    FILE *memStream = open_memstream(&buffer, &bufferSize);
-    GetVideo().Video_MakeScreenShot(memStream, Video::SCREENSHOT_560x384);
-    fclose(memStream);
-
-#ifdef DEBUG
-    NSTimeInterval duration = -[start timeIntervalSinceNow];
-    NSLog(@"Screenshot took: %f ms", duration * 1000);
-#endif // DEBUG
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-#ifdef DEBUG
-        NSDate *start = [NSDate now];
-#endif
-        // ...and then convert it to PNG for saving
-        NSImage *image = [[NSImage alloc] initWithData:[NSData dataWithBytes:buffer length:bufferSize]];
-        CGImageRef cgRef = [image CGImageForProposedRect:NULL context:nil hints:nil];
-        NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
-        [newRep setSize:[image size]];
-        NSData *pngData = [newRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-        [pngData writeToURL:[self composeScreenshotPath] atomically:YES];
-        free(buffer);
-#ifdef DEBUG
-    NSTimeInterval duration = -[start timeIntervalSinceNow];
-    NSLog(@"PNG conversion took: %f ms", duration * 1000);
-#endif // DEBUG
-        [[NSSound soundNamed:@"Blow"] play];
-    });
-}
 
 - (IBAction)driveLightAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -480,6 +504,110 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             }
         }
     }
+}
+
+- (IBAction)recordScreenAction:(id)sender {
+    if (self.videoWriter == nil) {
+        NSLog(@"Starting screen recording");
+        
+        NSURL *url = [self unusedURLForFilename:SCREEN_RECORDING_FILE_NAME extension:@"mov"];
+        
+        NSError *error = nil;
+        self.videoWriter = [[AVAssetWriter alloc] initWithURL:url
+                                                     fileType:AVFileTypeAppleM4V
+                                                        error:&error];
+        const NSInteger shouldOverscan = [self shouldOverscan];
+        const NSInteger overscanWidth = shouldOverscan ? frameBuffer.borderWidth * OVERSCAN * 2 : 0;
+        const NSInteger overscanHeight = shouldOverscan ? frameBuffer.borderHeight * OVERSCAN * 2 : 0;
+        NSDictionary *videoSettings = @{
+            AVVideoCodecKey: AVVideoCodecTypeHEVC,
+            AVVideoWidthKey: @(frameBuffer.bufferWidth),
+            AVVideoHeightKey: @(frameBuffer.bufferHeight),
+            // just like the emulated display, overscan a little bit so that we
+            // don't clip off portions of the pixels on the edge
+            AVVideoCleanApertureKey: @{
+                AVVideoCleanApertureWidthKey: @(frameBuffer.pixelWidth + overscanWidth),
+                AVVideoCleanApertureHeightKey: @(frameBuffer.pixelHeight + overscanHeight),
+                AVVideoCleanApertureHorizontalOffsetKey: @(0),
+                AVVideoCleanApertureVerticalOffsetKey: @(0),
+            },
+        };
+        self.videoWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo
+                                                                   outputSettings:videoSettings];
+        self.videoWriterInput.transform = CGAffineTransformMakeScale(1, -1);
+        self.videoWriterAdaptor =
+            [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.videoWriterInput
+                                                                             sourcePixelBufferAttributes:nil];
+        [self.videoWriter addInput:self.videoWriterInput];
+        [self.videoWriter startWriting];
+        [self.videoWriter startSessionAtSourceTime:kCMTimeZero];
+        self.videoWriterFrameNumber = 0;
+    }
+    else {
+        // stop recording
+        NSLog(@"Ending screen recording");
+        self.recordingScreen = NO;
+        self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"video" accessibilityDescription:@""];
+        [self.videoWriterInput markAsFinished];
+        [self.videoWriter finishWritingWithCompletionHandler:^(void) {
+            if (self.videoWriter.status != AVAssetWriterStatusCompleted) {
+                NSLog(@"Failed to write screen recording: %@", self.videoWriter.error);
+            }
+            
+            // clean up
+            self.videoWriter = nil;
+            self.videoWriterInput = nil;
+            self.videoWriterAdaptor = nil;
+            self.videoWriterFrameNumber = 0;
+            
+            self.recordingScreen = NO;
+
+            NSLog(@"Ended screen recording");
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                self.screenRecordingButton.contentTintColor = [NSColor secondaryLabelColor];
+            });
+        }];
+    }
+}
+
+- (IBAction)takeScreenshotAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+#ifdef DEBUG
+    NSDate *start = [NSDate now];
+#endif
+    
+    // have the BMP screenshot written to a memory stream instead of a file...
+    char *buffer;
+    size_t bufferSize;
+    FILE *memStream = open_memstream(&buffer, &bufferSize);
+    GetVideo().Video_MakeScreenShot(memStream, Video::SCREENSHOT_560x384);
+    fclose(memStream);
+
+#ifdef DEBUG
+    NSTimeInterval duration = -[start timeIntervalSinceNow];
+    NSLog(@"Screenshot took: %f ms", duration * 1000);
+#endif // DEBUG
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+#ifdef DEBUG
+        NSDate *start = [NSDate now];
+#endif
+        // ...and then convert it to PNG for saving
+        NSImage *image = [[NSImage alloc] initWithData:[NSData dataWithBytes:buffer length:bufferSize]];
+        CGImageRef cgRef = [image CGImageForProposedRect:NULL context:nil hints:nil];
+        NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
+        [newRep setSize:[image size]];
+        NSData *pngData = [newRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
+        [pngData writeToURL:[self unusedURLForFilename:SCREENSHOT_FILE_NAME extension:@"png"] atomically:YES];
+        free(buffer);
+#ifdef DEBUG
+        NSTimeInterval duration = -[start timeIntervalSinceNow];
+        NSLog(@"PNG conversion took: %f ms", duration * 1000);
+#endif // DEBUG
+        [[NSSound soundNamed:@"Blow"] play];
+    });
 }
 
 #pragma mark - Helpers because I can't figure out how to make 'frame' properly global
@@ -685,6 +813,13 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     VideoBenchmark(redraw, refresh);
 }
 
+- (BOOL)shouldOverscan {
+    // the idealized display seems to show weird artifacts in the overscan
+    // area, so we crop tightly
+    Video &video = GetVideo();
+    return (video.GetVideoType() != VT_COLOR_IDEALIZED);
+}
+
 #pragma mark - Utilities
 
 - (NSString *)localizedVideoType:(NSInteger)videoType {
@@ -798,7 +933,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     return self.hasStatusBar ? STATUS_BAR_HEIGHT : 0;
 }
 
-- (NSURL *)composeScreenshotPath {
+- (NSURL *)unusedURLForFilename:(NSString *)desiredFilename extension:(NSString *)extension {
     NSURL *folder = [[UserDefaults sharedInstance] screenshotsFolder];
     
     // walk through the folder to make a set of files that have our prefix
@@ -810,19 +945,19 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSMutableSet *set = [NSMutableSet set];
     for (NSURL *url in enumerator) {
         NSString *filename = [url lastPathComponent];
-        if ([filename hasPrefix:SCREENSHOT_FILE_NAME]) {
+        if ([filename hasPrefix:desiredFilename]) {
             [set addObject:filename];
         }
     }
     
     // starting from "1", let's find one that's not already used
-    NSString *filename = [NSString stringWithFormat:@"%@.png", SCREENSHOT_FILE_NAME];
+    NSString *candidateFilename = [NSString stringWithFormat:@"%@.%@", desiredFilename, extension];
     NSInteger index = 2;
-    while ([set containsObject:filename]) {
-        filename = [NSString stringWithFormat:@"%@ %ld.png", SCREENSHOT_FILE_NAME, index++];
+    while ([set containsObject:candidateFilename]) {
+        candidateFilename = [NSString stringWithFormat:@"%@ %ld.%@", desiredFilename, index++, extension];
     }
     
-    return [folder URLByAppendingPathComponent:filename];
+    return [folder URLByAppendingPathComponent:candidateFilename];
 }
 
 - (void)updateStatusLabel {

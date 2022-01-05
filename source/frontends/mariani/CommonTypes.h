@@ -18,4 +18,7 @@ typedef struct {
     unsigned borderHeight;
 } FrameBuffer;
 
+// how much of the overscan area to display
+#define OVERSCAN                0.1
+
 #endif /* CommonTypes_h */

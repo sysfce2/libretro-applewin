@@ -18,6 +18,7 @@
                 <outlet property="driveLightButtonTemplate" destination="NGY-eR-Avg" id="DBE-ke-cr3"/>
                 <outlet property="emulatorVC" destination="S0z-N3-T9h" id="XAc-8o-NgU"/>
                 <outlet property="openDiskImageMenu" destination="ae9-FF-J5g" id="hW4-cQ-Fxb"/>
+                <outlet property="screenRecordingButton" destination="DSR-xi-Jep" id="NmW-pv-4Ab"/>
                 <outlet property="showHideStatusBarMenuItem" destination="Qa1-0n-abD" id="jQF-tx-pGh"/>
                 <outlet property="statusBarView" destination="Mnw-rf-Y9b" id="vHG-8g-HKh"/>
                 <outlet property="statusLabel" destination="v5N-tl-es5" id="dzw-S4-KXI"/>
@@ -224,13 +225,33 @@
                                     <action selector="driveLightAction:" target="Voe-Tx-rLC" id="sbG-RH-fSd"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v5N-tl-es5">
+                                <rect key="frame" x="43" y="9" width="669" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="GCW-F3-7D6">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <button toolTip="Toggle audio on or off" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-oO-i17">
-                                <rect key="frame" x="759" y="-1.5" width="33.5" height="33.5"/>
+                                <rect key="frame" x="718" y="-1.5" width="33.5" height="33.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="speaker.slash" catalog="system" imagePosition="only" alignment="center" alternateImage="speaker" state="on" imageScaling="proportionallyDown" inset="2" id="JHc-Xt-b47">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system" size="18"/>
                                 </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DSR-xi-Jep">
+                                <rect key="frame" x="758" y="1" width="32.5" height="32.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="video" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="SSU-IM-3QB">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="18"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="recordScreenAction:" target="Voe-Tx-rLC" id="pjR-1B-e3v"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lMj-oj-jRW">
                                 <rect key="frame" x="798" y="0.0" width="32" height="34.5"/>
@@ -243,15 +264,6 @@
                                     <action selector="takeScreenshotAction:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v5N-tl-es5">
-                                <rect key="frame" x="43" y="9" width="710" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="GCW-F3-7D6">
-                                    <font key="font" usesAppearanceFont="YES"/>
-                                    <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                         </subviews>
                     </customView>
                 </subviews>
@@ -265,5 +277,6 @@
         <image name="circle.fill" catalog="system" width="15" height="15"/>
         <image name="speaker" catalog="system" width="14" height="14"/>
         <image name="speaker.slash" catalog="system" width="13" height="15"/>
+        <image name="video" catalog="system" width="19" height="13"/>
     </resources>
 </document>

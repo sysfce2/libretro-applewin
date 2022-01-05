@@ -72,4 +72,8 @@
     [_renderer updateTextureWithData:frameBuffer->data];
 }
 
+- (void)displayTypeDidChange {
+    [_renderer mtkView:_view drawableSizeWillChange:_view.drawableSize];
+}
+
 @end
