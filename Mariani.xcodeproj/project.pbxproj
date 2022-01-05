@@ -149,11 +149,12 @@
 		B0098D06277E1D4F00F38E0C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB6D0277A16600002A6C3 /* unzip.c */; };
 		B0098D07277E1D4F00F38E0C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB6D5277A16600002A6C3 /* ioapi.c */; };
 		B0098D08277E244F00F38E0C /* Registry.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5EF277A14DA0002A6C3 /* Registry.h */; };
+		B020F8A62785D30E0071D3C7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020F8A32785D30E0071D3C7 /* stdafx.cpp */; };
 		B032DE26277A0C23006DC0F7 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE25277A0C23006DC0F7 /* AppDelegate.mm */; };
 		B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B032DE27277A0C24006DC0F7 /* Assets.xcassets */; };
 		B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B032DE29277A0C24006DC0F7 /* MainMenu.xib */; };
 		B032DE2D277A0C24006DC0F7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE2C277A0C24006DC0F7 /* main.m */; };
-		B032DE38277A0C24006DC0F7 /* marianiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE37277A0C24006DC0F7 /* marianiTests.m */; };
+		B032DE38277A0C24006DC0F7 /* marianiTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE37277A0C24006DC0F7 /* marianiTests.mm */; };
 		B032DE42277A0C24006DC0F7 /* marianiUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE41277A0C24006DC0F7 /* marianiUITests.m */; };
 		B032DE44277A0C24006DC0F7 /* marianiUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */; };
 		B045FE722782984F006E36F9 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5C2782984E006E36F9 /* Apple2e.rom */; };
@@ -265,6 +266,9 @@
 
 /* Begin PBXFileReference section */
 		B0098BFA277E0F6800F38E0C /* libAppleWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAppleWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B020F8A32785D30E0071D3C7 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = test/TestCPU6502/stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		B020F8A42785D30E0071D3C7 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = test/TestCPU6502/stdafx.h; sourceTree = SOURCE_ROOT; };
+		B020F8A52785D30E0071D3C7 /* TestCPU6502.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestCPU6502.cpp; path = test/TestCPU6502/TestCPU6502.cpp; sourceTree = SOURCE_ROOT; };
 		B032DE21277A0C23006DC0F7 /* Mariani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mariani.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE24277A0C23006DC0F7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B032DE25277A0C23006DC0F7 /* AppDelegate.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -273,7 +277,7 @@
 		B032DE2C277A0C24006DC0F7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B032DE2E277A0C24006DC0F7 /* mariani.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mariani.entitlements; sourceTree = "<group>"; };
 		B032DE33277A0C24006DC0F7 /* MarianiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarianiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B032DE37277A0C24006DC0F7 /* marianiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiTests.m; sourceTree = "<group>"; };
+		B032DE37277A0C24006DC0F7 /* marianiTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = marianiTests.mm; sourceTree = "<group>"; };
 		B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarianiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE41277A0C24006DC0F7 /* marianiUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITests.m; sourceTree = "<group>"; };
 		B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITestsLaunchTests.m; sourceTree = "<group>"; };
@@ -732,7 +736,10 @@
 		B032DE36277A0C24006DC0F7 /* marianiTests */ = {
 			isa = PBXGroup;
 			children = (
-				B032DE37277A0C24006DC0F7 /* marianiTests.m */,
+				B020F8A32785D30E0071D3C7 /* stdafx.cpp */,
+				B020F8A42785D30E0071D3C7 /* stdafx.h */,
+				B020F8A52785D30E0071D3C7 /* TestCPU6502.cpp */,
+				B032DE37277A0C24006DC0F7 /* marianiTests.mm */,
 			);
 			name = marianiTests;
 			path = source/frontends/mariani/marianiTests;
@@ -1599,7 +1606,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B032DE38277A0C24006DC0F7 /* marianiTests.m in Sources */,
+				B032DE38277A0C24006DC0F7 /* marianiTests.mm in Sources */,
+				B020F8A62785D30E0071D3C7 /* stdafx.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1914,15 +1922,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = test/TestCPU6502/;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tampinco.marianiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mariani.app/Contents/MacOS/mariani";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mariani.app/Contents/MacOS/Mariani";
 			};
 			name = Debug;
 		};
@@ -1930,15 +1942,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = test/TestCPU6502/;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tampinco.marianiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mariani.app/Contents/MacOS/mariani";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mariani.app/Contents/MacOS/Mariani";
 			};
 			name = Release;
 		};
