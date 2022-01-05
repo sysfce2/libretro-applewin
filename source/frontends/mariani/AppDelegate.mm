@@ -646,13 +646,22 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             else {
                 Disk_Status_e status[NUM_DRIVES];
                 card->GetLightStatus(&status[0], &status[1]);
-                const BOOL active = (status[drive] == DISK_STATUS_READ || status[drive] == DISK_STATUS_WRITE);
-                if (active) {
-                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
+                if (status[drive] != DISK_STATUS_OFF) {
+                    if (card->GetProtect(drive)) {
+                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"lock.circle.fill" accessibilityDescription:@""];
+                    }
+                    else {
+                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
+                    }
                     driveLightButton.contentTintColor = [NSColor controlAccentColor];
                 }
                 else {
-                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
+                    if (card->GetProtect(drive)) {
+                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"lock.circle" accessibilityDescription:@""];
+                    }
+                    else {
+                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
+                    }
                     driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
                 }
             }
