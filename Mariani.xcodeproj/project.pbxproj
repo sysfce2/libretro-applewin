@@ -200,7 +200,6 @@
 		B049E8A7277C4F6D00FC14A3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A6277C4F6D00FC14A3 /* Shaders.metal */; };
 		B049E8AD277C880800FC14A3 /* EmulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E8AB277C880800FC14A3 /* EmulatorView.mm */; };
 		B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
-		B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */; };
 		B0689D0A2780B9B60029EB7D /* MarianiFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* MarianiFrame.cpp */; };
 		B0689D0D2780C85F0029EB7D /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
 		B0689D172781984F0029EB7D /* UserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B0689D152781984F0029EB7D /* UserDefaults.h */; };
@@ -243,6 +242,8 @@
 		B09AB819277A21410002A6C3 /* fileapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F9277A21410002A6C3 /* fileapi.cpp */; };
 		B09AB81A277A21410002A6C3 /* winnls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7FA277A21410002A6C3 /* winnls.cpp */; };
 		B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
+		B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
+		B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,7 +371,6 @@
 		B049E8AA277C880800FC14A3 /* EmulatorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorView.h; sourceTree = "<group>"; };
 		B049E8AB277C880800FC14A3 /* EmulatorView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EmulatorView.mm; sourceTree = "<group>"; };
 		B049E8AE277C9A8000FC14A3 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		B0689D082780B9B60029EB7D /* MarianiFrame.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarianiFrame.cpp; sourceTree = "<group>"; };
 		B0689D092780B9B60029EB7D /* MarianiFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MarianiFrame.hpp; sourceTree = "<group>"; };
 		B0689D152781984F0029EB7D /* UserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefaults.h; sourceTree = "<group>"; };
@@ -623,6 +623,11 @@
 		B09AB836277A22530002A6C3 /* Uilib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uilib.h; path = source/Tfe/Uilib.h; sourceTree = "<group>"; };
 		B09AB837277A22530002A6C3 /* Pcap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pcap.h; path = source/Tfe/Pcap.h; sourceTree = "<group>"; };
 		B0A6BB76277A31F7008813DE /* libpcap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcap.tbd; path = usr/lib/libpcap.tbd; sourceTree = SDKROOT; };
+		B0ED3FCC27859566006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		B0ED3FCE2785973C006E4784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B0ED3FD027859747006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B0F0138D2785A211002936B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Preferences.storyboard; sourceTree = "<group>"; };
+		B0F013902785A218002936B4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Preferences.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -715,7 +720,8 @@
 				B032DE27277A0C24006DC0F7 /* Assets.xcassets */,
 				B045FE5B278297F8006E36F9 /* Resources */,
 				B032DE29277A0C24006DC0F7 /* MainMenu.xib */,
-				B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */,
+				B0F0138E2785A211002936B4 /* Preferences.storyboard */,
+				B0ED3FCD2785973C006E4784 /* Localizable.strings */,
 				B032DE2C277A0C24006DC0F7 /* main.m */,
 				B032DE2E277A0C24006DC0F7 /* mariani.entitlements */,
 			);
@@ -1372,6 +1378,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = B032DE18277A0C23006DC0F7;
 			productRefGroup = B032DE22277A0C23006DC0F7 /* Products */;
@@ -1408,11 +1415,12 @@
 				B045FE7B2782984F006E36F9 /* DISK2.rom in Resources */,
 				B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */,
 				B045FE822782984F006E36F9 /* Apple2_JPlus_Video.rom in Resources */,
-				B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */,
+				B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */,
 				B045FE782782984F006E36F9 /* TK3000e.rom in Resources */,
 				B045FE872782984F006E36F9 /* Mockingboard-D.rom in Resources */,
 				B045FE7E2782984F006E36F9 /* Base64A.rom in Resources */,
 				B045FE732782984F006E36F9 /* Apple2_Plus.rom in Resources */,
+				B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */,
 				B045FE812782984F006E36F9 /* SSC.rom in Resources */,
 				B045FE852782984F006E36F9 /* Apple2.rom in Resources */,
 				B045FE832782984F006E36F9 /* Parallel.rom in Resources */,
@@ -1624,8 +1632,27 @@
 			isa = PBXVariantGroup;
 			children = (
 				B032DE2A277A0C24006DC0F7 /* Base */,
+				B0ED3FCC27859566006E4784 /* zh-Hant */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		B0ED3FCD2785973C006E4784 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B0ED3FCE2785973C006E4784 /* Base */,
+				B0ED3FD027859747006E4784 /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B0F0138E2785A211002936B4 /* Preferences.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B0F0138D2785A211002936B4 /* Base */,
+				B0F013902785A218002936B4 /* zh-Hant */,
+			);
+			name = Preferences.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1687,6 +1714,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -1748,6 +1776,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
