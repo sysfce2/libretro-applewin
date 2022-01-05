@@ -1,5 +1,5 @@
 //
-//  sdldummyframe.hpp
+//  MarianiFrame.hpp
 //  Mariani
 //
 //  Created by sh95014 on 1/2/22.
@@ -14,13 +14,13 @@ namespace common2
   struct EmulatorOptions;
 }
 
-namespace sa2
+namespace mariani
 {
 
-  class SDLDummyFrame : public SDLFrame
+  class MarianiFrame : public sa2::SDLFrame
   {
   public:
-    SDLDummyFrame(const common2::EmulatorOptions & options);
+    MarianiFrame(const common2::EmulatorOptions & options);
 
     void VideoPresentScreen() override;
     void Initialize(bool resetVideoState) override;

@@ -201,7 +201,7 @@
 		B049E8AD277C880800FC14A3 /* EmulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E8AB277C880800FC14A3 /* EmulatorView.mm */; };
 		B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
 		B049E8B2277D8B3B00FC14A3 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */; };
-		B0689D0A2780B9B60029EB7D /* sdldummyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* sdldummyframe.cpp */; };
+		B0689D0A2780B9B60029EB7D /* MarianiFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* MarianiFrame.cpp */; };
 		B0689D0D2780C85F0029EB7D /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
 		B0689D172781984F0029EB7D /* UserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B0689D152781984F0029EB7D /* UserDefaults.h */; };
 		B0689D182781984F0029EB7D /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
@@ -371,8 +371,8 @@
 		B049E8AB277C880800FC14A3 /* EmulatorView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EmulatorView.mm; sourceTree = "<group>"; };
 		B049E8AE277C9A8000FC14A3 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
-		B0689D082780B9B60029EB7D /* sdldummyframe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdldummyframe.cpp; sourceTree = "<group>"; };
-		B0689D092780B9B60029EB7D /* sdldummyframe.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdldummyframe.hpp; sourceTree = "<group>"; };
+		B0689D082780B9B60029EB7D /* MarianiFrame.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarianiFrame.cpp; sourceTree = "<group>"; };
+		B0689D092780B9B60029EB7D /* MarianiFrame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MarianiFrame.hpp; sourceTree = "<group>"; };
 		B0689D152781984F0029EB7D /* UserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefaults.h; sourceTree = "<group>"; };
 		B0689D162781984F0029EB7D /* UserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
 		B0927414277D9399003FFB79 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
@@ -702,6 +702,8 @@
 				B049E8AB277C880800FC14A3 /* EmulatorView.mm */,
 				B049E89C277C43BF00FC14A3 /* EmulatorViewController.h */,
 				B049E89D277C43BF00FC14A3 /* EmulatorViewController.m */,
+				B0689D082780B9B60029EB7D /* MarianiFrame.cpp */,
+				B0689D092780B9B60029EB7D /* MarianiFrame.hpp */,
 				B0927414277D9399003FFB79 /* PreferencesViewController.h */,
 				B0927415277D9399003FFB79 /* PreferencesViewController.mm */,
 				B0927418277D9403003FFB79 /* PreferencesWindowController.h */,
@@ -716,8 +718,6 @@
 				B049E8B1277D8B3B00FC14A3 /* Preferences.storyboard */,
 				B032DE2C277A0C24006DC0F7 /* main.m */,
 				B032DE2E277A0C24006DC0F7 /* mariani.entitlements */,
-				B0689D082780B9B60029EB7D /* sdldummyframe.cpp */,
-				B0689D092780B9B60029EB7D /* sdldummyframe.hpp */,
 			);
 			name = mariani;
 			path = source/frontends/mariani;
@@ -1531,7 +1531,7 @@
 				B0689D182781984F0029EB7D /* UserDefaults.m in Sources */,
 				B049E820277B512500FC14A3 /* sdirectsound.cpp in Sources */,
 				B09AB7D2277A21180002A6C3 /* Joystick.cpp in Sources */,
-				B0689D0A2780B9B60029EB7D /* sdldummyframe.cpp in Sources */,
+				B0689D0A2780B9B60029EB7D /* MarianiFrame.cpp in Sources */,
 				B09AB72E277A1BA40002A6C3 /* Util_MemoryTextFile.cpp in Sources */,
 				B049E852277B6FFE00FC14A3 /* fileregistry.cpp in Sources */,
 				B032DE2D277A0C24006DC0F7 /* main.m in Sources */,

@@ -16,7 +16,7 @@
 #import "gamepad.h"
 #import "programoptions.h"
 #import "sdirectsound.h"
-#import "sdldummyframe.hpp"
+#import "MarianiFrame.hpp"
 #import "utils.h"
 
 // AppleWin
@@ -108,7 +108,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     self.logger = new LoggerContext(options.log);
     self.registryContext = new RegistryContext(CreateFileRegistry(options));
 
-    frame.reset(new sa2::SDLDummyFrame(options));
+    frame.reset(new mariani::MarianiFrame(options));
 
     std::shared_ptr<Paddle> paddle(new sa2::Gamepad(0));
     self.initialisation = new Initialisation(frame, paddle);
