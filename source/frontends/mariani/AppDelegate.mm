@@ -16,7 +16,7 @@
 #import "gamepad.h"
 #import "programoptions.h"
 #import "sdirectsound.h"
-#import "MarianiFrame.hpp"
+#import "MarianiFrame.h"
 #import "utils.h"
 
 // AppleWin

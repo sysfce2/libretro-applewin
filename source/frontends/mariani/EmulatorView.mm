@@ -1,5 +1,5 @@
 //
-//  EmulatorView.m
+//  EmulatorView.mm
 //  Mariani
 //
 //  Created by sh95014 on 12/29/21.
@@ -8,6 +8,7 @@
 #import "EmulatorView.h"
 #import "Carbon/Carbon.h"
 #import "linux/keyboard.h"
+#import "linux/paddle.h"
 
 @interface EmulatorView ()
     @property BOOL forceCapsLock;
@@ -79,10 +80,23 @@
     }
 }
 
-- (void)flagsChanged:(NSEvent*)event
+- (void)flagsChanged:(NSEvent *)event
 {
     if (event.keyCode == kVK_CapsLock) {
         self.forceCapsLock = NO;
+    }
+    else if (event.modifierFlags & NSEventModifierFlagOption) {
+        // necessary check because we only want to translate the keyDown events
+        switch (event.keyCode) {
+            case kVK_Option:
+                Paddle::setButtonPressed(Paddle::ourOpenApple);
+                break;
+            case kVK_RightOption:
+                Paddle::setButtonPressed(Paddle::ourSolidApple);
+                break;
+            default:
+                break;
+        }
     }
 }
 

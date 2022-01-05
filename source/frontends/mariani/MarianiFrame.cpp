@@ -6,7 +6,7 @@
 //
 
 #include "StdAfx.h"
-#include "MarianiFrame.hpp"
+#include "MarianiFrame.h"
 #include "linux/resources.h"
 #include "ParallelPrinter.h"
 #include "AppDelegate.h"
