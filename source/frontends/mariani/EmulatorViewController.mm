@@ -45,8 +45,8 @@
 #import "EmulatorRenderer.h"
 #import "UserDefaults.h"
 
-#define SCREEN_RECORDING_FILE_NAME @"Mariani Recording"
-#define SCREENSHOT_FILE_NAME @"Mariani Screen Shot"
+#define SCREEN_RECORDING_FILE_NAME  NSLocalizedString(@"Mariani Recording", @"default name for new screen recording")
+#define SCREENSHOT_FILE_NAME        NSLocalizedString(@"Mariani Screen Shot", @"default name for new screenshot")
 
 @interface EmulatorViewController ()
 
@@ -284,9 +284,9 @@ std::shared_ptr<sa2::SDLFrame> frame;
 - (void)toggleScreenRecording {
     if (self.videoWriter == nil) {
         [self.delegate screenRecordingDidStart];
-        NSURL *url = [self unusedURLForFilename:SCREEN_RECORDING_FILE_NAME
-                                      extension:@"mov"
-                                       inFolder:[[UserDefaults sharedInstance] recordingsFolder]];
+        NSURL *url = [self.delegate unusedURLForFilename:SCREEN_RECORDING_FILE_NAME
+                                               extension:@"mov"
+                                                inFolder:[[UserDefaults sharedInstance] recordingsFolder]];
         NSLog(@"Starting screen recording to %@", url);
 
         NSError *error = nil;
@@ -374,9 +374,9 @@ std::shared_ptr<sa2::SDLFrame> frame;
         NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
         [newRep setSize:[image size]];
         NSData *pngData = [newRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-        NSURL *url = [self unusedURLForFilename:SCREENSHOT_FILE_NAME
-                                      extension:@"png"
-                                       inFolder:[[UserDefaults sharedInstance] screenshotsFolder]];
+        NSURL *url = [self.delegate unusedURLForFilename:SCREENSHOT_FILE_NAME
+                                               extension:@"png"
+                                                inFolder:[[UserDefaults sharedInstance] screenshotsFolder]];
         [pngData writeToURL:url atomically:YES];
         free(buffer);
 #ifdef DEBUG
@@ -394,33 +394,6 @@ std::shared_ptr<sa2::SDLFrame> frame;
     // area, so we crop tightly
     Video &video = GetVideo();
     return (video.GetVideoType() != VT_COLOR_IDEALIZED);
-}
-
-#pragma mark - Utilities
-
-- (NSURL *)unusedURLForFilename:(NSString *)desiredFilename extension:(NSString *)extension inFolder:(NSURL *)folder {
-    // walk through the folder to make a set of files that have our prefix
-    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
-        enumeratorAtURL:folder
-        includingPropertiesForKeys:nil
-        options:(NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles)
-        errorHandler:^(NSURL *url, NSError *error) { return YES; }];
-    NSMutableSet *set = [NSMutableSet set];
-    for (NSURL *url in enumerator) {
-        NSString *filename = [url lastPathComponent];
-        if ([filename hasPrefix:desiredFilename]) {
-            [set addObject:filename];
-        }
-    }
-    
-    // starting from "1", let's find one that's not already used
-    NSString *candidateFilename = [NSString stringWithFormat:@"%@.%@", desiredFilename, extension];
-    NSInteger index = 2;
-    while ([set containsObject:candidateFilename]) {
-        candidateFilename = [NSString stringWithFormat:@"%@ %ld.%@", desiredFilename, index++, extension];
-    }
-    
-    return [folder URLByAppendingPathComponent:candidateFilename];
 }
 
 @end

@@ -103,9 +103,6 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
-/* open another disk image */
-"Other…" = "Other…";
-
 /* No comment provided by engineer. */
 "Phasor (sound)" = "Phasor (sound)";
 
@@ -165,3 +162,18 @@
 
 /* empty slot */
 "—" = "—";
+
+/* open another disk image */
+"Other Disk…" = "Other Disk…";
+
+/* create new blank disk image */
+"New Blank Disk" = "New Blank Disk";
+
+/* default file name for new blank disk */
+"Blank" = "Blank";
+
+/* default name for new screen recording */
+"Mariani Recording" = "Mariani Recording";
+
+/* default name for new screenshot */
+"Mariani Screen Shot" = "Mariani Screen Shot";

@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateStatus:(NSString *)status;
 
+- (NSURL *)unusedURLForFilename:(NSString *)desiredFilename extension:(NSString *)extension inFolder:(NSURL *)folder;
+
 @end
 
 @interface EmulatorViewController : NSViewController<EmulatorRendererDelegate>

@@ -33,6 +33,7 @@
 #import "UserDefaults.h"
 
 #define STATUS_BAR_HEIGHT   32
+#define BLANK_FILE_NAME     NSLocalizedString(@"Blank", @"default file name for new blank disk")
 
 // encode the slot-drive tuple into a single number (suitable for use as a
 // NSView tag, or decode from it
@@ -170,6 +171,31 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     self.statusLabel.stringValue = status;
 }
 
+- (NSURL *)unusedURLForFilename:(NSString *)desiredFilename extension:(NSString *)extension inFolder:(NSURL *)folder {
+    // walk through the folder to make a set of files that have our prefix
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
+        enumeratorAtURL:folder
+        includingPropertiesForKeys:nil
+        options:(NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles)
+        errorHandler:^(NSURL *url, NSError *error) { return YES; }];
+    NSMutableSet *set = [NSMutableSet set];
+    for (NSURL *url in enumerator) {
+        NSString *filename = [url lastPathComponent];
+        if ([filename hasPrefix:desiredFilename]) {
+            [set addObject:filename];
+        }
+    }
+    
+    // starting from "1", let's find one that's not already used
+    NSString *candidateFilename = [NSString stringWithFormat:@"%@.%@", desiredFilename, extension];
+    NSInteger index = 2;
+    while ([set containsObject:candidateFilename]) {
+        candidateFilename = [NSString stringWithFormat:@"%@ %ld.%@", desiredFilename, index++, extension];
+    }
+    
+    return [folder URLByAppendingPathComponent:candidateFilename];
+}
+
 #pragma mark - App menu actions
 
 - (IBAction)preferencesAction:(id)sender {
@@ -253,6 +279,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         newItem.state = NSControlStateValueOn;
         video.SetVideoType(VideoType_e(newItem.tag));
         [self.emulatorVC videoModeDidChange];
+        [self.emulatorVC displayTypeDidChange];
         
         NSLog(@"Set video type to %ld", (long)newItem.tag);
     }
@@ -308,9 +335,15 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         [menu addItem:[NSMenuItem separatorItem]];
     }
     
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Other…", @"open another disk image")
-                                                  action:@selector(openDiskImage:)
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"New Blank Disk", @"create new blank disk image")
+                                                  action:@selector(createBlankDiskImage:)
                                            keyEquivalent:@""];
+    item.tag = ENCODE_SLOT_DRIVE(slot, drive);
+    [menu addItem:item];
+     
+    item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Other Disk…", @"open another disk image")
+                                      action:@selector(openDiskImage:)
+                               keyEquivalent:@""];
     item.tag = ENCODE_SLOT_DRIVE(slot, drive);
     [menu addItem:item];
 
@@ -349,7 +382,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         panel.delegate = self;
         
         if ([panel runModal] == NSModalResponseOK) {
-            const char *fileSystemRepresentation = [panel.URL fileSystemRepresentation];
+            const char *fileSystemRepresentation = panel.URL.fileSystemRepresentation;
             std::string filename(fileSystemRepresentation);
             CardManager &cardManager = GetCardMgr();
             Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
@@ -363,6 +396,43 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
                 NSLog(@"Failed to load '%s' into slot %d drive %d due to error %d",
                       fileSystemRepresentation, slot, drive, error);
                 card->NotifyInvalidImage(drive, fileSystemRepresentation, error);
+            }
+        }
+    }
+}
+
+- (void)createBlankDiskImage:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    if ([sender isKindOfClass:[NSMenuItem class]]) {
+        NSMenuItem *menuItem = (NSMenuItem *)sender;
+        const int slot = DECODE_SLOT(menuItem.tag);
+        const int drive = DECODE_DRIVE(menuItem.tag);
+        
+        NSString *lastPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"NSNavLastRootDirectory"];
+        lastPath = [lastPath stringByStandardizingPath];
+        if (lastPath != nil) {
+            NSURL *folder = [NSURL fileURLWithPath:lastPath];
+            if (folder == nil) {
+                // fall back to ~/Desktop
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
+                folder = [NSURL fileURLWithPath:[paths objectAtIndex:0]];
+            }
+
+            NSURL *url = [self unusedURLForFilename:BLANK_FILE_NAME extension:@"dsk" inFolder:folder];
+            std::string filename(url.fileSystemRepresentation);
+            CardManager &cardManager = GetCardMgr();
+            Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+            const ImageError_e error = card->InsertDisk(drive, filename, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_CREATE);
+            if (error == eIMAGE_ERROR_NONE) {
+                NSLog(@"Loaded '%s' into slot %d drive %d",
+                      url.fileSystemRepresentation, slot, drive);
+                [self updateDriveLights];
+            }
+            else {
+                NSLog(@"Failed to load '%s' into slot %d drive %d due to error %d",
+                      url.fileSystemRepresentation, slot, drive, error);
+                card->NotifyInvalidImage(drive, url.fileSystemRepresentation, error);
             }
         }
     }

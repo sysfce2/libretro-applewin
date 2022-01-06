@@ -103,9 +103,6 @@
 /* No comment provided by engineer. */
 "OK" = "好";
 
-/* open another disk image */
-"Other…" = "其他⋯";
-
 /* No comment provided by engineer. */
 "Phasor (sound)" = "Phasor (音效卡)";
 
@@ -165,3 +162,18 @@
 
 /* empty slot */
 "—" = "—";
+
+/* open another disk image */
+"Other Disk…" = "開啟其他磁碟⋯";
+
+/* create new blank disk image */
+"New Blank Disk" = "新增空白磁碟";
+
+/* default file name for new blank disk */
+"Blank" = "空白磁碟";
+
+/* default name for new screen recording */
+"Mariani Recording" = "Mariani 螢幕錄影";
+
+/* default name for new screenshot */
+"Mariani Screen Shot" = "Mariani 螢幕快照";
