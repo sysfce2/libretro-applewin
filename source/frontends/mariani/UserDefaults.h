@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
+@property (nonatomic) NSURL *recordingsFolder;
 @property (nonatomic) NSURL *screenshotsFolder;
 
 @end

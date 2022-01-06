@@ -43,6 +43,7 @@ void CreateLanguageCard(void); // should be in Memory.h
 
 @property (weak) IBOutlet NSButton *generalDeveloperToolsButton;
 @property (weak) IBOutlet NSButton *generalScreenshotsFolderButton;
+@property (weak) IBOutlet NSButton *generalRecordingsFolderButton;
 
 @property (weak) IBOutlet NSPopUpButton *computerMainBoardButton;
 @property (weak) IBOutlet NSPopUpButton *computerSlot1Button;
@@ -130,6 +131,9 @@ BOOL configured;
 
     NSURL *folder = [[UserDefaults sharedInstance] screenshotsFolder];
     self.generalScreenshotsFolderButton.title = [NSString stringWithUTF8String:[folder fileSystemRepresentation]];
+
+    folder = [[UserDefaults sharedInstance] recordingsFolder];
+    self.generalRecordingsFolderButton.title = [NSString stringWithUTF8String:[folder fileSystemRepresentation]];
 }
 
 // types of main boards, ordered as we want them to appear in UI
@@ -263,6 +267,21 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 
 - (IBAction)toggleDeveloperTools:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (IBAction)recordingsFolderAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.canChooseFiles = NO;
+    panel.canChooseDirectories = YES;
+    panel.allowsMultipleSelection = NO;
+    panel.canDownloadUbiquitousContents = YES;
+    
+    if ([panel runModal] == NSModalResponseOK) {
+        self.generalRecordingsFolderButton.title = [NSString stringWithUTF8String:[panel.URL fileSystemRepresentation]];
+        [[UserDefaults sharedInstance] setRecordingsFolder:panel.URL];
+    }
 }
 
 - (IBAction)screenshotsFolderAction:(id)sender {

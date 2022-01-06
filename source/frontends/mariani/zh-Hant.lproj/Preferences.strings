@@ -81,3 +81,9 @@
 
 /* Class = "NSTextFieldCell"; title = "1:"; ObjectID = "yJi-x4-80i"; */
 "yJi-x4-80i.title" = "1:";
+
+/* Class = "NSButtonCell"; title = "Button"; ObjectID = "WV6-AZ-bPD"; */
+"WV6-AZ-bPD.title" = "Button";
+
+/* Class = "NSTextFieldCell"; title = "Recordings:"; ObjectID = "zxc-fb-W3p"; */
+"zxc-fb-W3p.title" = "螢幕錄影:";

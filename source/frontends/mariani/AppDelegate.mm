@@ -510,7 +510,9 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     if (self.videoWriter == nil) {
         NSLog(@"Starting screen recording");
         
-        NSURL *url = [self unusedURLForFilename:SCREEN_RECORDING_FILE_NAME extension:@"mov"];
+        NSURL *url = [self unusedURLForFilename:SCREEN_RECORDING_FILE_NAME
+                                      extension:@"mov"
+                                       inFolder:[[UserDefaults sharedInstance] recordingsFolder]];
         
         NSError *error = nil;
         self.videoWriter = [[AVAssetWriter alloc] initWithURL:url
@@ -600,7 +602,10 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
         [newRep setSize:[image size]];
         NSData *pngData = [newRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-        [pngData writeToURL:[self unusedURLForFilename:SCREENSHOT_FILE_NAME extension:@"png"] atomically:YES];
+        NSURL *url = [self unusedURLForFilename:SCREENSHOT_FILE_NAME
+                                      extension:@"png"
+                                       inFolder:[[UserDefaults sharedInstance] screenshotsFolder]];
+        [pngData writeToURL:url atomically:YES];
         free(buffer);
 #ifdef DEBUG
         NSTimeInterval duration = -[start timeIntervalSinceNow];
@@ -933,9 +938,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     return self.hasStatusBar ? STATUS_BAR_HEIGHT : 0;
 }
 
-- (NSURL *)unusedURLForFilename:(NSString *)desiredFilename extension:(NSString *)extension {
-    NSURL *folder = [[UserDefaults sharedInstance] screenshotsFolder];
-    
+- (NSURL *)unusedURLForFilename:(NSString *)desiredFilename extension:(NSString *)extension inFolder:(NSURL *)folder {
     // walk through the folder to make a set of files that have our prefix
     NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
         enumeratorAtURL:folder
