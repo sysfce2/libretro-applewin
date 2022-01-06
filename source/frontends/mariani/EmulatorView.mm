@@ -42,8 +42,10 @@
             ch = 0x0D;  // ^M
             break;
         case kVK_LeftArrow:
-        case kVK_Delete:
             ch = 0x08;  // ^H
+            break;
+        case kVK_Delete:
+            ch = 0x7F;
             break;
         case kVK_RightArrow:
             ch = 0x15;  // ^U
