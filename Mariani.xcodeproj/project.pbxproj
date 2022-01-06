@@ -198,7 +198,7 @@
 		B049E852277B6FFE00FC14A3 /* fileregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E850277B6FFE00FC14A3 /* fileregistry.cpp */; };
 		B049E855277B702100FC14A3 /* ptreeregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E853277B702000FC14A3 /* ptreeregistry.cpp */; };
 		B049E859277B714800FC14A3 /* gamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E857277B714800FC14A3 /* gamepad.cpp */; };
-		B049E89F277C43BF00FC14A3 /* EmulatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B049E89D277C43BF00FC14A3 /* EmulatorViewController.m */; };
+		B049E89F277C43BF00FC14A3 /* EmulatorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E89D277C43BF00FC14A3 /* EmulatorViewController.mm */; };
 		B049E8A3277C44B100FC14A3 /* EmulatorRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A1277C44B100FC14A3 /* EmulatorRenderer.m */; };
 		B049E8A7277C4F6D00FC14A3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A6277C4F6D00FC14A3 /* Shaders.metal */; };
 		B049E8AD277C880800FC14A3 /* EmulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E8AB277C880800FC14A3 /* EmulatorView.mm */; };
@@ -370,7 +370,7 @@
 		B049E857277B714800FC14A3 /* gamepad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gamepad.cpp; path = source/frontends/sdl/gamepad.cpp; sourceTree = "<group>"; };
 		B049E858277B714800FC14A3 /* gamepad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gamepad.h; path = source/frontends/sdl/gamepad.h; sourceTree = "<group>"; };
 		B049E89C277C43BF00FC14A3 /* EmulatorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorViewController.h; sourceTree = "<group>"; };
-		B049E89D277C43BF00FC14A3 /* EmulatorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmulatorViewController.m; sourceTree = "<group>"; };
+		B049E89D277C43BF00FC14A3 /* EmulatorViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = EmulatorViewController.mm; sourceTree = "<group>"; };
 		B049E8A0277C44B100FC14A3 /* EmulatorRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorRenderer.h; sourceTree = "<group>"; };
 		B049E8A1277C44B100FC14A3 /* EmulatorRenderer.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = EmulatorRenderer.m; sourceTree = "<group>"; };
 		B049E8A4277C4F0E00FC14A3 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
@@ -716,7 +716,7 @@
 				B049E8AA277C880800FC14A3 /* EmulatorView.h */,
 				B049E8AB277C880800FC14A3 /* EmulatorView.mm */,
 				B049E89C277C43BF00FC14A3 /* EmulatorViewController.h */,
-				B049E89D277C43BF00FC14A3 /* EmulatorViewController.m */,
+				B049E89D277C43BF00FC14A3 /* EmulatorViewController.mm */,
 				B0689D092780B9B60029EB7D /* MarianiFrame.h */,
 				B0689D082780B9B60029EB7D /* MarianiFrame.cpp */,
 				B0927414277D9399003FFB79 /* PreferencesViewController.h */,
@@ -1602,7 +1602,7 @@
 				B09AB801277A21410002A6C3 /* dmusicc.cpp in Sources */,
 				B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */,
 				B09AB680277A14DB0002A6C3 /* StdAfx.cpp in Sources */,
-				B049E89F277C43BF00FC14A3 /* EmulatorViewController.m in Sources */,
+				B049E89F277C43BF00FC14A3 /* EmulatorViewController.mm in Sources */,
 				B09AB7D6277A21180002A6C3 /* Registry.cpp in Sources */,
 				B09AB7D5277A21180002A6C3 /* Debugger_Display.cpp in Sources */,
 				B09AB810277A21410002A6C3 /* winbase.cpp in Sources */,

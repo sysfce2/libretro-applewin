@@ -8,18 +8,18 @@
 #ifdef __OBJC__
 
 #import <Cocoa/Cocoa.h>
+#import "EmulatorViewController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSOpenSavePanelDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSOpenSavePanelDelegate, EmulatorViewControllerDelegate>
 
 - (void)applyVideoModeChange;
 - (BOOL)emulationHardwareChanged;
 - (IBAction)rebootEmulatorAction:(id)sender;
-- (void)restartFrame;
+- (void)reinitializeFrame;
 - (void)reconfigureDrives;
 - (int)showModalAlertofType:(int)type withMessage:(NSString *)message information:(NSString *)information;
 - (void)updateDriveLights;
 - (void)terminateWithReason:(NSString *)reason;
-- (BOOL)shouldOverscan;
 
 @end
 

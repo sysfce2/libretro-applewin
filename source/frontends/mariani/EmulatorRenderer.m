@@ -173,7 +173,7 @@
     _viewportSize.x = size.width;
     _viewportSize.y = size.height;
     
-    const BOOL shouldOverscan = [theAppDelegate shouldOverscan];
+    const BOOL shouldOverscan = [self.delegate shouldOverscan];
     const double borderWidth = shouldOverscan ? _frameBuffer.borderWidth * (1.0 - OVERSCAN) : _frameBuffer.borderWidth;
     const double borderHeight = shouldOverscan ? _frameBuffer.borderHeight * (1.0 - OVERSCAN) : _frameBuffer.borderHeight;
     const double borderWidthRatio = borderWidth / _frameBuffer.bufferWidth;

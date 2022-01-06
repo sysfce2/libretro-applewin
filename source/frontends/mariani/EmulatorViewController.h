@@ -25,14 +25,40 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CommonTypes.h"
+#import "EmulatorRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EmulatorViewController : NSViewController
+@protocol EmulatorViewControllerDelegate <NSObject>
 
-- (void)createScreen:(FrameBuffer *)frameBuffer;
-- (void)updateScreen:(FrameBuffer *)frameBuffer;
+- (BOOL)shouldPlayAudio;
+- (void)terminateWithReason:(NSString *)reason;
+
+- (void)screenRecordingDidStart;
+- (void)screenRecordingDidTick;
+- (void)screenRecordingDidTock;
+- (void)screenRecordingDidStop;
+
+- (void)updateStatus:(NSString *)status;
+
+@end
+
+@interface EmulatorViewController : NSViewController<EmulatorRendererDelegate>
+
+@property (nullable, weak) id<EmulatorViewControllerDelegate> delegate;
+
+- (void)start;
+- (void)pause;
+- (void)reboot;
+- (void)reinitialize;
+- (void)stop;
+
+- (void)toggleScreenRecording;
+- (void)takeScreenshot;
+
 - (void)displayTypeDidChange;
+- (void)videoModeDidChange;
+- (BOOL)emulationHardwareChanged;
 
 @end
 

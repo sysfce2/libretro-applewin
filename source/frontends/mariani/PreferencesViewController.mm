@@ -362,7 +362,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         
         [theAppDelegate reconfigureDrives];
         if (oldHasVidHD != video.HasVidHD()) {
-            [theAppDelegate restartFrame];
+            [theAppDelegate reinitializeFrame];
         }
 
         self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];

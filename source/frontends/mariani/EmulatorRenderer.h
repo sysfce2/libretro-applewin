@@ -24,12 +24,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MetalKit/MetalKit.h>
 #import "CommonTypes.h"
-@import MetalKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol EmulatorRendererDelegate <NSObject>
+
+- (BOOL)shouldOverscan;
+
+@end
+
 @interface EmulatorRenderer : NSObject<MTKViewDelegate>
+
+@property (nullable, weak) id<EmulatorRendererDelegate> delegate;
 
 - (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)mtkView frameBuffer:(FrameBuffer *)frameBuffer;
 
