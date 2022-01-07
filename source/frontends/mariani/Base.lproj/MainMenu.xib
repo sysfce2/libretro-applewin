@@ -312,7 +312,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" id="g5p-th-gOh">
                             <font key="font" metaFont="smallSystem"/>
-                            <string key="title">Mariani is a port of the AppleWin open source project, so most of the credit goes to its many volunteers over the years, but especially to audetto upon whose Raspberry Pi port this is based.</string>
+                            <string key="title">Mariani is a port of the AppleWin open source project, so most of the credit goes to its many volunteers over the years, but especially to Andrea Odetti upon whose Raspberry Pi port this is based.</string>
                             <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
