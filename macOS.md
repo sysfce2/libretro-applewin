@@ -18,7 +18,20 @@ brew install cmake pkgconfig libyaml minizip libslirp libpcap Boost sdl2 sdl2_im
 
 ### Checkout
 
-The next step is basically the same as in [Linux](linux.md) except you probably don't want any of the other frontends anyway so I simplified:
+Next, you'll probably want to generate an Xcode project to take advantage of source code indexing and finding the lines of code with warnings or errors. The parameters assume you just want the imgui frontend:
+
+```
+git clone https://github.com/sh95014/AppleWin.git --recursive
+cd AppleWin
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_SA2=ON -G Xcode ..
+open applewin.xcodeproj
+```
+
+The project should now launch in Xcode. Select the `ALL_BUILD` target and build. You can look under `Products` in the left pane to see where it is, because unfortunately Xcode does not seem to be able to run and debug the binary.
+
+Or, you can follow basically the same as in [Linux](linux.md), also simplified to build only the sa2 frontend:
 
 ```
 git clone https://github.com/sh95014/AppleWin.git --recursive
