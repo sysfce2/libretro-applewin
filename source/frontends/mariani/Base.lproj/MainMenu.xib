@@ -310,7 +310,7 @@
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IMx-mH-sLa">
                         <rect key="frame" x="156" y="61" width="336" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" selectable="YES" id="g5p-th-gOh">
+                        <textFieldCell key="cell" id="g5p-th-gOh">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title">Mariani is a port of the AppleWin open source project, so most of the credit goes to its many volunteers over the years, but especially to audetto upon whose Raspberry Pi port this is based.</string>
                             <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
