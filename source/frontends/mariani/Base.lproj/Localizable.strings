@@ -177,3 +177,6 @@
 
 /* default name for new screenshot */
 "Mariani Screen Shot" = "Mariani Screen Shot";
+
+/* No comment provided by engineer. */
+"Version %@ (%@)" = "Version %1$@ (%2$@)";

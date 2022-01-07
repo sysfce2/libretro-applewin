@@ -54,6 +54,13 @@
 @property (strong) IBOutlet NSButton *volumeToggleButton;
 @property (strong) IBOutlet NSButton *screenRecordingButton;
 
+@property (strong) IBOutlet NSWindow *aboutWindow;
+@property (strong) IBOutlet NSImageView *aboutImage;
+@property (strong) IBOutlet NSTextField *aboutTitle;
+@property (strong) IBOutlet NSTextField *aboutVersion;
+@property (strong) IBOutlet NSTextField *aboutCredits;
+@property (strong) IBOutlet NSButton *aboutLinkButton;
+
 @property (strong) PreferencesWindowController *preferencesWC;
 @property NSArray *driveLightButtons;
 @property NSData *driveLightButtonTemplateArchive;
@@ -194,6 +201,24 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
     
     return [folder URLByAppendingPathComponent:candidateFilename];
+}
+
+#pragma mark - Mariani menu actions
+
+- (IBAction)aboutAction:(id)sender {
+    if (self.aboutImage.image == nil) {
+        self.aboutImage.image = [NSApp applicationIconImage];
+        
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        self.aboutVersion.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)", @""),
+            [infoDictionary objectForKey:@"CFBundleShortVersionString"],
+            [infoDictionary objectForKey:@"CFBundleVersion"]];
+    }
+    [self.aboutWindow orderFront:sender];
+}
+
+- (IBAction)aboutLinkAction:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/sh95014/AppleWin"]];
 }
 
 #pragma mark - App menu actions

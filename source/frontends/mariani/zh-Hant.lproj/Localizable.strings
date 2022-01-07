@@ -177,3 +177,6 @@
 
 /* default name for new screenshot */
 "Mariani Screen Shot" = "Mariani 螢幕快照";
+
+/* No comment provided by engineer. */
+"Version %@ (%@)" = "版本 %1$@ (%2$@)";
