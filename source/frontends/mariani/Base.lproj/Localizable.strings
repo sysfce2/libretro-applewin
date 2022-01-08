@@ -210,3 +210,12 @@
 
 /* No comment provided by engineer. */
 "Unnamed" = "Unnamed";
+
+/* No comment provided by engineer. */
+"End Emulation" = "End Emulation";
+
+/* No comment provided by engineer. */
+"Ending Emulation" = "Ending Emulation";
+
+/* No comment provided by engineer. */
+"This will end the emulation and any unsaved changes will be lost." = "This will end the emulation and any unsaved changes will be lost.";

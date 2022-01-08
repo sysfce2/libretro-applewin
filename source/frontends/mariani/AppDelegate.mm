@@ -152,12 +152,21 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 #pragma mark - NSWindowDelegate
 
-- (void)windowWillClose:(NSNotification *)notification {
-    // needed despite applicationShouldTerminateAfterLastWindowClosed: because
-    // the preferences window may be open
-    if (notification.object == self.window) {
-        [self terminateWithReason:@"main window closed"];
-    }
+- (BOOL)windowShouldClose:(NSWindow *)sender {
+    NSAlert *alert = [[NSAlert alloc] init];
+    
+    alert.messageText = NSLocalizedString(@"Ending Emulation", @"");
+    alert.informativeText = NSLocalizedString(@"This will end the emulation and any unsaved changes will be lost.", @"");
+    alert.alertStyle = NSAlertStyleWarning;
+    alert.icon = [NSImage imageWithSystemSymbolName:@"hand.raised" accessibilityDescription:@""];
+    [alert addButtonWithTitle:NSLocalizedString(@"End Emulation", @"")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+    [alert beginSheetModalForWindow:sender completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSAlertFirstButtonReturn) {
+            [self terminateWithReason:@"main window closed"];
+        }
+    }];
+    return NO;
 }
 
 #pragma mark - NSOpenSavePanelDelegate

@@ -210,3 +210,12 @@
 
 /* No comment provided by engineer. */
 "Unnamed" = "未命名";
+
+/* No comment provided by engineer. */
+"End Emulation" = "結束模擬器";
+
+/* No comment provided by engineer. */
+"Ending Emulation" = "即將結束模擬器";
+
+/* No comment provided by engineer. */
+"This will end the emulation and any unsaved changes will be lost." = "這將結束模擬器，尚未儲存的資料也將會被刪除。";
