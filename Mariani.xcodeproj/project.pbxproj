@@ -152,6 +152,100 @@
 		B020F8A62785D30E0071D3C7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020F8A32785D30E0071D3C7 /* stdafx.cpp */; };
 		B020F8A92785EA440071D3C7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8A82785EA440071D3C7 /* AVFoundation.framework */; };
 		B020F8AB2785F3920071D3C7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8AA2785F3920071D3C7 /* CoreMedia.framework */; };
+		B0270B3A2789CA9F00E3ACCF /* guiddef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7ED277A21400002A6C3 /* guiddef.cpp */; };
+		B0270B3B2789CA9F00E3ACCF /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
+		B0270B3C2789CA9F00E3ACCF /* sdirectsound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E81E277B512500FC14A3 /* sdirectsound.cpp */; };
+		B0270B3D2789CA9F00E3ACCF /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C8277A21180002A6C3 /* Joystick.cpp */; };
+		B0270B3E2789CA9F00E3ACCF /* MarianiFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* MarianiFrame.cpp */; };
+		B0270B3F2789CA9F00E3ACCF /* Util_MemoryTextFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB710277A1BA30002A6C3 /* Util_MemoryTextFile.cpp */; };
+		B0270B402789CA9F00E3ACCF /* fileregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E850277B6FFE00FC14A3 /* fileregistry.cpp */; };
+		B0270B412789CA9F00E3ACCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE2C277A0C24006DC0F7 /* main.m */; };
+		B0270B422789CA9F00E3ACCF /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
+		B0270B432789CA9F00E3ACCF /* FourPlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CF277A21180002A6C3 /* FourPlay.cpp */; };
+		B0270B442789CA9F00E3ACCF /* Debugger_Win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C9277A21180002A6C3 /* Debugger_Win32.cpp */; };
+		B0270B452789CA9F00E3ACCF /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D0277A21180002A6C3 /* Keyboard.cpp */; };
+		B0270B462789CA9F00E3ACCF /* Debugger_Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB721277A1BA40002A6C3 /* Debugger_Color.cpp */; };
+		B0270B472789CA9F00E3ACCF /* SNESMAX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D1277A21180002A6C3 /* SNESMAX.cpp */; };
+		B0270B482789CA9F00E3ACCF /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A6277C4F6D00FC14A3 /* Shaders.metal */; };
+		B0270B492789CA9F00E3ACCF /* SerialComms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CD277A21180002A6C3 /* SerialComms.cpp */; };
+		B0270B4B2789CA9F00E3ACCF /* Debugger_Commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB714277A1BA40002A6C3 /* Debugger_Commands.cpp */; };
+		B0270B4C2789CA9F00E3ACCF /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E83D277B61AC00FC14A3 /* utils.cpp */; };
+		B0270B4D2789CA9F00E3ACCF /* winnls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7FA277A21410002A6C3 /* winnls.cpp */; };
+		B0270B4E2789CA9F00E3ACCF /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7EF277A21400002A6C3 /* misc.cpp */; };
+		B0270B4F2789CA9F00E3ACCF /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E838277B61A100FC14A3 /* utils.cpp */; };
+		B0270B512789CA9F00E3ACCF /* PropertySheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CE277A21180002A6C3 /* PropertySheet.cpp */; };
+		B0270B522789CA9F00E3ACCF /* Speech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB626277A14DB0002A6C3 /* Speech.cpp */; };
+		B0270B532789CA9F00E3ACCF /* EmulatorRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A1277C44B100FC14A3 /* EmulatorRenderer.m */; };
+		B0270B542789CA9F00E3ACCF /* Debugger_Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB71D277A1BA40002A6C3 /* Debugger_Assembler.cpp */; };
+		B0270B552789CA9F00E3ACCF /* commonframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E830277B5E3700FC14A3 /* commonframe.cpp */; };
+		B0270B562789CA9F00E3ACCF /* fileapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F9277A21410002A6C3 /* fileapi.cpp */; };
+		B0270B572789CA9F00E3ACCF /* dsound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E5277A21400002A6C3 /* dsound.cpp */; };
+		B0270B582789CA9F00E3ACCF /* speed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E841277B61CB00FC14A3 /* speed.cpp */; };
+		B0270B592789CA9F00E3ACCF /* Debugger_Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB71E277A1BA40002A6C3 /* Debugger_Console.cpp */; };
+		B0270B5A2789CA9F00E3ACCF /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE25277A0C23006DC0F7 /* AppDelegate.mm */; };
+		B0270B5B2789CA9F00E3ACCF /* sdlframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E824277B52B200FC14A3 /* sdlframe.cpp */; };
+		B0270B5C2789CA9F00E3ACCF /* Debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB718277A1BA40002A6C3 /* Debug.cpp */; };
+		B0270B5D2789CA9F00E3ACCF /* ptreeregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E853277B702000FC14A3 /* ptreeregistry.cpp */; };
+		B0270B5E2789CA9F00E3ACCF /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
+		B0270B5F2789CA9F00E3ACCF /* Debugger_Help.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB71A277A1BA40002A6C3 /* Debugger_Help.cpp */; };
+		B0270B602789CA9F00E3ACCF /* EmulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E8AB277C880800FC14A3 /* EmulatorView.mm */; };
+		B0270B612789CA9F00E3ACCF /* Debugger_Range.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB70F277A1BA30002A6C3 /* Debugger_Range.cpp */; };
+		B0270B622789CA9F00E3ACCF /* strsafe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F2277A21400002A6C3 /* strsafe.cpp */; };
+		B0270B632789CA9F00E3ACCF /* winhandles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F1277A21400002A6C3 /* winhandles.cpp */; };
+		B0270B642789CA9F00E3ACCF /* Debugger_Symbols.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB70C277A1BA30002A6C3 /* Debugger_Symbols.cpp */; };
+		B0270B652789CA9F00E3ACCF /* processfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E834277B614900FC14A3 /* processfile.cpp */; };
+		B0270B662789CA9F00E3ACCF /* winuser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E3277A21400002A6C3 /* winuser.cpp */; };
+		B0270B672789CA9F00E3ACCF /* timeapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E4277A21400002A6C3 /* timeapi.cpp */; };
+		B0270B682789CA9F00E3ACCF /* Debugger_DisassemblerData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB70A277A1BA30002A6C3 /* Debugger_DisassemblerData.cpp */; };
+		B0270B692789CA9F00E3ACCF /* Debugger_Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB709277A1BA30002A6C3 /* Debugger_Parser.cpp */; };
+		B0270B6A2789CA9F00E3ACCF /* winstrings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E9277A21400002A6C3 /* winstrings.cpp */; };
+		B0270B6B2789CA9F00E3ACCF /* PropertySheetHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7EA277A36CE00FC14A3 /* PropertySheetHelper.cpp */; };
+		B0270B6C2789CA9F00E3ACCF /* Debugger_Disassembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB706277A1BA30002A6C3 /* Debugger_Disassembler.cpp */; };
+		B0270B6D2789CA9F00E3ACCF /* dmusicc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E1277A21400002A6C3 /* dmusicc.cpp */; };
+		B0270B6E2789CA9F00E3ACCF /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
+		B0270B6F2789CA9F00E3ACCF /* StdAfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB63A277A14DB0002A6C3 /* StdAfx.cpp */; };
+		B0270B702789CA9F00E3ACCF /* EmulatorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E89D277C43BF00FC14A3 /* EmulatorViewController.mm */; };
+		B0270B712789CA9F00E3ACCF /* Registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CC277A21180002A6C3 /* Registry.cpp */; };
+		B0270B722789CA9F00E3ACCF /* Debugger_Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CB277A21180002A6C3 /* Debugger_Display.cpp */; };
+		B0270B732789CA9F00E3ACCF /* winbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F0277A21400002A6C3 /* winbase.cpp */; };
+		B0270B742789CA9F00E3ACCF /* gamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E857277B714800FC14A3 /* gamepad.cpp */; };
+		B0270B792789CA9F00E3ACCF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8AA2785F3920071D3C7 /* CoreMedia.framework */; };
+		B0270B7A2789CA9F00E3ACCF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8A82785EA440071D3C7 /* AVFoundation.framework */; };
+		B0270B7B2789CA9F00E3ACCF /* libAppleWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0098BFA277E0F6800F38E0C /* libAppleWin.a */; };
+		B0270B7C2789CA9F00E3ACCF /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
+		B0270B7D2789CA9F00E3ACCF /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E84D277B6F4A00FC14A3 /* libboost_program_options.a */; };
+		B0270B7E2789CA9F00E3ACCF /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E822277B517700FC14A3 /* libSDL2.a */; };
+		B0270B7F2789CA9F00E3ACCF /* libslirp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E81A277A394500FC14A3 /* libslirp.a */; };
+		B0270B802789CA9F00E3ACCF /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
+		B0270B822789CA9F00E3ACCF /* PRAVETS82.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6A2782984E006E36F9 /* PRAVETS82.ROM */; };
+		B0270B832789CA9F00E3ACCF /* CHARSET8M.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */; };
+		B0270B842789CA9F00E3ACCF /* CHARSET4.BMP in Resources */ = {isa = PBXBuildFile; fileRef = B045FE882782B9B3006E36F9 /* CHARSET4.BMP */; };
+		B0270B852789CA9F00E3ACCF /* PRAVETS8M.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE612782984E006E36F9 /* PRAVETS8M.ROM */; };
+		B0270B862789CA9F00E3ACCF /* TKClock.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE632782984E006E36F9 /* TKClock.rom */; };
+		B0270B872789CA9F00E3ACCF /* PRAVETS8C.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE692782984E006E36F9 /* PRAVETS8C.ROM */; };
+		B0270B882789CA9F00E3ACCF /* ThunderClockPlus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6E2782984E006E36F9 /* ThunderClockPlus.rom */; };
+		B0270B892789CA9F00E3ACCF /* MouseInterface.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5F2782984E006E36F9 /* MouseInterface.rom */; };
+		B0270B8A2789CA9F00E3ACCF /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5C2782984E006E36F9 /* Apple2e.rom */; };
+		B0270B8C2789CA9F00E3ACCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B032DE27277A0C24006DC0F7 /* Assets.xcassets */; };
+		B0270B8D2789CA9F00E3ACCF /* Base64A_German_Video.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE642782984E006E36F9 /* Base64A_German_Video.rom */; };
+		B0270B8E2789CA9F00E3ACCF /* Hddrvr.bin in Resources */ = {isa = PBXBuildFile; fileRef = B045FE602782984E006E36F9 /* Hddrvr.bin */; };
+		B0270B8F2789CA9F00E3ACCF /* CHARSET8C.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */; };
+		B0270B902789CA9F00E3ACCF /* DISK2-13sector.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */; };
+		B0270B912789CA9F00E3ACCF /* DISK2.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE652782984E006E36F9 /* DISK2.rom */; };
+		B0270B922789CA9F00E3ACCF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B032DE29277A0C24006DC0F7 /* MainMenu.xib */; };
+		B0270B932789CA9F00E3ACCF /* Apple2_JPlus_Video.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6C2782984E006E36F9 /* Apple2_JPlus_Video.rom */; };
+		B0270B942789CA9F00E3ACCF /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
+		B0270B952789CA9F00E3ACCF /* TK3000e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE622782984E006E36F9 /* TK3000e.rom */; };
+		B0270B962789CA9F00E3ACCF /* Mockingboard-D.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE712782984F006E36F9 /* Mockingboard-D.rom */; };
+		B0270B972789CA9F00E3ACCF /* Base64A.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE682782984E006E36F9 /* Base64A.rom */; };
+		B0270B982789CA9F00E3ACCF /* Apple2_Plus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */; };
+		B0270B992789CA9F00E3ACCF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
+		B0270B9A2789CA9F00E3ACCF /* SSC.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6B2782984E006E36F9 /* SSC.rom */; };
+		B0270B9B2789CA9F00E3ACCF /* Apple2.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6F2782984E006E36F9 /* Apple2.rom */; };
+		B0270B9C2789CA9F00E3ACCF /* Parallel.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6D2782984E006E36F9 /* Parallel.rom */; };
+		B0270B9D2789CA9F00E3ACCF /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE702782984E006E36F9 /* Apple2e_Enhanced.rom */; };
+		B0270B9E2789CA9F00E3ACCF /* Apple2_JPlus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE672782984E006E36F9 /* Apple2_JPlus.rom */; };
+		B0270B9F2789CA9F00E3ACCF /* CHARSET82.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */; };
 		B032DE26277A0C23006DC0F7 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE25277A0C23006DC0F7 /* AppDelegate.mm */; };
 		B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B032DE27277A0C24006DC0F7 /* Assets.xcassets */; };
 		B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B032DE29277A0C24006DC0F7 /* MainMenu.xib */; };
@@ -209,7 +303,6 @@
 		B08CFE3A27889220002B841D /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3927889220002B841D /* libdiskimg.a */; };
 		B08CFE3C2788941F002B841D /* libnufx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3B2788941F002B841D /* libnufx.a */; };
 		B08CFE3E27889479002B841D /* libhfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3D27889479002B841D /* libhfs.a */; };
-		B08CFE4927889D44002B841D /* DiskImageWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = B08CFE4727889D44002B841D /* DiskImageWrapper.h */; };
 		B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE4827889D44002B841D /* DiskImageWrapper.mm */; };
 		B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
@@ -279,7 +372,8 @@
 		B020F8A52785D30E0071D3C7 /* TestCPU6502.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestCPU6502.cpp; path = test/TestCPU6502/TestCPU6502.cpp; sourceTree = SOURCE_ROOT; };
 		B020F8A82785EA440071D3C7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B020F8AA2785F3920071D3C7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		B032DE21277A0C23006DC0F7 /* Mariani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mariani.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0270BA32789CA9F00E3ACCF /* Mariani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mariani.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B032DE21277A0C23006DC0F7 /* Mariani Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mariani Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE24277A0C23006DC0F7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B032DE25277A0C23006DC0F7 /* AppDelegate.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		B032DE27277A0C24006DC0F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -661,6 +755,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0270B752789CA9F00E3ACCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0270B792789CA9F00E3ACCF /* CoreMedia.framework in Frameworks */,
+				B0270B7A2789CA9F00E3ACCF /* AVFoundation.framework in Frameworks */,
+				B0270B7B2789CA9F00E3ACCF /* libAppleWin.a in Frameworks */,
+				B0270B7C2789CA9F00E3ACCF /* MetalKit.framework in Frameworks */,
+				B0270B7D2789CA9F00E3ACCF /* libboost_program_options.a in Frameworks */,
+				B0270B7E2789CA9F00E3ACCF /* libSDL2.a in Frameworks */,
+				B0270B7F2789CA9F00E3ACCF /* libslirp.a in Frameworks */,
+				B0270B802789CA9F00E3ACCF /* libpcap.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B032DE1E277A0C23006DC0F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -715,10 +824,11 @@
 		B032DE22277A0C23006DC0F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B032DE21277A0C23006DC0F7 /* Mariani.app */,
+				B032DE21277A0C23006DC0F7 /* Mariani Pro.app */,
 				B032DE33277A0C24006DC0F7 /* MarianiTests.xctest */,
 				B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */,
 				B0098BFA277E0F6800F38E0C /* libAppleWin.a */,
+				B0270BA32789CA9F00E3ACCF /* Mariani.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1305,11 +1415,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0270B372789CA9F00E3ACCF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B09AB6E1277A171A0002A6C3 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B08CFE4927889D44002B841D /* DiskImageWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1333,9 +1449,27 @@
 			productReference = B0098BFA277E0F6800F38E0C /* libAppleWin.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B032DE20277A0C23006DC0F7 /* Mariani */ = {
+		B0270B362789CA9F00E3ACCF /* Mariani */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B032DE47277A0C24006DC0F7 /* Build configuration list for PBXNativeTarget "Mariani" */;
+			buildConfigurationList = B0270BA02789CA9F00E3ACCF /* Build configuration list for PBXNativeTarget "Mariani" */;
+			buildPhases = (
+				B0270B372789CA9F00E3ACCF /* Headers */,
+				B0270B392789CA9F00E3ACCF /* Sources */,
+				B0270B752789CA9F00E3ACCF /* Frameworks */,
+				B0270B812789CA9F00E3ACCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mariani;
+			productName = mariani;
+			productReference = B0270BA32789CA9F00E3ACCF /* Mariani.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B032DE20277A0C23006DC0F7 /* Mariani Pro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B032DE47277A0C24006DC0F7 /* Build configuration list for PBXNativeTarget "Mariani Pro" */;
 			buildPhases = (
 				B09AB6E1277A171A0002A6C3 /* Headers */,
 				B032DE1D277A0C23006DC0F7 /* Sources */,
@@ -1346,9 +1480,9 @@
 			);
 			dependencies = (
 			);
-			name = Mariani;
+			name = "Mariani Pro";
 			productName = mariani;
-			productReference = B032DE21277A0C23006DC0F7 /* Mariani.app */;
+			productReference = B032DE21277A0C23006DC0F7 /* Mariani Pro.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B032DE32277A0C24006DC0F7 /* MarianiTests */ = {
@@ -1426,7 +1560,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B032DE20277A0C23006DC0F7 /* Mariani */,
+				B032DE20277A0C23006DC0F7 /* Mariani Pro */,
+				B0270B362789CA9F00E3ACCF /* Mariani */,
 				B0098BF9277E0F6800F38E0C /* AppleWin */,
 				B032DE32277A0C24006DC0F7 /* MarianiTests */,
 				B032DE3C277A0C24006DC0F7 /* MarianiUITests */,
@@ -1435,6 +1570,42 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B0270B812789CA9F00E3ACCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0270B822789CA9F00E3ACCF /* PRAVETS82.ROM in Resources */,
+				B0270B832789CA9F00E3ACCF /* CHARSET8M.bmp in Resources */,
+				B0270B842789CA9F00E3ACCF /* CHARSET4.BMP in Resources */,
+				B0270B852789CA9F00E3ACCF /* PRAVETS8M.ROM in Resources */,
+				B0270B862789CA9F00E3ACCF /* TKClock.rom in Resources */,
+				B0270B872789CA9F00E3ACCF /* PRAVETS8C.ROM in Resources */,
+				B0270B882789CA9F00E3ACCF /* ThunderClockPlus.rom in Resources */,
+				B0270B892789CA9F00E3ACCF /* MouseInterface.rom in Resources */,
+				B0270B8A2789CA9F00E3ACCF /* Apple2e.rom in Resources */,
+				B0270B8C2789CA9F00E3ACCF /* Assets.xcassets in Resources */,
+				B0270B8D2789CA9F00E3ACCF /* Base64A_German_Video.rom in Resources */,
+				B0270B8E2789CA9F00E3ACCF /* Hddrvr.bin in Resources */,
+				B0270B8F2789CA9F00E3ACCF /* CHARSET8C.bmp in Resources */,
+				B0270B902789CA9F00E3ACCF /* DISK2-13sector.rom in Resources */,
+				B0270B912789CA9F00E3ACCF /* DISK2.rom in Resources */,
+				B0270B922789CA9F00E3ACCF /* MainMenu.xib in Resources */,
+				B0270B932789CA9F00E3ACCF /* Apple2_JPlus_Video.rom in Resources */,
+				B0270B942789CA9F00E3ACCF /* Preferences.storyboard in Resources */,
+				B0270B952789CA9F00E3ACCF /* TK3000e.rom in Resources */,
+				B0270B962789CA9F00E3ACCF /* Mockingboard-D.rom in Resources */,
+				B0270B972789CA9F00E3ACCF /* Base64A.rom in Resources */,
+				B0270B982789CA9F00E3ACCF /* Apple2_Plus.rom in Resources */,
+				B0270B992789CA9F00E3ACCF /* Localizable.strings in Resources */,
+				B0270B9A2789CA9F00E3ACCF /* SSC.rom in Resources */,
+				B0270B9B2789CA9F00E3ACCF /* Apple2.rom in Resources */,
+				B0270B9C2789CA9F00E3ACCF /* Parallel.rom in Resources */,
+				B0270B9D2789CA9F00E3ACCF /* Apple2e_Enhanced.rom in Resources */,
+				B0270B9E2789CA9F00E3ACCF /* Apple2_JPlus.rom in Resources */,
+				B0270B9F2789CA9F00E3ACCF /* CHARSET82.bmp in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B032DE1F277A0C23006DC0F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1573,6 +1744,70 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0270B392789CA9F00E3ACCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0270B3A2789CA9F00E3ACCF /* guiddef.cpp in Sources */,
+				B0270B3B2789CA9F00E3ACCF /* UserDefaults.m in Sources */,
+				B0270B3C2789CA9F00E3ACCF /* sdirectsound.cpp in Sources */,
+				B0270B3D2789CA9F00E3ACCF /* Joystick.cpp in Sources */,
+				B0270B3E2789CA9F00E3ACCF /* MarianiFrame.cpp in Sources */,
+				B0270B3F2789CA9F00E3ACCF /* Util_MemoryTextFile.cpp in Sources */,
+				B0270B402789CA9F00E3ACCF /* fileregistry.cpp in Sources */,
+				B0270B412789CA9F00E3ACCF /* main.m in Sources */,
+				B0270B422789CA9F00E3ACCF /* programoptions.cpp in Sources */,
+				B0270B432789CA9F00E3ACCF /* FourPlay.cpp in Sources */,
+				B0270B442789CA9F00E3ACCF /* Debugger_Win32.cpp in Sources */,
+				B0270B452789CA9F00E3ACCF /* Keyboard.cpp in Sources */,
+				B0270B462789CA9F00E3ACCF /* Debugger_Color.cpp in Sources */,
+				B0270B472789CA9F00E3ACCF /* SNESMAX.cpp in Sources */,
+				B0270B482789CA9F00E3ACCF /* Shaders.metal in Sources */,
+				B0270B492789CA9F00E3ACCF /* SerialComms.cpp in Sources */,
+				B0270B4B2789CA9F00E3ACCF /* Debugger_Commands.cpp in Sources */,
+				B0270B4C2789CA9F00E3ACCF /* utils.cpp in Sources */,
+				B0270B4D2789CA9F00E3ACCF /* winnls.cpp in Sources */,
+				B0270B4E2789CA9F00E3ACCF /* misc.cpp in Sources */,
+				B0270B4F2789CA9F00E3ACCF /* utils.cpp in Sources */,
+				B0270B512789CA9F00E3ACCF /* PropertySheet.cpp in Sources */,
+				B0270B522789CA9F00E3ACCF /* Speech.cpp in Sources */,
+				B0270B532789CA9F00E3ACCF /* EmulatorRenderer.m in Sources */,
+				B0270B542789CA9F00E3ACCF /* Debugger_Assembler.cpp in Sources */,
+				B0270B552789CA9F00E3ACCF /* commonframe.cpp in Sources */,
+				B0270B562789CA9F00E3ACCF /* fileapi.cpp in Sources */,
+				B0270B572789CA9F00E3ACCF /* dsound.cpp in Sources */,
+				B0270B582789CA9F00E3ACCF /* speed.cpp in Sources */,
+				B0270B592789CA9F00E3ACCF /* Debugger_Console.cpp in Sources */,
+				B0270B5A2789CA9F00E3ACCF /* AppDelegate.mm in Sources */,
+				B0270B5B2789CA9F00E3ACCF /* sdlframe.cpp in Sources */,
+				B0270B5C2789CA9F00E3ACCF /* Debug.cpp in Sources */,
+				B0270B5D2789CA9F00E3ACCF /* ptreeregistry.cpp in Sources */,
+				B0270B5E2789CA9F00E3ACCF /* PreferencesWindowController.m in Sources */,
+				B0270B5F2789CA9F00E3ACCF /* Debugger_Help.cpp in Sources */,
+				B0270B602789CA9F00E3ACCF /* EmulatorView.mm in Sources */,
+				B0270B612789CA9F00E3ACCF /* Debugger_Range.cpp in Sources */,
+				B0270B622789CA9F00E3ACCF /* strsafe.cpp in Sources */,
+				B0270B632789CA9F00E3ACCF /* winhandles.cpp in Sources */,
+				B0270B642789CA9F00E3ACCF /* Debugger_Symbols.cpp in Sources */,
+				B0270B652789CA9F00E3ACCF /* processfile.cpp in Sources */,
+				B0270B662789CA9F00E3ACCF /* winuser.cpp in Sources */,
+				B0270B672789CA9F00E3ACCF /* timeapi.cpp in Sources */,
+				B0270B682789CA9F00E3ACCF /* Debugger_DisassemblerData.cpp in Sources */,
+				B0270B692789CA9F00E3ACCF /* Debugger_Parser.cpp in Sources */,
+				B0270B6A2789CA9F00E3ACCF /* winstrings.cpp in Sources */,
+				B0270B6B2789CA9F00E3ACCF /* PropertySheetHelper.cpp in Sources */,
+				B0270B6C2789CA9F00E3ACCF /* Debugger_Disassembler.cpp in Sources */,
+				B0270B6D2789CA9F00E3ACCF /* dmusicc.cpp in Sources */,
+				B0270B6E2789CA9F00E3ACCF /* PreferencesViewController.mm in Sources */,
+				B0270B6F2789CA9F00E3ACCF /* StdAfx.cpp in Sources */,
+				B0270B702789CA9F00E3ACCF /* EmulatorViewController.mm in Sources */,
+				B0270B712789CA9F00E3ACCF /* Registry.cpp in Sources */,
+				B0270B722789CA9F00E3ACCF /* Debugger_Display.cpp in Sources */,
+				B0270B732789CA9F00E3ACCF /* winbase.cpp in Sources */,
+				B0270B742789CA9F00E3ACCF /* gamepad.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B032DE1D277A0C23006DC0F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1662,12 +1897,12 @@
 /* Begin PBXTargetDependency section */
 		B032DE35277A0C24006DC0F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B032DE20277A0C23006DC0F7 /* Mariani */;
+			target = B032DE20277A0C23006DC0F7 /* Mariani Pro */;
 			targetProxy = B032DE34277A0C24006DC0F7 /* PBXContainerItemProxy */;
 		};
 		B032DE3F277A0C24006DC0F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B032DE20277A0C23006DC0F7 /* Mariani */;
+			target = B032DE20277A0C23006DC0F7 /* Mariani Pro */;
 			targetProxy = B032DE3E277A0C24006DC0F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1761,6 +1996,94 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B0270BA12789CA9F00E3ACCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = mariani/mariani.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					source,
+					/opt/homebrew/opt/libslirp/include/slirp,
+					/opt/homebrew/opt/sdl2/include/SDL2,
+					/opt/homebrew/opt/sdl2_image/include/SDL2,
+					/opt/homebrew/opt/boost/include,
+					../CiderPress/diskimg,
+				);
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/libslirp/4.6.1/lib,
+					/opt/homebrew/Cellar/sdl2/2.0.18/lib,
+					/opt/homebrew/Cellar/sdl2_image/2.0.5/lib,
+					/opt/homebrew/Cellar/boost/1.76.0/lib,
+					"../CiderPress/diskimg/**",
+					../CiderPress/nufxlib,
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B0270BA22789CA9F00E3ACCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = mariani/mariani.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					source,
+					/opt/homebrew/opt/libslirp/include/slirp,
+					/opt/homebrew/opt/sdl2/include/SDL2,
+					/opt/homebrew/opt/sdl2_image/include/SDL2,
+					/opt/homebrew/opt/boost/include,
+					../CiderPress/diskimg,
+				);
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/libslirp/4.6.1/lib,
+					/opt/homebrew/Cellar/sdl2/2.0.18/lib,
+					/opt/homebrew/Cellar/sdl2_image/2.0.5/lib,
+					/opt/homebrew/Cellar/boost/1.76.0/lib,
+					"../CiderPress/diskimg/**",
+					../CiderPress/nufxlib,
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -1893,7 +2216,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					FEATURE_BROWSER,
+					"$(inherited)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					source,
@@ -1920,7 +2246,7 @@
 					../CiderPress/nufxlib,
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -1937,7 +2263,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					FEATURE_BROWSER,
+					"$(inherited)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					source,
@@ -1964,7 +2293,7 @@
 					../CiderPress/nufxlib,
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -2050,6 +2379,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B0270BA02789CA9F00E3ACCF /* Build configuration list for PBXNativeTarget "Mariani" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0270BA12789CA9F00E3ACCF /* Debug */,
+				B0270BA22789CA9F00E3ACCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B032DE1C277A0C23006DC0F7 /* Build configuration list for PBXProject "Mariani" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2059,7 +2397,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B032DE47277A0C24006DC0F7 /* Build configuration list for PBXNativeTarget "Mariani" */ = {
+		B032DE47277A0C24006DC0F7 /* Build configuration list for PBXNativeTarget "Mariani Pro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B032DE48277A0C24006DC0F7 /* Debug */,

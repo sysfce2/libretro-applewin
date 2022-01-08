@@ -144,7 +144,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="BcV-Zb-Hv8">
-                                                    <rect key="frame" x="711" y="0.0" width="80" height="17"/>
+                                                    <rect key="frame" x="710.5" y="0.0" width="80" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aDu-sv-7of">

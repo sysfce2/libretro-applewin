@@ -28,14 +28,16 @@
 #import "Video.h"
 
 #import "CommonTypes.h"
-#import "DiskImageBrowserWindowController.h"
-#import "DiskImageWrapper.h"
 #import "EmulatorViewController.h"
 #import "PreferencesWindowController.h"
 #import "UserDefaults.h"
 
+#ifdef FEATURE_BROWSER
 #import "DiskImg.h"
+#import "DiskImageBrowserWindowController.h"
+#import "DiskImageWrapper.h"
 using namespace DiskImgLib;
+#endif // FEATURE_BROWSER
 
 #define STATUS_BAR_HEIGHT   32
 #define BLANK_FILE_NAME     NSLocalizedString(@"Blank", @"default file name for new blank disk")
@@ -76,7 +78,9 @@ using namespace DiskImgLib;
 
 @end
 
+#ifdef FEATURE_BROWSER
 static void DiskImgMsgHandler(const char *file, int line, const char *msg);
+#endif
 
 @interface NSAlert (Synchronous)
 
@@ -90,8 +94,10 @@ static void DiskImgMsgHandler(const char *file, int line, const char *msg);
 Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+#ifdef FEATURE_BROWSER
     Global::SetDebugMsgHandler(DiskImgMsgHandler);
     Global::AppInit();
+#endif
     
     _hasStatusBar = YES;
     self.driveLightButtonTemplate.hidden = YES;
@@ -123,7 +129,9 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     [self.emulatorVC stop];
 
+#ifdef FEATURE_BROWSER
     Global::AppCleanup();
+#endif
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
@@ -370,6 +378,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     if ([diskName length] > 0) {
         [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
         
+#ifdef FEATURE_BROWSER
         // see if this disk is browseable
         DiskImg *diskImg = new DiskImg;
         std::string diskPathname = card->DiskGetFullPathName(drive);
@@ -382,6 +391,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             menuItem.representedObject = [[DiskImageWrapper alloc] initWithPath:pathString diskImg:diskImg];
             [menu addItem:menuItem];
         }
+#endif // FEATURE_BROWSER
         
         [menu addItemWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
                         action:@selector(ejectDisk:)
@@ -404,6 +414,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     [menu popUpMenuPositioningItem:nil atLocation:CGPointZero inView:view];
 }
 
+#ifdef FEATURE_BROWSER
 - (void)browseDisk:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
@@ -423,6 +434,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         }
     }
 }
+#endif // FEATURE_BROWSER
 
 - (void)ejectDisk:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -878,6 +890,7 @@ const char *GetSupportDirectory() {
     return supportDirectoryPath.UTF8String;
 }
 
+#ifdef FEATURE_BROWSER
 static void
 DiskImgMsgHandler(const char *file, int line, const char *msg)
 {
@@ -888,3 +901,4 @@ DiskImgMsgHandler(const char *file, int line, const char *msg)
     fprintf(stderr, "%s:%d: %s\n", file, line, msg);
 #endif
 }
+#endif // FEATURE_BROWSER
