@@ -225,3 +225,9 @@
 
 /* No comment provided by engineer. */
 "\n\nThe disk image browser uses code from the CiderPress project by Andy McFadden." = "\n\nThe disk image browser uses code from the CiderPress project by Andy McFadden.";
+
+/* No comment provided by engineer. */
+"Unable to interpret the data format stored on this disk." = "Unable to interpret the data format stored on this disk.";
+
+/* No comment provided by engineer. */
+"Unknown Disk Format" = "Unknown Disk Format";

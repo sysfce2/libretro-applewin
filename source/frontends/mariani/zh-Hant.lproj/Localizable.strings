@@ -225,3 +225,9 @@
 
 /* No comment provided by engineer. */
 "\n\nThe disk image browser uses code from the CiderPress project by Andy McFadden." = "\n\n磁碟映像檔瀏覽功能包含 Andy McFadden 為 CiderPress 計畫所寫的部分程式碼。";
+
+/* No comment provided by engineer. */
+"Unable to interpret the data format stored on this disk." = "無法辨認儲存於此磁碟上的資料格式。";
+
+/* No comment provided by engineer. */
+"Unknown Disk Format" = "不明資料格式";

@@ -80,7 +80,10 @@ NSArray *fileTypeStrings = @[
         self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
         self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
 
-        [self readFileSystem:wrapper];
+        if (![self readFileSystem:wrapper]) {
+            NSLog(@"failed to read file system");
+            return nil;
+        }
         
         if (![[NSBundle mainBundle] loadNibNamed:@"DiskImageBrowser" owner:self topLevelObjects:nil]) {
             NSLog(@"failed to load DiskImageBrowser nib");
@@ -171,8 +174,11 @@ NSArray *fileTypeStrings = @[
 
 #pragma mark - Utilities
 
-- (void)readFileSystem:(DiskImageWrapper *)wrapper {
+- (BOOL)readFileSystem:(DiskImageWrapper *)wrapper {
     DiskFS *diskFS = wrapper.diskImg->OpenAppropriateDiskFS();
+    if (diskFS == nil) {
+        return NO;
+    }
     diskFS->SetScanForSubVolumes(DiskFS::kScanSubEnabled);
     diskFS->Initialize(wrapper.diskImg, DiskFS::kInitFull);
     
@@ -205,6 +211,8 @@ NSArray *fileTypeStrings = @[
         file = diskFS->GetNextFile(file);
     }
     delete diskFS;
+    
+    return YES;
 }
 
 - (FSItem *)newFSItemFromA2File:(A2File *)file {

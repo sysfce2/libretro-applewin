@@ -430,9 +430,11 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         }
 #endif // FEATURE_BROWSER
         
-        [menu addItemWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
-                        action:@selector(ejectDisk:)
-                 keyEquivalent:@""];
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
+                                                          action:@selector(ejectDisk:)
+                                                   keyEquivalent:@""];
+        menuItem.representedObject = @[ @(slot), @(drive) ];
+        [menu addItem:menuItem];
         [menu addItem:[NSMenuItem separatorItem]];
     }
     
@@ -441,7 +443,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Other Disk…", @"open another disk image")
                                       action:@selector(openDiskImage:)
                                keyEquivalent:@""];
-    item.tag = ENCODE_SLOT_DRIVE(slot, drive);
+    item.representedObject = @[ @(slot), @(drive) ];
     [menu addItem:item];
 
     [menu popUpMenuPositioningItem:nil atLocation:CGPointZero inView:view];
@@ -458,8 +460,15 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             DiskImageBrowserWindowController *browserVC = [self.browserViewControllers objectForKey:wrapper.path];
             if (browserVC == nil) {
                 browserVC = [[DiskImageBrowserWindowController alloc] initWithDiskImageWrapper:wrapper];
-                [self.browserViewControllers setObject:browserVC forKey:wrapper.path];
-                [browserVC showWindow:self];
+                if (browserVC != nil) {
+                    [self.browserViewControllers setObject:browserVC forKey:wrapper.path];
+                    [browserVC showWindow:self];
+                }
+                else {
+                    [self showModalAlertofType:MB_ICONWARNING | MB_OK
+                                   withMessage:NSLocalizedString(@"Unknown Disk Format", @"")
+                                   information:NSLocalizedString(@"Unable to interpret the data format stored on this disk.", @"")];
+                }
             }
             else {
                 [browserVC.window orderFront:self];
@@ -474,9 +483,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = (NSMenuItem *)sender;
-        const int tag = [menuItem.menu.title intValue];
-        const int slot = DECODE_SLOT(tag);
-        const int drive = DECODE_DRIVE(tag);
+        const int slot = [menuItem.representedObject[0] intValue];
+        const int drive = [menuItem.representedObject[1] intValue];
         
         CardManager &cardManager = GetCardMgr();
         Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
@@ -485,23 +493,13 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     }
 }
 
-- (void)newDiskImage:(id)sender {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-
-    if ([sender isKindOfClass:[NSMenuItem class]]) {
-        NSMenuItem *menuItem = (NSMenuItem *)sender;
-        const int slot = DECODE_SLOT(menuItem.tag);
-        const int drive = DECODE_DRIVE(menuItem.tag);
-    }
-}
-
 - (void)openDiskImage:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = (NSMenuItem *)sender;
-        const int slot = DECODE_SLOT(menuItem.tag);
-        const int drive = DECODE_DRIVE(menuItem.tag);
+        const int slot = [menuItem.representedObject[0] intValue];
+        const int drive = [menuItem.representedObject[1] intValue];
         
         NSOpenPanel *panel = [NSOpenPanel openPanel];
         panel.canChooseFiles = YES;
@@ -535,9 +533,9 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = (NSMenuItem *)sender;
-        const int slot = DECODE_SLOT(menuItem.tag);
-        const int drive = DECODE_DRIVE(menuItem.tag);
-        
+        const int slot = [menuItem.representedObject[0] intValue];
+        const int drive = [menuItem.representedObject[1] intValue];
+
         NSString *lastPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"NSNavLastRootDirectory"];
         lastPath = [lastPath stringByStandardizingPath];
         NSURL *folder = [NSURL fileURLWithPath:lastPath];
@@ -631,13 +629,13 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
                 item = [[NSMenuItem alloc] initWithTitle:driveName
                                                   action:@selector(createBlankDiskImage:)
                                            keyEquivalent:@""];
-                item.tag = ENCODE_SLOT_DRIVE(slot, drive);
+                item.representedObject = @[ @(slot), @(drive) ];
                 [self.createDiskImageMenu addItem:item];
                 
                 item = [[NSMenuItem alloc] initWithTitle:driveName
                                                   action:@selector(openDiskImage:)
                                            keyEquivalent:@""];
-                item.tag = ENCODE_SLOT_DRIVE(slot, drive);
+                item.representedObject = @[ @(slot), @(drive) ];
                 [self.openDiskImageMenu addItem:item];
                 driveLightButton.toolTip = driveName;
 
