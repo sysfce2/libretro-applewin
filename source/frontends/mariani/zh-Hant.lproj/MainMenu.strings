@@ -13,9 +13,6 @@
 /* Class = "NSMenuItem"; title = "Quit Mariani"; ObjectID = "4sb-4s-VLi"; */
 "4sb-4s-VLi.title" = "結束 Mariani";
 
-/* Class = "NSMenuItem"; title = "Open Disk Image"; ObjectID = "5JX-tw-JnM"; */
-"5JX-tw-JnM.title" = "開啟磁碟映像檔";
-
 /* Class = "NSMenuItem"; title = "About Mariani"; ObjectID = "5kV-Vb-QxS"; */
 "5kV-Vb-QxS.title" = "關於 Mariani";
 
@@ -85,9 +82,6 @@
 /* Class = "NSMenuItem"; title = "Window"; ObjectID = "aUF-d1-5bR"; */
 "aUF-d1-5bR.title" = "視窗";
 
-/* Class = "NSMenu"; title = "Open Disk Image"; ObjectID = "ae9-FF-J5g"; */
-"ae9-FF-J5g.title" = "開啟磁碟映像檔";
-
 /* Class = "NSMenu"; title = "File"; ObjectID = "bib-Uj-vzu"; */
 "bib-Uj-vzu.title" = "檔案";
 
@@ -138,3 +132,9 @@
 
 /* Class = "NSMenuItem"; title = "Close Window"; ObjectID = "4wN-Ie-K1K"; */
 "4wN-Ie-K1K.title" = "關閉視窗";
+
+/* Class = "NSMenuItem"; title = "New Blank Disk Image"; ObjectID = "FCU-LR-rG3"; */
+"FCU-LR-rG3.title" = "新建空白磁碟映像檔";
+
+/* Class = "NSMenuItem"; title = "Insert Disk Image"; ObjectID = "l7t-Fp-Pd9"; */
+"l7t-Fp-Pd9.title" = "插入磁碟映像檔";

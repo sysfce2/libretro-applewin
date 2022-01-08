@@ -20,10 +20,11 @@
                 <outlet property="aboutTitle" destination="W27-NV-qqh" id="sRu-Lv-drS"/>
                 <outlet property="aboutVersion" destination="FYa-VN-hRm" id="IH2-Ft-7wy"/>
                 <outlet property="aboutWindow" destination="JMZ-Zo-DvY" id="1AO-kF-nBs"/>
+                <outlet property="createDiskImageMenu" destination="RjL-S4-oG8" id="8PI-CL-Q4I"/>
                 <outlet property="displayTypeMenu" destination="eeY-Un-lEj" id="N54-FR-NAN"/>
                 <outlet property="driveLightButtonTemplate" destination="NGY-eR-Avg" id="DBE-ke-cr3"/>
                 <outlet property="emulatorVC" destination="S0z-N3-T9h" id="XAc-8o-NgU"/>
-                <outlet property="openDiskImageMenu" destination="ae9-FF-J5g" id="hW4-cQ-Fxb"/>
+                <outlet property="openDiskImageMenu" destination="aVZ-wx-6ML" id="h5M-nh-kdR"/>
                 <outlet property="screenRecordingButton" destination="DSR-xi-Jep" id="NmW-pv-4Ab"/>
                 <outlet property="showHideStatusBarMenuItem" destination="Qa1-0n-abD" id="jQF-tx-pGh"/>
                 <outlet property="statusBarView" destination="Mnw-rf-Y9b" id="vHG-8g-HKh"/>
@@ -92,9 +93,13 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="bib-Uj-vzu">
                         <items>
-                            <menuItem title="Open Disk Image" id="5JX-tw-JnM">
+                            <menuItem title="New Blank Disk Image" id="FCU-LR-rG3">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Open Disk Image" id="ae9-FF-J5g"/>
+                                <menu key="submenu" id="RjL-S4-oG8"/>
+                            </menuItem>
+                            <menuItem title="Insert Disk Image" id="l7t-Fp-Pd9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" id="aVZ-wx-6ML"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="081-d1-Gfw"/>
                             <menuItem title="Close Window" keyEquivalent="w" id="4wN-Ie-K1K">
