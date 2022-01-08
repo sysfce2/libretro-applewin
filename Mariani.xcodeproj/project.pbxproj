@@ -205,8 +205,13 @@
 		B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
 		B0689D0A2780B9B60029EB7D /* MarianiFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* MarianiFrame.cpp */; };
 		B0689D0D2780C85F0029EB7D /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
-		B0689D172781984F0029EB7D /* UserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B0689D152781984F0029EB7D /* UserDefaults.h */; };
 		B0689D182781984F0029EB7D /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
+		B08CFE3A27889220002B841D /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3927889220002B841D /* libdiskimg.a */; };
+		B08CFE3C2788941F002B841D /* libnufx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3B2788941F002B841D /* libnufx.a */; };
+		B08CFE3E27889479002B841D /* libhfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3D27889479002B841D /* libhfs.a */; };
+		B08CFE4927889D44002B841D /* DiskImageWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = B08CFE4727889D44002B841D /* DiskImageWrapper.h */; };
+		B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE4827889D44002B841D /* DiskImageWrapper.mm */; };
+		B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
 		B09AB674277A14DB0002A6C3 /* Speech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB626277A14DB0002A6C3 /* Speech.cpp */; };
@@ -247,6 +252,7 @@
 		B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
 		B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
 		B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
+		B0F25BCD2789B2DB0080523F /* DiskImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -383,6 +389,13 @@
 		B0689D092780B9B60029EB7D /* MarianiFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarianiFrame.h; sourceTree = "<group>"; };
 		B0689D152781984F0029EB7D /* UserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefaults.h; sourceTree = "<group>"; };
 		B0689D162781984F0029EB7D /* UserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
+		B08CFE3927889220002B841D /* libdiskimg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiskimg.a; path = ../CiderPress/diskimg/libdiskimg.a; sourceTree = "<group>"; };
+		B08CFE3B2788941F002B841D /* libnufx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnufx.a; path = ../CiderPress/nufxlib/libnufx.a; sourceTree = "<group>"; };
+		B08CFE3D27889479002B841D /* libhfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhfs.a; path = ../CiderPress/diskimg/libhfs/libhfs.a; sourceTree = "<group>"; };
+		B08CFE4727889D44002B841D /* DiskImageWrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = DiskImageWrapper.h; sourceTree = "<group>"; };
+		B08CFE4827889D44002B841D /* DiskImageWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageWrapper.mm; sourceTree = "<group>"; };
+		B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImageBrowserWindowController.h; sourceTree = "<group>"; };
+		B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageBrowserWindowController.mm; sourceTree = "<group>"; };
 		B0927414277D9399003FFB79 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
 		B0927415277D9399003FFB79 /* PreferencesViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PreferencesViewController.mm; sourceTree = "<group>"; };
 		B0927418277D9403003FFB79 /* PreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
@@ -636,6 +649,8 @@
 		B0ED3FD027859747006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B0F0138D2785A211002936B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Preferences.storyboard; sourceTree = "<group>"; };
 		B0F013902785A218002936B4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Preferences.strings"; sourceTree = "<group>"; };
+		B0F25BCE2789B2DB0080523F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DiskImageBrowser.xib; sourceTree = "<group>"; };
+		B0F25BD12789B2E10080523F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/DiskImageBrowser.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -650,6 +665,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B08CFE3E27889479002B841D /* libhfs.a in Frameworks */,
+				B08CFE3C2788941F002B841D /* libnufx.a in Frameworks */,
+				B08CFE3A27889220002B841D /* libdiskimg.a in Frameworks */,
 				B020F8AB2785F3920071D3C7 /* CoreMedia.framework in Frameworks */,
 				B020F8A92785EA440071D3C7 /* AVFoundation.framework in Frameworks */,
 				B0098CF3277E187900F38E0C /* libAppleWin.a in Frameworks */,
@@ -711,6 +729,10 @@
 				B032DE24277A0C23006DC0F7 /* AppDelegate.h */,
 				B032DE25277A0C23006DC0F7 /* AppDelegate.mm */,
 				B049E8A8277C59D500FC14A3 /* CommonTypes.h */,
+				B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */,
+				B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */,
+				B08CFE4727889D44002B841D /* DiskImageWrapper.h */,
+				B08CFE4827889D44002B841D /* DiskImageWrapper.mm */,
 				B049E8A0277C44B100FC14A3 /* EmulatorRenderer.h */,
 				B049E8A1277C44B100FC14A3 /* EmulatorRenderer.m */,
 				B049E8AA277C880800FC14A3 /* EmulatorView.h */,
@@ -730,6 +752,7 @@
 				B032DE27277A0C24006DC0F7 /* Assets.xcassets */,
 				B045FE5B278297F8006E36F9 /* Resources */,
 				B032DE29277A0C24006DC0F7 /* MainMenu.xib */,
+				B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */,
 				B0F0138E2785A211002936B4 /* Preferences.storyboard */,
 				B0ED3FCD2785973C006E4784 /* Localizable.strings */,
 				B032DE2C277A0C24006DC0F7 /* main.m */,
@@ -1193,6 +1216,9 @@
 		B09AB844277A282A0002A6C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B08CFE3D27889479002B841D /* libhfs.a */,
+				B08CFE3B2788941F002B841D /* libnufx.a */,
+				B08CFE3927889220002B841D /* libdiskimg.a */,
 				B020F8AA2785F3920071D3C7 /* CoreMedia.framework */,
 				B020F8A82785EA440071D3C7 /* AVFoundation.framework */,
 				B049E8AE277C9A8000FC14A3 /* MetalKit.framework */,
@@ -1283,7 +1309,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0689D172781984F0029EB7D /* UserDefaults.h in Headers */,
+				B08CFE4927889D44002B841D /* DiskImageWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1422,6 +1448,7 @@
 				B045FE842782984F006E36F9 /* ThunderClockPlus.rom in Resources */,
 				B045FE752782984F006E36F9 /* MouseInterface.rom in Resources */,
 				B045FE722782984F006E36F9 /* Apple2e.rom in Resources */,
+				B0F25BCD2789B2DB0080523F /* DiskImageBrowser.xib in Resources */,
 				B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */,
 				B045FE7A2782984F006E36F9 /* Base64A_German_Video.rom in Resources */,
 				B045FE762782984F006E36F9 /* Hddrvr.bin in Resources */,
@@ -1566,11 +1593,13 @@
 				B09AB7DB277A21180002A6C3 /* SNESMAX.cpp in Sources */,
 				B049E8A7277C4F6D00FC14A3 /* Shaders.metal in Sources */,
 				B09AB7D7277A21180002A6C3 /* SerialComms.cpp in Sources */,
+				B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */,
 				B09AB732277A1BA40002A6C3 /* Debugger_Commands.cpp in Sources */,
 				B049E83F277B61AC00FC14A3 /* utils.cpp in Sources */,
 				B09AB81A277A21410002A6C3 /* winnls.cpp in Sources */,
 				B09AB80F277A21410002A6C3 /* misc.cpp in Sources */,
 				B049E83A277B61A100FC14A3 /* utils.cpp in Sources */,
+				B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */,
 				B09AB7D8277A21180002A6C3 /* PropertySheet.cpp in Sources */,
 				B09AB674277A14DB0002A6C3 /* Speech.cpp in Sources */,
 				B049E8A3277C44B100FC14A3 /* EmulatorRenderer.m in Sources */,
@@ -1669,6 +1698,15 @@
 				B0F013902785A218002936B4 /* zh-Hant */,
 			);
 			name = Preferences.storyboard;
+			sourceTree = "<group>";
+		};
+		B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B0F25BCE2789B2DB0080523F /* Base */,
+				B0F25BD12789B2E10080523F /* zh-Hant */,
+			);
+			name = DiskImageBrowser.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1863,6 +1901,7 @@
 					/opt/homebrew/opt/sdl2/include/SDL2,
 					/opt/homebrew/opt/sdl2_image/include/SDL2,
 					/opt/homebrew/opt/boost/include,
+					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1877,6 +1916,8 @@
 					/opt/homebrew/Cellar/sdl2/2.0.18/lib,
 					/opt/homebrew/Cellar/sdl2_image/2.0.5/lib,
 					/opt/homebrew/Cellar/boost/1.76.0/lib,
+					"../CiderPress/diskimg/**",
+					../CiderPress/nufxlib,
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
@@ -1904,6 +1945,7 @@
 					/opt/homebrew/opt/sdl2/include/SDL2,
 					/opt/homebrew/opt/sdl2_image/include/SDL2,
 					/opt/homebrew/opt/boost/include,
+					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1918,6 +1960,8 @@
 					/opt/homebrew/Cellar/sdl2/2.0.18/lib,
 					/opt/homebrew/Cellar/sdl2_image/2.0.5/lib,
 					/opt/homebrew/Cellar/boost/1.76.0/lib,
+					"../CiderPress/diskimg/**",
+					../CiderPress/nufxlib,
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;

@@ -13,13 +13,14 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSOpenSavePanelDelegate, EmulatorViewControllerDelegate>
 
 - (void)applyVideoModeChange;
+- (void)browserWindowWillClose:(NSString *)path;
 - (BOOL)emulationHardwareChanged;
 - (IBAction)rebootEmulatorAction:(id)sender;
-- (void)reinitializeFrame;
 - (void)reconfigureDrives;
+- (void)reinitializeFrame;
 - (int)showModalAlertofType:(int)type withMessage:(NSString *)message information:(NSString *)information;
-- (void)updateDriveLights;
 - (void)terminateWithReason:(NSString *)reason;
+- (void)updateDriveLights;
 
 @end
 

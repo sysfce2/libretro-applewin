@@ -28,9 +28,14 @@
 #import "Video.h"
 
 #import "CommonTypes.h"
+#import "DiskImageBrowserWindowController.h"
+#import "DiskImageWrapper.h"
 #import "EmulatorViewController.h"
 #import "PreferencesWindowController.h"
 #import "UserDefaults.h"
+
+#import "DiskImg.h"
+using namespace DiskImgLib;
 
 #define STATUS_BAR_HEIGHT   32
 #define BLANK_FILE_NAME     NSLocalizedString(@"Blank", @"default file name for new blank disk")
@@ -67,7 +72,11 @@
 @property BOOL hasStatusBar;
 @property (readonly) double statusBarHeight;
 
+@property (strong) NSMutableDictionary *browserViewControllers;
+
 @end
+
+static void DiskImgMsgHandler(const char *file, int line, const char *msg);
 
 @interface NSAlert (Synchronous)
 
@@ -81,9 +90,13 @@
 Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    Global::SetDebugMsgHandler(DiskImgMsgHandler);
+    Global::AppInit();
+    
     _hasStatusBar = YES;
     self.driveLightButtonTemplate.hidden = YES;
     self.statusLabel.stringValue = @"";
+    self.browserViewControllers = [NSMutableDictionary dictionary];
     
     self.window.delegate = self;
     self.emulatorVC.delegate = self;
@@ -109,6 +122,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     [self.emulatorVC stop];
+
+    Global::AppCleanup();
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
@@ -354,6 +369,20 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     NSString *diskName = [NSString stringWithUTF8String:card->GetFullDiskFilename(drive).c_str()];
     if ([diskName length] > 0) {
         [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
+        
+        // see if this disk is browseable
+        DiskImg *diskImg = new DiskImg;
+        std::string diskPathname = card->DiskGetFullPathName(drive);
+        if (diskImg->OpenImage(diskPathname.c_str(), '/', true) == kDIErrNone &&
+            diskImg->AnalyzeImage() == kDIErrNone) {
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Browse...", @"browse disk image")
+                                                              action:@selector(browseDisk:)
+                                                       keyEquivalent:@""];
+            NSString *pathString = [NSString stringWithUTF8String:diskPathname.c_str()];
+            menuItem.representedObject = [[DiskImageWrapper alloc] initWithPath:pathString diskImg:diskImg];
+            [menu addItem:menuItem];
+        }
+        
         [menu addItemWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
                         action:@selector(ejectDisk:)
                  keyEquivalent:@""];
@@ -373,6 +402,26 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     [menu addItem:item];
 
     [menu popUpMenuPositioningItem:nil atLocation:CGPointZero inView:view];
+}
+
+- (void)browseDisk:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    if ([sender isKindOfClass:[NSMenuItem class]]) {
+        NSMenuItem *menuItem = (NSMenuItem *)sender;
+        if ([menuItem.representedObject isKindOfClass:[DiskImageWrapper class]]) {
+            DiskImageWrapper *wrapper = (DiskImageWrapper *)menuItem.representedObject;
+            DiskImageBrowserWindowController *browserVC = [self.browserViewControllers objectForKey:wrapper.path];
+            if (browserVC == nil) {
+                browserVC = [[DiskImageBrowserWindowController alloc] initWithDiskImageWrapper:wrapper];
+                [self.browserViewControllers setObject:browserVC forKey:wrapper.path];
+                [browserVC showWindow:self];
+            }
+            else {
+                [browserVC.window orderFront:self];
+            }
+        }
+    }
 }
 
 - (void)ejectDisk:(id)sender {
@@ -477,16 +526,16 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 #pragma mark - Helpers because I can't figure out how to make 'frame' properly global
 
-- (BOOL)emulationHardwareChanged {
-    return [self.emulatorVC emulationHardwareChanged];
-}
-
 - (void)applyVideoModeChange {
     [self.emulatorVC videoModeDidChange];
 }
 
-- (void)reinitializeFrame {
-    [self.emulatorVC reinitialize];
+- (void)browserWindowWillClose:(NSString *)path {
+    [self.browserViewControllers removeObjectForKey:path];
+}
+
+- (BOOL)emulationHardwareChanged {
+    return [self.emulatorVC emulationHardwareChanged];
 }
 
 - (void)reconfigureDrives {
@@ -548,6 +597,10 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         // status bar buttons overlap
         [self.window setContentMinSize:[self minimumContentSizeAtScale:1]];
     }
+}
+
+- (void)reinitializeFrame {
+    [self.emulatorVC reinitialize];
 }
 
 - (int)showModalAlertofType:(int)type
@@ -823,4 +876,15 @@ const char *GetSupportDirectory() {
     }
     
     return supportDirectoryPath.UTF8String;
+}
+
+static void
+DiskImgMsgHandler(const char *file, int line, const char *msg)
+{
+    assert(file != nil);
+    assert(msg != nil);
+
+#ifdef DEBUG
+    fprintf(stderr, "%s:%d: %s\n", file, line, msg);
+#endif
 }

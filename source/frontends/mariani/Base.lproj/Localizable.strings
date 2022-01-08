@@ -180,3 +180,33 @@
 
 /* No comment provided by engineer. */
 "Version %@ (%@)" = "Version %1$@ (%2$@)";
+
+/* No comment provided by engineer. */
+"%.1f GB" = "%.1f GB";
+
+/* No comment provided by engineer. */
+"%.1f KB" = "%.1f KB";
+
+/* No comment provided by engineer. */
+"%.1f MB" = "%.1f MB";
+
+/* No comment provided by engineer. */
+"%llu bytes" = "%llu bytes";
+
+/* no date available */
+"-" = "-";
+
+/* No comment provided by engineer. */
+"0 bytes" = "0 bytes";
+
+/* No comment provided by engineer. */
+"1 byte" = "1 byte";
+
+/* No comment provided by engineer. */
+"2 bytes" = "2 bytes";
+
+/* browse disk image */
+"Browse..." = "Browse...";
+
+/* No comment provided by engineer. */
+"Unnamed" = "Unnamed";

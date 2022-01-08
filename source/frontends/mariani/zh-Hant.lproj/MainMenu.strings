@@ -135,3 +135,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Version x.y (z)"; ObjectID = "trm-zd-aCT"; */
 "trm-zd-aCT.title" = "Version x.y (z)";
+
+/* Class = "NSMenuItem"; title = "Close Window"; ObjectID = "4wN-Ie-K1K"; */
+"4wN-Ie-K1K.title" = "關閉視窗";

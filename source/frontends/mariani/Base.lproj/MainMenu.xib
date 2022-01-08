@@ -97,6 +97,12 @@
                                 <menu key="submenu" title="Open Disk Image" id="ae9-FF-J5g"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="081-d1-Gfw"/>
+                            <menuItem title="Close Window" keyEquivalent="w" id="4wN-Ie-K1K">
+                                <connections>
+                                    <action selector="performClose:" target="-1" id="6nd-jB-WEW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ie1-De-YTi"/>
                             <menuItem title="Control-Reset" keyEquivalent="" id="dm4-pj-VNI">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>

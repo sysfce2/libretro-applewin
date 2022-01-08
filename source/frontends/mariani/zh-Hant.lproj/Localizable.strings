@@ -143,7 +143,7 @@
 "TK3000 //e Emulator" = "TK3000 //e 模擬器";
 
 /* No comment provided by engineer. */
-"Unknown" = "Unknown";
+"Unknown" = "未知";
 
 /* No comment provided by engineer. */
 "Uthernet I (network)" = "Uthernet I (網路卡)";
@@ -180,3 +180,33 @@
 
 /* No comment provided by engineer. */
 "Version %@ (%@)" = "版本 %1$@ (%2$@)";
+
+/* No comment provided by engineer. */
+"%.1f GB" = "%.1f GB";
+
+/* No comment provided by engineer. */
+"%.1f KB" = "%.1f KB";
+
+/* No comment provided by engineer. */
+"%.1f MB" = "%.1f MB";
+
+/* No comment provided by engineer. */
+"%llu bytes" = "%llu 位元";
+
+/* no date available */
+"-" = "-";
+
+/* No comment provided by engineer. */
+"0 bytes" = "0 位元";
+
+/* No comment provided by engineer. */
+"1 byte" = "1 位元";
+
+/* No comment provided by engineer. */
+"2 bytes" = "2 位元";
+
+/* browse disk image */
+"Browse..." = "瀏覽⋯";
+
+/* No comment provided by engineer. */
+"Unnamed" = "未命名";
