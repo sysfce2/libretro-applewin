@@ -300,6 +300,8 @@
 		B0689D0A2780B9B60029EB7D /* MarianiFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* MarianiFrame.cpp */; };
 		B0689D0D2780C85F0029EB7D /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
 		B0689D182781984F0029EB7D /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
+		B07612302789E4BE009E79BE /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07612332789E4BE009E79BE /* About.xib */; };
+		B07612312789E4BE009E79BE /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07612332789E4BE009E79BE /* About.xib */; };
 		B08CFE3A27889220002B841D /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3927889220002B841D /* libdiskimg.a */; };
 		B08CFE3C2788941F002B841D /* libnufx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3B2788941F002B841D /* libnufx.a */; };
 		B08CFE3E27889479002B841D /* libhfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3D27889479002B841D /* libhfs.a */; };
@@ -483,6 +485,8 @@
 		B0689D092780B9B60029EB7D /* MarianiFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarianiFrame.h; sourceTree = "<group>"; };
 		B0689D152781984F0029EB7D /* UserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefaults.h; sourceTree = "<group>"; };
 		B0689D162781984F0029EB7D /* UserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
+		B07612322789E4BE009E79BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/About.xib; sourceTree = "<group>"; };
+		B07612352789E4C2009E79BE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/About.strings"; sourceTree = "<group>"; };
 		B08CFE3927889220002B841D /* libdiskimg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiskimg.a; path = ../CiderPress/diskimg/libdiskimg.a; sourceTree = "<group>"; };
 		B08CFE3B2788941F002B841D /* libnufx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnufx.a; path = ../CiderPress/nufxlib/libnufx.a; sourceTree = "<group>"; };
 		B08CFE3D27889479002B841D /* libhfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhfs.a; path = ../CiderPress/diskimg/libhfs/libhfs.a; sourceTree = "<group>"; };
@@ -862,6 +866,7 @@
 				B032DE27277A0C24006DC0F7 /* Assets.xcassets */,
 				B045FE5B278297F8006E36F9 /* Resources */,
 				B032DE29277A0C24006DC0F7 /* MainMenu.xib */,
+				B07612332789E4BE009E79BE /* About.xib */,
 				B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */,
 				B0F0138E2785A211002936B4 /* Preferences.storyboard */,
 				B0ED3FCD2785973C006E4784 /* Localizable.strings */,
@@ -1577,6 +1582,7 @@
 				B0270B822789CA9F00E3ACCF /* PRAVETS82.ROM in Resources */,
 				B0270B832789CA9F00E3ACCF /* CHARSET8M.bmp in Resources */,
 				B0270B842789CA9F00E3ACCF /* CHARSET4.BMP in Resources */,
+				B07612312789E4BE009E79BE /* About.xib in Resources */,
 				B0270B852789CA9F00E3ACCF /* PRAVETS8M.ROM in Resources */,
 				B0270B862789CA9F00E3ACCF /* TKClock.rom in Resources */,
 				B0270B872789CA9F00E3ACCF /* PRAVETS8C.ROM in Resources */,
@@ -1627,6 +1633,7 @@
 				B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */,
 				B045FE7B2782984F006E36F9 /* DISK2.rom in Resources */,
 				B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */,
+				B07612302789E4BE009E79BE /* About.xib in Resources */,
 				B045FE822782984F006E36F9 /* Apple2_JPlus_Video.rom in Resources */,
 				B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */,
 				B045FE782782984F006E36F9 /* TK3000e.rom in Resources */,
@@ -1915,6 +1922,15 @@
 				B0ED3FCC27859566006E4784 /* zh-Hant */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		B07612332789E4BE009E79BE /* About.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B07612322789E4BE009E79BE /* Base */,
+				B07612352789E4C2009E79BE /* zh-Hant */,
+			);
+			name = About.xib;
 			sourceTree = "<group>";
 		};
 		B0ED3FCD2785973C006E4784 /* Localizable.strings */ = {

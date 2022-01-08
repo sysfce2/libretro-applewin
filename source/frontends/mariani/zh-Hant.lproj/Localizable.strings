@@ -219,3 +219,9 @@
 
 /* No comment provided by engineer. */
 "This will end the emulation and any unsaved changes will be lost." = "這將結束模擬器，尚未儲存的資料也將會被刪除。";
+
+/* No comment provided by engineer. */
+"About %@" = "關於 %@";
+
+/* No comment provided by engineer. */
+"\n\nThe disk image browser uses code from the CiderPress project by Andy McFadden." = "\n\n磁碟映像檔瀏覽功能包含 Andy McFadden 為 CiderPress 計畫所寫的部分程式碼。";

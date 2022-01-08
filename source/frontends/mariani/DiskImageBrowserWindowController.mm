@@ -82,7 +82,10 @@ NSArray *fileTypeStrings = @[
 
         [self readFileSystem:wrapper];
         
-        [[NSBundle mainBundle] loadNibNamed:@"DiskImageBrowser" owner:self topLevelObjects:nil];
+        if (![[NSBundle mainBundle] loadNibNamed:@"DiskImageBrowser" owner:self topLevelObjects:nil]) {
+            NSLog(@"failed to load DiskImageBrowser nib");
+            return nil;
+        }
         if ([self.rootDirectory.name length]) {
             self.window.title = [NSString stringWithFormat:@"%@ (%@)", self.rootDirectory.name, [wrapper.path lastPathComponent]];
         }

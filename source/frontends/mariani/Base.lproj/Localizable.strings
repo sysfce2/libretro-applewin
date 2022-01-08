@@ -219,3 +219,9 @@
 
 /* No comment provided by engineer. */
 "This will end the emulation and any unsaved changes will be lost." = "This will end the emulation and any unsaved changes will be lost.";
+
+/* No comment provided by engineer. */
+"About %@" = "About %@";
+
+/* No comment provided by engineer. */
+"\n\nThe disk image browser uses code from the CiderPress project by Andy McFadden." = "\n\nThe disk image browser uses code from the CiderPress project by Andy McFadden.";
