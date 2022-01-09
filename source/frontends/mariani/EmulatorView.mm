@@ -84,21 +84,28 @@
 
 - (void)flagsChanged:(NSEvent *)event
 {
-    if (event.keyCode == kVK_CapsLock) {
-        self.forceCapsLock = NO;
-    }
-    else if (event.modifierFlags & NSEventModifierFlagOption) {
-        // necessary check because we only want to translate the keyDown events
-        switch (event.keyCode) {
-            case kVK_Option:
+    switch (event.keyCode) {
+        case kVK_CapsLock:
+            self.forceCapsLock = NO;
+            break;
+        case kVK_Option:
+            if (event.modifierFlags & NSEventModifierFlagOption) {
                 Paddle::setButtonPressed(Paddle::ourOpenApple);
-                break;
-            case kVK_RightOption:
+            }
+            else {
+                Paddle::setButtonReleased(Paddle::ourOpenApple);
+            }
+            break;
+        case kVK_RightOption:
+            if (event.modifierFlags & NSEventModifierFlagOption) {
                 Paddle::setButtonPressed(Paddle::ourSolidApple);
-                break;
-            default:
-                break;
-        }
+            }
+            else {
+                Paddle::setButtonReleased(Paddle::ourSolidApple);
+            }
+            break;
+        default:
+            break;
     }
 }
 
