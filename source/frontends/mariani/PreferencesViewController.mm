@@ -238,7 +238,12 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         // Mockingboard volume slider
         self.audioMockingboardVolumeSlider.maxValue = volumeMax;
         self.audioMockingboardVolumeSlider.intValue = volumeMax - MB_GetVolume();
+        [self performSelector:@selector(updateMockingboardPreferences) inViewControllerWithID:AUDIO_VIDEO_PANE_ID];
     }
+}
+
+- (void)updateMockingboardPreferences {
+    self.audioMockingboardVolumeSlider.enabled = [self isMockingboardInstalled];
 }
 
 - (void)configureVideo {
@@ -262,36 +267,15 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         // Enhanced speed for floppy drives
         self.storageEnhancedSpeedButton.state = cardManager.GetDisk2CardMgr().GetEnhanceDisk() ? NSControlStateValueOn : NSControlStateValueOff;
 
-        [self updateHardDiskPreferences];
+        [self performSelector:@selector(updateHardDiskPreferences) inViewControllerWithID:STORAGE_PANE_ID];
     }
 }
 
 - (void)updateHardDiskPreferences {
-    if (![[self valueForKey:@"vcId"] isEqualToString:STORAGE_PANE_ID]) {
-        // forward to the right view contoller instead
-        for (PreferencesViewController *vc in self.parentViewController.childViewControllers) {
-            if ([[vc valueForKey:@"vcId"] isEqualToString:STORAGE_PANE_ID]) {
-                [vc updateHardDiskPreferences];
-            }
-        }
-        return;
-    }
     HarddiskInterfaceCard *hddCard = [self hddCard];
     self.storageHardDiskFolderButton.enabled = (hddCard != nil);
     self.storageCreateHardDiskButton.enabled = (hddCard != nil);
     self.storageHardDiskFolderButton.title = (hddCard != nil) ? [NSString stringWithUTF8String:hddCard->HarddiskGetFullPathName(0).c_str()] : @"";
-}
-
-- (HarddiskInterfaceCard *)hddCard {
-    CardManager &cardManager = GetCardMgr();
-    
-    // Hard disk
-    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
-        if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
-            return dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
-        }
-    }
-    return nil;
 }
 
 #pragma mark - Actions
@@ -371,6 +355,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
                     if (slotTypes[slot][i] == CT_MockingboardC && slot != currentSlot) {
                         cardManager.Insert((SLOTS)slot, (SS_CARDTYPE)slotButton.selectedTag);
                         [slotButtons[slot] selectItemWithTag:slotButton.selectedTag];
+                        [self performSelector:@selector(updateMockingboardPreferences) inViewControllerWithID:AUDIO_VIDEO_PANE_ID];
                     }
                 }
             }
@@ -382,12 +367,13 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
                     if (slotTypes[slot][i] == CT_MockingboardC && slot != currentSlot) {
                         cardManager.Insert((SLOTS)slot, CT_Empty);
                         [slotButtons[slot] selectItemWithTag:CT_Empty];
+                        [self performSelector:@selector(updateMockingboardPreferences) inViewControllerWithID:AUDIO_VIDEO_PANE_ID];
                     }
                 }
             }
         }
         
-        const BOOL slotHadHDD = (cardManager.QuerySlot((SLOTS)currentSlot) == CT_GenericHDD);
+        const SS_CARDTYPE previousCard = cardManager.QuerySlot((SLOTS)currentSlot);
         
         cardManager.Insert((SLOTS)currentSlot, (SS_CARDTYPE)slotButton.selectedTag);
         
@@ -398,8 +384,12 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
             [theAppDelegate reinitializeFrame];
         }
         
-        if (slotHadHDD || cardManager.QuerySlot((SLOTS)currentSlot) == CT_GenericHDD) {
-            [self updateHardDiskPreferences];
+        // update related settings in other panes as necessary
+        if (previousCard == CT_GenericHDD || cardManager.QuerySlot((SLOTS)currentSlot) == CT_GenericHDD) {
+            [self performSelector:@selector(updateHardDiskPreferences) inViewControllerWithID:STORAGE_PANE_ID];
+        }
+        if (previousCard == CT_MockingboardC) {
+            [self performSelector:@selector(updateMockingboardPreferences) inViewControllerWithID:AUDIO_VIDEO_PANE_ID];
         }
         self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
     }
@@ -508,7 +498,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         HarddiskInterfaceCard *hddCard = [self hddCard];
         if (hddCard->Insert(0, pathname)) {
             NSLog(@"Loaded '%s' as HDD 0", fileSystemRepresentation);
-            [self updateHardDiskPreferences];
+            [self performSelector:@selector(updateHardDiskPreferences) inViewControllerWithID:STORAGE_PANE_ID];
         }
         else {
             NSLog(@"Failed to '%s' as HDD", fileSystemRepresentation);
@@ -625,5 +615,46 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
     }
     video.SetVideoStyle(currentVideoStyle);
 }
+
+- (HarddiskInterfaceCard *)hddCard {
+    CardManager &cardManager = GetCardMgr();
+    
+    // Hard disk
+    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
+        if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
+            return dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
+        }
+    }
+    return nil;
+}
+
+- (BOOL)isMockingboardInstalled {
+    CardManager &cardManager = GetCardMgr();
+    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
+        if (cardManager.QuerySlot(slot) == CT_MockingboardC) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+// this should be okay because we're only calling methods returning void
+- (void)performSelector:(SEL)selector inViewControllerWithID:(NSString *)vcID {
+    if ([[self valueForKey:@"vcId"] isEqualToString:vcID]) {
+        [self performSelector:selector];
+        return;
+    }
+    
+    // forward to the right view contoller instead
+    for (PreferencesViewController *vc in self.parentViewController.childViewControllers) {
+        if ([[vc valueForKey:@"vcId"] isEqualToString:vcID]) {
+            [vc performSelector:selector];
+            return;
+        }
+    }
+}
+#pragma clang diagnostic pop
 
 @end
