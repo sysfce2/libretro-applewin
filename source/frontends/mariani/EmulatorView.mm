@@ -16,6 +16,23 @@
 
 @implementation EmulatorView
 
+enum {
+    ASCII_NUL = 0x00,
+    ASCII_BS  = 0x08,  // ^H
+    ASCII_HT  = 0x09,  // ^I
+    ASCII_LF  = 0x0A,  // ^J
+    ASCII_VT  = 0x0B,  // ^K
+    ASCII_CR  = 0x0D,  // ^M
+    ASCII_NAK = 0x15,  // ^U
+    ASCII_ESC = 0x1B,  // ^[
+    ASCII_SPC = 0x20,
+    ASCII_A   = 0x41,
+    ASCII_Z   = 0x5A,
+    ASCII_a   = 0x61,
+    ASCII_z   = 0x7A,
+    ASCII_DEL = 0x7F,
+};
+
 - (instancetype)initWithCoder:(NSCoder *)coder {
     if ((self = [super initWithCoder:coder])) {
         self.forceCapsLock = YES;
@@ -33,50 +50,56 @@
 // - 0 is unmodified by CTRL or SHIFT, but that's not relevant to us
 // - special keys like ← or → are sent as control characters
 - (void)keyDown:(NSEvent *)event {
-    NSInteger ch = 0;
+    NSInteger ch = ASCII_NUL;
     
     switch (event.keyCode) {
         case kVK_ANSI_KeypadEnter:
         case kVK_Return:
-            ch = 0x0D;  // ^M
-            break;
-        case kVK_LeftArrow:
-            ch = 0x08;  // ^H
+            ch = ASCII_CR;
             break;
         case kVK_Delete:
-            ch = 0x7F;
+            if (event.modifierFlags & NSEventModifierFlagOption) {
+                ch = ASCII_DEL;
+                break;
+            }
+            // fallthrough
+        case kVK_LeftArrow:
+            ch = ASCII_BS;
             break;
         case kVK_RightArrow:
-            ch = 0x15;  // ^U
+            ch = ASCII_NAK;
             break;
         case kVK_UpArrow:
-            ch = 0x0B;  // ^K
+            ch = ASCII_VT;
             break;
         case kVK_DownArrow:
-            ch = 0x0A;  // ^J
+            ch = ASCII_LF;
             break;
         case kVK_Escape:
-            ch = 0x1B;
+            ch = ASCII_ESC;
             break;
         case kVK_Tab:
-            ch = 0x09;  // ^I
+            ch = ASCII_HT;
             break;
         default: {
             // maybe it's already a printable character
             unichar c = [event.characters characterAtIndex:0];
             if (event.modifierFlags & NSEventModifierFlagControl) {
                 ch = toupper(c);
-                if (ch >= 'A' && ch <= 'Z') {
+                if (ch >= ASCII_A && ch <= ASCII_Z) {
                     ch -= 0x40;  // A -> ^A
                 }
+                else if (ch >= ASCII_a && ch <= ASCII_z) {
+                    ch -= 0x60;  // a -> ^A
+                }
             }
-            else if (c >= 0x20 && c <= 0x7E) {
+            else if (c >= ASCII_SPC && c < ASCII_DEL) {
                 ch = self.forceCapsLock ? toupper(c) : c;
             }
             break;
         }
     }
-    if (ch != 0) {
+    if (ch != ASCII_NUL) {
         addKeyToBuffer(ch);
     }
 }
@@ -115,12 +138,12 @@
         // filter out multi-byte characters
         if (substringRange.length == 1) {
             unichar ch = [substring characterAtIndex:0];
-            if (ch == 0x0A) {
+            if (ch == ASCII_LF) {
                 // pasted lines end with LF character, but we probably want to
                 // paste a CR instead
-                addKeyToBuffer(0x0D);
+                addKeyToBuffer(ASCII_CR);
             }
-            else if (ch <= 0x7E) {
+            else if (ch < ASCII_DEL) {
                 addKeyToBuffer((BYTE)ch);
             }
         }
