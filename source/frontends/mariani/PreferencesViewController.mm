@@ -34,6 +34,11 @@ void CreateLanguageCard(void); // FIXME should be in Memory.h
 
 #import "linux/registry.h"
 
+#ifdef FEATURE_BROWSER
+#include "DiskImg.h"
+using namespace DiskImgLib;
+#endif // FEATURE_BROWSER
+
 // these need to match the values set in Preferences.storyboard for key "vcId"
 #define GENERAL_PANE_ID         @"general"
 #define COMPUTER_PANE_ID        @"computer"
@@ -269,6 +274,16 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 
         [self performSelector:@selector(updateHardDiskPreferences) inViewControllerWithID:STORAGE_PANE_ID];
     }
+
+#ifndef FEATURE_BROWSER
+    // hide "Create New Hard Disk" button and shrink the pane height
+    self.storageCreateHardDiskButton.hidden = YES;
+    CGFloat adjustment = CGRectGetMinY(self.storageHardDiskFolderButton.frame) - CGRectGetMinY(self.storageCreateHardDiskButton.frame);
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= adjustment;
+    self.view.frame = viewFrame;
+    self.preferredContentSize = self.view.frame.size;
+#endif // FEATURE_BROWSER
 }
 
 - (void)updateHardDiskPreferences {
@@ -508,6 +523,83 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 
 - (IBAction)createHardDiskAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+#ifdef FEATURE_BROWSER
+    NSSavePanel *savePanel = [[NSSavePanel alloc] init];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    // don't really want to declare UTTypes for all the disk images yet
+    savePanel.allowedFileTypes = @[ @"hdv" ];
+#pragma clang diagnostic pop
+    
+    if ([savePanel runModal] == NSModalResponseOK) {
+        const char *outputFilename = savePanel.URL.fileSystemRepresentation;
+        
+        // create and format the hard disk
+        
+        DIError error;
+        DiskImg *diskImg = new DiskImg;
+        error = diskImg->CreateImage(outputFilename,
+                                     nil,                            // storageName
+                                     DiskImg::kOuterFormatNone,
+                                     DiskImg::kFileFormatUnadorned,
+                                     DiskImg::kPhysicalFormatSectors,
+                                     nil,                            // pNibbleDescr
+                                     DiskImg::kSectorOrderProDOS,
+                                     DiskImg::kFormatGenericProDOSOrd,
+                                     65536,
+                                     true);                          // no need to format the image
+        if (error != kDIErrNone) {
+            [theAppDelegate showModalAlertofType:MB_ICONWARNING | MB_OK
+                                     withMessage:@"Unable to Create Image"
+                                     information:[NSString stringWithUTF8String:DIStrError(error)]];
+        }
+        
+        error = diskImg->FormatImage(DiskImg::kFormatProDOS, "MARIANI");
+        if (error != kDIErrNone) {
+            [theAppDelegate showModalAlertofType:MB_ICONWARNING | MB_OK
+                                     withMessage:@"Unable to Format Disk"
+                                     information:[NSString stringWithUTF8String:DIStrError(error)]];
+            delete diskImg;
+            return;
+        }
+        
+        DiskFS *diskFS = diskImg->OpenAppropriateDiskFS(false);
+        if (error != kDIErrNone) {
+            [theAppDelegate showModalAlertofType:MB_ICONWARNING | MB_OK
+                                     withMessage:@"Unable to Open File System"
+                                     information:nil];
+            delete diskImg;
+            return;
+        }
+
+        error = diskFS->Initialize(diskImg, DiskFS::kInitFull);
+        if (error != kDIErrNone) {
+            [theAppDelegate showModalAlertofType:MB_ICONWARNING | MB_OK
+                                     withMessage:@"Unable to Format Disk"
+                                     information:[NSString stringWithUTF8String:DIStrError(error)]];
+            delete diskImg;
+            delete diskFS;
+            return;
+        }
+        
+        delete diskFS;
+        diskImg->CloseImage();
+        delete diskImg;
+        
+        // insert the hard disk
+        
+        CardManager &cardManager = GetCardMgr();
+
+        for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
+            if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
+                HarddiskInterfaceCard *hddCard = dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
+                hddCard->Insert(0, std::string(outputFilename));
+            }
+        }
+        [self performSelector:@selector(updateHardDiskPreferences) inViewControllerWithID:STORAGE_PANE_ID];
+    }
+#endif // FEATURE_BROWSER
 }
 
 #pragma mark - NSOpenSavePanelDelegate
