@@ -140,7 +140,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{TEXT("DW2")         , CmdDisasmDataDefWord2       , CMD_DEFINE_DATA_WORD2, "Define address array, display 2 words/line" },
 		{TEXT("DW4")         , CmdDisasmDataDefWord4       , CMD_DEFINE_DATA_WORD4, "Define address array, display 4 words/line" },
 		{TEXT("ASC")         , CmdDisasmDataDefString      , CMD_DEFINE_DATA_STR  , "Define text string"                         }, // 2.7.0.26 Changed: DS to ASC because DS is used as "Define Space" assembler directive
-//		{TEXT("DF")          , CmdDisasmDataDefFloat       , CMD_DEFINE_DATA_FLOAT, "Define AppleSoft (packed) Float"            },
+		{TEXT("DF")          , CmdDisasmDataDefFloat       , CMD_DEFINE_DATA_FLOAT, "Define AppleSoft (packed) Float"            },
 //		{TEXT("DFX")         , CmdDisasmDataDefFloatUnpack , CMD_DEFINE_DATA_FLOAT2,"Define AppleSoft (unpacked) Float"          },
 		// with symbol lookup
 //		{TEXT("DA<>")        , CmdDisasmDataDefAddress8HL  , CMD_DEFINE_ADDR_8_HL , "Define split array of addresses, high byte section followed by low byte section" },
@@ -148,7 +148,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //		{TEXT("DA<")         , CmdDisasmDataDefAddress8H   , CMD_DEFINE_ADDR_BYTE_H   , "Define array of high byte addresses"   },
 //		{TEXT("DB>")         , CmdDisasmDataDefAddress8L   , CMD_DEFINE_ADDR_BYTE_L   , "Define array of low byte addresses"    } 
 		{TEXT("DA")          , CmdDisasmDataDefAddress16   , CMD_DEFINE_ADDR_WORD , "Define array of word addresses"            },
-// TODO: Rename config cmd: DISASM
+// TODO: Rename config cmd: DISASM or ID (Interactive Disassembly)
 //		{TEXT("UA")          , CmdDisasmDataSmart          , CMD_SMART_DISASSEMBLE, "Analyze opcodes to determine if code or data" },		
 	// Disk
 		{TEXT("DISK")        , CmdDisk              , CMD_DISK                 , "Access Disk Drive Functions" },
@@ -262,8 +262,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{TEXT("DGR1")        , CmdViewOutput_DGR1   , CMD_VIEW_DGR1  , "View Double lo-res Page 1"              },
 		{TEXT("DGR2")        , CmdViewOutput_DGR2   , CMD_VIEW_DGR2  , "View Double lo-res Page 2"              },
 		{TEXT("HGR")         , CmdViewOutput_HGRX   , CMD_VIEW_HGRX  , "View Hi-res (current page)"             },
-		{TEXT("HGR1")        , CmdViewOutput_HGR1   , CMD_VIEW_HGR1  , "View Hi-res Page 1"                     },
-		{TEXT("HGR2")        , CmdViewOutput_HGR2   , CMD_VIEW_HGR2  , "View Hi-res Page 2"                     },
+		{TEXT("HGR0")        , CmdViewOutput_HGR0   , CMD_VIEW_HGR0  , "View pseudo Hi-res Page 0 ($0000)"      },
+		{TEXT("HGR1")        , CmdViewOutput_HGR1   , CMD_VIEW_HGR1  , "View Hi-res Page 1 ($2000)"             },
+		{TEXT("HGR2")        , CmdViewOutput_HGR2   , CMD_VIEW_HGR2  , "View Hi-res Page 2 ($4000)"             },
+		{TEXT("HGR3")        , CmdViewOutput_HGR3   , CMD_VIEW_HGR3  , "View pseudo Hi-res Page 3 ($6000)"      },
+		{TEXT("HGR4")        , CmdViewOutput_HGR4   , CMD_VIEW_HGR4  , "View pseudo Hi-res Page 4 ($8000)"      },
+		{TEXT("HGR5")        , CmdViewOutput_HGR5   , CMD_VIEW_HGR5  , "View pseudo Hi-res Page 5 ($A000)"      },
 		{TEXT("DHGR")        , CmdViewOutput_DHGRX  , CMD_VIEW_DHGRX , "View Double Hi-res (current page)"      },
 		{TEXT("DHGR1")       , CmdViewOutput_DHGR1  , CMD_VIEW_DHGR1 , "View Double Hi-res Page 1"              },
 		{TEXT("DHGR2")       , CmdViewOutput_DHGR2  , CMD_VIEW_DHGR2 , "View Double Hi-res Page 2"              },

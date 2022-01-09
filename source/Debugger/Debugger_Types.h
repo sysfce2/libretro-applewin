@@ -398,6 +398,7 @@
 		, CMD_DEFINE_DATA_WORD2
 		, CMD_DEFINE_DATA_WORD4
 		, CMD_DEFINE_DATA_STR
+		, CMD_DEFINE_DATA_FLOAT// FAC Packed
 //		, CMD_DEFINE_DATA_FACP // FAC Packed
 //		, CMD_DEFINE_DATA_FACU // FAC Unpacked
 //		, CMD_DATA_DEFINE_ADDR_BYTE_L  // DB< address symbol
@@ -504,8 +505,12 @@
 		, CMD_VIEW_DGR1
 		, CMD_VIEW_DGR2
 		, CMD_VIEW_HGRX
+		, CMD_VIEW_HGR0
 		, CMD_VIEW_HGR1
 		, CMD_VIEW_HGR2
+		, CMD_VIEW_HGR3
+		, CMD_VIEW_HGR4
+		, CMD_VIEW_HGR5
 		, CMD_VIEW_DHGRX
 		, CMD_VIEW_DHGR1
 		, CMD_VIEW_DHGR2
@@ -585,6 +590,8 @@
 	Update_t CmdDisasmDataDefByte2    (int nArgs);
 	Update_t CmdDisasmDataDefByte4    (int nArgs);
 	Update_t CmdDisasmDataDefByte8    (int nArgs);
+
+	Update_t CmdDisasmDataDefFloat    (int nArgs);
 
 	Update_t CmdDisasmDataDefWord1    (int nArgs);
 	Update_t CmdDisasmDataDefWord2    (int nArgs);
@@ -766,8 +773,12 @@
 	Update_t CmdViewOutput_DGR2    (int nArgs);
 
 	Update_t CmdViewOutput_HGRX    (int nArgs);
+	Update_t CmdViewOutput_HGR0    (int nArgs);
 	Update_t CmdViewOutput_HGR1    (int nArgs);
 	Update_t CmdViewOutput_HGR2    (int nArgs);
+	Update_t CmdViewOutput_HGR3    (int nArgs);
+	Update_t CmdViewOutput_HGR4    (int nArgs);
+	Update_t CmdViewOutput_HGR5    (int nArgs);
 	Update_t CmdViewOutput_DHGRX   (int nArgs);
 	Update_t CmdViewOutput_DHGR1   (int nArgs);
 	Update_t CmdViewOutput_DHGR2   (int nArgs);
@@ -844,20 +855,20 @@
 	enum Nopcode_e
 	{
 		_NOP_REMOVED
-		,NOP_BYTE_1 // 1 bytes/line
-		,NOP_BYTE_2 // 2 bytes/line
-		,NOP_BYTE_4 // 4 bytes/line
-		,NOP_BYTE_8 // 8 bytes/line
-		,NOP_WORD_1 // 1 words/line = 2 bytes (no symbol lookup)
-		,NOP_WORD_2 // 2 words/line = 4 bytes
-		,NOP_WORD_4 // 4 words/line = 8 bytes
-		,NOP_ADDRESS// 1 word/line  = 2 bytes (with symbol lookup)
-		,NOP_HEX    // hex string   =16 bytes
-		,NOP_CHAR   // char string // TODO: FIXME: needed??
-		,NOP_STRING_ASCII // Low Ascii
-		,NOP_STRING_APPLE // High Ascii
+		,NOP_BYTE_1           // 1 bytes/line
+		,NOP_BYTE_2           // 2 bytes/line
+		,NOP_BYTE_4           // 4 bytes/line
+		,NOP_BYTE_8           // 8 bytes/line
+		,NOP_WORD_1           // 1 words/line = 2 bytes (no symbol lookup)
+		,NOP_WORD_2           // 2 words/line = 4 bytes
+		,NOP_WORD_4           // 4 words/line = 8 bytes
+		,NOP_ADDRESS          // 1 word/line  = 2 bytes (with symbol lookup)
+		,NOP_HEX              // hex string   =16 bytes
+		,NOP_CHAR             // char string // TODO: FIXME: needed??
+		,NOP_STRING_ASCII     // Low Ascii
+		,NOP_STRING_APPLE     // High Ascii
 		,NOP_STRING_APPLESOFT // Mixed Low/High
-		,NOP_FAC
+		,NOP_FAC              // Applesoft Floating-Point Format (5 bytes), i.e. $F069 = 0x81490FDAA2 = pi/2
 		,NOP_SPRITE
 		,NUM_NOPCODE_TYPES
 	};
@@ -869,7 +880,7 @@
 		char sSymbol[ MAX_SYMBOLS_LEN+1 ];
 
 		Nopcode_e eElementType ; // eElementType -> iNoptype
-		int       iDirective   ; // iDirective   -> iNopcode
+		int       iDirective   ; // iDirective   -> iNopcode  ASC DA DB DF DW etc.
 
 		WORD nStartAddress; // link to block [start,end)
 		WORD nEndAddress  ; 
@@ -921,13 +932,13 @@
 		, NUM_DISASM_TARGET_TYPES
 	};
 
-	enum DisasmDisplay_e // TODO: Prefix enums with DISASM_DISPLAY_
+	enum DisasmDisplay_e
 	{
-		MAX_ADDRESS_LEN   = 40,
-		MAX_OPCODES       =  3, // only display 3 opcode bytes -- See FormatOpcodeBytes() // TODO: FIX when showing data hex
-		CHARS_FOR_ADDRESS =  8, // 4 digits + end-of-string + padding
-		MAX_IMMEDIATE_LEN = 20, // Data Disassembly
-		MAX_TARGET_LEN    = MAX_IMMEDIATE_LEN, // Debugger Display: pTarget = line.sTarget
+		DISASM_DISPLAY_MAX_ADDRESS_LEN   = 40,
+		DISASM_DISPLAY_MAX_OPCODES       =  3, // only display 3 opcode bytes -- See FormatOpcodeBytes() // TODO: FIX when showing data hex
+		DISASM_DISPLAY_CHARS_FOR_ADDRESS =  8, // 4 digits + end-of-string + padding
+		DISASM_DISPLAY_MAX_IMMEDIATE_LEN = 20, // Data Disassembly
+		DISASM_DISPLAY_MAX_TARGET_LEN    = DISASM_DISPLAY_MAX_IMMEDIATE_LEN, // Debugger Display: pTarget = line.sTarget
 	};
 
 	struct DisasmLine_t
@@ -936,8 +947,8 @@
 		short iOpmode;
 		int   nOpbyte;
 
-		char sAddress  [ CHARS_FOR_ADDRESS ];
-		char sOpCodes  [(MAX_OPCODES*3)+1];
+		char sAddress  [ DISASM_DISPLAY_CHARS_FOR_ADDRESS ];
+		char sOpCodes  [(DISASM_DISPLAY_MAX_OPCODES*3)+1];
 
 		// Added for Data Disassembler
 		char sLabel    [ MAX_SYMBOLS_LEN+1 ]; // label is a symbol
@@ -951,15 +962,17 @@ const	DisasmData_t* pDisasmData; // If != NULL then bytes are marked up as data 
 		//
 
 		int  nTarget; // address -> string
-		char sTarget   [ MAX_ADDRESS_LEN ];
+		char sTarget   [ DISASM_DISPLAY_MAX_ADDRESS_LEN ];
 
-		char sTargetOffset[ CHARS_FOR_ADDRESS ]; // +/- 255, realistically +/-1
+		char sTargetOffset[ DISASM_DISPLAY_CHARS_FOR_ADDRESS ]; // +/- 255, realistically +/-1
 		int  nTargetOffset;
 
-		char sTargetPointer[ CHARS_FOR_ADDRESS ];
-		char sTargetValue  [ CHARS_FOR_ADDRESS ];
-//		char sTargetAddress[ CHARS_FOR_ADDRESS ];
+		char sTargetPointer[ DISASM_DISPLAY_CHARS_FOR_ADDRESS ];
+		char sTargetValue  [ DISASM_DISPLAY_CHARS_FOR_ADDRESS ];
 
+		int iTargetTable; // Which symbol table this appears in if any.  See: SYMBOLS_USER_2, DrawDisassemblyLine(), GetDisassemblyLine(), FindSymbolFromAddress()
+
+		char sImmediateSignedDec[ 6 ]; // "-128" .. "+127"
 		char sImmediate[ 4 ]; // 'c'
 		char nImmediate;
 		char sBranch   [ 4 ]; // ^
