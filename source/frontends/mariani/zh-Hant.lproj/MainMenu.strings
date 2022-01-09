@@ -123,3 +123,15 @@
 
 /* Class = "NSMenuItem"; title = "Insert Disk Image"; ObjectID = "l7t-Fp-Pd9"; */
 "l7t-Fp-Pd9.title" = "插入磁碟映像檔";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "PWm-bp-TRi"; */
+"PWm-bp-TRi.title" = "編輯";
+
+/* Class = "NSMenuItem"; title = "Paste Text"; ObjectID = "Sor-6b-zpM"; */
+"Sor-6b-zpM.title" = "貼上文字";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "h7E-ye-pU4"; */
+"h7E-ye-pU4.title" = "編輯";
+
+/* Class = "NSMenuItem"; title = "Copy Screenshot"; ObjectID = "wcB-ZJ-Gew"; */
+"wcB-ZJ-Gew.title" = "拷貝螢幕快照";

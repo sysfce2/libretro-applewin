@@ -42,6 +42,9 @@ using namespace DiskImgLib;
 #define STATUS_BAR_HEIGHT   32
 #define BLANK_FILE_NAME     NSLocalizedString(@"Blank", @"default file name for new blank disk")
 
+// needs to match tag of Edit menu item in MainMenu.xib
+#define EDIT_TAG            3917
+
 // encode the slot-drive tuple into a single number (suitable for use as a
 // NSView tag, or decode from it
 #define ENCODE_SLOT_DRIVE(s, d) ((char)((s) * 10 + (d)))
@@ -112,6 +115,20 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     self.window.delegate = self;
     self.emulatorVC.delegate = self;
+    
+    // remove the "Start Dictation..." and "Emoji & Symbols" items
+    NSMenu *editMenu = [[[[NSApplication sharedApplication] mainMenu] itemWithTag:EDIT_TAG] submenu];
+    for (NSMenuItem *item in [editMenu itemArray]) {
+        if ([item action] == NSSelectorFromString(@"startDictation:") ||
+            [item action] == NSSelectorFromString(@"orderFrontCharacterPalette:")) {
+            [editMenu removeItem:item];
+        }
+    }
+    // make sure a separator is not the bottom option
+    const NSInteger lastItemIndex = [editMenu numberOfItems] - 1;
+    if ([[editMenu itemAtIndex:lastItemIndex] isSeparatorItem]) {
+        [editMenu removeItemAtIndex:lastItemIndex];
+    }
     
     // populate the Display Type menu with options
     Video &video = GetVideo();
@@ -604,10 +621,10 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     [self.emulatorVC toggleScreenRecording];
 }
 
-- (IBAction)takeScreenshotAction:(id)sender {
+- (IBAction)saveScreenshotAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    [self.emulatorVC takeScreenshot];
+    [self.emulatorVC saveScreenshot];
 }
 
 #pragma mark - Helpers because I can't figure out how to make 'frame' properly global
@@ -836,7 +853,6 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
                 HarddiskInterfaceCard *card = dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
                 Disk_Status_e status;
                 card->GetLightStatus(&status);
-                NSLog(@"updateDriveLights: HDD is %d", status);
                 if (status != DISK_STATUS_OFF) {
                     driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
                     driveLightButton.contentTintColor = [NSColor controlAccentColor];

@@ -118,6 +118,23 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Edit" tag="3917" id="h7E-ye-pU4" userLabel="Edit">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Edit" id="PWm-bp-TRi">
+                        <items>
+                            <menuItem title="Copy Screenshot" keyEquivalent="c" id="wcB-ZJ-Gew" userLabel="Copy Screenshot">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="lUy-fx-9fj"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste Text" keyEquivalent="v" id="Sor-6b-zpM">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="gzh-xh-79B"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="View" id="H8h-7b-M4v">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
@@ -265,7 +282,7 @@
                                     <font key="font" metaFont="system" size="18"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="takeScreenshotAction:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
+                                    <action selector="saveScreenshotAction:" target="Voe-Tx-rLC" id="RPa-OV-IIl"/>
                                 </connections>
                             </button>
                             <button toolTip="Toggle audio on or off" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-oO-i17">

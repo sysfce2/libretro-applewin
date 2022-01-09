@@ -16,7 +16,6 @@
 
 @implementation EmulatorView
 
-
 - (instancetype)initWithCoder:(NSCoder *)coder {
     if ((self = [super initWithCoder:coder])) {
         self.forceCapsLock = YES;
@@ -107,6 +106,25 @@
         default:
             break;
     }
+}
+
+- (void)addStringToKeyboardBuffer:(NSString *)string {
+    [string enumerateSubstringsInRange:NSMakeRange(0, string.length)
+                               options:NSStringEnumerationByComposedCharacterSequences
+                            usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+        // filter out multi-byte characters
+        if (substringRange.length == 1) {
+            unichar ch = [substring characterAtIndex:0];
+            if (ch == 0x0A) {
+                // pasted lines end with LF character, but we probably want to
+                // paste a CR instead
+                addKeyToBuffer(0x0D);
+            }
+            else if (ch <= 0x7E) {
+                addKeyToBuffer((BYTE)ch);
+            }
+        }
+    }];
 }
 
 @end

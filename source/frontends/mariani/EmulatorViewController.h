@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface EmulatorViewController : NSViewController<EmulatorRendererDelegate>
+@interface EmulatorViewController : NSViewController <EmulatorRendererDelegate>
 
 @property (nullable, weak) id<EmulatorViewControllerDelegate> delegate;
 
@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)stop;
 
 - (void)toggleScreenRecording;
-- (void)takeScreenshot;
+- (void)saveScreenshot;
 
 - (void)displayTypeDidChange;
 - (void)videoModeDidChange;

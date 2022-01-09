@@ -24,6 +24,7 @@
 //
 
 #import "EmulatorViewController.h"
+#import "EmulatorView.h"
 #import <MetalKit/MetalKit.h>
 #import <AVFoundation/AVFoundation.h>
 
@@ -347,7 +348,7 @@ std::shared_ptr<sa2::SDLFrame> frame;
     }
 }
 
-- (void)takeScreenshot {
+- (void)takeScreenshotWithCompletion:(void (^)(NSData *pngData))completion {
 #ifdef DEBUG
     NSDate *start = [NSDate now];
 #endif
@@ -374,17 +375,41 @@ std::shared_ptr<sa2::SDLFrame> frame;
         NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
         [newRep setSize:[image size]];
         NSData *pngData = [newRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
+        free(buffer);
+#ifdef DEBUG
+        NSTimeInterval duration = -[start timeIntervalSinceNow];
+        NSLog(@"Screenshot converted to PNG, PNG conversion took %f ms", duration * 1000);
+#endif // DEBUG
+        if (completion) {
+            completion(pngData);
+        }
+    });
+}
+
+- (void)saveScreenshot {
+    [self takeScreenshotWithCompletion:^(NSData *pngData) {
         NSURL *url = [self.delegate unusedURLForFilename:SCREENSHOT_FILE_NAME
                                                extension:@"png"
                                                 inFolder:[[UserDefaults sharedInstance] screenshotsFolder]];
         [pngData writeToURL:url atomically:YES];
-        free(buffer);
-#ifdef DEBUG
-        NSTimeInterval duration = -[start timeIntervalSinceNow];
-        NSLog(@"Screenshot saved to %@, PNG conversion took %f ms", url, duration * 1000);
-#endif // DEBUG
         [[NSSound soundNamed:@"Blow"] play];
-    });
+    }];
+}
+
+- (IBAction)copy:(id)sender {
+    [self takeScreenshotWithCompletion:^(NSData *pngData) {
+        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+        [pasteboard declareTypes:@[ NSPasteboardTypePNG ] owner:nil];
+        if ([pasteboard setData:pngData forType:NSPasteboardTypePNG]) {
+            NSLog(@"Sent to pasteboard: %@", pngData);
+        }
+    }];
+}
+
+- (IBAction)paste:(id)sender {
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    NSString *string = [pasteboard stringForType:NSPasteboardTypeString];
+    [(EmulatorView *)self.view addStringToKeyboardBuffer:string];
 }
 
 #pragma mark - EmulatorRendererProtocol

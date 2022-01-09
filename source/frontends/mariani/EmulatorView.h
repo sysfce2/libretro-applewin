@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EmulatorView : MTKView
 
+- (void)addStringToKeyboardBuffer:(NSString *)string;
+
 @end
 
 NS_ASSUME_NONNULL_END
