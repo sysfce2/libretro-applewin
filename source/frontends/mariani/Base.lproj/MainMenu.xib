@@ -210,7 +210,7 @@
             </items>
             <point key="canvasLocation" x="-670" y="-478"/>
         </menu>
-        <window title="Mariani" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="QvC-M9-y7g">
+        <window title="Mariani" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="MainWindow" animationBehavior="default" tabbingMode="disallowed" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="196" y="204" width="840" height="608"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>

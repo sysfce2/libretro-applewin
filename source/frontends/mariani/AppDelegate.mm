@@ -77,7 +77,7 @@ using namespace DiskImgLib;
 @property BOOL hasStatusBar;
 @property (readonly) double statusBarHeight;
 
-@property (strong) NSMutableDictionary *browserViewControllers;
+@property (strong) NSMutableDictionary *browserWindowControllers;
 
 @end
 
@@ -105,7 +105,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     _hasStatusBar = YES;
     self.driveLightButtonTemplate.hidden = YES;
     self.statusLabel.stringValue = @"";
-    self.browserViewControllers = [NSMutableDictionary dictionary];
+    self.browserWindowControllers = [NSMutableDictionary dictionary];
     
     NSString *appName = [NSRunningApplication currentApplication].localizedName;
     self.aboutMarianiMenuItem.title = [NSString stringWithFormat:NSLocalizedString(@"About %@", @""), appName];
@@ -492,12 +492,12 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         NSMenuItem *menuItem = (NSMenuItem *)sender;
         if ([menuItem.representedObject isKindOfClass:[DiskImageWrapper class]]) {
             DiskImageWrapper *wrapper = (DiskImageWrapper *)menuItem.representedObject;
-            DiskImageBrowserWindowController *browserVC = [self.browserViewControllers objectForKey:wrapper.path];
-            if (browserVC == nil) {
-                browserVC = [[DiskImageBrowserWindowController alloc] initWithDiskImageWrapper:wrapper];
-                if (browserVC != nil) {
-                    [self.browserViewControllers setObject:browserVC forKey:wrapper.path];
-                    [browserVC showWindow:self];
+            DiskImageBrowserWindowController *browserWC = [self.browserWindowControllers objectForKey:wrapper.path];
+            if (browserWC == nil) {
+                browserWC = [[DiskImageBrowserWindowController alloc] initWithDiskImageWrapper:wrapper];
+                if (browserWC != nil) {
+                    [self.browserWindowControllers setObject:browserWC forKey:wrapper.path];
+                    [browserWC showWindow:self];
                 }
                 else {
                     [self showModalAlertofType:MB_ICONWARNING | MB_OK
@@ -506,7 +506,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
                 }
             }
             else {
-                [browserVC.window orderFront:self];
+                [browserWC.window orderFront:self];
             }
         }
     }
@@ -617,7 +617,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (void)browserWindowWillClose:(NSString *)path {
-    [self.browserViewControllers removeObjectForKey:path];
+    [self.browserWindowControllers removeObjectForKey:path];
 }
 
 - (BOOL)emulationHardwareChanged {
