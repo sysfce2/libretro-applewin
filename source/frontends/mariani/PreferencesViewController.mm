@@ -23,9 +23,10 @@
 #import "CardManager.h"
 #import "Common.h"
 #import "Core.h"
+#import "Harddisk.h"
 #import "Interface.h"
 #import "Memory.h"
-void CreateLanguageCard(void); // should be in Memory.h
+void CreateLanguageCard(void); // FIXME should be in Memory.h
 #import "Mockingboard.h"
 #import "Speaker.h"
 #import "Tfe.h"
@@ -41,29 +42,30 @@ void CreateLanguageCard(void); // should be in Memory.h
 
 @interface PreferencesViewController ()
 
-@property (weak) IBOutlet NSButton *generalDeveloperToolsButton;
-@property (weak) IBOutlet NSButton *generalScreenshotsFolderButton;
-@property (weak) IBOutlet NSButton *generalRecordingsFolderButton;
+@property (strong) IBOutlet NSButton *generalDeveloperToolsButton;
+@property (strong) IBOutlet NSButton *generalScreenshotsFolderButton;
+@property (strong) IBOutlet NSButton *generalRecordingsFolderButton;
 
-@property (weak) IBOutlet NSPopUpButton *computerMainBoardButton;
-@property (weak) IBOutlet NSPopUpButton *computerSlot1Button;
-@property (weak) IBOutlet NSPopUpButton *computerSlot2Button;
-@property (weak) IBOutlet NSPopUpButton *computerSlot3Button;
-@property (weak) IBOutlet NSPopUpButton *computerSlot4Button;
-@property (weak) IBOutlet NSPopUpButton *computerSlot5Button;
-@property (weak) IBOutlet NSPopUpButton *computerSlot6Button;
-@property (weak) IBOutlet NSPopUpButton *computerSlot7Button;
-@property (weak) IBOutlet NSPopUpButton *computerExansionSlotButton;
-@property (weak) IBOutlet NSPopUpButton *computerPcapSlotButton;
-@property (weak) IBOutlet NSButton *computerRebootEmulatorButton;
+@property (strong) IBOutlet NSPopUpButton *computerMainBoardButton;
+@property (strong) IBOutlet NSPopUpButton *computerSlot1Button;
+@property (strong) IBOutlet NSPopUpButton *computerSlot2Button;
+@property (strong) IBOutlet NSPopUpButton *computerSlot3Button;
+@property (strong) IBOutlet NSPopUpButton *computerSlot4Button;
+@property (strong) IBOutlet NSPopUpButton *computerSlot5Button;
+@property (strong) IBOutlet NSPopUpButton *computerSlot6Button;
+@property (strong) IBOutlet NSPopUpButton *computerSlot7Button;
+@property (strong) IBOutlet NSPopUpButton *computerExansionSlotButton;
+@property (strong) IBOutlet NSPopUpButton *computerPcapSlotButton;
+@property (strong) IBOutlet NSButton *computerRebootEmulatorButton;
 
-@property (weak) IBOutlet NSButton *video50PercentScanLinesButton;
-@property (weak) IBOutlet NSColorWell *videoCustomColorWell;
-@property (weak) IBOutlet NSSlider *audioSpeakerVolumeSlider;
-@property (weak) IBOutlet NSSlider *audioMockingboardVolumeSlider;
+@property (strong) IBOutlet NSButton *video50PercentScanLinesButton;
+@property (strong) IBOutlet NSColorWell *videoCustomColorWell;
+@property (strong) IBOutlet NSSlider *audioSpeakerVolumeSlider;
+@property (strong) IBOutlet NSSlider *audioMockingboardVolumeSlider;
 
-@property (weak) IBOutlet NSButton *storageEnhancedSpeedButton;
-@property (weak) IBOutlet NSButton *storageHardDiskFolderButton;
+@property (strong) IBOutlet NSButton *storageEnhancedSpeedButton;
+@property (strong) IBOutlet NSButton *storageHardDiskFolderButton;
+@property (strong) IBOutlet NSButton *storageCreateHardDiskButton;
 
 @property NSMutableDictionary *keyValueStore;
 @property BOOL configured;
@@ -75,8 +77,7 @@ void CreateLanguageCard(void); // should be in Memory.h
 BOOL configured;
 
 - (void)awakeFromNib {
-    // just have the first PreferencesViewController that is awakened configure
-    // the views for everybody
+    // each pane's controller should only configure itself
     if (!self.configured) {
         NSString *vcId = [self valueForKey:@"vcId"];
         if ([vcId isEqualToString:GENERAL_PANE_ID]) {
@@ -254,13 +255,44 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 }
 
 - (void)configureStorage {
+    NSString *vcId = [self valueForKey:@"vcId"];
+    if ([vcId isEqualToString:STORAGE_PANE_ID]) {
+        CardManager &cardManager = GetCardMgr();
+
+        // Enhanced speed for floppy drives
+        self.storageEnhancedSpeedButton.state = cardManager.GetDisk2CardMgr().GetEnhanceDisk() ? NSControlStateValueOn : NSControlStateValueOff;
+
+        [self updateHardDiskPreferences];
+    }
+}
+
+- (void)updateHardDiskPreferences {
+    if (![[self valueForKey:@"vcId"] isEqualToString:STORAGE_PANE_ID]) {
+        // forward to the right view contoller instead
+        for (PreferencesViewController *vc in self.parentViewController.childViewControllers) {
+            if ([[vc valueForKey:@"vcId"] isEqualToString:STORAGE_PANE_ID]) {
+                [vc updateHardDiskPreferences];
+            }
+        }
+        NSAssert(NO, @"failed to find storage pane's view controller");
+        return;
+    }
+    HarddiskInterfaceCard *hddCard = [self hddCard];
+    self.storageHardDiskFolderButton.enabled = (hddCard != nil);
+    self.storageCreateHardDiskButton.enabled = (hddCard != nil);
+    self.storageHardDiskFolderButton.title = (hddCard != nil) ? [NSString stringWithUTF8String:hddCard->HarddiskGetFullPathName(0).c_str()] : @"";
+}
+
+- (HarddiskInterfaceCard *)hddCard {
     CardManager &cardManager = GetCardMgr();
-
-    // Enhanced speed for floppy drives
-    self.storageEnhancedSpeedButton.state = cardManager.GetDisk2CardMgr().GetEnhanceDisk() ? NSControlStateValueOn : NSControlStateValueOff;
-
+    
     // Hard disk
-    self.storageHardDiskFolderButton.enabled = NO;
+    for (int slot = SLOT1; slot < NUM_SLOTS; slot++) {
+        if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
+            return dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
+        }
+    }
+    return nil;
 }
 
 #pragma mark - Actions
@@ -356,6 +388,8 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
             }
         }
         
+        const BOOL slotHadHDD = (cardManager.QuerySlot((SLOTS)currentSlot) == CT_GenericHDD);
+        
         cardManager.Insert((SLOTS)currentSlot, (SS_CARDTYPE)slotButton.selectedTag);
         
         MemInitializeIO();
@@ -364,7 +398,10 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         if (oldHasVidHD != video.HasVidHD()) {
             [theAppDelegate reinitializeFrame];
         }
-
+        
+        if (slotHadHDD || cardManager.QuerySlot((SLOTS)currentSlot) == CT_GenericHDD) {
+            [self updateHardDiskPreferences];
+        }
         self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
     }
 }
@@ -458,6 +495,54 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 
 - (IBAction)hardDiskFolderAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.canChooseFiles = YES;
+    panel.canChooseDirectories = NO;
+    panel.allowsMultipleSelection = NO;
+    panel.canDownloadUbiquitousContents = YES;
+    panel.delegate = self;
+    
+    if ([panel runModal] == NSModalResponseOK) {
+        const char *fileSystemRepresentation = panel.URL.fileSystemRepresentation;
+        std::string pathname(fileSystemRepresentation);
+        HarddiskInterfaceCard *hddCard = [self hddCard];
+        if (hddCard->Insert(0, pathname)) {
+            NSLog(@"Loaded '%s' as HDD 0", fileSystemRepresentation);
+            [self updateHardDiskPreferences];
+        }
+        else {
+            NSLog(@"Failed to '%s' as HDD", fileSystemRepresentation);
+        }
+    }
+}
+
+- (IBAction)createHardDiskAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+#pragma mark - NSOpenSavePanelDelegate
+
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
+    // we have several NSOpenPanels in this class but luckily the others are
+    // directory pickers so don't need a delegate yet, so we don't have to
+    // disambiguate.
+    
+    // never allow navigation into packages
+    NSNumber *isPackage;
+    if ([url getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil] &&
+        [isPackage boolValue]) {
+        return NO;
+    }
+
+    // always allow navigation into directories
+    NSNumber *isDirectory;
+    if ([url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil] &&
+        [isDirectory boolValue]) {
+        return YES;
+    }
+    
+    return [url.pathExtension.uppercaseString isEqualToString:@"HDV"];
 }
 
 #pragma mark - Utilities

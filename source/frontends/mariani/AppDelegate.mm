@@ -178,6 +178,13 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 #pragma mark - NSOpenSavePanelDelegate
 
 - (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
+    // never allow navigation into packages
+    NSNumber *isPackage;
+    if ([url getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil] &&
+        [isPackage boolValue]) {
+        return NO;
+    }
+    
     // always allow navigation into directories
     NSNumber *isDirectory;
     if ([url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil] &&

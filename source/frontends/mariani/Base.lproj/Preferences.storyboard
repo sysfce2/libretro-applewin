@@ -516,11 +516,11 @@
             <objects>
                 <viewController title="Storage" id="e3Y-c0-dGl" customClass="PreferencesViewController" sceneMemberID="viewController">
                     <view key="view" id="s0M-LS-SDq">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="91"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="121"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ur4-hX-Ps9">
-                                <rect key="frame" x="18" y="22" width="120" height="16"/>
+                                <rect key="frame" x="18" y="52" width="120" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Hard disk:" id="pBX-bw-eKh">
                                     <font key="font" metaFont="system"/>
@@ -529,7 +529,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="99X-7E-DaS">
-                                <rect key="frame" x="144" y="19" width="286" height="19"/>
+                                <rect key="frame" x="144" y="49" width="286" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="roundRect" title="Button" bezelStyle="roundedRect" image="folder" catalog="system" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nT1-OW-VEY">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -540,11 +540,11 @@
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="MfP-cO-8w4">
-                                <rect key="frame" x="20" y="44" width="410" height="5"/>
+                                <rect key="frame" x="20" y="74" width="410" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <button toolTip="Enables faster but less authentic disk access" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3p-Y6-znB">
-                                <rect key="frame" x="88" y="54" width="272" height="18"/>
+                                <rect key="frame" x="88" y="84" width="272" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enhanced speed for floppy drives" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8J1-iv-XcH">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -554,19 +554,31 @@
                                     <action selector="toggleDiskEnhancedSpeed:" target="e3Y-c0-dGl" id="SjK-gw-f7W"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sb-00-62f">
+                                <rect key="frame" x="229" y="14" width="208" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Create New Hard Disk" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lZG-5R-Dzg">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="createHardDiskAction:" target="e3Y-c0-dGl" id="c4l-x6-vP0"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="vcId" value="storage"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="storageCreateHardDiskButton" destination="2sb-00-62f" id="QEO-cI-bra"/>
                         <outlet property="storageEnhancedSpeedButton" destination="T3p-Y6-znB" id="5gE-8M-hQO"/>
                         <outlet property="storageHardDiskFolderButton" destination="99X-7E-DaS" id="ySA-n1-Eq3"/>
                     </connections>
                 </viewController>
                 <customObject id="9EP-jI-MpJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="229" y="872.5"/>
+            <point key="canvasLocation" x="229" y="887.5"/>
         </scene>
     </scenes>
     <resources>
