@@ -269,7 +269,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 #ifdef FEATURE_BROWSER
         CGRect oldCreditsFrame = self.aboutCredits.frame;
         self.aboutCredits.stringValue = [self.aboutCredits.stringValue stringByAppendingString:
-            NSLocalizedString(@"\n\nThe disk image browser uses code from the CiderPress project by Andy McFadden.", "")];
+            NSLocalizedString(@"\n\nAdvanced disk image features include code from the CiderPress project by Andy McFadden.", "")];
         CGRect newCreditsFrame = oldCreditsFrame;
         newCreditsFrame.size = [self.aboutCredits sizeThatFits:CGSizeMake(oldCreditsFrame.size.width, 5000)];
         self.aboutCredits.frame = newCreditsFrame;
@@ -417,43 +417,71 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
     
     // if there's a disk in the drive, show it
     CardManager &cardManager = GetCardMgr();
-    Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
-    NSString *diskName = [NSString stringWithUTF8String:card->GetFullDiskFilename(drive).c_str()];
-    if ([diskName length] > 0) {
-        [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
+    if (cardManager.QuerySlot(slot) == CT_Disk2) {
+        Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
+        NSString *diskName = [NSString stringWithUTF8String:card->GetFullDiskFilename(drive).c_str()];
+        if ([diskName length] > 0) {
+            [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
+            
+#ifdef FEATURE_BROWSER
+            // see if this disk is browseable
+            DiskImg *diskImg = new DiskImg;
+            std::string diskPathname = card->DiskGetFullPathName(drive);
+            if (diskImg->OpenImage(diskPathname.c_str(), '/', true) == kDIErrNone &&
+                diskImg->AnalyzeImage() == kDIErrNone) {
+                NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Examine…", @"browse disk image")
+                                                                  action:@selector(browseDisk:)
+                                                           keyEquivalent:@""];
+                NSString *pathString = [NSString stringWithUTF8String:diskPathname.c_str()];
+                menuItem.representedObject = [[DiskImageWrapper alloc] initWithPath:pathString diskImg:diskImg];
+                [menu addItem:menuItem];
+            }
+#endif // FEATURE_BROWSER
+            
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
+                                                              action:@selector(ejectDisk:)
+                                                       keyEquivalent:@""];
+            menuItem.representedObject = @[ @(slot), @(drive) ];
+            [menu addItem:menuItem];
+            [menu addItem:[NSMenuItem separatorItem]];
+        }
+        
+        NSMenuItem *item;
+         
+        item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Other Disk…", @"open another disk image")
+                                          action:@selector(openDiskImage:)
+                                   keyEquivalent:@""];
+        item.representedObject = @[ @(slot), @(drive) ];
+        [menu addItem:item];
+    }
+    else if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
+        HarddiskInterfaceCard *card = dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
+        const char *path = card->HarddiskGetFullPathName(0).c_str();
+        NSString *pathString = [NSString stringWithUTF8String:path];
+        NSString *diskName = [pathString lastPathComponent];
+        if ([diskName length] > 0) {
+            [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
         
 #ifdef FEATURE_BROWSER
-        // see if this disk is browseable
-        DiskImg *diskImg = new DiskImg;
-        std::string diskPathname = card->DiskGetFullPathName(drive);
-        if (diskImg->OpenImage(diskPathname.c_str(), '/', true) == kDIErrNone &&
-            diskImg->AnalyzeImage() == kDIErrNone) {
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Browse...", @"browse disk image")
-                                                              action:@selector(browseDisk:)
-                                                       keyEquivalent:@""];
-            NSString *pathString = [NSString stringWithUTF8String:diskPathname.c_str()];
-            menuItem.representedObject = [[DiskImageWrapper alloc] initWithPath:pathString diskImg:diskImg];
-            [menu addItem:menuItem];
-        }
+            // see if this disk is browseable
+            DiskImg *diskImg = new DiskImg;
+            if (diskImg->OpenImage(pathString.UTF8String, '/', true) == kDIErrNone &&
+                diskImg->AnalyzeImage() == kDIErrNone) {
+                NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Examine…", @"browse disk image")
+                                                                  action:@selector(browseDisk:)
+                                                           keyEquivalent:@""];
+                menuItem.representedObject = [[DiskImageWrapper alloc] initWithPath:pathString diskImg:diskImg];
+                [menu addItem:menuItem];
+            }
 #endif // FEATURE_BROWSER
-        
-        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
-                                                          action:@selector(ejectDisk:)
-                                                   keyEquivalent:@""];
-        menuItem.representedObject = @[ @(slot), @(drive) ];
-        [menu addItem:menuItem];
-        [menu addItem:[NSMenuItem separatorItem]];
+        }
     }
-    
-    NSMenuItem *item;
-     
-    item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Other Disk…", @"open another disk image")
-                                      action:@selector(openDiskImage:)
-                               keyEquivalent:@""];
-    item.representedObject = @[ @(slot), @(drive) ];
-    [menu addItem:item];
 
     [menu popUpMenuPositioningItem:nil atLocation:CGPointZero inView:view];
+    if ([view isKindOfClass:[NSButton class]]) {
+        NSButton *button = (NSButton *)view;
+        [button setState:NSControlStateValueOff];
+    }
 }
 
 #ifdef FEATURE_BROWSER
@@ -651,6 +679,30 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         }
     }
     
+    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
+        if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
+            NSButton *driveLightButton = (NSButton *)[self viewCopyFromArchive:self.driveLightButtonTemplateArchive];
+            
+            [driveLightButtons addObject:driveLightButton];
+            [[self.driveLightButtonTemplate superview] addSubview:driveLightButton];
+            
+            // offset each drive light button from the left
+            CGRect driveLightButtonFrame = driveLightButton.frame;
+            driveLightButtonFrame.origin.x = self.driveLightButtonTemplate.frame.origin.x + position * self.driveLightButtonTemplate.frame.size.width;
+            driveLightButton.frame = driveLightButtonFrame;
+            driveLightsRightEdge = CGRectGetMaxX(driveLightButtonFrame);
+            
+            driveLightButton.tag = ENCODE_SLOT_DRIVE(slot, 0);
+            driveLightButton.hidden = NO;
+            
+            NSString *driveName = [NSString stringWithFormat:NSLocalizedString(@"Slot %d Hard Disk", @""), slot];
+            driveLightButton.toolTip = driveName;
+            
+            position++;
+
+        }
+    }
+    
     self.driveLightButtons = driveLightButtons;
     
     CGRect statusLabelFrame = self.statusLabel.frame;
@@ -663,6 +715,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
         // status bar buttons overlap
         [self.window setContentMinSize:[self minimumContentSizeAtScale:1]];
     }
+    
+    [self updateDriveLights];
 }
 
 - (void)reinitializeFrame {
@@ -749,30 +803,46 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             CardManager &cardManager = GetCardMgr();
             const UINT slot = DECODE_SLOT(driveLightButton.tag);
             const int drive = DECODE_DRIVE(driveLightButton.tag);
-            Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(slot));
-            if (card->IsDriveEmpty(drive)) {
-                driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
-                driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
-            }
-            else {
-                Disk_Status_e status[NUM_DRIVES];
-                card->GetLightStatus(&status[0], &status[1]);
-                if (status[drive] != DISK_STATUS_OFF) {
-                    if (card->GetProtect(drive)) {
-                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"lock.circle.fill" accessibilityDescription:@""];
+            if (cardManager.QuerySlot(slot) == CT_Disk2) {
+                Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard *>(cardManager.GetObj(slot));
+                if (card->IsDriveEmpty(drive)) {
+                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
+                    driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
+                }
+                else {
+                    Disk_Status_e status[NUM_DRIVES];
+                    card->GetLightStatus(&status[0], &status[1]);
+                    if (status[drive] != DISK_STATUS_OFF) {
+                        if (card->GetProtect(drive)) {
+                            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"lock.circle.fill" accessibilityDescription:@""];
+                        }
+                        else {
+                            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
+                        }
+                        driveLightButton.contentTintColor = [NSColor controlAccentColor];
                     }
                     else {
-                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
+                        if (card->GetProtect(drive)) {
+                            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"lock.circle" accessibilityDescription:@""];
+                        }
+                        else {
+                            driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
+                        }
+                        driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
                     }
+                }
+            }
+            else if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
+                HarddiskInterfaceCard *card = dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
+                Disk_Status_e status;
+                card->GetLightStatus(&status);
+                NSLog(@"updateDriveLights: HDD is %d", status);
+                if (status != DISK_STATUS_OFF) {
+                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.fill" accessibilityDescription:@""];
                     driveLightButton.contentTintColor = [NSColor controlAccentColor];
                 }
                 else {
-                    if (card->GetProtect(drive)) {
-                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"lock.circle" accessibilityDescription:@""];
-                    }
-                    else {
-                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
-                    }
+                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle" accessibilityDescription:@""];
                     driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
                 }
             }

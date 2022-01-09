@@ -141,29 +141,24 @@ NSArray *fileTypeStrings = @[
 }
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item {
-    NSView *enclosingView = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 0, self.rowHeight)];
     FSItem *fsItem = (FSItem *)item;
-    
-    NSTextField *textField = [[NSTextField alloc] init];
+    NSTextField *textField;
     if ([tableColumn.identifier isEqualToString:@"name"]) {
-        textField.stringValue = fsItem.name;
+        textField = [NSTextField labelWithString:fsItem.name];
     }
     else if ([tableColumn.identifier isEqualToString:@"dateModified"]) {
-        textField.stringValue = fsItem.lastModified;
+        textField = [NSTextField labelWithString:fsItem.lastModified];
     }
     else if ([tableColumn.identifier isEqualToString:@"size"]) {
-        textField.stringValue = fsItem.size;
+        textField = [NSTextField labelWithString:fsItem.size];
     }
     else if ([tableColumn.identifier isEqualToString:@"kind"]) {
-        textField.stringValue = fsItem.kind;
+        textField = [NSTextField labelWithString:fsItem.kind];
     }
-    textField.bezeled = NO;
-    textField.drawsBackground = NO;
-    textField.editable = NO;
-    textField.selectable = NO;
     [textField sizeToFit];
-    
+
     // center textField vertically within enclosingView
+    NSView *enclosingView = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 0, self.rowHeight)];
     CGRect textFieldFrame = textField.frame;
     textFieldFrame.origin.y = VERTICAL_MARGIN;
     textField.frame = textFieldFrame;

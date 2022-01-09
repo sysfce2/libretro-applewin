@@ -31,7 +31,8 @@ namespace mariani
     int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;
 
     void FrameDrawDiskLEDS() override;
-      
+    void FrameRefreshStatus(int flags) override;
+
     virtual std::string Video_GetScreenShotFolder() override;
 
   protected:

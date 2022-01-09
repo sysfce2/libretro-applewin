@@ -87,3 +87,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Recordings:"; ObjectID = "zxc-fb-W3p"; */
 "zxc-fb-W3p.title" = "螢幕錄影:";
+
+/* Class = "NSButtonCell"; title = "Create New Hard Disk"; ObjectID = "lZG-5R-Dzg"; */
+"lZG-5R-Dzg.title" = "新建硬碟映像檔";

@@ -53,6 +53,12 @@ namespace mariani
     UpdateDriveLights();
   }
 
+  void MarianiFrame::FrameRefreshStatus(int flags) {
+    if (flags & (DRAW_LEDS | DRAW_DISK_STATUS)) {
+      UpdateDriveLights();
+    }
+  }
+
   std::string MarianiFrame::getResourcePath(const std::string & filename)
   {
     return std::string(PathToResourceNamed(filename.c_str()));

@@ -274,7 +274,6 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
                 [vc updateHardDiskPreferences];
             }
         }
-        NSAssert(NO, @"failed to find storage pane's view controller");
         return;
     }
     HarddiskInterfaceCard *hddCard = [self hddCard];
@@ -287,7 +286,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
     CardManager &cardManager = GetCardMgr();
     
     // Hard disk
-    for (int slot = SLOT1; slot < NUM_SLOTS; slot++) {
+    for (int slot = SLOT0; slot < NUM_SLOTS; slot++) {
         if (cardManager.QuerySlot(slot) == CT_GenericHDD) {
             return dynamic_cast<HarddiskInterfaceCard *>(cardManager.GetObj(slot));
         }

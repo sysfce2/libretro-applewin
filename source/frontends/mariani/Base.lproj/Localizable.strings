@@ -205,9 +205,6 @@
 /* No comment provided by engineer. */
 "2 bytes" = "2 bytes";
 
-/* browse disk image */
-"Browse..." = "Browse...";
-
 /* No comment provided by engineer. */
 "Unnamed" = "Unnamed";
 
@@ -231,3 +228,15 @@
 
 /* No comment provided by engineer. */
 "Unknown Disk Format" = "Unknown Disk Format";
+
+/* No comment provided by engineer. */
+"\n\nAdvanced disk image features use code from the CiderPress project by Andy McFadden." = "\n\nAdvanced disk image features use code from the CiderPress project by Andy McFadden.";
+
+/* No comment provided by engineer. */
+"\n\nAdvanced disk image features include code from the CiderPress project by Andy McFadden." = "\n\nAdvanced disk image features include code from the CiderPress project by Andy McFadden.";
+
+/* browse disk image */
+"Examine…" = "Examine…";
+
+/* No comment provided by engineer. */
+"Slot %d Hard Disk" = "Slot %d Hard Disk";
