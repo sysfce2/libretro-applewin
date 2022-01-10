@@ -83,7 +83,7 @@ enum {
             break;
         default: {
             // maybe it's already a printable character
-            unichar c = [event.characters characterAtIndex:0];
+            unichar c = [event.charactersIgnoringModifiers characterAtIndex:0];
             if (event.modifierFlags & NSEventModifierFlagControl) {
                 ch = toupper(c);
                 if (ch >= ASCII_A && ch <= ASCII_Z) {
