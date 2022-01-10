@@ -316,7 +316,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
     panel.canDownloadUbiquitousContents = YES;
     
     if ([panel runModal] == NSModalResponseOK) {
-        self.generalRecordingsFolderButton.title = [panel.URL path];
+        self.generalRecordingsFolderButton.title = [panel.URL.path stringByAbbreviatingWithTildeInPath];
         [[UserDefaults sharedInstance] setRecordingsFolder:panel.URL];
     }
 }
