@@ -268,6 +268,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 #pragma mark - Mariani menu actions
 
 - (IBAction)aboutAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
     if (self.aboutWindow == nil) {
         if (![[NSBundle mainBundle] loadNibNamed:@"About" owner:self topLevelObjects:nil]) {
             NSLog(@"failed to load About nib");
@@ -304,6 +306,8 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 }
 
 - (IBAction)aboutLinkAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/sh95014/AppleWin"]];
 }
 
@@ -311,6 +315,7 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (IBAction)preferencesAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
     if (self.preferencesWC == nil) {
         NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Preferences" bundle:nil];
         self.preferencesWC = [storyboard instantiateInitialController];
