@@ -17,20 +17,22 @@
 @implementation EmulatorView
 
 enum {
-    ASCII_NUL = 0x00,
-    ASCII_BS  = 0x08,  // ^H
-    ASCII_HT  = 0x09,  // ^I
-    ASCII_LF  = 0x0A,  // ^J
-    ASCII_VT  = 0x0B,  // ^K
-    ASCII_CR  = 0x0D,  // ^M
-    ASCII_NAK = 0x15,  // ^U
-    ASCII_ESC = 0x1B,  // ^[
-    ASCII_SPC = 0x20,
-    ASCII_A   = 0x41,
-    ASCII_Z   = 0x5A,
-    ASCII_a   = 0x61,
-    ASCII_z   = 0x7A,
-    ASCII_DEL = 0x7F,
+    ASCII_NUL           = 0x00,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗@⦘
+    ASCII_BS            = 0x08,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗H⦘
+    ASCII_HT            = 0x09,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗I⦘
+    ASCII_LF            = 0x0A,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗J⦘
+    ASCII_VT            = 0x0B,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗K⦘
+    ASCII_CR            = 0x0D,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗M⦘
+    ASCII_NAK           = 0x15,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗U⦘
+    ASCII_ESC           = 0x1B,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗[⦘
+    ASCII_FS            = 0x1C,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗\⦘
+    ASCII_GS            = 0x1D,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗]⦘
+    ASCII_RS            = 0x1E,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗^⦘
+    ASCII_US            = 0x1F,  // ⦗𝙲𝚃𝚁𝙻⦘-⦗-⦘
+    ASCII_SP            = 0x20,
+    ASCII_QUOTE         = 0x27,  // ⦗'⦘
+    ASCII_BACKSLASH     = 0x5C,  // ⦗\⦘
+    ASCII_DEL           = 0x7F,
 };
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -45,12 +47,12 @@ enum {
 }
 
 // Going by the Apple ][ Reference Manual, the rules are basically:
-// - the number keys are modified by SHIFT only
-// - the letter keys are modified by CTRL only (not true for //e)
-// - 0 is unmodified by CTRL or SHIFT, but that's not relevant to us
-// - special keys like ← or → are sent as control characters
+// - the number keys are modified by ⦗𝚂𝙷𝙸𝙵𝚃⦘ only
+// - the letter keys are modified by ⦗𝙲𝚃𝚁𝙻⦘ only (not true for //e)
+// - 0 is unmodified by ⦗𝙲𝚃𝚁𝙻⦘ or ⦗𝚂𝙷𝙸𝙵𝚃⦘, but that's not relevant to us
+// - special keys like ⦗←⦘ or ⦗→⦘ are sent as control characters
 - (void)keyDown:(NSEvent *)event {
-    NSInteger ch = ASCII_NUL;
+    NSInteger ch = -1;
     
     switch (event.keyCode) {
         case kVK_ANSI_KeypadEnter:
@@ -78,29 +80,50 @@ enum {
         case kVK_Escape:
             ch = ASCII_ESC;
             break;
-        case kVK_Tab:
-            ch = ASCII_HT;
-            break;
         default: {
-            // maybe it's already a printable character
-            unichar c = [event.charactersIgnoringModifiers characterAtIndex:0];
+            unichar raw = [event.charactersIgnoringModifiers characterAtIndex:0];
             if (event.modifierFlags & NSEventModifierFlagControl) {
-                ch = toupper(c);
-                if (ch >= ASCII_A && ch <= ASCII_Z) {
-                    ch -= 0x40;  // A -> ^A
+                // for the following, ⦗𝙲𝚃𝚁𝙻⦘-⦗𝚂𝙷𝙸𝙵𝚃⦘-[key] = ⦗𝙲𝚃𝚁𝙻⦘-[key]
+                if (raw >= 'A' && raw <= 'Z') {
+                    ch = raw - 0x40;  // A → ⦗𝙲𝚃𝚁𝙻⦘-A
                 }
-                else if (ch >= ASCII_a && ch <= ASCII_z) {
-                    ch -= 0x60;  // a -> ^A
+                else if (raw >= 'a' && raw <= 'z') {
+                    ch = raw - 0x60;  // a → ⦗𝙲𝚃𝚁𝙻⦘-A
+                }
+                else if (raw == '-' || raw == '_') {
+                    ch = ASCII_US;
+                }
+                else if (raw == '2' || raw == '@') {
+                    ch = ASCII_NUL;
+                }
+                else if (raw == '6' || raw == '^') {
+                    ch = ASCII_RS;
+                }
+                else if (raw == '[' || raw == '{') {
+                    ch = ASCII_ESC;
+                }
+                else if (raw == ASCII_BACKSLASH || raw == '|') {
+                    ch = ASCII_FS;
+                }
+                else if (raw == ']' || raw == '}') {
+                    ch = ASCII_GS;
+                }
+                // for the following, ⦗𝙲𝚃𝚁𝙻⦘-⦗𝚂𝙷𝙸𝙵𝚃⦘-[key] = ⦗𝚂𝙷𝙸𝙵𝚃⦘-[key]
+                else {
+                    ch = raw;
                 }
             }
-            else if (c >= ASCII_SPC && c < ASCII_DEL) {
-                ch = self.forceCapsLock ? toupper(c) : c;
+            else if (raw >= ASCII_SP && raw < ASCII_DEL) {
+                ch = self.forceCapsLock ? toupper(raw) : raw;
             }
             break;
         }
     }
-    if (ch != ASCII_NUL) {
+    if (ch >= ASCII_NUL) {
         addKeyToBuffer(ch);
+    }
+    else {
+        NSLog(@"Ignored key code 0x%02X", event.keyCode);
     }
 }
 
