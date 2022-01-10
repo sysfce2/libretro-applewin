@@ -35,6 +35,8 @@ namespace mariani
 
     virtual std::string Video_GetScreenShotFolder() override;
 
+    void *FrameBufferData();
+
   protected:
     void GetRelativeMousePosition(const SDL_MouseMotionEvent & motion, double & x, double & y) const override;
 

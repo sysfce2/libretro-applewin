@@ -75,7 +75,7 @@
     FrameBuffer frameBuffer;
 }
 
-std::shared_ptr<sa2::SDLFrame> frame;
+std::shared_ptr<mariani::MarianiFrame> frame;
 
 - (void)awakeFromNib {
     [super awakeFromNib];

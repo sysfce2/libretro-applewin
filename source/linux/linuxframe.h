@@ -38,9 +38,6 @@ public:
   virtual void Begin();
   virtual void End();
 
-#ifdef MARIANI
-  void *FrameBufferData();
-#endif
 protected:
   std::vector<uint8_t> myFramebuffer;
 };

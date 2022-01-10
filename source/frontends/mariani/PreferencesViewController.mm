@@ -136,10 +136,10 @@ BOOL configured;
     self.generalDeveloperToolsButton.enabled = NO;
 
     NSURL *folder = [[UserDefaults sharedInstance] screenshotsFolder];
-    self.generalScreenshotsFolderButton.title = [NSString stringWithUTF8String:[folder fileSystemRepresentation]];
+    self.generalScreenshotsFolderButton.title = [folder.path stringByAbbreviatingWithTildeInPath];
 
     folder = [[UserDefaults sharedInstance] recordingsFolder];
-    self.generalRecordingsFolderButton.title = [NSString stringWithUTF8String:[folder fileSystemRepresentation]];
+    self.generalRecordingsFolderButton.title = [folder.path stringByAbbreviatingWithTildeInPath];
 }
 
 // types of main boards, ordered as we want them to appear in UI
@@ -290,7 +290,14 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
     HarddiskInterfaceCard *hddCard = [self hddCard];
     self.storageHardDiskFolderButton.enabled = (hddCard != nil);
     self.storageCreateHardDiskButton.enabled = (hddCard != nil);
-    self.storageHardDiskFolderButton.title = (hddCard != nil) ? [NSString stringWithUTF8String:hddCard->HarddiskGetFullPathName(0).c_str()] : @"";
+    if (hddCard != nil) {
+        NSString *path = [NSString stringWithUTF8String:hddCard->HarddiskGetFullPathName(0).c_str()];
+        path = [path stringByAbbreviatingWithTildeInPath];
+        self.storageHardDiskFolderButton.title = path;
+    }
+    else {
+        self.storageHardDiskFolderButton.title = @"";
+    }
 }
 
 #pragma mark - Actions
@@ -309,7 +316,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
     panel.canDownloadUbiquitousContents = YES;
     
     if ([panel runModal] == NSModalResponseOK) {
-        self.generalRecordingsFolderButton.title = [NSString stringWithUTF8String:[panel.URL fileSystemRepresentation]];
+        self.generalRecordingsFolderButton.title = [panel.URL path];
         [[UserDefaults sharedInstance] setRecordingsFolder:panel.URL];
     }
 }
@@ -324,7 +331,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
     panel.canDownloadUbiquitousContents = YES;
     
     if ([panel runModal] == NSModalResponseOK) {
-        self.generalScreenshotsFolderButton.title = [NSString stringWithUTF8String:[panel.URL fileSystemRepresentation]];
+        self.generalScreenshotsFolderButton.title = [panel.URL.path stringByAbbreviatingWithTildeInPath];
         [[UserDefaults sharedInstance] setScreenshotsFolder:panel.URL];
     }
 }

@@ -59,6 +59,10 @@ namespace mariani
     }
   }
 
+  void *MarianiFrame::FrameBufferData() {
+    return myFramebuffer.data();
+  }
+
   std::string MarianiFrame::getResourcePath(const std::string & filename)
   {
     return std::string(PathToResourceNamed(filename.c_str()));
