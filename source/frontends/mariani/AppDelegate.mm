@@ -268,35 +268,37 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 #pragma mark - Mariani menu actions
 
 - (IBAction)aboutAction:(id)sender {
-    if (![[NSBundle mainBundle] loadNibNamed:@"About" owner:self topLevelObjects:nil]) {
-        NSLog(@"failed to load About nib");
-        return;
-    }
-    
-    if (self.aboutImage.image == nil) {
-        self.aboutImage.image = [NSApp applicationIconImage];
+    if (self.aboutWindow == nil) {
+        if (![[NSBundle mainBundle] loadNibNamed:@"About" owner:self topLevelObjects:nil]) {
+            NSLog(@"failed to load About nib");
+            return;
+        }
         
-        self.aboutTitle.stringValue = [NSRunningApplication currentApplication].localizedName;
-        
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        self.aboutVersion.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)", @""),
-            infoDictionary[@"CFBundleShortVersionString"],
-            infoDictionary[@"CFBundleVersion"]];
-        
+        if (self.aboutImage.image == nil) {
+            self.aboutImage.image = [NSApp applicationIconImage];
+            
+            self.aboutTitle.stringValue = [NSRunningApplication currentApplication].localizedName;
+            
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            self.aboutVersion.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)", @""),
+                infoDictionary[@"CFBundleShortVersionString"],
+                infoDictionary[@"CFBundleVersion"]];
+            
 #ifdef FEATURE_BROWSER
-        CGRect oldCreditsFrame = self.aboutCredits.frame;
-        self.aboutCredits.stringValue = [self.aboutCredits.stringValue stringByAppendingString:
-            NSLocalizedString(@"\n\nAdvanced disk image features include code from the CiderPress project by Andy McFadden.", "")];
-        CGRect newCreditsFrame = oldCreditsFrame;
-        newCreditsFrame.size = [self.aboutCredits sizeThatFits:CGSizeMake(oldCreditsFrame.size.width, 5000)];
-        self.aboutCredits.frame = newCreditsFrame;
-        
-        CGRect aboutWindowFrame = self.aboutWindow.frame;
-        CGFloat gap = newCreditsFrame.size.height - oldCreditsFrame.size.height;
-        aboutWindowFrame.size.height += gap;
-        aboutWindowFrame.origin.y -= gap / 2;
-        [self.aboutWindow setFrame:aboutWindowFrame display:YES];
+            CGRect oldCreditsFrame = self.aboutCredits.frame;
+            self.aboutCredits.stringValue = [self.aboutCredits.stringValue stringByAppendingString:
+                NSLocalizedString(@"\n\nAdvanced disk image features include code from the CiderPress project by Andy McFadden.", "")];
+            CGRect newCreditsFrame = oldCreditsFrame;
+            newCreditsFrame.size = [self.aboutCredits sizeThatFits:CGSizeMake(oldCreditsFrame.size.width, 5000)];
+            self.aboutCredits.frame = newCreditsFrame;
+            
+            CGRect aboutWindowFrame = self.aboutWindow.frame;
+            CGFloat gap = newCreditsFrame.size.height - oldCreditsFrame.size.height;
+            aboutWindowFrame.size.height += gap;
+            aboutWindowFrame.origin.y -= gap / 2;
+            [self.aboutWindow setFrame:aboutWindowFrame display:YES];
 #endif // FEATURE_BROWSER
+        }
     }
     [self.aboutWindow orderFront:sender];
 }
@@ -309,8 +311,10 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
 
 - (IBAction)preferencesAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Preferences" bundle:nil];
-    self.preferencesWC = [storyboard instantiateInitialController];
+    if (self.preferencesWC == nil) {
+        NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Preferences" bundle:nil];
+        self.preferencesWC = [storyboard instantiateInitialController];
+    }
     [self.preferencesWC showWindow:sender];
 }
 
