@@ -405,15 +405,13 @@ namespace sa2
       {
       case SDLK_F12:
         {
-          Snapshot_LoadState();
-          mySpeed.reset();
-          ResetHardware();
+          LoadSnapshot();
           break;
         }
       case SDLK_F11:
         {
           const std::string & pathname = Snapshot_GetPathname();
-          const std::string message = "Do you want to save the state to " + pathname + "?";
+          const std::string message = "Do you want to save the state to: " + pathname + "?";
           SoundCore_SetFade(FADE_OUT);
           if (show_yes_no_dialog(myWindow, "Save state", message))
           {
@@ -599,8 +597,9 @@ namespace sa2
         g_dwCyclesThisFrame -= dwClksPerFrame;
         if (g_bFullSpeed)
         {
-          NTSC_VideoClockResync(g_dwCyclesThisFrame);
-          GetVideo().VideoRefreshBuffer(GetVideo().GetVideoMode(), true);
+          // only call VideoPresentScreen every 16ms
+          // hardcoded in FrameBase::VideoRedrawScreenDuringFullSpeed()
+          VideoRedrawScreenDuringFullSpeed(g_dwCyclesThisFrame);
         }
       }
     } while (totalCyclesExecuted < cyclesToExecute);
@@ -695,6 +694,7 @@ namespace sa2
         // entering full speed
         MB_Mute();
         setGLSwapInterval(0);
+        VideoRedrawScreenDuringFullSpeed(0, true);
       }
       else
       {
@@ -730,6 +730,13 @@ namespace sa2
   {
     const CConfigNeedingRestart currentConfig = CConfigNeedingRestart::Create();
     return myHardwareConfig != currentConfig;
+  }
+
+  void SDLFrame::LoadSnapshot()
+  {
+    common2::CommonFrame::LoadSnapshot();
+    mySpeed.reset();
+    ResetHardware();
   }
 
 }
