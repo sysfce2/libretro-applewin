@@ -2,11 +2,56 @@
 
 ## Introduction
 
-This is intended to be a native macOS UI for [AppleWin](https://github.com/AppleWin/AppleWin), by way of [Andrea](https://github.com/audetto)'s [Raspberry Pi port](https://github.com/audetto/AppleWin). You can build a macOS command-line app from Andrea's repo with the instructions below.
+Mariani is a native macOS UI for [AppleWin](https://github.com/AppleWin/AppleWin), by way of [Andrea](https://github.com/audetto)'s [Raspberry Pi port](https://github.com/audetto/AppleWin). I built this because while I greatly respect cross-platform UI, I don't actually like to use it, and I wanted a native experience under macOS and one did not seem to exist.
 
-The rationale for this fork is to experiment with a native macOS UI, but you should be able to build [sa2](source/frontends/sdl/README.md) from here as well. You can check out the work-in-progress by opening Mariani.xcodeproj in Xcode.
+But if what you want is a macOS command-line app, you can build it from Andrea's repo with the instructions below.
 
-## Build
+## Build Mariani
+
+### Dependencies
+
+The easiest way to build Mariani is to satisfy the dependencies using [Homebrew](https://brew.sh). After you install Homebrew, pick up the required packages below:
+
+```
+brew install Boost sdl2
+```
+
+### Checkout
+
+Now we're ready to grab the source code:
+
+```
+git clone https://github.com/sh95014/AppleWin.git --recursive
+```
+
+Load up the Xcode project, and build the "Mariani" target for "My Mac".
+
+"Mariani Pro" contains an additional feature to browse inside a floppy disk image that you've loaded into the emulator, and requires code from [CiderPress](https://github.com/fadden/ciderpress). If you want to try it, you'll want to follow the [Linux build instructions](https://github.com/fadden/ciderpress/blob/master/README-linux.md).
+
+"Mariani Pro Universal" is even more of a pain. Unfortunately, Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and build Boost yourself. Here's a script that should help:
+
+```
+#!/bin/sh
+
+rm -rf arm64 x86_64 universal stage bin.v2
+rm -f b2 project-config*
+./bootstrap.sh cxxflags="-arch x86_64 -arch arm64" cflags="-arch x86_64 -arch arm64" linkflags="-arch x86_64 -arch arm64"
+./b2 toolset=clang-darwin target-os=darwin architecture=arm abi=aapcs cxxflags="-arch arm64" cflags="-arch arm64" linkflags="-arch arm64" -a
+mkdir -p arm64 && cp stage/lib/*.dylib arm64 && cp stage/lib/*.a arm64
+./b2 toolset=clang-darwin target-os=darwin architecture=x86 cxxflags="-arch x86_64" cflags="-arch x86_64" linkflags="-arch x86_64" abi=sysv binary-format=mach-o -a
+mkdir x86_64 && cp stage/lib/*.dylib x86_64 && cp stage/lib/*.a x86_64
+mkdir universal
+for dylib in arm64/*; do 
+  lipo -create -arch arm64 $dylib -arch x86_64 x86_64/$(basename $dylib) -output universal/$(basename $dylib); 
+done
+for dylib in universal/*; do
+  lipo $dylib -info;
+done
+```
+
+## Build sa2
+
+sa2 is the binary produced by Andrea's port.
 
 ### Dependencies
 
