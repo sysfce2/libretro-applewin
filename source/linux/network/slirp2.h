@@ -3,7 +3,7 @@
 #ifndef MARIANI
 #include "linux/config.h"
 #else
-#define SLIRP_FOUND "1"
+#undef SLIRP_FOUND
 #endif // MARIANI
 
 #ifdef SLIRP_FOUND

@@ -25,7 +25,9 @@
 
 #include <algorithm>
 
+#ifndef MARIANI
 #include <SDL_image.h>
+#endif
 
 // #define KEY_LOGGING_VERBOSE
 
