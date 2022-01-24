@@ -6,6 +6,35 @@ Mariani is a native macOS UI for [AppleWin](https://github.com/AppleWin/AppleWin
 
 But if what you want is a macOS command-line app, you can build it from Andrea's repo with the instructions below.
 
+### Features
+
+- Native, universal macOS UI
+- Screen recording
+- Copy screenshot to pasteboard
+- Disk image browser
+- Floppy and hard disk image creation
+- Full-screen support
+
+### AppleWin Features Not Yet Supported
+
+- Debugger and memory viewer
+- Load/save emulator state
+- Cassette support
+
+### Known Issues
+
+- plugging or unplugging a VidHD does not refresh the display correctly
+- Screen recording does not record audio
+- Certain key combinations are not sent to the emulator
+- Code could be better commented
+
+### Suspected Issues
+
+- Joystick may not work. I don't have one yet and haven't tested it.
+- AppleWin supports lots of esoteric hardware, I've really just been using the floppy drive, hard drive, 80-column card, and Mockingboard.
+- Moving the main window to another monitor may cause issues.
+- Haven't tested on an x86 Mac yet.
+
 ## Build Mariani
 
 ### Dependencies
