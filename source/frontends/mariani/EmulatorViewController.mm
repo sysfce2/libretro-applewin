@@ -61,6 +61,7 @@
 @property uint64_t samplePeriodBeginCumulativeCycles;
 @property NSInteger frameCount;
 @property NSTimer *timer;
+@property CVDisplayLinkRef displayLink;
 
 @property AVAssetWriter *videoWriter;
 @property AVAssetWriterInput *videoWriterInput;
@@ -136,7 +137,22 @@ std::shared_ptr<mariani::MarianiFrame> frame;
     self.samplePeriodBeginCumulativeCycles = g_nCumulativeCycles;
     self.frameCount = 0;
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / TARGET_FPS target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+    CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+    CVDisplayLinkSetOutputCallback(self.displayLink, &MyDisplayLinkCallback, (__bridge void *)self);
+    CGDirectDisplayID viewDisplayID =
+        (CGDirectDisplayID) [self.view.window.screen.deviceDescription[@"NSScreenNumber"] unsignedIntegerValue];
+    CVDisplayLinkSetCurrentCGDisplay(_displayLink, viewDisplayID);
+    CVDisplayLinkStart(self.displayLink);
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+}
+
+static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *now, const CVTimeStamp *outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void *displayLinkContext)
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [(__bridge EmulatorViewController *)displayLinkContext updateDisplay];
+    });
+    return kCVReturnSuccess;
 }
 
 - (void)timerFired {
@@ -165,14 +181,34 @@ std::shared_ptr<mariani::MarianiFrame> frame;
     NSTimeInterval executionTimeOffset = -[start timeIntervalSinceNow];
 #endif
 
-    frame->VideoPresentScreen();
+    if (++self.frameCount > TARGET_FPS) {
+        NSArray *cpus = @[ @"", @"6502", @"65C02", @"Z80" ];
+        double clockSpeed =
+            (double)(g_nCumulativeCycles - self.samplePeriodBeginCumulativeCycles) /
+            -[self.samplePeriodBeginClockTime timeIntervalSinceNow];
+        [self.delegate updateStatus:[NSString stringWithFormat:@"%@@%.3f MHz", cpus[GetActiveCpu()], clockSpeed / 1000000]];
 
+        self.samplePeriodBeginClockTime = [NSDate now];
+        self.samplePeriodBeginCumulativeCycles = g_nCumulativeCycles;
+        self.frameCount = 0;
+    }
+    
+#ifdef DEBUG
+    NSTimeInterval duration = -[start timeIntervalSinceNow];
+    if (duration > 1.0 / TARGET_FPS) {
+        // oops, took too long
+        NSLog(@"Frame time exceeded: %f ms", duration * 1000);
+        NSLog(@"    Write audio:                %f ms", (audioWriteTimeOffset * 1000));
+        NSLog(@"    Process events:             %f ms", (eventProcessingTimeOffset - audioWriteTimeOffset) * 1000);
+        NSLog(@"    Execute:                    %f ms", (executionTimeOffset - eventProcessingTimeOffset) * 1000);
+    }
+#endif // DEBUG
+}
+
+- (void)updateDisplay {
     frameBuffer.data = frame->FrameBufferData();
     [self.renderer updateTextureWithData:frameBuffer.data];
-#ifdef DEBUG
-    NSTimeInterval screenPresentationTimeOffset = -[start timeIntervalSinceNow];
-#endif
-
+    
     if (self.videoWriterInput.readyForMoreMediaData) {
         if (!self.isRecordingScreen) {
             self.recordingScreen = YES;
@@ -216,38 +252,13 @@ std::shared_ptr<mariani::MarianiFrame> frame;
             [self.delegate screenRecordingDidTock];
         }
     }
-#ifdef DEBUG
-    NSTimeInterval screenRecordingTimeOffset = -[start timeIntervalSinceNow];
-#endif
-
-    if (++self.frameCount > TARGET_FPS) {
-        NSArray *cpus = @[ @"", @"6502", @"65C02", @"Z80" ];
-        double clockSpeed =
-            (double)(g_nCumulativeCycles - self.samplePeriodBeginCumulativeCycles) /
-            -[self.samplePeriodBeginClockTime timeIntervalSinceNow];
-        [self.delegate updateStatus:[NSString stringWithFormat:@"%@@%.3f MHz", cpus[GetActiveCpu()], clockSpeed / 1000000]];
-
-        self.samplePeriodBeginClockTime = [NSDate now];
-        self.samplePeriodBeginCumulativeCycles = g_nCumulativeCycles;
-        self.frameCount = 0;
-    }
-    
-#ifdef DEBUG
-    NSTimeInterval duration = -[start timeIntervalSinceNow];
-    if (duration > 1.0 / TARGET_FPS) {
-        // oops, took too long
-        NSLog(@"Frame time exceeded: %f ms", duration * 1000);
-        NSLog(@"    Write audio:                %f ms", (audioWriteTimeOffset * 1000));
-        NSLog(@"    Process events:             %f ms", (eventProcessingTimeOffset - audioWriteTimeOffset) * 1000);
-        NSLog(@"    Execute:                    %f ms", (executionTimeOffset - eventProcessingTimeOffset) * 1000);
-        NSLog(@"    Present screen:             %f ms", (screenPresentationTimeOffset - executionTimeOffset) * 1000);
-        NSLog(@"    Record screen:              %f ms", (screenRecordingTimeOffset - screenPresentationTimeOffset) * 1000);
-    }
-#endif // DEBUG
 }
 
 - (void)pause {
     [self.timer invalidate];
+    CVDisplayLinkStop(self.displayLink);
+    CVDisplayLinkRelease(self.displayLink);
+    self.displayLink = NULL;
 }
 
 - (void)reboot {

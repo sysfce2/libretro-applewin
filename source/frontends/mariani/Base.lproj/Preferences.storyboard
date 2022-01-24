@@ -519,6 +519,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="121"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <button toolTip="Enables faster but less authentic disk access" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3p-Y6-znB">
+                                <rect key="frame" x="88" y="84" width="272" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Enhanced speed for floppy drives" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8J1-iv-XcH">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggleDiskEnhancedSpeed:" target="e3Y-c0-dGl" id="SjK-gw-f7W"/>
+                                </connections>
+                            </button>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="MfP-cO-8w4">
+                                <rect key="frame" x="20" y="74" width="410" height="5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ur4-hX-Ps9">
                                 <rect key="frame" x="18" y="52" width="120" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -537,21 +552,6 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="hardDiskFolderAction:" target="e3Y-c0-dGl" id="N6K-RU-tQL"/>
-                                </connections>
-                            </button>
-                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="MfP-cO-8w4">
-                                <rect key="frame" x="20" y="74" width="410" height="5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </box>
-                            <button toolTip="Enables faster but less authentic disk access" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3p-Y6-znB">
-                                <rect key="frame" x="88" y="84" width="272" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Enhanced speed for floppy drives" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8J1-iv-XcH">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="toggleDiskEnhancedSpeed:" target="e3Y-c0-dGl" id="SjK-gw-f7W"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sb-00-62f">
