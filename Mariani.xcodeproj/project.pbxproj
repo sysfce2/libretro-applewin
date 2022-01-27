@@ -482,7 +482,7 @@
 
 /* Begin PBXFileReference section */
 		B0098BFA277E0F6800F38E0C /* libAppleWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAppleWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B00ECBE4279EEB600041E16C /* Mariani Pro Universal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mariani Pro Universal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00ECBE4279EEB600041E16C /* Mariani Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mariani Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B00ECBE5279EEBAB0041E16C /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../boost_1_78_0/universal/libboost_program_options.a; sourceTree = "<group>"; };
 		B00ECBE7279EEBD30041E16C /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../SDL2.framework; sourceTree = "<group>"; };
 		B020F8A32785D30E0071D3C7 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = test/TestCPU6502/stdafx.cpp; sourceTree = SOURCE_ROOT; };
@@ -964,7 +964,7 @@
 				B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */,
 				B0098BFA277E0F6800F38E0C /* libAppleWin.a */,
 				B0270BA32789CA9F00E3ACCF /* Mariani.app */,
-				B00ECBE4279EEB600041E16C /* Mariani Pro Universal.app */,
+				B00ECBE4279EEB600041E16C /* Mariani Pro.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1611,7 +1611,7 @@
 			);
 			name = "Mariani Pro Universal";
 			productName = mariani;
-			productReference = B00ECBE4279EEB600041E16C /* Mariani Pro Universal.app */;
+			productReference = B00ECBE4279EEB600041E16C /* Mariani Pro.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B0270B362789CA9F00E3ACCF /* Mariani */ = {
@@ -2317,7 +2317,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Mariani Pro";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Debug;
@@ -2363,7 +2363,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Mariani Pro";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
