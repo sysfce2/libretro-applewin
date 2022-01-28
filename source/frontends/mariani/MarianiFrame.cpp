@@ -18,6 +18,8 @@ namespace mariani
     : SDLFrame(options)
   {
     g_sProgramDir = GetSupportDirectory();
+    g_bPrinterAppend = true;
+    g_bFilterUnprintable = false;
   }
 
   void MarianiFrame::Initialize(bool resetVideoState)
