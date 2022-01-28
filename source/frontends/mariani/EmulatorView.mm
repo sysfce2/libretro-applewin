@@ -10,8 +10,16 @@
 #import "linux/keyboard.h"
 #import "linux/paddle.h"
 
+#import "StdAfx.h"
+#import "Core.h"
+#import "CardManager.h"
+#import "MouseInterface.h"
+
 @interface EmulatorView ()
-    @property BOOL forceCapsLock;
+
+@property BOOL forceCapsLock;
+@property NSTrackingRectTag trackingRectTag;
+
 @end
 
 @implementation EmulatorView
@@ -38,12 +46,22 @@ enum {
 - (instancetype)initWithCoder:(NSCoder *)coder {
     if ((self = [super initWithCoder:coder])) {
         self.forceCapsLock = YES;
+        self.trackingRectTag = [self addTrackingRect:self.bounds owner:self userData:NULL assumeInside:YES];
     }
     return self;
 }
 
 - (BOOL)acceptsFirstResponder {
     return YES;
+}
+
+- (void)viewDidMoveToWindow {
+    [self.window setAcceptsMouseMovedEvents:YES];
+}
+
+- (void)updateTrackingAreas {
+    [self removeTrackingRect:self.trackingRectTag];
+    self.trackingRectTag = [self addTrackingRect:self.bounds owner:self userData:NULL assumeInside:YES];
 }
 
 // Going by the Apple ][ Reference Manual, the rules are basically:
@@ -171,6 +189,93 @@ enum {
             }
         }
     }];
+}
+
+- (void)mouseDown:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    CardManager & cardManager = GetCardMgr();
+
+    if (cardManager.IsMouseCardInstalled() && cardManager.GetMouseCard()->IsActiveAndEnabled()) {
+        cardManager.GetMouseCard()->SetButton(BUTTON0, BUTTON_DOWN);
+    }
+}
+
+- (void)mouseUp:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    CardManager & cardManager = GetCardMgr();
+
+    if (cardManager.IsMouseCardInstalled() && cardManager.GetMouseCard()->IsActiveAndEnabled()) {
+        cardManager.GetMouseCard()->SetButton(BUTTON0, BUTTON_UP);
+    }
+}
+
+- (void)rightMouseDown:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    CardManager & cardManager = GetCardMgr();
+
+    if (cardManager.IsMouseCardInstalled() && cardManager.GetMouseCard()->IsActiveAndEnabled()) {
+        cardManager.GetMouseCard()->SetButton(BUTTON1, BUTTON_DOWN);
+    }
+}
+
+- (void)rightMouseUp:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    CardManager & cardManager = GetCardMgr();
+
+    if (cardManager.IsMouseCardInstalled() && cardManager.GetMouseCard()->IsActiveAndEnabled()) {
+        cardManager.GetMouseCard()->SetButton(BUTTON1, BUTTON_UP);
+    }
+}
+
+- (void)mouseMoved:(NSEvent *)event {
+    CardManager & cardManager = GetCardMgr();
+
+    if (cardManager.IsMouseCardInstalled() && cardManager.GetMouseCard()->IsActiveAndEnabled()) {
+        int iX, iMinX, iMaxX;
+        int iY, iMinY, iMaxY;
+        cardManager.GetMouseCard()->GetXY(iX, iMinX, iMaxX, iY, iMinY, iMaxY);
+        
+        long dx, dy;
+        CGSize viewSize = self.bounds.size;
+        if (iMaxX - iMinX == 32767 && iMaxY - iMinY == 32767) {
+            // we can't tell where the emulated mouse pointer is, so relative
+            // motion is the best we can do.
+            // see SDLFrame::ProcessMouseMotion for details
+            dx = lround(event.deltaX);
+            dy = lround(event.deltaY);
+        }
+        else {
+            // translate the absolute (view-relative) position of the pointer
+            // into a relative motion so that the emulated mouse pointer can
+            // match where the real mouse pointer is.
+            CGPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+            
+            const int sizeX = iMaxX - iMinX;
+            const int sizeY = iMaxY - iMinY;
+            const int newX = iMinX + (int)lround((location.x / viewSize.width) * sizeX);
+            const int newY = iMinY + (int)lround((1 - location.y / viewSize.height) * sizeY);
+            
+            dx = newX - iX;
+            dy = newY - iY;
+        }
+        
+        int outOfBoundsX, outOfBoundsY;
+        cardManager.GetMouseCard()->SetPositionRel(dx, dy, &outOfBoundsX, &outOfBoundsY);
+    }
+}
+
+- (void)mouseDragged:(NSEvent *)event {
+    [self mouseMoved:event];
+}
+
+- (void)mouseEntered:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [NSCursor hide];
+}
+
+- (void)mouseExited:(NSEvent *)event {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [NSCursor unhide];
 }
 
 @end
