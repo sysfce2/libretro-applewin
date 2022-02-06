@@ -2381,6 +2381,8 @@
 					source,
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
+					/usr/local/include,
+					/usr/local/include/SDL2,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -2390,7 +2392,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/lib,
+					/usr/local/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2415,6 +2421,8 @@
 					source,
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
+					/usr/local/include,
+					/usr/local/include/SDL2,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -2424,7 +2432,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = /opt/homebrew/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/lib,
+					/usr/local/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2570,6 +2582,8 @@
 					source,
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
+					/usr/local/include,
+					/usr/local/include/SDL2,
 					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
@@ -2582,9 +2596,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
+					/usr/local/lib,
 					"../CiderPress/diskimg/**",
 					../CiderPress/nufxlib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2612,6 +2628,8 @@
 					source,
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
+					/usr/local/include,
+					/usr/local/include/SDL2,
 					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
@@ -2624,9 +2642,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
+					/usr/local/lib,
 					"../CiderPress/diskimg/**",
 					../CiderPress/nufxlib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
