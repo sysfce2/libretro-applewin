@@ -444,6 +444,8 @@
 		B09AB819277A21410002A6C3 /* fileapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F9277A21410002A6C3 /* fileapi.cpp */; };
 		B09AB81A277A21410002A6C3 /* winnls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7FA277A21410002A6C3 /* winnls.cpp */; };
 		B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
+		B0A8D66627B1119D00D4314F /* 6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D66427B1119D00D4314F /* 6522.cpp */; };
+		B0A8D66727B1119D00D4314F /* 6522.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D66527B1119D00D4314F /* 6522.h */; };
 		B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
 		B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
 		B0F25BCD2789B2DB0080523F /* DiskImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */; };
@@ -858,6 +860,8 @@
 		B09AB836277A22530002A6C3 /* Uilib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uilib.h; path = source/Tfe/Uilib.h; sourceTree = "<group>"; };
 		B09AB837277A22530002A6C3 /* Pcap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pcap.h; path = source/Tfe/Pcap.h; sourceTree = "<group>"; };
 		B0A6BB76277A31F7008813DE /* libpcap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcap.tbd; path = usr/lib/libpcap.tbd; sourceTree = SDKROOT; };
+		B0A8D66427B1119D00D4314F /* 6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = 6522.cpp; path = source/6522.cpp; sourceTree = "<group>"; };
+		B0A8D66527B1119D00D4314F /* 6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 6522.h; path = source/6522.h; sourceTree = "<group>"; };
 		B0ED3FCC27859566006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B0ED3FCE2785973C006E4784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B0ED3FD027859747006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1149,6 +1153,8 @@
 		B09AB5E4277A14850002A6C3 /* AppleWin */ = {
 			isa = PBXGroup;
 			children = (
+				B0A8D66427B1119D00D4314F /* 6522.cpp */,
+				B0A8D66527B1119D00D4314F /* 6522.h */,
 				B09AB62A277A14DB0002A6C3 /* 6821.cpp */,
 				B09AB5F6277A14DA0002A6C3 /* 6821.h */,
 				B09AB627277A14DB0002A6C3 /* AY8910.cpp */,
@@ -1487,6 +1493,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0A8D66727B1119D00D4314F /* 6522.h in Headers */,
 				B0098CC2277E171100F38E0C /* keyboard.h in Headers */,
 				B0098CC8277E171100F38E0C /* RGBMonitor.h in Headers */,
 				B0098CF1277E171200F38E0C /* paddle.h in Headers */,
@@ -1912,6 +1919,7 @@
 				B0098C79277E140100F38E0C /* SynchronousEventManager.cpp in Sources */,
 				B0098C83277E140100F38E0C /* Harddisk.cpp in Sources */,
 				B0098CFC277E19D200F38E0C /* emitter.c in Sources */,
+				B0A8D66627B1119D00D4314F /* 6522.cpp in Sources */,
 				B0098CA7277E144E00F38E0C /* paddle.cpp in Sources */,
 				B0098CB0277E147500F38E0C /* Debugger_Win32.cpp in Sources */,
 				B0098C8B277E140100F38E0C /* z80emu.cpp in Sources */,
