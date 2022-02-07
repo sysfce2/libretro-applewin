@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Foundation/NSProcessInfo.h>
 #import "windows.h"
 
 #import "context.h"
@@ -82,6 +83,8 @@ using namespace DiskImgLib;
 
 @property (strong) NSMutableDictionary *browserWindowControllers;
 
+@property (strong) NSProcessInfo *processInfo;
+
 @end
 
 #ifdef FEATURE_BROWSER
@@ -98,8 +101,11 @@ static void DiskImgMsgHandler(const char *file, int line, const char *msg);
 @implementation AppDelegate
 
 Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
+const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    self.processInfo = [[NSProcessInfo alloc] init];
+    
 #ifdef FEATURE_BROWSER
     Global::SetDebugMsgHandler(DiskImgMsgHandler);
     Global::AppInit();
@@ -832,11 +838,12 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             if (cardManager.QuerySlot(slot) == CT_Disk2) {
                 Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard *>(cardManager.GetObj(slot));
                 if (card->IsDriveEmpty(drive)) {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1200
-                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
-#else
-                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dashed" accessibilityDescription:@""];
-#endif
+                    if ([self.processInfo isOperatingSystemAtLeastVersion:macOS12]) {
+                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
+                    }
+                    else {
+                        driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dashed" accessibilityDescription:@""];
+                    }
                     driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
                 }
                 else {
