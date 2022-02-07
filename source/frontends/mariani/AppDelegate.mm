@@ -832,7 +832,11 @@ Disk_Status_e driveStatus[NUM_SLOTS * NUM_DRIVES];
             if (cardManager.QuerySlot(slot) == CT_Disk2) {
                 Disk2InterfaceCard *card = dynamic_cast<Disk2InterfaceCard *>(cardManager.GetObj(slot));
                 if (card->IsDriveEmpty(drive)) {
+#if __MAC_OS_X_VERSION_MIN_REQUIRED < 1200
                     driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dotted" accessibilityDescription:@""];
+#else
+                    driveLightButton.image = [NSImage imageWithSystemSymbolName:@"circle.dashed" accessibilityDescription:@""];
+#endif
                     driveLightButton.contentTintColor = [NSColor secondaryLabelColor];
                 }
                 else {
