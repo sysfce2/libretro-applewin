@@ -60,7 +60,7 @@
 @property NSDate *samplePeriodBeginClockTime;
 @property uint64_t samplePeriodBeginCumulativeCycles;
 @property NSInteger frameCount;
-@property NSTimer *timer;
+@property NSTimer *runLoopTimer;
 @property CVDisplayLinkRef displayLink;
 
 @property AVAssetWriter *videoWriter;
@@ -68,6 +68,7 @@
 @property AVAssetWriterInputPixelBufferAdaptor *videoWriterAdaptor;
 @property int64_t videoWriterFrameNumber;
 @property (getter=isRecordingScreen) BOOL recordingScreen;
+@property NSTimer *recordingTimer;
 
 @end
 
@@ -144,18 +145,20 @@ std::shared_ptr<mariani::MarianiFrame> frame;
     CVDisplayLinkSetCurrentCGDisplay(_displayLink, viewDisplayID);
     CVDisplayLinkStart(self.displayLink);
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+    self.runLoopTimer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(runLoopTimerFired) userInfo:nil repeats:YES];
 }
 
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *now, const CVTimeStamp *outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void *displayLinkContext)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [(__bridge EmulatorViewController *)displayLinkContext updateDisplay];
+        EmulatorViewController *emulatorVC = (__bridge EmulatorViewController *)displayLinkContext;
+        emulatorVC->frameBuffer.data = frame->FrameBufferData();
+        [[emulatorVC renderer] updateTextureWithData:emulatorVC->frameBuffer.data];
     });
     return kCVReturnSuccess;
 }
 
-- (void)timerFired {
+- (void)runLoopTimerFired {
 #ifdef DEBUG
     NSDate *start = [NSDate now];
 #endif
@@ -181,7 +184,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     NSTimeInterval executionTimeOffset = -[start timeIntervalSinceNow];
 #endif
 
-    if (++self.frameCount > TARGET_FPS) {
+    self.frameCount++;
+    static uint64_t timeOfLastUpdate = clock_gettime_nsec_np(CLOCK_UPTIME_RAW);
+    uint64_t currentTime = clock_gettime_nsec_np(CLOCK_UPTIME_RAW);
+    if (currentTime - timeOfLastUpdate > 1000000000.0 / TARGET_FPS) {
         NSArray *cpus = @[ @"", @"6502", @"65C02", @"Z80" ];
         double clockSpeed =
             (double)(g_nCumulativeCycles - self.samplePeriodBeginCumulativeCycles) /
@@ -191,6 +197,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         self.samplePeriodBeginClockTime = [NSDate now];
         self.samplePeriodBeginCumulativeCycles = g_nCumulativeCycles;
         self.frameCount = 0;
+        timeOfLastUpdate = currentTime;
     }
     
 #ifdef DEBUG
@@ -205,9 +212,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 #endif // DEBUG
 }
 
-- (void)updateDisplay {
+- (void)recordingTimerFired {
     frameBuffer.data = frame->FrameBufferData();
-    [self.renderer updateTextureWithData:frameBuffer.data];
     
     if (self.videoWriterInput.readyForMoreMediaData) {
         if (!self.isRecordingScreen) {
@@ -238,11 +244,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
             self.videoWriterFrameNumber++;
         }
     }
-#ifdef DEBUG
-    else if (self.videoWriter != nil) {
-        NSLog(@"Screen Recording: skipped a frame");
-    }
-#endif
     if (self.isRecordingScreen) {
         // blink the screen recording button
         if (self.videoWriterFrameNumber % TARGET_FPS == 0) {
@@ -255,7 +256,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 - (void)pause {
-    [self.timer invalidate];
+    [self.runLoopTimer invalidate];
     CVDisplayLinkStop(self.displayLink);
     CVDisplayLinkRelease(self.displayLink);
     self.displayLink = NULL;
@@ -331,10 +332,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         [self.videoWriter startWriting];
         [self.videoWriter startSessionAtSourceTime:kCMTimeZero];
         self.videoWriterFrameNumber = 0;
+        
+        self.recordingTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0 / TARGET_FPS) target:self selector:@selector(recordingTimerFired) userInfo:nil repeats:YES];
     }
     else {
         // stop recording
         NSLog(@"Ending screen recording");
+        [self.recordingTimer invalidate];
         self.recordingScreen = NO;
         [self.videoWriterInput markAsFinished];
         [self.videoWriter finishWritingWithCompletionHandler:^(void) {
