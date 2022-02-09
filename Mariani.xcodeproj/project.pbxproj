@@ -350,6 +350,108 @@
 		B032DE38277A0C24006DC0F7 /* marianiTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE37277A0C24006DC0F7 /* marianiTests.mm */; };
 		B032DE42277A0C24006DC0F7 /* marianiUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE41277A0C24006DC0F7 /* marianiUITests.m */; };
 		B032DE44277A0C24006DC0F7 /* marianiUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */; };
+		B03C209F27B461EB00171783 /* OzDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37C27B45D0800C0BF71 /* OzDOS.cpp */; };
+		B03C20A027B461EB00171783 /* VolumeUsage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37F27B45D0800C0BF71 /* VolumeUsage.cpp */; };
+		B03C20A127B461EB00171783 /* DOSImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39427B45D0900C0BF71 /* DOSImage.cpp */; };
+		B03C20A227B461EB00171783 /* FDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37527B45D0800C0BF71 /* FDI.cpp */; };
+		B03C20A327B461EB00171783 /* CP_WNASPI32.H in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C38727B45D0800C0BF71 /* CP_WNASPI32.H */; };
+		B03C20A427B461EB00171783 /* GenericFD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38027B45D0800C0BF71 /* GenericFD.cpp */; };
+		B03C20A527B461EB00171783 /* ASPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39527B45D0900C0BF71 /* ASPI.h */; };
+		B03C20A627B461EB00171783 /* GenericFD.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39027B45D0900C0BF71 /* GenericFD.h */; };
+		B03C20A727B461EB00171783 /* DiskFS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39A27B45D0900C0BF71 /* DiskFS.cpp */; };
+		B03C20A827B461EB00171783 /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38127B45D0800C0BF71 /* Global.cpp */; };
+		B03C20A927B461EB00171783 /* ProDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38527B45D0800C0BF71 /* ProDOS.cpp */; };
+		B03C20AA27B461EB00171783 /* DIUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38A27B45D0800C0BF71 /* DIUtil.cpp */; };
+		B03C20AB27B461EB00171783 /* HFS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39B27B45D0900C0BF71 /* HFS.cpp */; };
+		B03C20AC27B461EB00171783 /* DiskImg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37B27B45D0800C0BF71 /* DiskImg.cpp */; };
+		B03C20AD27B461EB00171783 /* RDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37627B45D0800C0BF71 /* RDOS.cpp */; };
+		B03C20AE27B461EB00171783 /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37727B45D0800C0BF71 /* Container.cpp */; };
+		B03C20AF27B461EB00171783 /* SCSIDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C38B27B45D0800C0BF71 /* SCSIDefs.h */; };
+		B03C20B027B461EB00171783 /* SPTI.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39827B45D0900C0BF71 /* SPTI.h */; };
+		B03C20B127B461EB00171783 /* Win32BlockIO.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39627B45D0900C0BF71 /* Win32BlockIO.h */; };
+		B03C20B227B461EB00171783 /* DiskImg.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39327B45D0900C0BF71 /* DiskImg.h */; };
+		B03C20B327B461EB00171783 /* SPTI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38927B45D0800C0BF71 /* SPTI.cpp */; };
+		B03C20B427B461EB00171783 /* CFFA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39227B45D0900C0BF71 /* CFFA.cpp */; };
+		B03C20B527B461EB00171783 /* DOS33.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38227B45D0800C0BF71 /* DOS33.cpp */; };
+		B03C20B627B461EB00171783 /* FAT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38C27B45D0800C0BF71 /* FAT.cpp */; };
+		B03C20B727B461EB00171783 /* TwoImg.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37127B45D0800C0BF71 /* TwoImg.h */; };
+		B03C20B827B461EB00171783 /* OuterWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39C27B45D0900C0BF71 /* OuterWrapper.cpp */; };
+		B03C20B927B461EB00171783 /* Win32BlockIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38627B45D0800C0BF71 /* Win32BlockIO.cpp */; };
+		B03C20BA27B461EB00171783 /* Win32Extra.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37227B45D0800C0BF71 /* Win32Extra.h */; };
+		B03C20BB27B461EB00171783 /* Gutenberg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37027B45D0700C0BF71 /* Gutenberg.cpp */; };
+		B03C20BC27B461EB00171783 /* MacPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37927B45D0800C0BF71 /* MacPart.cpp */; };
+		B03C20BD27B461EB00171783 /* FocusDrive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39927B45D0900C0BF71 /* FocusDrive.cpp */; };
+		B03C20BE27B461EB00171783 /* Pascal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37827B45D0800C0BF71 /* Pascal.cpp */; };
+		B03C20BF27B461EB00171783 /* UNIDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37D27B45D0800C0BF71 /* UNIDOS.cpp */; };
+		B03C20C027B461EB00171783 /* ImageWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38D27B45D0800C0BF71 /* ImageWrapper.cpp */; };
+		B03C20C127B461EB00171783 /* StdAfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39D27B45D0900C0BF71 /* StdAfx.cpp */; };
+		B03C20C227B461EB00171783 /* CPM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38F27B45D0800C0BF71 /* CPM.cpp */; };
+		B03C20C327B461EB00171783 /* DiskImgPriv.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37327B45D0800C0BF71 /* DiskImgPriv.h */; };
+		B03C20C427B461EB00171783 /* ASPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39127B45D0900C0BF71 /* ASPI.cpp */; };
+		B03C20C527B461EB00171783 /* DDD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38827B45D0800C0BF71 /* DDD.cpp */; };
+		B03C20C627B461EB00171783 /* DiskImgDetail.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39727B45D0900C0BF71 /* DiskImgDetail.h */; };
+		B03C20C727B461EB00171783 /* Nibble35.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37E27B45D0800C0BF71 /* Nibble35.cpp */; };
+		B03C20C827B461EB00171783 /* StdAfx.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37A27B45D0800C0BF71 /* StdAfx.h */; };
+		B03C20C927B461EB00171783 /* CP_ntddscsi.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C38427B45D0800C0BF71 /* CP_ntddscsi.h */; };
+		B03C20CA27B461EB00171783 /* MicroDrive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38E27B45D0800C0BF71 /* MicroDrive.cpp */; };
+		B03C20CB27B461EB00171783 /* Nibble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37427B45D0800C0BF71 /* Nibble.cpp */; };
+		B03C20CC27B461EB00171783 /* TwoImg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39E27B45D0900C0BF71 /* TwoImg.cpp */; };
+		B03C20CD27B461F200171783 /* data.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3AF27B45E5500C0BF71 /* data.h */; };
+		B03C20CE27B461F200171783 /* hfs.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3B427B45E5500C0BF71 /* hfs.c */; };
+		B03C20CF27B461F200171783 /* btree.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3C527B45E5600C0BF71 /* btree.c */; };
+		B03C20D027B461F200171783 /* memcmp.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3B227B45E5500C0BF71 /* memcmp.c */; };
+		B03C20D127B461F200171783 /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3BA27B45E5500C0BF71 /* version.h */; };
+		B03C20D227B461F200171783 /* medium.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3B627B45E5500C0BF71 /* medium.h */; };
+		B03C20D327B461F200171783 /* volume.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3B327B45E5500C0BF71 /* volume.h */; };
+		B03C20D427B461F200171783 /* apple.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3B927B45E5500C0BF71 /* apple.h */; };
+		B03C20D527B461F200171783 /* btree.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3AB27B45E5500C0BF71 /* btree.h */; };
+		B03C20D627B461F200171783 /* node.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3BE27B45E5600C0BF71 /* node.c */; };
+		B03C20D727B461F200171783 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3B727B45E5500C0BF71 /* file.h */; };
+		B03C20D827B461F200171783 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3AA27B45E5500C0BF71 /* file.c */; };
+		B03C20D927B461F200171783 /* medium.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3C127B45E5600C0BF71 /* medium.c */; };
+		B03C20DA27B461F200171783 /* low.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3AE27B45E5500C0BF71 /* low.c */; };
+		B03C20DB27B461F200171783 /* block.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3BB27B45E5500C0BF71 /* block.h */; };
+		B03C20DC27B461F200171783 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3AD27B45E5500C0BF71 /* os.h */; };
+		B03C20DD27B461F200171783 /* os.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3B027B45E5500C0BF71 /* os.c */; };
+		B03C20DE27B461F200171783 /* record.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3C327B45E5600C0BF71 /* record.c */; };
+		B03C20DF27B461F200171783 /* volume.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3BC27B45E5500C0BF71 /* volume.c */; };
+		B03C20E027B461F200171783 /* data.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3C827B45E5600C0BF71 /* data.c */; };
+		B03C20E127B461F200171783 /* libhfs.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3C227B45E5600C0BF71 /* libhfs.h */; };
+		B03C20E227B461F200171783 /* block.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3C727B45E5600C0BF71 /* block.c */; };
+		B03C20E327B461F200171783 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3C427B45E5600C0BF71 /* config.h */; };
+		B03C20E427B461F200171783 /* node.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3BF27B45E5600C0BF71 /* node.h */; };
+		B03C20E527B461F200171783 /* hfs.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3B827B45E5500C0BF71 /* hfs.h */; };
+		B03C20E627B461F200171783 /* low.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3B127B45E5500C0BF71 /* low.h */; };
+		B03C20E727B461F200171783 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C3C627B45E5600C0BF71 /* version.c */; };
+		B03C20E827B461F200171783 /* record.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C3C027B45E5600C0BF71 /* record.h */; };
+		B03C20E927B461F700171783 /* Deferred.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6FD27B4599300D4314F /* Deferred.c */; };
+		B03C20EA27B461F700171783 /* SourceSink.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D70027B4599300D4314F /* SourceSink.c */; };
+		B03C20EB27B461F700171783 /* MiscStuff.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D70727B459AE00D4314F /* MiscStuff.h */; };
+		B03C20EC27B461F700171783 /* NufxLibPriv.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D70427B459AE00D4314F /* NufxLibPriv.h */; };
+		B03C20ED27B461F700171783 /* Lzw.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F827B4599300D4314F /* Lzw.c */; };
+		B03C20EE27B461F700171783 /* MiscStuff.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6FA27B4599300D4314F /* MiscStuff.c */; };
+		B03C20EF27B461F700171783 /* SysDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D70627B459AE00D4314F /* SysDefs.h */; };
+		B03C20F027B461F700171783 /* ArchiveIO.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6FB27B4599300D4314F /* ArchiveIO.c */; };
+		B03C20F127B461F700171783 /* Crc16.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F127B4599300D4314F /* Crc16.c */; };
+		B03C20F227B461F700171783 /* Entry.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F627B4599300D4314F /* Entry.c */; };
+		B03C20F327B461F700171783 /* Lzc.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6EE27B4599300D4314F /* Lzc.c */; };
+		B03C20F427B461F700171783 /* Value.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F927B4599300D4314F /* Value.c */; };
+		B03C20F527B461F700171783 /* Bzip2.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D70227B4599400D4314F /* Bzip2.c */; };
+		B03C20F627B461F700171783 /* Debug.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F327B4599300D4314F /* Debug.c */; };
+		B03C20F727B461F700171783 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D70327B459AE00D4314F /* config.h */; };
+		B03C20F827B461F700171783 /* FileIO.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F227B4599300D4314F /* FileIO.c */; };
+		B03C20F927B461F700171783 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F527B4599300D4314F /* Thread.c */; };
+		B03C20FA27B461F700171783 /* Squeeze.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6FF27B4599300D4314F /* Squeeze.c */; };
+		B03C20FB27B461F700171783 /* MiscUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6EF27B4599300D4314F /* MiscUtils.c */; };
+		B03C20FC27B461F700171783 /* Expand.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D70127B4599400D4314F /* Expand.c */; };
+		B03C20FD27B461F700171783 /* Charset.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6EC27B4599300D4314F /* Charset.c */; };
+		B03C20FE27B461F700171783 /* Archive.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6FC27B4599300D4314F /* Archive.c */; };
+		B03C20FF27B461F700171783 /* Deflate.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F027B4599300D4314F /* Deflate.c */; };
+		B03C210027B461F700171783 /* Funnel.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6FE27B4599300D4314F /* Funnel.c */; };
+		B03C210127B461F700171783 /* NufxLib.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D70527B459AE00D4314F /* NufxLib.h */; };
+		B03C210227B461F700171783 /* Compress.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6ED27B4599300D4314F /* Compress.c */; };
+		B03C210327B461F700171783 /* Version.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F727B4599300D4314F /* Version.c */; };
+		B03C210427B461F700171783 /* Record.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D6F427B4599300D4314F /* Record.c */; };
 		B045FE722782984F006E36F9 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5C2782984E006E36F9 /* Apple2e.rom */; };
 		B045FE732782984F006E36F9 /* Apple2_Plus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */; };
 		B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */; };
@@ -523,6 +625,7 @@
 		B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarianiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE41277A0C24006DC0F7 /* marianiUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITests.m; sourceTree = "<group>"; };
 		B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITestsLaunchTests.m; sourceTree = "<group>"; };
+		B03C209B27B461E500171783 /* libCiderPress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCiderPress.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B045FE5C2782984E006E36F9 /* Apple2e.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e.rom; path = resource/Apple2e.rom; sourceTree = SOURCE_ROOT; };
 		B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2_Plus.rom; path = resource/Apple2_Plus.rom; sourceTree = SOURCE_ROOT; };
 		B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DISK2-13sector.rom"; path = "resource/DISK2-13sector.rom"; sourceTree = SOURCE_ROOT; };
@@ -1065,6 +1168,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B03C209927B461E500171783 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1094,6 +1204,7 @@
 				B0098BFA277E0F6800F38E0C /* libAppleWin.a */,
 				B0270BA32789CA9F00E3ACCF /* Mariani.app */,
 				B00ECBE4279EEB600041E16C /* Mariani Pro.app */,
+				B03C209B27B461E500171783 /* libCiderPress.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1840,6 +1951,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B03C209727B461E500171783 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B03C20D727B461F200171783 /* file.h in Headers */,
+				B03C20EF27B461F700171783 /* SysDefs.h in Headers */,
+				B03C20E827B461F200171783 /* record.h in Headers */,
+				B03C20B127B461EB00171783 /* Win32BlockIO.h in Headers */,
+				B03C20EB27B461F700171783 /* MiscStuff.h in Headers */,
+				B03C20B227B461EB00171783 /* DiskImg.h in Headers */,
+				B03C20C327B461EB00171783 /* DiskImgPriv.h in Headers */,
+				B03C20D427B461F200171783 /* apple.h in Headers */,
+				B03C20B027B461EB00171783 /* SPTI.h in Headers */,
+				B03C20CD27B461F200171783 /* data.h in Headers */,
+				B03C20C827B461EB00171783 /* StdAfx.h in Headers */,
+				B03C20BA27B461EB00171783 /* Win32Extra.h in Headers */,
+				B03C20AF27B461EB00171783 /* SCSIDefs.h in Headers */,
+				B03C20A327B461EB00171783 /* CP_WNASPI32.H in Headers */,
+				B03C20B727B461EB00171783 /* TwoImg.h in Headers */,
+				B03C20D527B461F200171783 /* btree.h in Headers */,
+				B03C210127B461F700171783 /* NufxLib.h in Headers */,
+				B03C20D127B461F200171783 /* version.h in Headers */,
+				B03C20C927B461EB00171783 /* CP_ntddscsi.h in Headers */,
+				B03C20E427B461F200171783 /* node.h in Headers */,
+				B03C20DB27B461F200171783 /* block.h in Headers */,
+				B03C20F727B461F700171783 /* config.h in Headers */,
+				B03C20DC27B461F200171783 /* os.h in Headers */,
+				B03C20EC27B461F700171783 /* NufxLibPriv.h in Headers */,
+				B03C20E627B461F200171783 /* low.h in Headers */,
+				B03C20A527B461EB00171783 /* ASPI.h in Headers */,
+				B03C20A627B461EB00171783 /* GenericFD.h in Headers */,
+				B03C20E527B461F200171783 /* hfs.h in Headers */,
+				B03C20C627B461EB00171783 /* DiskImgDetail.h in Headers */,
+				B03C20E327B461F200171783 /* config.h in Headers */,
+				B03C20E127B461F200171783 /* libhfs.h in Headers */,
+				B03C20D327B461F200171783 /* volume.h in Headers */,
+				B03C20D227B461F200171783 /* medium.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B09AB6E1277A171A0002A6C3 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2006,6 +2157,23 @@
 			productReference = B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		B03C209A27B461E500171783 /* CiderPress */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B03C209E27B461E500171783 /* Build configuration list for PBXNativeTarget "CiderPress" */;
+			buildPhases = (
+				B03C209727B461E500171783 /* Headers */,
+				B03C209827B461E500171783 /* Sources */,
+				B03C209927B461E500171783 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CiderPress;
+			productName = CiderPress;
+			productReference = B03C209B27B461E500171783 /* libCiderPress.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2028,6 +2196,9 @@
 					B032DE3C277A0C24006DC0F7 = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = B032DE20277A0C23006DC0F7;
+					};
+					B03C209A27B461E500171783 = {
+						CreatedOnToolsVersion = 13.2.1;
 					};
 					B0A8D6AC27B4552100D4314F = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -2063,6 +2234,7 @@
 				B0A8D6AC27B4552100D4314F /* nufxlib */,
 				B0D1C36B27B45CC400C0BF71 /* diskimg */,
 				B0D1C3A327B45DF900C0BF71 /* libhfs */,
+				B03C209A27B461E500171783 /* CiderPress */,
 			);
 		};
 /* End PBXProject section */
@@ -2494,6 +2666,82 @@
 			files = (
 				B032DE44277A0C24006DC0F7 /* marianiUITestsLaunchTests.m in Sources */,
 				B032DE42277A0C24006DC0F7 /* marianiUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B03C209827B461E500171783 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B03C20E227B461F200171783 /* block.c in Sources */,
+				B03C20C227B461EB00171783 /* CPM.cpp in Sources */,
+				B03C20BE27B461EB00171783 /* Pascal.cpp in Sources */,
+				B03C20FB27B461F700171783 /* MiscUtils.c in Sources */,
+				B03C20EA27B461F700171783 /* SourceSink.c in Sources */,
+				B03C210027B461F700171783 /* Funnel.c in Sources */,
+				B03C20EE27B461F700171783 /* MiscStuff.c in Sources */,
+				B03C20BC27B461EB00171783 /* MacPart.cpp in Sources */,
+				B03C210327B461F700171783 /* Version.c in Sources */,
+				B03C20BD27B461EB00171783 /* FocusDrive.cpp in Sources */,
+				B03C20F827B461F700171783 /* FileIO.c in Sources */,
+				B03C20DE27B461F200171783 /* record.c in Sources */,
+				B03C20E027B461F200171783 /* data.c in Sources */,
+				B03C209F27B461EB00171783 /* OzDOS.cpp in Sources */,
+				B03C20A127B461EB00171783 /* DOSImage.cpp in Sources */,
+				B03C20A927B461EB00171783 /* ProDOS.cpp in Sources */,
+				B03C20E727B461F200171783 /* version.c in Sources */,
+				B03C20CB27B461EB00171783 /* Nibble.cpp in Sources */,
+				B03C20CC27B461EB00171783 /* TwoImg.cpp in Sources */,
+				B03C20F327B461F700171783 /* Lzc.c in Sources */,
+				B03C20DD27B461F200171783 /* os.c in Sources */,
+				B03C20A827B461EB00171783 /* Global.cpp in Sources */,
+				B03C20AA27B461EB00171783 /* DIUtil.cpp in Sources */,
+				B03C20FA27B461F700171783 /* Squeeze.c in Sources */,
+				B03C20FF27B461F700171783 /* Deflate.c in Sources */,
+				B03C20D627B461F200171783 /* node.c in Sources */,
+				B03C20B327B461EB00171783 /* SPTI.cpp in Sources */,
+				B03C20C427B461EB00171783 /* ASPI.cpp in Sources */,
+				B03C20B527B461EB00171783 /* DOS33.cpp in Sources */,
+				B03C20D827B461F200171783 /* file.c in Sources */,
+				B03C20F927B461F700171783 /* Thread.c in Sources */,
+				B03C20FE27B461F700171783 /* Archive.c in Sources */,
+				B03C20F627B461F700171783 /* Debug.c in Sources */,
+				B03C20AC27B461EB00171783 /* DiskImg.cpp in Sources */,
+				B03C20C127B461EB00171783 /* StdAfx.cpp in Sources */,
+				B03C20F227B461F700171783 /* Entry.c in Sources */,
+				B03C20A027B461EB00171783 /* VolumeUsage.cpp in Sources */,
+				B03C20CE27B461F200171783 /* hfs.c in Sources */,
+				B03C20FD27B461F700171783 /* Charset.c in Sources */,
+				B03C20F127B461F700171783 /* Crc16.c in Sources */,
+				B03C20ED27B461F700171783 /* Lzw.c in Sources */,
+				B03C20BB27B461EB00171783 /* Gutenberg.cpp in Sources */,
+				B03C20CF27B461F200171783 /* btree.c in Sources */,
+				B03C20D027B461F200171783 /* memcmp.c in Sources */,
+				B03C20A727B461EB00171783 /* DiskFS.cpp in Sources */,
+				B03C210227B461F700171783 /* Compress.c in Sources */,
+				B03C20DA27B461F200171783 /* low.c in Sources */,
+				B03C20B627B461EB00171783 /* FAT.cpp in Sources */,
+				B03C20B927B461EB00171783 /* Win32BlockIO.cpp in Sources */,
+				B03C20F427B461F700171783 /* Value.c in Sources */,
+				B03C20B827B461EB00171783 /* OuterWrapper.cpp in Sources */,
+				B03C20B427B461EB00171783 /* CFFA.cpp in Sources */,
+				B03C20CA27B461EB00171783 /* MicroDrive.cpp in Sources */,
+				B03C20E927B461F700171783 /* Deferred.c in Sources */,
+				B03C20C527B461EB00171783 /* DDD.cpp in Sources */,
+				B03C20A427B461EB00171783 /* GenericFD.cpp in Sources */,
+				B03C20D927B461F200171783 /* medium.c in Sources */,
+				B03C20AE27B461EB00171783 /* Container.cpp in Sources */,
+				B03C20AD27B461EB00171783 /* RDOS.cpp in Sources */,
+				B03C210427B461F700171783 /* Record.c in Sources */,
+				B03C20FC27B461F700171783 /* Expand.c in Sources */,
+				B03C20BF27B461EB00171783 /* UNIDOS.cpp in Sources */,
+				B03C20DF27B461F200171783 /* volume.c in Sources */,
+				B03C20C027B461EB00171783 /* ImageWrapper.cpp in Sources */,
+				B03C20F027B461F700171783 /* ArchiveIO.c in Sources */,
+				B03C20A227B461EB00171783 /* FDI.cpp in Sources */,
+				B03C20AB27B461EB00171783 /* HFS.cpp in Sources */,
+				B03C20C727B461EB00171783 /* Nibble35.cpp in Sources */,
+				B03C20F527B461F700171783 /* Bzip2.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3076,6 +3324,30 @@
 			};
 			name = Release;
 		};
+		B03C209C27B461E500171783 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B03C209D27B461E500171783 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		B0A8D6AE27B4552100D4314F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3225,6 +3497,15 @@
 			buildConfigurations = (
 				B032DE4E277A0C24006DC0F7 /* Debug */,
 				B032DE4F277A0C24006DC0F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B03C209E27B461E500171783 /* Build configuration list for PBXNativeTarget "CiderPress" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B03C209C27B461E500171783 /* Debug */,
+				B03C209D27B461E500171783 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
