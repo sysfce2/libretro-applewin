@@ -208,9 +208,6 @@
 		B00ECBB2279EEB600041E16C /* Debugger_Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CB277A21180002A6C3 /* Debugger_Display.cpp */; };
 		B00ECBB3279EEB600041E16C /* winbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F0277A21400002A6C3 /* winbase.cpp */; };
 		B00ECBB4279EEB600041E16C /* gamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E857277B714800FC14A3 /* gamepad.cpp */; };
-		B00ECBB6279EEB600041E16C /* libhfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3D27889479002B841D /* libhfs.a */; };
-		B00ECBB7279EEB600041E16C /* libnufx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3B2788941F002B841D /* libnufx.a */; };
-		B00ECBB8279EEB600041E16C /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3927889220002B841D /* libdiskimg.a */; };
 		B00ECBB9279EEB600041E16C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8AA2785F3920071D3C7 /* CoreMedia.framework */; };
 		B00ECBBA279EEB600041E16C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8A82785EA440071D3C7 /* AVFoundation.framework */; };
 		B00ECBBB279EEB600041E16C /* libAppleWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0098BFA277E0F6800F38E0C /* libAppleWin.a */; };
@@ -401,9 +398,6 @@
 		B0689D182781984F0029EB7D /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
 		B07612302789E4BE009E79BE /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07612332789E4BE009E79BE /* About.xib */; };
 		B07612312789E4BE009E79BE /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07612332789E4BE009E79BE /* About.xib */; };
-		B08CFE3A27889220002B841D /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3927889220002B841D /* libdiskimg.a */; };
-		B08CFE3C2788941F002B841D /* libnufx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3B2788941F002B841D /* libnufx.a */; };
-		B08CFE3E27889479002B841D /* libhfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CFE3D27889479002B841D /* libhfs.a */; };
 		B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE4827889D44002B841D /* DiskImageWrapper.mm */; };
 		B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
@@ -446,6 +440,9 @@
 		B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
 		B0A8D66627B1119D00D4314F /* 6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D66427B1119D00D4314F /* 6522.cpp */; };
 		B0A8D66727B1119D00D4314F /* 6522.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D66527B1119D00D4314F /* 6522.h */; };
+		B0A8D70927B459F600D4314F /* libnufx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A8D70827B459F600D4314F /* libnufx.a */; };
+		B0D1C3A227B45D7900C0BF71 /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D1C3A127B45D7900C0BF71 /* libdiskimg.a */; };
+		B0D1C3CA27B45ED000C0BF71 /* libhfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D1C3C927B45ECF00C0BF71 /* libhfs.a */; };
 		B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
 		B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
 		B0F25BCD2789B2DB0080523F /* DiskImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */; };
@@ -465,6 +462,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = B032DE20277A0C23006DC0F7;
 			remoteInfo = mariani;
+		};
+		B0A8D6B027B4570100D4314F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B032DE19277A0C23006DC0F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0A8D6AC27B4552100D4314F;
+			remoteInfo = nufxlib;
+		};
+		B0D1C39F27B45D2B00C0BF71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B032DE19277A0C23006DC0F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0D1C36B27B45CC400C0BF71;
+			remoteInfo = diskimg;
+		};
+		B0D1C3A727B45E0200C0BF71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B032DE19277A0C23006DC0F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0D1C3A327B45DF900C0BF71;
+			remoteInfo = libhfs;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -605,9 +623,6 @@
 		B0689D162781984F0029EB7D /* UserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
 		B07612322789E4BE009E79BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/About.xib; sourceTree = "<group>"; };
 		B07612352789E4C2009E79BE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/About.strings"; sourceTree = "<group>"; };
-		B08CFE3927889220002B841D /* libdiskimg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiskimg.a; path = ../CiderPress/diskimg/libdiskimg.a; sourceTree = "<group>"; };
-		B08CFE3B2788941F002B841D /* libnufx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnufx.a; path = ../CiderPress/nufxlib/libnufx.a; sourceTree = "<group>"; };
-		B08CFE3D27889479002B841D /* libhfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhfs.a; path = ../CiderPress/diskimg/libhfs/libhfs.a; sourceTree = "<group>"; };
 		B08CFE4727889D44002B841D /* DiskImageWrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = DiskImageWrapper.h; sourceTree = "<group>"; };
 		B08CFE4827889D44002B841D /* DiskImageWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageWrapper.mm; sourceTree = "<group>"; };
 		B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImageBrowserWindowController.h; sourceTree = "<group>"; };
@@ -862,6 +877,118 @@
 		B0A6BB76277A31F7008813DE /* libpcap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcap.tbd; path = usr/lib/libpcap.tbd; sourceTree = SDKROOT; };
 		B0A8D66427B1119D00D4314F /* 6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = 6522.cpp; path = source/6522.cpp; sourceTree = "<group>"; };
 		B0A8D66527B1119D00D4314F /* 6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 6522.h; path = source/6522.h; sourceTree = "<group>"; };
+		B0A8D6B527B457F300D4314F /* NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = NOTES.md; path = source/frontends/mariani/CiderPress/nufxlib/NOTES.md; sourceTree = "<group>"; };
+		B0A8D6C027B457F300D4314F /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.txt; path = source/frontends/mariani/CiderPress/nufxlib/README.txt; sourceTree = "<group>"; };
+		B0A8D6C227B457F300D4314F /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ChangeLog.txt; path = source/frontends/mariani/CiderPress/nufxlib/ChangeLog.txt; sourceTree = "<group>"; };
+		B0A8D6CC27B457F300D4314F /* COPYING-LIB */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "COPYING-LIB"; path = "source/frontends/mariani/CiderPress/nufxlib/COPYING-LIB"; sourceTree = "<group>"; };
+		B0A8D6EC27B4599300D4314F /* Charset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Charset.c; path = source/frontends/mariani/CiderPress/nufxlib/Charset.c; sourceTree = "<group>"; };
+		B0A8D6ED27B4599300D4314F /* Compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Compress.c; path = source/frontends/mariani/CiderPress/nufxlib/Compress.c; sourceTree = "<group>"; };
+		B0A8D6EE27B4599300D4314F /* Lzc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Lzc.c; path = source/frontends/mariani/CiderPress/nufxlib/Lzc.c; sourceTree = "<group>"; };
+		B0A8D6EF27B4599300D4314F /* MiscUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MiscUtils.c; path = source/frontends/mariani/CiderPress/nufxlib/MiscUtils.c; sourceTree = "<group>"; };
+		B0A8D6F027B4599300D4314F /* Deflate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Deflate.c; path = source/frontends/mariani/CiderPress/nufxlib/Deflate.c; sourceTree = "<group>"; };
+		B0A8D6F127B4599300D4314F /* Crc16.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Crc16.c; path = source/frontends/mariani/CiderPress/nufxlib/Crc16.c; sourceTree = "<group>"; };
+		B0A8D6F227B4599300D4314F /* FileIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FileIO.c; path = source/frontends/mariani/CiderPress/nufxlib/FileIO.c; sourceTree = "<group>"; };
+		B0A8D6F327B4599300D4314F /* Debug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Debug.c; path = source/frontends/mariani/CiderPress/nufxlib/Debug.c; sourceTree = "<group>"; };
+		B0A8D6F427B4599300D4314F /* Record.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Record.c; path = source/frontends/mariani/CiderPress/nufxlib/Record.c; sourceTree = "<group>"; };
+		B0A8D6F527B4599300D4314F /* Thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Thread.c; path = source/frontends/mariani/CiderPress/nufxlib/Thread.c; sourceTree = "<group>"; };
+		B0A8D6F627B4599300D4314F /* Entry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Entry.c; path = source/frontends/mariani/CiderPress/nufxlib/Entry.c; sourceTree = "<group>"; };
+		B0A8D6F727B4599300D4314F /* Version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Version.c; path = source/frontends/mariani/CiderPress/nufxlib/Version.c; sourceTree = "<group>"; };
+		B0A8D6F827B4599300D4314F /* Lzw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Lzw.c; path = source/frontends/mariani/CiderPress/nufxlib/Lzw.c; sourceTree = "<group>"; };
+		B0A8D6F927B4599300D4314F /* Value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Value.c; path = source/frontends/mariani/CiderPress/nufxlib/Value.c; sourceTree = "<group>"; };
+		B0A8D6FA27B4599300D4314F /* MiscStuff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MiscStuff.c; path = source/frontends/mariani/CiderPress/nufxlib/MiscStuff.c; sourceTree = "<group>"; };
+		B0A8D6FB27B4599300D4314F /* ArchiveIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ArchiveIO.c; path = source/frontends/mariani/CiderPress/nufxlib/ArchiveIO.c; sourceTree = "<group>"; };
+		B0A8D6FC27B4599300D4314F /* Archive.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Archive.c; path = source/frontends/mariani/CiderPress/nufxlib/Archive.c; sourceTree = "<group>"; };
+		B0A8D6FD27B4599300D4314F /* Deferred.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Deferred.c; path = source/frontends/mariani/CiderPress/nufxlib/Deferred.c; sourceTree = "<group>"; };
+		B0A8D6FE27B4599300D4314F /* Funnel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Funnel.c; path = source/frontends/mariani/CiderPress/nufxlib/Funnel.c; sourceTree = "<group>"; };
+		B0A8D6FF27B4599300D4314F /* Squeeze.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Squeeze.c; path = source/frontends/mariani/CiderPress/nufxlib/Squeeze.c; sourceTree = "<group>"; };
+		B0A8D70027B4599300D4314F /* SourceSink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SourceSink.c; path = source/frontends/mariani/CiderPress/nufxlib/SourceSink.c; sourceTree = "<group>"; };
+		B0A8D70127B4599400D4314F /* Expand.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Expand.c; path = source/frontends/mariani/CiderPress/nufxlib/Expand.c; sourceTree = "<group>"; };
+		B0A8D70227B4599400D4314F /* Bzip2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Bzip2.c; path = source/frontends/mariani/CiderPress/nufxlib/Bzip2.c; sourceTree = "<group>"; };
+		B0A8D70327B459AE00D4314F /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = source/frontends/mariani/CiderPress/nufxlib/config.h; sourceTree = "<group>"; };
+		B0A8D70427B459AE00D4314F /* NufxLibPriv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NufxLibPriv.h; path = source/frontends/mariani/CiderPress/nufxlib/NufxLibPriv.h; sourceTree = "<group>"; };
+		B0A8D70527B459AE00D4314F /* NufxLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NufxLib.h; path = source/frontends/mariani/CiderPress/nufxlib/NufxLib.h; sourceTree = "<group>"; };
+		B0A8D70627B459AE00D4314F /* SysDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SysDefs.h; path = source/frontends/mariani/CiderPress/nufxlib/SysDefs.h; sourceTree = "<group>"; };
+		B0A8D70727B459AE00D4314F /* MiscStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MiscStuff.h; path = source/frontends/mariani/CiderPress/nufxlib/MiscStuff.h; sourceTree = "<group>"; };
+		B0A8D70827B459F600D4314F /* libnufx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnufx.a; path = source/frontends/mariani/CiderPress/nufxlib/libnufx.a; sourceTree = "<group>"; };
+		B0D1C37027B45D0700C0BF71 /* Gutenberg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gutenberg.cpp; path = source/frontends/mariani/CiderPress/diskimg/Gutenberg.cpp; sourceTree = "<group>"; };
+		B0D1C37127B45D0800C0BF71 /* TwoImg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwoImg.h; path = source/frontends/mariani/CiderPress/diskimg/TwoImg.h; sourceTree = "<group>"; };
+		B0D1C37227B45D0800C0BF71 /* Win32Extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Win32Extra.h; path = source/frontends/mariani/CiderPress/diskimg/Win32Extra.h; sourceTree = "<group>"; };
+		B0D1C37327B45D0800C0BF71 /* DiskImgPriv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiskImgPriv.h; path = source/frontends/mariani/CiderPress/diskimg/DiskImgPriv.h; sourceTree = "<group>"; };
+		B0D1C37427B45D0800C0BF71 /* Nibble.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Nibble.cpp; path = source/frontends/mariani/CiderPress/diskimg/Nibble.cpp; sourceTree = "<group>"; };
+		B0D1C37527B45D0800C0BF71 /* FDI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FDI.cpp; path = source/frontends/mariani/CiderPress/diskimg/FDI.cpp; sourceTree = "<group>"; };
+		B0D1C37627B45D0800C0BF71 /* RDOS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RDOS.cpp; path = source/frontends/mariani/CiderPress/diskimg/RDOS.cpp; sourceTree = "<group>"; };
+		B0D1C37727B45D0800C0BF71 /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Container.cpp; path = source/frontends/mariani/CiderPress/diskimg/Container.cpp; sourceTree = "<group>"; };
+		B0D1C37827B45D0800C0BF71 /* Pascal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pascal.cpp; path = source/frontends/mariani/CiderPress/diskimg/Pascal.cpp; sourceTree = "<group>"; };
+		B0D1C37927B45D0800C0BF71 /* MacPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MacPart.cpp; path = source/frontends/mariani/CiderPress/diskimg/MacPart.cpp; sourceTree = "<group>"; };
+		B0D1C37A27B45D0800C0BF71 /* StdAfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StdAfx.h; path = source/frontends/mariani/CiderPress/diskimg/StdAfx.h; sourceTree = "<group>"; };
+		B0D1C37B27B45D0800C0BF71 /* DiskImg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DiskImg.cpp; path = source/frontends/mariani/CiderPress/diskimg/DiskImg.cpp; sourceTree = "<group>"; };
+		B0D1C37C27B45D0800C0BF71 /* OzDOS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OzDOS.cpp; path = source/frontends/mariani/CiderPress/diskimg/OzDOS.cpp; sourceTree = "<group>"; };
+		B0D1C37D27B45D0800C0BF71 /* UNIDOS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UNIDOS.cpp; path = source/frontends/mariani/CiderPress/diskimg/UNIDOS.cpp; sourceTree = "<group>"; };
+		B0D1C37E27B45D0800C0BF71 /* Nibble35.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Nibble35.cpp; path = source/frontends/mariani/CiderPress/diskimg/Nibble35.cpp; sourceTree = "<group>"; };
+		B0D1C37F27B45D0800C0BF71 /* VolumeUsage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VolumeUsage.cpp; path = source/frontends/mariani/CiderPress/diskimg/VolumeUsage.cpp; sourceTree = "<group>"; };
+		B0D1C38027B45D0800C0BF71 /* GenericFD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GenericFD.cpp; path = source/frontends/mariani/CiderPress/diskimg/GenericFD.cpp; sourceTree = "<group>"; };
+		B0D1C38127B45D0800C0BF71 /* Global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Global.cpp; path = source/frontends/mariani/CiderPress/diskimg/Global.cpp; sourceTree = "<group>"; };
+		B0D1C38227B45D0800C0BF71 /* DOS33.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DOS33.cpp; path = source/frontends/mariani/CiderPress/diskimg/DOS33.cpp; sourceTree = "<group>"; };
+		B0D1C38327B45D0800C0BF71 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = source/frontends/mariani/CiderPress/diskimg/README.md; sourceTree = "<group>"; };
+		B0D1C38427B45D0800C0BF71 /* CP_ntddscsi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CP_ntddscsi.h; path = source/frontends/mariani/CiderPress/diskimg/CP_ntddscsi.h; sourceTree = "<group>"; };
+		B0D1C38527B45D0800C0BF71 /* ProDOS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProDOS.cpp; path = source/frontends/mariani/CiderPress/diskimg/ProDOS.cpp; sourceTree = "<group>"; };
+		B0D1C38627B45D0800C0BF71 /* Win32BlockIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Win32BlockIO.cpp; path = source/frontends/mariani/CiderPress/diskimg/Win32BlockIO.cpp; sourceTree = "<group>"; };
+		B0D1C38727B45D0800C0BF71 /* CP_WNASPI32.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CP_WNASPI32.H; path = source/frontends/mariani/CiderPress/diskimg/CP_WNASPI32.H; sourceTree = "<group>"; };
+		B0D1C38827B45D0800C0BF71 /* DDD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DDD.cpp; path = source/frontends/mariani/CiderPress/diskimg/DDD.cpp; sourceTree = "<group>"; };
+		B0D1C38927B45D0800C0BF71 /* SPTI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SPTI.cpp; path = source/frontends/mariani/CiderPress/diskimg/SPTI.cpp; sourceTree = "<group>"; };
+		B0D1C38A27B45D0800C0BF71 /* DIUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DIUtil.cpp; path = source/frontends/mariani/CiderPress/diskimg/DIUtil.cpp; sourceTree = "<group>"; };
+		B0D1C38B27B45D0800C0BF71 /* SCSIDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSIDefs.h; path = source/frontends/mariani/CiderPress/diskimg/SCSIDefs.h; sourceTree = "<group>"; };
+		B0D1C38C27B45D0800C0BF71 /* FAT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FAT.cpp; path = source/frontends/mariani/CiderPress/diskimg/FAT.cpp; sourceTree = "<group>"; };
+		B0D1C38D27B45D0800C0BF71 /* ImageWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageWrapper.cpp; path = source/frontends/mariani/CiderPress/diskimg/ImageWrapper.cpp; sourceTree = "<group>"; };
+		B0D1C38E27B45D0800C0BF71 /* MicroDrive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MicroDrive.cpp; path = source/frontends/mariani/CiderPress/diskimg/MicroDrive.cpp; sourceTree = "<group>"; };
+		B0D1C38F27B45D0800C0BF71 /* CPM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPM.cpp; path = source/frontends/mariani/CiderPress/diskimg/CPM.cpp; sourceTree = "<group>"; };
+		B0D1C39027B45D0900C0BF71 /* GenericFD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericFD.h; path = source/frontends/mariani/CiderPress/diskimg/GenericFD.h; sourceTree = "<group>"; };
+		B0D1C39127B45D0900C0BF71 /* ASPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ASPI.cpp; path = source/frontends/mariani/CiderPress/diskimg/ASPI.cpp; sourceTree = "<group>"; };
+		B0D1C39227B45D0900C0BF71 /* CFFA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CFFA.cpp; path = source/frontends/mariani/CiderPress/diskimg/CFFA.cpp; sourceTree = "<group>"; };
+		B0D1C39327B45D0900C0BF71 /* DiskImg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiskImg.h; path = source/frontends/mariani/CiderPress/diskimg/DiskImg.h; sourceTree = "<group>"; };
+		B0D1C39427B45D0900C0BF71 /* DOSImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DOSImage.cpp; path = source/frontends/mariani/CiderPress/diskimg/DOSImage.cpp; sourceTree = "<group>"; };
+		B0D1C39527B45D0900C0BF71 /* ASPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASPI.h; path = source/frontends/mariani/CiderPress/diskimg/ASPI.h; sourceTree = "<group>"; };
+		B0D1C39627B45D0900C0BF71 /* Win32BlockIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Win32BlockIO.h; path = source/frontends/mariani/CiderPress/diskimg/Win32BlockIO.h; sourceTree = "<group>"; };
+		B0D1C39727B45D0900C0BF71 /* DiskImgDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiskImgDetail.h; path = source/frontends/mariani/CiderPress/diskimg/DiskImgDetail.h; sourceTree = "<group>"; };
+		B0D1C39827B45D0900C0BF71 /* SPTI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTI.h; path = source/frontends/mariani/CiderPress/diskimg/SPTI.h; sourceTree = "<group>"; };
+		B0D1C39927B45D0900C0BF71 /* FocusDrive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FocusDrive.cpp; path = source/frontends/mariani/CiderPress/diskimg/FocusDrive.cpp; sourceTree = "<group>"; };
+		B0D1C39A27B45D0900C0BF71 /* DiskFS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DiskFS.cpp; path = source/frontends/mariani/CiderPress/diskimg/DiskFS.cpp; sourceTree = "<group>"; };
+		B0D1C39B27B45D0900C0BF71 /* HFS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HFS.cpp; path = source/frontends/mariani/CiderPress/diskimg/HFS.cpp; sourceTree = "<group>"; };
+		B0D1C39C27B45D0900C0BF71 /* OuterWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OuterWrapper.cpp; path = source/frontends/mariani/CiderPress/diskimg/OuterWrapper.cpp; sourceTree = "<group>"; };
+		B0D1C39D27B45D0900C0BF71 /* StdAfx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StdAfx.cpp; path = source/frontends/mariani/CiderPress/diskimg/StdAfx.cpp; sourceTree = "<group>"; };
+		B0D1C39E27B45D0900C0BF71 /* TwoImg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TwoImg.cpp; path = source/frontends/mariani/CiderPress/diskimg/TwoImg.cpp; sourceTree = "<group>"; };
+		B0D1C3A127B45D7900C0BF71 /* libdiskimg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdiskimg.a; path = source/frontends/mariani/CiderPress/diskimg/libdiskimg.a; sourceTree = "<group>"; };
+		B0D1C3AA27B45E5500C0BF71 /* file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = file.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/file.c; sourceTree = "<group>"; };
+		B0D1C3AB27B45E5500C0BF71 /* btree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = btree.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/btree.h; sourceTree = "<group>"; };
+		B0D1C3AC27B45E5500C0BF71 /* COPYRIGHT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = COPYRIGHT; path = source/frontends/mariani/CiderPress/diskimg/libhfs/COPYRIGHT; sourceTree = "<group>"; };
+		B0D1C3AD27B45E5500C0BF71 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/os.h; sourceTree = "<group>"; };
+		B0D1C3AE27B45E5500C0BF71 /* low.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = low.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/low.c; sourceTree = "<group>"; };
+		B0D1C3AF27B45E5500C0BF71 /* data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/data.h; sourceTree = "<group>"; };
+		B0D1C3B027B45E5500C0BF71 /* os.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = os.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/os.c; sourceTree = "<group>"; };
+		B0D1C3B127B45E5500C0BF71 /* low.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = low.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/low.h; sourceTree = "<group>"; };
+		B0D1C3B227B45E5500C0BF71 /* memcmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = memcmp.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/memcmp.c; sourceTree = "<group>"; };
+		B0D1C3B327B45E5500C0BF71 /* volume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = volume.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/volume.h; sourceTree = "<group>"; };
+		B0D1C3B427B45E5500C0BF71 /* hfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hfs.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/hfs.c; sourceTree = "<group>"; };
+		B0D1C3B627B45E5500C0BF71 /* medium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = medium.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/medium.h; sourceTree = "<group>"; };
+		B0D1C3B727B45E5500C0BF71 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = file.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/file.h; sourceTree = "<group>"; };
+		B0D1C3B827B45E5500C0BF71 /* hfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hfs.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/hfs.h; sourceTree = "<group>"; };
+		B0D1C3B927B45E5500C0BF71 /* apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apple.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/apple.h; sourceTree = "<group>"; };
+		B0D1C3BA27B45E5500C0BF71 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = version.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/version.h; sourceTree = "<group>"; };
+		B0D1C3BB27B45E5500C0BF71 /* block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = block.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/block.h; sourceTree = "<group>"; };
+		B0D1C3BC27B45E5500C0BF71 /* volume.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = volume.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/volume.c; sourceTree = "<group>"; };
+		B0D1C3BD27B45E5500C0BF71 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = source/frontends/mariani/CiderPress/diskimg/libhfs/README; sourceTree = "<group>"; };
+		B0D1C3BE27B45E5600C0BF71 /* node.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = node.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/node.c; sourceTree = "<group>"; };
+		B0D1C3BF27B45E5600C0BF71 /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = node.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/node.h; sourceTree = "<group>"; };
+		B0D1C3C027B45E5600C0BF71 /* record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = record.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/record.h; sourceTree = "<group>"; };
+		B0D1C3C127B45E5600C0BF71 /* medium.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = medium.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/medium.c; sourceTree = "<group>"; };
+		B0D1C3C227B45E5600C0BF71 /* libhfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libhfs.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/libhfs.h; sourceTree = "<group>"; };
+		B0D1C3C327B45E5600C0BF71 /* record.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = record.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/record.c; sourceTree = "<group>"; };
+		B0D1C3C427B45E5600C0BF71 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = source/frontends/mariani/CiderPress/diskimg/libhfs/config.h; sourceTree = "<group>"; };
+		B0D1C3C527B45E5600C0BF71 /* btree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = btree.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/btree.c; sourceTree = "<group>"; };
+		B0D1C3C627B45E5600C0BF71 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/version.c; sourceTree = "<group>"; };
+		B0D1C3C727B45E5600C0BF71 /* block.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = block.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/block.c; sourceTree = "<group>"; };
+		B0D1C3C827B45E5600C0BF71 /* data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = data.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/data.c; sourceTree = "<group>"; };
+		B0D1C3C927B45ECF00C0BF71 /* libhfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhfs.a; path = source/frontends/mariani/CiderPress/diskimg/libhfs/libhfs.a; sourceTree = "<group>"; };
 		B0ED3FCC27859566006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B0ED3FCE2785973C006E4784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B0ED3FD027859747006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -889,9 +1016,6 @@
 				B00ECBE9279EEBDC0041E16C /* SDL2.framework in Frameworks */,
 				B00ECBBB279EEB600041E16C /* libAppleWin.a in Frameworks */,
 				B00ECBE6279EEBAB0041E16C /* libboost_program_options.a in Frameworks */,
-				B00ECBB8279EEB600041E16C /* libdiskimg.a in Frameworks */,
-				B00ECBB6279EEB600041E16C /* libhfs.a in Frameworks */,
-				B00ECBB7279EEB600041E16C /* libnufx.a in Frameworks */,
 				B00ECBC0279EEB600041E16C /* libpcap.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -919,9 +1043,9 @@
 				B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */,
 				B0098CF3277E187900F38E0C /* libAppleWin.a in Frameworks */,
 				B049E84E277B6F4A00FC14A3 /* libboost_program_options.a in Frameworks */,
-				B08CFE3A27889220002B841D /* libdiskimg.a in Frameworks */,
-				B08CFE3E27889479002B841D /* libhfs.a in Frameworks */,
-				B08CFE3C2788941F002B841D /* libnufx.a in Frameworks */,
+				B0A8D70927B459F600D4314F /* libnufx.a in Frameworks */,
+				B0D1C3A227B45D7900C0BF71 /* libdiskimg.a in Frameworks */,
+				B0D1C3CA27B45ED000C0BF71 /* libhfs.a in Frameworks */,
 				B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */,
 				B049E823277B517700FC14A3 /* libSDL2.a in Frameworks */,
 			);
@@ -955,6 +1079,7 @@
 				B032DE23277A0C23006DC0F7 /* mariani */,
 				B032DE36277A0C24006DC0F7 /* marianiTests */,
 				B032DE40277A0C24006DC0F7 /* marianiUITests */,
+				B0A8D67127B4519200D4314F /* CiderPress */,
 				B032DE22277A0C23006DC0F7 /* Products */,
 				B09AB844277A282A0002A6C3 /* Frameworks */,
 			);
@@ -1469,11 +1594,11 @@
 		B09AB844277A282A0002A6C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0D1C3C927B45ECF00C0BF71 /* libhfs.a */,
+				B0D1C3A127B45D7900C0BF71 /* libdiskimg.a */,
+				B0A8D70827B459F600D4314F /* libnufx.a */,
 				B00ECBE7279EEBD30041E16C /* SDL2.framework */,
 				B00ECBE5279EEBAB0041E16C /* libboost_program_options.a */,
-				B08CFE3D27889479002B841D /* libhfs.a */,
-				B08CFE3B2788941F002B841D /* libnufx.a */,
-				B08CFE3927889220002B841D /* libdiskimg.a */,
 				B020F8AA2785F3920071D3C7 /* CoreMedia.framework */,
 				B020F8A82785EA440071D3C7 /* AVFoundation.framework */,
 				B049E8AE277C9A8000FC14A3 /* MetalKit.framework */,
@@ -1484,6 +1609,146 @@
 				B0A6BB76277A31F7008813DE /* libpcap.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B0A8D67027B4517C00D4314F /* nufxlib */ = {
+			isa = PBXGroup;
+			children = (
+				B0A8D6C227B457F300D4314F /* ChangeLog.txt */,
+				B0A8D6CC27B457F300D4314F /* COPYING-LIB */,
+				B0A8D6B527B457F300D4314F /* NOTES.md */,
+				B0A8D6C027B457F300D4314F /* README.txt */,
+				B0A8D70327B459AE00D4314F /* config.h */,
+				B0A8D70727B459AE00D4314F /* MiscStuff.h */,
+				B0A8D70527B459AE00D4314F /* NufxLib.h */,
+				B0A8D70427B459AE00D4314F /* NufxLibPriv.h */,
+				B0A8D70627B459AE00D4314F /* SysDefs.h */,
+				B0A8D6FC27B4599300D4314F /* Archive.c */,
+				B0A8D6FB27B4599300D4314F /* ArchiveIO.c */,
+				B0A8D70227B4599400D4314F /* Bzip2.c */,
+				B0A8D6EC27B4599300D4314F /* Charset.c */,
+				B0A8D6ED27B4599300D4314F /* Compress.c */,
+				B0A8D6F127B4599300D4314F /* Crc16.c */,
+				B0A8D6F327B4599300D4314F /* Debug.c */,
+				B0A8D6FD27B4599300D4314F /* Deferred.c */,
+				B0A8D6F027B4599300D4314F /* Deflate.c */,
+				B0A8D6F627B4599300D4314F /* Entry.c */,
+				B0A8D70127B4599400D4314F /* Expand.c */,
+				B0A8D6F227B4599300D4314F /* FileIO.c */,
+				B0A8D6FE27B4599300D4314F /* Funnel.c */,
+				B0A8D6EE27B4599300D4314F /* Lzc.c */,
+				B0A8D6F827B4599300D4314F /* Lzw.c */,
+				B0A8D6FA27B4599300D4314F /* MiscStuff.c */,
+				B0A8D6EF27B4599300D4314F /* MiscUtils.c */,
+				B0A8D6F427B4599300D4314F /* Record.c */,
+				B0A8D70027B4599300D4314F /* SourceSink.c */,
+				B0A8D6FF27B4599300D4314F /* Squeeze.c */,
+				B0A8D6F527B4599300D4314F /* Thread.c */,
+				B0A8D6F927B4599300D4314F /* Value.c */,
+				B0A8D6F727B4599300D4314F /* Version.c */,
+			);
+			name = nufxlib;
+			sourceTree = "<group>";
+		};
+		B0A8D67127B4519200D4314F /* CiderPress */ = {
+			isa = PBXGroup;
+			children = (
+				B0D1C36F27B45CDE00C0BF71 /* diskimg */,
+				B0D1C3A927B45E2600C0BF71 /* libhfs */,
+				B0A8D67027B4517C00D4314F /* nufxlib */,
+			);
+			name = CiderPress;
+			sourceTree = "<group>";
+		};
+		B0D1C36F27B45CDE00C0BF71 /* diskimg */ = {
+			isa = PBXGroup;
+			children = (
+				B0D1C38327B45D0800C0BF71 /* README.md */,
+				B0D1C39127B45D0900C0BF71 /* ASPI.cpp */,
+				B0D1C39527B45D0900C0BF71 /* ASPI.h */,
+				B0D1C39227B45D0900C0BF71 /* CFFA.cpp */,
+				B0D1C37727B45D0800C0BF71 /* Container.cpp */,
+				B0D1C38427B45D0800C0BF71 /* CP_ntddscsi.h */,
+				B0D1C38727B45D0800C0BF71 /* CP_WNASPI32.H */,
+				B0D1C38F27B45D0800C0BF71 /* CPM.cpp */,
+				B0D1C38827B45D0800C0BF71 /* DDD.cpp */,
+				B0D1C39A27B45D0900C0BF71 /* DiskFS.cpp */,
+				B0D1C37B27B45D0800C0BF71 /* DiskImg.cpp */,
+				B0D1C39327B45D0900C0BF71 /* DiskImg.h */,
+				B0D1C39727B45D0900C0BF71 /* DiskImgDetail.h */,
+				B0D1C37327B45D0800C0BF71 /* DiskImgPriv.h */,
+				B0D1C38A27B45D0800C0BF71 /* DIUtil.cpp */,
+				B0D1C38227B45D0800C0BF71 /* DOS33.cpp */,
+				B0D1C39427B45D0900C0BF71 /* DOSImage.cpp */,
+				B0D1C38C27B45D0800C0BF71 /* FAT.cpp */,
+				B0D1C37527B45D0800C0BF71 /* FDI.cpp */,
+				B0D1C39927B45D0900C0BF71 /* FocusDrive.cpp */,
+				B0D1C38027B45D0800C0BF71 /* GenericFD.cpp */,
+				B0D1C39027B45D0900C0BF71 /* GenericFD.h */,
+				B0D1C38127B45D0800C0BF71 /* Global.cpp */,
+				B0D1C37027B45D0700C0BF71 /* Gutenberg.cpp */,
+				B0D1C39B27B45D0900C0BF71 /* HFS.cpp */,
+				B0D1C38D27B45D0800C0BF71 /* ImageWrapper.cpp */,
+				B0D1C37927B45D0800C0BF71 /* MacPart.cpp */,
+				B0D1C38E27B45D0800C0BF71 /* MicroDrive.cpp */,
+				B0D1C37427B45D0800C0BF71 /* Nibble.cpp */,
+				B0D1C37E27B45D0800C0BF71 /* Nibble35.cpp */,
+				B0D1C39C27B45D0900C0BF71 /* OuterWrapper.cpp */,
+				B0D1C37C27B45D0800C0BF71 /* OzDOS.cpp */,
+				B0D1C37827B45D0800C0BF71 /* Pascal.cpp */,
+				B0D1C38527B45D0800C0BF71 /* ProDOS.cpp */,
+				B0D1C37627B45D0800C0BF71 /* RDOS.cpp */,
+				B0D1C38B27B45D0800C0BF71 /* SCSIDefs.h */,
+				B0D1C38927B45D0800C0BF71 /* SPTI.cpp */,
+				B0D1C39827B45D0900C0BF71 /* SPTI.h */,
+				B0D1C39D27B45D0900C0BF71 /* StdAfx.cpp */,
+				B0D1C37A27B45D0800C0BF71 /* StdAfx.h */,
+				B0D1C39E27B45D0900C0BF71 /* TwoImg.cpp */,
+				B0D1C37127B45D0800C0BF71 /* TwoImg.h */,
+				B0D1C37D27B45D0800C0BF71 /* UNIDOS.cpp */,
+				B0D1C37F27B45D0800C0BF71 /* VolumeUsage.cpp */,
+				B0D1C38627B45D0800C0BF71 /* Win32BlockIO.cpp */,
+				B0D1C39627B45D0900C0BF71 /* Win32BlockIO.h */,
+				B0D1C37227B45D0800C0BF71 /* Win32Extra.h */,
+			);
+			name = diskimg;
+			sourceTree = "<group>";
+		};
+		B0D1C3A927B45E2600C0BF71 /* libhfs */ = {
+			isa = PBXGroup;
+			children = (
+				B0D1C3AC27B45E5500C0BF71 /* COPYRIGHT */,
+				B0D1C3BD27B45E5500C0BF71 /* README */,
+				B0D1C3B927B45E5500C0BF71 /* apple.h */,
+				B0D1C3C727B45E5600C0BF71 /* block.c */,
+				B0D1C3BB27B45E5500C0BF71 /* block.h */,
+				B0D1C3C527B45E5600C0BF71 /* btree.c */,
+				B0D1C3AB27B45E5500C0BF71 /* btree.h */,
+				B0D1C3C427B45E5600C0BF71 /* config.h */,
+				B0D1C3C827B45E5600C0BF71 /* data.c */,
+				B0D1C3AF27B45E5500C0BF71 /* data.h */,
+				B0D1C3AA27B45E5500C0BF71 /* file.c */,
+				B0D1C3B727B45E5500C0BF71 /* file.h */,
+				B0D1C3B427B45E5500C0BF71 /* hfs.c */,
+				B0D1C3B827B45E5500C0BF71 /* hfs.h */,
+				B0D1C3C227B45E5600C0BF71 /* libhfs.h */,
+				B0D1C3AE27B45E5500C0BF71 /* low.c */,
+				B0D1C3B127B45E5500C0BF71 /* low.h */,
+				B0D1C3C127B45E5600C0BF71 /* medium.c */,
+				B0D1C3B627B45E5500C0BF71 /* medium.h */,
+				B0D1C3B227B45E5500C0BF71 /* memcmp.c */,
+				B0D1C3BE27B45E5600C0BF71 /* node.c */,
+				B0D1C3BF27B45E5600C0BF71 /* node.h */,
+				B0D1C3B027B45E5500C0BF71 /* os.c */,
+				B0D1C3AD27B45E5500C0BF71 /* os.h */,
+				B0D1C3C327B45E5600C0BF71 /* record.c */,
+				B0D1C3C027B45E5600C0BF71 /* record.h */,
+				B0D1C3C627B45E5600C0BF71 /* version.c */,
+				B0D1C3BA27B45E5500C0BF71 /* version.h */,
+				B0D1C3BC27B45E5500C0BF71 /* volume.c */,
+				B0D1C3B327B45E5500C0BF71 /* volume.h */,
+			);
+			name = libhfs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1584,6 +1849,51 @@
 		};
 /* End PBXHeadersBuildPhase section */
 
+/* Begin PBXLegacyTarget section */
+		B0A8D6AC27B4552100D4314F /* nufxlib */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = B0A8D6AD27B4552100D4314F /* Build configuration list for PBXLegacyTarget "nufxlib" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = source/frontends/mariani/CiderPress/nufxlib;
+			dependencies = (
+			);
+			name = nufxlib;
+			passBuildSettingsInEnvironment = 1;
+			productName = nufxlib;
+		};
+		B0D1C36B27B45CC400C0BF71 /* diskimg */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = B0D1C36C27B45CC400C0BF71 /* Build configuration list for PBXLegacyTarget "diskimg" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = source/frontends/mariani/CiderPress/diskimg;
+			dependencies = (
+			);
+			name = diskimg;
+			passBuildSettingsInEnvironment = 1;
+			productName = diskimg;
+		};
+		B0D1C3A327B45DF900C0BF71 /* libhfs */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = B0D1C3A427B45DF900C0BF71 /* Build configuration list for PBXLegacyTarget "libhfs" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = source/frontends/mariani/CiderPress/diskimg/libhfs;
+			dependencies = (
+			);
+			name = libhfs;
+			passBuildSettingsInEnvironment = 1;
+			productName = libhfs;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		B0098BF9277E0F6800F38E0C /* AppleWin */ = {
 			isa = PBXNativeTarget;
@@ -1651,6 +1961,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				B0A8D6B127B4570100D4314F /* PBXTargetDependency */,
+				B0D1C3A027B45D2B00C0BF71 /* PBXTargetDependency */,
+				B0D1C3A827B45E0200C0BF71 /* PBXTargetDependency */,
 			);
 			name = "Mariani Pro";
 			productName = mariani;
@@ -1716,6 +2029,15 @@
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = B032DE20277A0C23006DC0F7;
 					};
+					B0A8D6AC27B4552100D4314F = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					B0D1C36B27B45CC400C0BF71 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					B0D1C3A327B45DF900C0BF71 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 				};
 			};
 			buildConfigurationList = B032DE1C277A0C23006DC0F7 /* Build configuration list for PBXProject "Mariani" */;
@@ -1738,6 +2060,9 @@
 				B0098BF9277E0F6800F38E0C /* AppleWin */,
 				B032DE32277A0C24006DC0F7 /* MarianiTests */,
 				B032DE3C277A0C24006DC0F7 /* MarianiUITests */,
+				B0A8D6AC27B4552100D4314F /* nufxlib */,
+				B0D1C36B27B45CC400C0BF71 /* diskimg */,
+				B0D1C3A327B45DF900C0BF71 /* libhfs */,
 			);
 		};
 /* End PBXProject section */
@@ -2185,6 +2510,21 @@
 			target = B032DE20277A0C23006DC0F7 /* Mariani Pro */;
 			targetProxy = B032DE3E277A0C24006DC0F7 /* PBXContainerItemProxy */;
 		};
+		B0A8D6B127B4570100D4314F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0A8D6AC27B4552100D4314F /* nufxlib */;
+			targetProxy = B0A8D6B027B4570100D4314F /* PBXContainerItemProxy */;
+		};
+		B0D1C3A027B45D2B00C0BF71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0D1C36B27B45CC400C0BF71 /* diskimg */;
+			targetProxy = B0D1C39F27B45D2B00C0BF71 /* PBXContainerItemProxy */;
+		};
+		B0D1C3A827B45E0200C0BF71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0D1C3A327B45DF900C0BF71 /* libhfs */;
+			targetProxy = B0D1C3A727B45E0200C0BF71 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2608,7 +2948,9 @@
 					/opt/homebrew/lib,
 					/usr/local/lib,
 					"../CiderPress/diskimg/**",
-					../CiderPress/nufxlib,
+					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/nufxlib",
+					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg",
+					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg/libhfs",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
@@ -2654,7 +2996,9 @@
 					/opt/homebrew/lib,
 					/usr/local/lib,
 					"../CiderPress/diskimg/**",
-					../CiderPress/nufxlib,
+					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/nufxlib",
+					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg",
+					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg/libhfs",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
@@ -2732,6 +3076,93 @@
 			};
 			name = Release;
 		};
+		B0A8D6AE27B4552100D4314F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B0A8D6AF27B4552100D4314F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B0D1C36D27B45CC400C0BF71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B0D1C36E27B45CC400C0BF71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B0D1C3A527B45DF900C0BF71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B0D1C3A627B45DF900C0BF71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2794,6 +3225,33 @@
 			buildConfigurations = (
 				B032DE4E277A0C24006DC0F7 /* Debug */,
 				B032DE4F277A0C24006DC0F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B0A8D6AD27B4552100D4314F /* Build configuration list for PBXLegacyTarget "nufxlib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0A8D6AE27B4552100D4314F /* Debug */,
+				B0A8D6AF27B4552100D4314F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B0D1C36C27B45CC400C0BF71 /* Build configuration list for PBXLegacyTarget "diskimg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0D1C36D27B45CC400C0BF71 /* Debug */,
+				B0D1C36E27B45CC400C0BF71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B0D1C3A427B45DF900C0BF71 /* Build configuration list for PBXLegacyTarget "libhfs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0D1C3A527B45DF900C0BF71 /* Debug */,
+				B0D1C3A627B45DF900C0BF71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

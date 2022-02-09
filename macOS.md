@@ -55,7 +55,7 @@ git clone https://github.com/sh95014/AppleWin.git --recursive
 
 Load up the Xcode project, and build the "Mariani" target for "My Mac".
 
-"Mariani Pro" contains an additional feature to browse inside a floppy disk image that you've loaded into the emulator, and requires code from [CiderPress](https://github.com/fadden/ciderpress). If you want to try it, you'll want to follow the [Linux build instructions](https://github.com/fadden/ciderpress/blob/master/README-linux.md).
+"Mariani Pro" contains an additional feature to browse inside a floppy disk image that you've loaded into the emulator. For now you need to go to `source/frontends/mariani/CiderPress/nufxlib` and run `./configure`, and then build the "Mariani Pro" target back in Xcode. (Somebody let me know how to improve that please!)
 
 "Mariani Pro Universal" is even more of a pain. Unfortunately, Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and build Boost yourself. Here's a script that should help:
 

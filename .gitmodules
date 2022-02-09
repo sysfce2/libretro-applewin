@@ -7,3 +7,6 @@
 [submodule "source/frontends/sdl/imgui/imgui_club"]
 	path = source/frontends/sdl/imgui/imgui_club
 	url = ../../ocornut/imgui_club
+[submodule "source/frontends/mariani/CiderPress"]
+	path = source/frontends/mariani/CiderPress
+	url = https://github.com/fadden/ciderpress.git
