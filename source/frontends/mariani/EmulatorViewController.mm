@@ -35,7 +35,6 @@
 #import <SDL.h>
 #import "benchmark.h"
 #import "fileregistry.h"
-#import "gamepad.h"
 #import "programoptions.h"
 #import "sdirectsound.h"
 #import "MarianiFrame.h"
@@ -43,6 +42,7 @@
 
 #import "CommonTypes.h"
 #import "MarianiFrame.h"
+#import "MarianiJoystick.h"
 #import "EmulatorRenderer.h"
 #import "UserDefaults.h"
 
@@ -93,7 +93,7 @@ std::shared_ptr<mariani::MarianiFrame> frame;
 
     frame.reset(new mariani::MarianiFrame(options));
 
-    std::shared_ptr<Paddle> paddle(new sa2::Gamepad(0));
+    std::shared_ptr<Paddle> paddle(new mariani::Gamepad());
     self.initialisation = new Initialisation(frame, paddle);
     applyOptions(options);
     frame->Begin();

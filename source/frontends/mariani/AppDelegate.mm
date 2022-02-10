@@ -7,6 +7,7 @@
 
 #import "AppDelegate.h"
 #import <Foundation/NSProcessInfo.h>
+#import <GameController/GameController.h>
 #import "windows.h"
 
 #import "context.h"
@@ -14,7 +15,6 @@
 #import <SDL.h>
 #import "benchmark.h"
 #import "fileregistry.h"
-#import "gamepad.h"
 #import "programoptions.h"
 #import "sdirectsound.h"
 #import "MarianiFrame.h"
@@ -1062,3 +1062,31 @@ DiskImgMsgHandler(const char *file, int line, const char *msg)
 #endif
 }
 #endif // FEATURE_BROWSER
+
+bool GamepadGetButton(int i)
+{
+    GCController *gc = [GCController current];
+    GCExtendedGamepad *gamepad = [gc extendedGamepad];
+    
+    if (gamepad != nil) {
+        switch (i) {
+            case 0:  return gamepad.buttonA.isPressed;
+            case 1:  return gamepad.buttonB.isPressed;
+        }
+    }
+    return 0;
+}
+
+double GamepadGetAxis(int i)
+{
+    GCController *gc = [GCController current];
+    GCExtendedGamepad *gamepad = [gc extendedGamepad];
+    
+    if (gamepad != nil) {
+        switch (i) {
+            case 0:  return gamepad.leftThumbstick.xAxis.value;
+            case 1:  return -gamepad.leftThumbstick.yAxis.value;
+        }
+    }
+    return 0;
+}

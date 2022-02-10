@@ -207,7 +207,6 @@
 		B00ECBB1279EEB600041E16C /* Registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CC277A21180002A6C3 /* Registry.cpp */; };
 		B00ECBB2279EEB600041E16C /* Debugger_Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CB277A21180002A6C3 /* Debugger_Display.cpp */; };
 		B00ECBB3279EEB600041E16C /* winbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F0277A21400002A6C3 /* winbase.cpp */; };
-		B00ECBB4279EEB600041E16C /* gamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E857277B714800FC14A3 /* gamepad.cpp */; };
 		B00ECBB9279EEB600041E16C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8AA2785F3920071D3C7 /* CoreMedia.framework */; };
 		B00ECBBA279EEB600041E16C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8A82785EA440071D3C7 /* AVFoundation.framework */; };
 		B00ECBBB279EEB600041E16C /* libAppleWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0098BFA277E0F6800F38E0C /* libAppleWin.a */; };
@@ -306,7 +305,6 @@
 		B0270B712789CA9F00E3ACCF /* Registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CC277A21180002A6C3 /* Registry.cpp */; };
 		B0270B722789CA9F00E3ACCF /* Debugger_Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CB277A21180002A6C3 /* Debugger_Display.cpp */; };
 		B0270B732789CA9F00E3ACCF /* winbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F0277A21400002A6C3 /* winbase.cpp */; };
-		B0270B742789CA9F00E3ACCF /* gamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E857277B714800FC14A3 /* gamepad.cpp */; };
 		B0270B792789CA9F00E3ACCF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8AA2785F3920071D3C7 /* CoreMedia.framework */; };
 		B0270B7A2789CA9F00E3ACCF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8A82785EA440071D3C7 /* AVFoundation.framework */; };
 		B0270B7B2789CA9F00E3ACCF /* libAppleWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0098BFA277E0F6800F38E0C /* libAppleWin.a */; };
@@ -489,7 +487,6 @@
 		B049E84E277B6F4A00FC14A3 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E84D277B6F4A00FC14A3 /* libboost_program_options.a */; };
 		B049E852277B6FFE00FC14A3 /* fileregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E850277B6FFE00FC14A3 /* fileregistry.cpp */; };
 		B049E855277B702100FC14A3 /* ptreeregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E853277B702000FC14A3 /* ptreeregistry.cpp */; };
-		B049E859277B714800FC14A3 /* gamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E857277B714800FC14A3 /* gamepad.cpp */; };
 		B049E89F277C43BF00FC14A3 /* EmulatorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E89D277C43BF00FC14A3 /* EmulatorViewController.mm */; };
 		B049E8A3277C44B100FC14A3 /* EmulatorRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A1277C44B100FC14A3 /* EmulatorRenderer.m */; };
 		B049E8A7277C4F6D00FC14A3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A6277C4F6D00FC14A3 /* Shaders.metal */; };
@@ -502,6 +499,15 @@
 		B07612312789E4BE009E79BE /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07612332789E4BE009E79BE /* About.xib */; };
 		B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE4827889D44002B841D /* DiskImageWrapper.mm */; };
 		B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
+		B090CF1D27B5A04F00C6C23D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B090CF1C27B5A04F00C6C23D /* GameController.framework */; };
+		B090CF1E27B5A05500C6C23D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B090CF1C27B5A04F00C6C23D /* GameController.framework */; };
+		B090CF1F27B5A05A00C6C23D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B090CF1C27B5A04F00C6C23D /* GameController.framework */; };
+		B090CF2227B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
+		B090CF2327B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
+		B090CF2427B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
+		B090CF2527B5A2A900C6C23D /* MarianiJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */; };
+		B090CF2627B5A2A900C6C23D /* MarianiJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */; };
+		B090CF2727B5A2A900C6C23D /* MarianiJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */; };
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
 		B09AB674277A14DB0002A6C3 /* Speech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB626277A14DB0002A6C3 /* Speech.cpp */; };
@@ -730,6 +736,9 @@
 		B08CFE4827889D44002B841D /* DiskImageWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageWrapper.mm; sourceTree = "<group>"; };
 		B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImageBrowserWindowController.h; sourceTree = "<group>"; };
 		B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageBrowserWindowController.mm; sourceTree = "<group>"; };
+		B090CF1C27B5A04F00C6C23D /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarianiJoystick.cpp; sourceTree = "<group>"; };
+		B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarianiJoystick.h; sourceTree = "<group>"; };
 		B0927414277D9399003FFB79 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
 		B0927415277D9399003FFB79 /* PreferencesViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PreferencesViewController.mm; sourceTree = "<group>"; };
 		B0927418277D9403003FFB79 /* PreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
@@ -1113,6 +1122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B090CF1F27B5A05A00C6C23D /* GameController.framework in Frameworks */,
 				B00ECBBA279EEB600041E16C /* AVFoundation.framework in Frameworks */,
 				B00ECBB9279EEB600041E16C /* CoreMedia.framework in Frameworks */,
 				B00ECBBC279EEB600041E16C /* MetalKit.framework in Frameworks */,
@@ -1127,6 +1137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B090CF1E27B5A05500C6C23D /* GameController.framework in Frameworks */,
 				B0270B7A2789CA9F00E3ACCF /* AVFoundation.framework in Frameworks */,
 				B0270B792789CA9F00E3ACCF /* CoreMedia.framework in Frameworks */,
 				B0270B7C2789CA9F00E3ACCF /* MetalKit.framework in Frameworks */,
@@ -1141,6 +1152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B090CF1D27B5A04F00C6C23D /* GameController.framework in Frameworks */,
 				B020F8A92785EA440071D3C7 /* AVFoundation.framework in Frameworks */,
 				B020F8AB2785F3920071D3C7 /* CoreMedia.framework in Frameworks */,
 				B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */,
@@ -1227,6 +1239,8 @@
 				B049E89D277C43BF00FC14A3 /* EmulatorViewController.mm */,
 				B0689D092780B9B60029EB7D /* MarianiFrame.h */,
 				B0689D082780B9B60029EB7D /* MarianiFrame.cpp */,
+				B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */,
+				B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */,
 				B0927414277D9399003FFB79 /* PreferencesViewController.h */,
 				B0927415277D9399003FFB79 /* PreferencesViewController.mm */,
 				B0927418277D9403003FFB79 /* PreferencesWindowController.h */,
@@ -1705,6 +1719,7 @@
 		B09AB844277A282A0002A6C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B090CF1C27B5A04F00C6C23D /* GameController.framework */,
 				B0D1C3C927B45ECF00C0BF71 /* libhfs.a */,
 				B0D1C3A127B45D7900C0BF71 /* libdiskimg.a */,
 				B0A8D70827B459F600D4314F /* libnufx.a */,
@@ -1941,6 +1956,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B090CF2727B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1948,6 +1964,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B090CF2627B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1995,6 +2012,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B090CF2527B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2512,12 +2530,12 @@
 				B00ECBAC279EEB600041E16C /* Debugger_Disassembler.cpp in Sources */,
 				B00ECBAD279EEB600041E16C /* dmusicc.cpp in Sources */,
 				B00ECBAE279EEB600041E16C /* PreferencesViewController.mm in Sources */,
+				B090CF2427B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */,
 				B00ECBAF279EEB600041E16C /* StdAfx.cpp in Sources */,
 				B00ECBB0279EEB600041E16C /* EmulatorViewController.mm in Sources */,
 				B00ECBB1279EEB600041E16C /* Registry.cpp in Sources */,
 				B00ECBB2279EEB600041E16C /* Debugger_Display.cpp in Sources */,
 				B00ECBB3279EEB600041E16C /* winbase.cpp in Sources */,
-				B00ECBB4279EEB600041E16C /* gamepad.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2548,6 +2566,7 @@
 				B0270B4F2789CA9F00E3ACCF /* utils.cpp in Sources */,
 				B0270B512789CA9F00E3ACCF /* PropertySheet.cpp in Sources */,
 				B0270B522789CA9F00E3ACCF /* Speech.cpp in Sources */,
+				B090CF2327B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */,
 				B0270B532789CA9F00E3ACCF /* EmulatorRenderer.m in Sources */,
 				B0270B542789CA9F00E3ACCF /* Debugger_Assembler.cpp in Sources */,
 				B0270B552789CA9F00E3ACCF /* commonframe.cpp in Sources */,
@@ -2581,7 +2600,6 @@
 				B0270B712789CA9F00E3ACCF /* Registry.cpp in Sources */,
 				B0270B722789CA9F00E3ACCF /* Debugger_Display.cpp in Sources */,
 				B0270B732789CA9F00E3ACCF /* winbase.cpp in Sources */,
-				B0270B742789CA9F00E3ACCF /* gamepad.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2642,12 +2660,12 @@
 				B09AB724277A1BA40002A6C3 /* Debugger_Disassembler.cpp in Sources */,
 				B09AB801277A21410002A6C3 /* dmusicc.cpp in Sources */,
 				B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */,
+				B090CF2227B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */,
 				B09AB680277A14DB0002A6C3 /* StdAfx.cpp in Sources */,
 				B049E89F277C43BF00FC14A3 /* EmulatorViewController.mm in Sources */,
 				B09AB7D6277A21180002A6C3 /* Registry.cpp in Sources */,
 				B09AB7D5277A21180002A6C3 /* Debugger_Display.cpp in Sources */,
 				B09AB810277A21410002A6C3 /* winbase.cpp in Sources */,
-				B049E859277B714800FC14A3 /* gamepad.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
