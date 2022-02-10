@@ -25,14 +25,12 @@ But if what you want is a macOS command-line app, you can build it from Andrea's
 
 - plugging or unplugging a VidHD does not refresh the display correctly
 - Screen recording does not record audio
-- Screen recording seems to occur at half speed on 120Hz devices
 - Certain key combinations are not sent to the emulator
 - Code could be better commented
 
 ### Suspected Issues
 
-- Joystick may not work. Support should be inherited from the Raspberry Pi port but I don't have one yet and haven't tested it.
-- AppleWin supports lots of esoteric hardware, I've really just been using the floppy drive, hard drive, 80-column card, and Mockingboard.
+- AppleWin supports lots of esoteric hardware, I've really just been using the floppy drive, hard drive, 80-column card, a [GameController](https://developer.apple.com/documentation/gamecontroller)-compatible gamepad (Steelseries Nimbus), and Mockingboard.
 - Moving the main window to another monitor may cause issues.
 
 ## Build Mariani
