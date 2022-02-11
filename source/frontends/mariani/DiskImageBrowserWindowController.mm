@@ -19,6 +19,7 @@ using namespace DiskImgLib;
 @property (strong) NSString *size;
 @property (strong) NSString *kind;
 @property (strong) NSMutableArray *children;
+@property A2File *file;
 @end
 
 @implementation FSItem
@@ -28,10 +29,11 @@ using namespace DiskImgLib;
 
 @property (strong) IBOutlet NSOutlineView *filesOutlineView;
 
-@property (strong) NSString *path;
 @property (strong) FSItem *rootDirectory;
 @property CGFloat rowHeight;
 @property NSDateFormatter *dateFormatter;
+@property DiskImageWrapper *wrapper;
+@property DiskFS *diskFS;
 
 @end
 
@@ -74,35 +76,41 @@ NSArray *fileTypeStrings = @[
 
 - (instancetype)initWithDiskImageWrapper:(DiskImageWrapper *)wrapper {
     if ((self = [super init]) != nil) {
-        self.path = wrapper.path;
+        self.wrapper = wrapper;
         
         self.dateFormatter = [[NSDateFormatter alloc] init];
         self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
         self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
 
-        if (![self readFileSystem:wrapper]) {
+        self.diskFS = self.wrapper.diskImg->OpenAppropriateDiskFS();
+        if (self.diskFS == nil) {
             NSLog(@"failed to read file system");
             return nil;
         }
+        [self readFileSystem];
         
         if (![[NSBundle mainBundle] loadNibNamed:@"DiskImageBrowser" owner:self topLevelObjects:nil]) {
             NSLog(@"failed to load DiskImageBrowser nib");
             return nil;
         }
         if ([self.rootDirectory.name length]) {
-            self.window.title = [NSString stringWithFormat:@"%@ (%@)", self.rootDirectory.name, [wrapper.path lastPathComponent]];
+            self.window.title = [NSString stringWithFormat:@"%@ (%@)", self.rootDirectory.name, [self.wrapper.path lastPathComponent]];
         }
         else {
-            self.window.title = [wrapper.path lastPathComponent];
+            self.window.title = [self.wrapper.path lastPathComponent];
         }
     }
     return self;
 }
 
+- (void)dealloc {
+    delete self.diskFS;
+}
+
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
-    [theAppDelegate browserWindowWillClose:self.path];
+    [theAppDelegate browserWindowWillClose:self.wrapper.path];
 }
 
 #pragma mark - NSOutlineViewDataSource
@@ -167,15 +175,29 @@ NSArray *fileTypeStrings = @[
     return enclosingView;
 }
 
+- (IBAction)outlineViewDoubleAction:(NSOutlineView *)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    FSItem *fsItem = (FSItem *)[sender itemAtRow:sender.clickedRow];
+    if (!fsItem.file->IsDirectory()) {
+        A2FileDescr *fd;
+        DIError error = fsItem.file->Open(&fd, true);
+        if (error == kDIErrNone && fd != NULL) {
+            size_t length = fsItem.file->GetDataLength();
+            void *buffer = malloc(length);
+            fd->Read(buffer, length);
+            fd->Close();
+            
+            free(buffer);
+        }
+    }
+}
+
 #pragma mark - Utilities
 
-- (BOOL)readFileSystem:(DiskImageWrapper *)wrapper {
-    DiskFS *diskFS = wrapper.diskImg->OpenAppropriateDiskFS();
-    if (diskFS == nil) {
-        return NO;
-    }
-    diskFS->SetScanForSubVolumes(DiskFS::kScanSubEnabled);
-    diskFS->Initialize(wrapper.diskImg, DiskFS::kInitFull);
+- (void)readFileSystem {
+    self.diskFS->SetScanForSubVolumes(DiskFS::kScanSubEnabled);
+    self.diskFS->Initialize(self.wrapper.diskImg, DiskFS::kInitFull);
     
     NSMutableDictionary *directories = [NSMutableDictionary dictionary];
     
@@ -186,7 +208,7 @@ NSArray *fileTypeStrings = @[
     FSItem *parentFsItem = self.rootDirectory;
     
     A2File *file;
-    file = diskFS->GetNextFile(nil);
+    file = self.diskFS->GetNextFile(nil);
     while (file != nil) {
         FSItem *fsItem = [self newFSItemFromA2File:file];
         if (file->IsDirectory()) {
@@ -203,11 +225,8 @@ NSArray *fileTypeStrings = @[
         }
         [parentFsItem.children addObject:fsItem];
         
-        file = diskFS->GetNextFile(file);
+        file = self.diskFS->GetNextFile(file);
     }
-    delete diskFS;
-    
-    return YES;
 }
 
 - (FSItem *)newFSItemFromA2File:(A2File *)file {
@@ -264,6 +283,7 @@ NSArray *fileTypeStrings = @[
     }
     
     fsItem.kind = [NSString stringWithFormat:@"%@ $%04X", fileTypeStrings[file->GetFileType()], file->GetAuxType()];
+    fsItem.file = file;
     
     return fsItem;
 }
