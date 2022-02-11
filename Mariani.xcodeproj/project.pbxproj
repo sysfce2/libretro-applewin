@@ -545,11 +545,58 @@
 		B09AB812277A21410002A6C3 /* strsafe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F2277A21400002A6C3 /* strsafe.cpp */; };
 		B09AB819277A21410002A6C3 /* fileapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F9277A21410002A6C3 /* fileapi.cpp */; };
 		B09AB81A277A21410002A6C3 /* winnls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7FA277A21410002A6C3 /* winnls.cpp */; };
+		B0A68EC527B6F1AC008D074B /* FAT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38C27B45D0800C0BF71 /* FAT.cpp */; };
+		B0A68EC627B6F1AC008D074B /* ASPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39527B45D0900C0BF71 /* ASPI.h */; };
+		B0A68EC727B6F1AC008D074B /* DiskImgPriv.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37327B45D0800C0BF71 /* DiskImgPriv.h */; };
+		B0A68EC827B6F1AC008D074B /* CFFA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39227B45D0900C0BF71 /* CFFA.cpp */; };
+		B0A68EC927B6F1AC008D074B /* DiskImgDetail.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39727B45D0900C0BF71 /* DiskImgDetail.h */; };
+		B0A68ECA27B6F1AC008D074B /* OzDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37C27B45D0800C0BF71 /* OzDOS.cpp */; };
+		B0A68ECB27B6F1AC008D074B /* TwoImg.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37127B45D0800C0BF71 /* TwoImg.h */; };
+		B0A68ECC27B6F1AC008D074B /* Gutenberg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37027B45D0700C0BF71 /* Gutenberg.cpp */; };
+		B0A68ECD27B6F1AC008D074B /* UNIDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37D27B45D0800C0BF71 /* UNIDOS.cpp */; };
+		B0A68ECE27B6F1AC008D074B /* DiskFS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39A27B45D0900C0BF71 /* DiskFS.cpp */; };
+		B0A68ECF27B6F1AC008D074B /* DiskImg.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39327B45D0900C0BF71 /* DiskImg.h */; };
+		B0A68ED027B6F1AC008D074B /* GenericFD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38027B45D0800C0BF71 /* GenericFD.cpp */; };
+		B0A68ED127B6F1AC008D074B /* ProDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38527B45D0800C0BF71 /* ProDOS.cpp */; };
+		B0A68ED227B6F1AC008D074B /* HFS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39B27B45D0900C0BF71 /* HFS.cpp */; };
+		B0A68ED327B6F1AC008D074B /* StdAfx.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37A27B45D0800C0BF71 /* StdAfx.h */; };
+		B0A68ED427B6F1AC008D074B /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37727B45D0800C0BF71 /* Container.cpp */; };
+		B0A68ED527B6F1AC008D074B /* DDD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38827B45D0800C0BF71 /* DDD.cpp */; };
+		B0A68ED627B6F1AC008D074B /* ASPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39127B45D0900C0BF71 /* ASPI.cpp */; };
+		B0A68ED727B6F1AC008D074B /* DIUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38A27B45D0800C0BF71 /* DIUtil.cpp */; };
+		B0A68ED827B6F1AC008D074B /* Nibble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37427B45D0800C0BF71 /* Nibble.cpp */; };
+		B0A68ED927B6F1AC008D074B /* ImageWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38D27B45D0800C0BF71 /* ImageWrapper.cpp */; };
+		B0A68EDA27B6F1AC008D074B /* CP_WNASPI32.H in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C38727B45D0800C0BF71 /* CP_WNASPI32.H */; };
+		B0A68EDB27B6F1AC008D074B /* RDOS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37627B45D0800C0BF71 /* RDOS.cpp */; };
+		B0A68EDC27B6F1AC008D074B /* VolumeUsage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37F27B45D0800C0BF71 /* VolumeUsage.cpp */; };
+		B0A68EDD27B6F1AC008D074B /* Win32BlockIO.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39627B45D0900C0BF71 /* Win32BlockIO.h */; };
+		B0A68EDE27B6F1AC008D074B /* DiskImg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37B27B45D0800C0BF71 /* DiskImg.cpp */; };
+		B0A68EDF27B6F1AC008D074B /* FocusDrive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39927B45D0900C0BF71 /* FocusDrive.cpp */; };
+		B0A68EE027B6F1AC008D074B /* MicroDrive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38E27B45D0800C0BF71 /* MicroDrive.cpp */; };
+		B0A68EE127B6F1AC008D074B /* DOS33.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38227B45D0800C0BF71 /* DOS33.cpp */; };
+		B0A68EE227B6F1AC008D074B /* DOSImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39427B45D0900C0BF71 /* DOSImage.cpp */; };
+		B0A68EE327B6F1AC008D074B /* StdAfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39D27B45D0900C0BF71 /* StdAfx.cpp */; };
+		B0A68EE427B6F1AC008D074B /* Win32Extra.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C37227B45D0800C0BF71 /* Win32Extra.h */; };
+		B0A68EE527B6F1AC008D074B /* CP_ntddscsi.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C38427B45D0800C0BF71 /* CP_ntddscsi.h */; };
+		B0A68EE627B6F1AC008D074B /* GenericFD.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39027B45D0900C0BF71 /* GenericFD.h */; };
+		B0A68EE727B6F1AC008D074B /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38127B45D0800C0BF71 /* Global.cpp */; };
+		B0A68EE827B6F1AC008D074B /* OuterWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39C27B45D0900C0BF71 /* OuterWrapper.cpp */; };
+		B0A68EE927B6F1AC008D074B /* Pascal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37827B45D0800C0BF71 /* Pascal.cpp */; };
+		B0A68EEA27B6F1AC008D074B /* SCSIDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C38B27B45D0800C0BF71 /* SCSIDefs.h */; };
+		B0A68EEB27B6F1AC008D074B /* CPM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38F27B45D0800C0BF71 /* CPM.cpp */; };
+		B0A68EEC27B6F1AC008D074B /* FDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37527B45D0800C0BF71 /* FDI.cpp */; };
+		B0A68EED27B6F1AC008D074B /* SPTI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38927B45D0800C0BF71 /* SPTI.cpp */; };
+		B0A68EEE27B6F1AC008D074B /* Win32BlockIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C38627B45D0800C0BF71 /* Win32BlockIO.cpp */; };
+		B0A68EEF27B6F1AC008D074B /* SPTI.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D1C39827B45D0900C0BF71 /* SPTI.h */; };
+		B0A68EF027B6F1AC008D074B /* MacPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37927B45D0800C0BF71 /* MacPart.cpp */; };
+		B0A68EF127B6F1AC008D074B /* Nibble35.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37E27B45D0800C0BF71 /* Nibble35.cpp */; };
+		B0A68EF227B6F1AC008D074B /* TwoImg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C39E27B45D0900C0BF71 /* TwoImg.cpp */; };
+		B0A68EF327B6F1C0008D074B /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A68EC127B6F1A2008D074B /* libdiskimg.a */; };
+		B0A68EF427B6F259008D074B /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A68EC127B6F1A2008D074B /* libdiskimg.a */; };
 		B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
 		B0A8D66627B1119D00D4314F /* 6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D66427B1119D00D4314F /* 6522.cpp */; };
 		B0A8D66727B1119D00D4314F /* 6522.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D66527B1119D00D4314F /* 6522.h */; };
 		B0A8D70927B459F600D4314F /* libnufx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A8D70827B459F600D4314F /* libnufx.a */; };
-		B0D1C3A227B45D7900C0BF71 /* libdiskimg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D1C3A127B45D7900C0BF71 /* libdiskimg.a */; };
 		B0D1C3CA27B45ED000C0BF71 /* libhfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D1C3C927B45ECF00C0BF71 /* libhfs.a */; };
 		B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
 		B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
@@ -577,13 +624,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B0A8D6AC27B4552100D4314F;
 			remoteInfo = nufxlib;
-		};
-		B0D1C39F27B45D2B00C0BF71 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B032DE19277A0C23006DC0F7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B0D1C36B27B45CC400C0BF71;
-			remoteInfo = diskimg;
 		};
 		B0D1C3A727B45E0200C0BF71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -986,6 +1026,7 @@
 		B09AB835277A22530002A6C3 /* tfearch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tfearch.cpp; path = source/Tfe/tfearch.cpp; sourceTree = "<group>"; };
 		B09AB836277A22530002A6C3 /* Uilib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uilib.h; path = source/Tfe/Uilib.h; sourceTree = "<group>"; };
 		B09AB837277A22530002A6C3 /* Pcap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pcap.h; path = source/Tfe/Pcap.h; sourceTree = "<group>"; };
+		B0A68EC127B6F1A2008D074B /* libdiskimg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdiskimg.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A6BB76277A31F7008813DE /* libpcap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcap.tbd; path = usr/lib/libpcap.tbd; sourceTree = SDKROOT; };
 		B0A8D66427B1119D00D4314F /* 6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = 6522.cpp; path = source/6522.cpp; sourceTree = "<group>"; };
 		B0A8D66527B1119D00D4314F /* 6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 6522.h; path = source/6522.h; sourceTree = "<group>"; };
@@ -1128,6 +1169,7 @@
 				B00ECBBC279EEB600041E16C /* MetalKit.framework in Frameworks */,
 				B00ECBE9279EEBDC0041E16C /* SDL2.framework in Frameworks */,
 				B00ECBBB279EEB600041E16C /* libAppleWin.a in Frameworks */,
+				B0A68EF427B6F259008D074B /* libdiskimg.a in Frameworks */,
 				B00ECBE6279EEBAB0041E16C /* libboost_program_options.a in Frameworks */,
 				B00ECBC0279EEB600041E16C /* libpcap.tbd in Frameworks */,
 			);
@@ -1159,7 +1201,7 @@
 				B0098CF3277E187900F38E0C /* libAppleWin.a in Frameworks */,
 				B049E84E277B6F4A00FC14A3 /* libboost_program_options.a in Frameworks */,
 				B0A8D70927B459F600D4314F /* libnufx.a in Frameworks */,
-				B0D1C3A227B45D7900C0BF71 /* libdiskimg.a in Frameworks */,
+				B0A68EF327B6F1C0008D074B /* libdiskimg.a in Frameworks */,
 				B0D1C3CA27B45ED000C0BF71 /* libhfs.a in Frameworks */,
 				B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */,
 				B049E823277B517700FC14A3 /* libSDL2.a in Frameworks */,
@@ -1181,6 +1223,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B03C209927B461E500171783 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0A68EBF27B6F1A2008D074B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1217,6 +1266,7 @@
 				B0270BA32789CA9F00E3ACCF /* Mariani.app */,
 				B00ECBE4279EEB600041E16C /* Mariani Pro.app */,
 				B03C209B27B461E500171783 /* libCiderPress.a */,
+				B0A68EC127B6F1A2008D074B /* libdiskimg.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2016,6 +2066,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0A68EBD27B6F1A2008D074B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0A68EEF27B6F1AC008D074B /* SPTI.h in Headers */,
+				B0A68EC727B6F1AC008D074B /* DiskImgPriv.h in Headers */,
+				B0A68ECF27B6F1AC008D074B /* DiskImg.h in Headers */,
+				B0A68EE627B6F1AC008D074B /* GenericFD.h in Headers */,
+				B0A68EDD27B6F1AC008D074B /* Win32BlockIO.h in Headers */,
+				B0A68EE427B6F1AC008D074B /* Win32Extra.h in Headers */,
+				B0A68EDA27B6F1AC008D074B /* CP_WNASPI32.H in Headers */,
+				B0A68ECB27B6F1AC008D074B /* TwoImg.h in Headers */,
+				B0A68EC927B6F1AC008D074B /* DiskImgDetail.h in Headers */,
+				B0A68EEA27B6F1AC008D074B /* SCSIDefs.h in Headers */,
+				B0A68EE527B6F1AC008D074B /* CP_ntddscsi.h in Headers */,
+				B0A68ED327B6F1AC008D074B /* StdAfx.h in Headers */,
+				B0A68EC627B6F1AC008D074B /* ASPI.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXLegacyTarget section */
@@ -2032,20 +2102,6 @@
 			name = nufxlib;
 			passBuildSettingsInEnvironment = 1;
 			productName = nufxlib;
-		};
-		B0D1C36B27B45CC400C0BF71 /* diskimg */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = B0D1C36C27B45CC400C0BF71 /* Build configuration list for PBXLegacyTarget "diskimg" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = source/frontends/mariani/CiderPress/diskimg;
-			dependencies = (
-			);
-			name = diskimg;
-			passBuildSettingsInEnvironment = 1;
-			productName = diskimg;
 		};
 		B0D1C3A327B45DF900C0BF71 /* libhfs */ = {
 			isa = PBXLegacyTarget;
@@ -2131,7 +2187,6 @@
 			);
 			dependencies = (
 				B0A8D6B127B4570100D4314F /* PBXTargetDependency */,
-				B0D1C3A027B45D2B00C0BF71 /* PBXTargetDependency */,
 				B0D1C3A827B45E0200C0BF71 /* PBXTargetDependency */,
 			);
 			name = "Mariani Pro";
@@ -2192,6 +2247,23 @@
 			productReference = B03C209B27B461E500171783 /* libCiderPress.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		B0A68EC027B6F1A2008D074B /* diskimg */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0A68EC227B6F1A2008D074B /* Build configuration list for PBXNativeTarget "diskimg" */;
+			buildPhases = (
+				B0A68EBD27B6F1A2008D074B /* Headers */,
+				B0A68EBE27B6F1A2008D074B /* Sources */,
+				B0A68EBF27B6F1A2008D074B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = diskimg;
+			productName = diskimg;
+			productReference = B0A68EC127B6F1A2008D074B /* libdiskimg.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2218,10 +2290,10 @@
 					B03C209A27B461E500171783 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					B0A8D6AC27B4552100D4314F = {
+					B0A68EC027B6F1A2008D074B = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					B0D1C36B27B45CC400C0BF71 = {
+					B0A8D6AC27B4552100D4314F = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
 					B0D1C3A327B45DF900C0BF71 = {
@@ -2250,9 +2322,9 @@
 				B032DE32277A0C24006DC0F7 /* MarianiTests */,
 				B032DE3C277A0C24006DC0F7 /* MarianiUITests */,
 				B0A8D6AC27B4552100D4314F /* nufxlib */,
-				B0D1C36B27B45CC400C0BF71 /* diskimg */,
 				B0D1C3A327B45DF900C0BF71 /* libhfs */,
 				B03C209A27B461E500171783 /* CiderPress */,
+				B0A68EC027B6F1A2008D074B /* diskimg */,
 			);
 		};
 /* End PBXProject section */
@@ -2763,6 +2835,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0A68EBE27B6F1A2008D074B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0A68EEB27B6F1AC008D074B /* CPM.cpp in Sources */,
+				B0A68ED727B6F1AC008D074B /* DIUtil.cpp in Sources */,
+				B0A68EDB27B6F1AC008D074B /* RDOS.cpp in Sources */,
+				B0A68ED827B6F1AC008D074B /* Nibble.cpp in Sources */,
+				B0A68EE027B6F1AC008D074B /* MicroDrive.cpp in Sources */,
+				B0A68ED227B6F1AC008D074B /* HFS.cpp in Sources */,
+				B0A68ECD27B6F1AC008D074B /* UNIDOS.cpp in Sources */,
+				B0A68EEC27B6F1AC008D074B /* FDI.cpp in Sources */,
+				B0A68EF227B6F1AC008D074B /* TwoImg.cpp in Sources */,
+				B0A68EE227B6F1AC008D074B /* DOSImage.cpp in Sources */,
+				B0A68ED527B6F1AC008D074B /* DDD.cpp in Sources */,
+				B0A68EDC27B6F1AC008D074B /* VolumeUsage.cpp in Sources */,
+				B0A68EF027B6F1AC008D074B /* MacPart.cpp in Sources */,
+				B0A68EC527B6F1AC008D074B /* FAT.cpp in Sources */,
+				B0A68ED127B6F1AC008D074B /* ProDOS.cpp in Sources */,
+				B0A68ECC27B6F1AC008D074B /* Gutenberg.cpp in Sources */,
+				B0A68EE727B6F1AC008D074B /* Global.cpp in Sources */,
+				B0A68ED627B6F1AC008D074B /* ASPI.cpp in Sources */,
+				B0A68EF127B6F1AC008D074B /* Nibble35.cpp in Sources */,
+				B0A68EE827B6F1AC008D074B /* OuterWrapper.cpp in Sources */,
+				B0A68EEE27B6F1AC008D074B /* Win32BlockIO.cpp in Sources */,
+				B0A68ED427B6F1AC008D074B /* Container.cpp in Sources */,
+				B0A68EDE27B6F1AC008D074B /* DiskImg.cpp in Sources */,
+				B0A68EE927B6F1AC008D074B /* Pascal.cpp in Sources */,
+				B0A68ECE27B6F1AC008D074B /* DiskFS.cpp in Sources */,
+				B0A68EE127B6F1AC008D074B /* DOS33.cpp in Sources */,
+				B0A68EC827B6F1AC008D074B /* CFFA.cpp in Sources */,
+				B0A68EED27B6F1AC008D074B /* SPTI.cpp in Sources */,
+				B0A68ED927B6F1AC008D074B /* ImageWrapper.cpp in Sources */,
+				B0A68EDF27B6F1AC008D074B /* FocusDrive.cpp in Sources */,
+				B0A68ECA27B6F1AC008D074B /* OzDOS.cpp in Sources */,
+				B0A68ED027B6F1AC008D074B /* GenericFD.cpp in Sources */,
+				B0A68EE327B6F1AC008D074B /* StdAfx.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2780,11 +2892,6 @@
 			isa = PBXTargetDependency;
 			target = B0A8D6AC27B4552100D4314F /* nufxlib */;
 			targetProxy = B0A8D6B027B4570100D4314F /* PBXContainerItemProxy */;
-		};
-		B0D1C3A027B45D2B00C0BF71 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B0D1C36B27B45CC400C0BF71 /* diskimg */;
-			targetProxy = B0D1C39F27B45D2B00C0BF71 /* PBXContainerItemProxy */;
 		};
 		B0D1C3A827B45E0200C0BF71 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3366,6 +3473,32 @@
 			};
 			name = Release;
 		};
+		B0A68EC327B6F1A2008D074B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B0A68EC427B6F1A2008D074B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		B0A8D6AE27B4552100D4314F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3385,35 +3518,6 @@
 			name = Debug;
 		};
 		B0A8D6AF27B4552100D4314F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		B0D1C36D27B45CC400C0BF71 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		B0D1C36E27B45CC400C0BF71 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -3528,20 +3632,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B0A68EC227B6F1A2008D074B /* Build configuration list for PBXNativeTarget "diskimg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0A68EC327B6F1A2008D074B /* Debug */,
+				B0A68EC427B6F1A2008D074B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B0A8D6AD27B4552100D4314F /* Build configuration list for PBXLegacyTarget "nufxlib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B0A8D6AE27B4552100D4314F /* Debug */,
 				B0A8D6AF27B4552100D4314F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B0D1C36C27B45CC400C0BF71 /* Build configuration list for PBXLegacyTarget "diskimg" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B0D1C36D27B45CC400C0BF71 /* Debug */,
-				B0D1C36E27B45CC400C0BF71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
