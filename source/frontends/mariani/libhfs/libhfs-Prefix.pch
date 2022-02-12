@@ -1,0 +1,13 @@
+//
+//  libhfs-Prefix.pch
+//  libhfs
+//
+//  Created by Steven Huang on 2/11/22.
+//
+
+#ifndef libhfs_Prefix_pch
+#define libhfs_Prefix_pch
+
+#import <stdlib.h>
+
+#endif /* libhfs_Prefix_pch */
