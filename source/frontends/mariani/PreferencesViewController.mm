@@ -17,7 +17,6 @@
 #include "StdAfx.h"
 #import <string>
 
-#import "wincompat.h"
 #import "winhandles.h"
 #import "Card.h"
 #import "CardManager.h"
@@ -32,7 +31,13 @@ void CreateLanguageCard(void); // FIXME should be in Memory.h
 #import "Tfe.h"
 #import "tfesupp.h"
 
-#import "linux/registry.h"
+// Objective-C typedefs BOOL to be bool, but wincompat.h typedefs it to be
+// int32_t, which causes function signature mismatches (such as with the
+// RegSaveValue() calls below.) This hack allows the function to be seen
+// with the correct signature and avoids the link error.
+#define BOOL int32_t
+#import "registry.h"
+#undef BOOL
 
 #ifdef FEATURE_BROWSER
 #include "DiskImg.h"

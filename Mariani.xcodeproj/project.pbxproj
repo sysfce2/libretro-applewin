@@ -3164,7 +3164,6 @@
 					/opt/homebrew/opt/libslirp/include/slirp,
 					source/frontends/mariani,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -3190,7 +3189,6 @@
 					/opt/homebrew/opt/libslirp/include/slirp,
 					source/frontends/mariani,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -3217,7 +3215,6 @@
 					source,
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
-					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -3227,12 +3224,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					../boost_1_78_0/universal,
-					"../CiderPress/diskimg/**",
-					../CiderPress/nufxlib,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				LIBRARY_SEARCH_PATHS = ../boost_1_78_0/universal;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "Mariani Pro";
@@ -3261,7 +3253,6 @@
 					source,
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
-					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -3271,12 +3262,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					../boost_1_78_0/universal,
-					"../CiderPress/diskimg/**",
-					../CiderPress/nufxlib,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				LIBRARY_SEARCH_PATHS = ../boost_1_78_0/universal;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "Mariani Pro";
@@ -3316,7 +3302,6 @@
 					/opt/homebrew/lib,
 					/usr/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3356,7 +3341,6 @@
 					/opt/homebrew/lib,
 					/usr/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3417,7 +3401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3476,7 +3460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3507,7 +3491,6 @@
 					/opt/homebrew/include/SDL2,
 					/usr/local/include,
 					/usr/local/include/SDL2,
-					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -3520,12 +3503,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
 					/usr/local/lib,
-					"../CiderPress/diskimg/**",
-					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/nufxlib",
-					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg",
-					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg/libhfs",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3555,7 +3533,6 @@
 					/opt/homebrew/include/SDL2,
 					/usr/local/include,
 					/usr/local/include/SDL2,
-					../CiderPress/diskimg,
 				);
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -3568,12 +3545,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
 					/usr/local/lib,
-					"../CiderPress/diskimg/**",
-					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/nufxlib",
-					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg",
-					"$(PROJECT_DIR)/source/frontends/mariani/CiderPress/diskimg/libhfs",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3591,7 +3563,6 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = test/TestCPU6502/;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3611,7 +3582,6 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = test/TestCPU6502/;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.mariani.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3658,7 +3628,6 @@
 					"_FILE_OFFSET_BITS=64",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -3673,7 +3642,6 @@
 					"_FILE_OFFSET_BITS=64",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -3690,7 +3658,6 @@
 					HAVE_CONFIG_H,
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -3707,7 +3674,6 @@
 					HAVE_CONFIG_H,
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -3722,7 +3688,6 @@
 					HAVE_CONFIG_H,
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = nufx;
 				SKIP_INSTALL = YES;
 			};
@@ -3737,7 +3702,6 @@
 					HAVE_CONFIG_H,
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = nufx;
 				SKIP_INSTALL = YES;
 			};
@@ -3752,7 +3716,6 @@
 					"HAVE_CONFIG_H=1",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -3767,7 +3730,6 @@
 					"HAVE_CONFIG_H=1",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
