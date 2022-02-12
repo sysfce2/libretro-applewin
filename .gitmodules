@@ -10,3 +10,6 @@
 [submodule "source/frontends/mariani/CiderPress"]
 	path = source/frontends/mariani/CiderPress
 	url = https://github.com/fadden/ciderpress.git
+[submodule "source/frontends/mariani/HexFiend"]
+	path = source/frontends/mariani/HexFiend
+	url = https://github.com/HexFiend/HexFiend.git

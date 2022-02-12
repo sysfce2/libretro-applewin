@@ -8,6 +8,7 @@
 #import "DiskImageBrowserWindowController.h"
 #import "AppDelegate.h"
 #import "DiskImg.h"
+#import <HexFiend/HexFiend.h>
 
 using namespace DiskImgLib;
 
@@ -28,12 +29,15 @@ using namespace DiskImgLib;
 @interface DiskImageBrowserWindowController ()
 
 @property (strong) IBOutlet NSOutlineView *filesOutlineView;
+@property (strong) IBOutlet NSPanel *filePreviewPanel;
 
 @property (strong) FSItem *rootDirectory;
 @property CGFloat rowHeight;
 @property NSDateFormatter *dateFormatter;
 @property DiskImageWrapper *wrapper;
 @property DiskFS *diskFS;
+
+@property (strong) HFController *hfController;
 
 @end
 
@@ -110,6 +114,7 @@ NSArray *fileTypeStrings = @[
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
+    [self.filePreviewPanel orderOut:self];
     [theAppDelegate browserWindowWillClose:self.wrapper.path];
 }
 
@@ -187,8 +192,10 @@ NSArray *fileTypeStrings = @[
             void *buffer = malloc(length);
             fd->Read(buffer, length);
             fd->Close();
-            
+            NSData *data = [NSData dataWithBytes:buffer length:length];
             free(buffer);
+            
+            [self previewFile:fsItem withData:data];
         }
     }
 }
@@ -286,6 +293,49 @@ NSArray *fileTypeStrings = @[
     fsItem.file = file;
     
     return fsItem;
+}
+
+- (void)previewFile:(FSItem *)fsItem withData:(NSData *)data {
+    self.filePreviewPanel.contentView.subviews = @[];
+    self.filePreviewPanel.title = fsItem.name;
+    
+    self.hfController = [[HFController alloc] init];
+    HFSharedMemoryByteSlice *byteSlice = [[HFSharedMemoryByteSlice alloc] initWithUnsharedData:data];
+    HFByteArray *byteArray = [[HFBTreeByteArray alloc] init];
+    [byteArray insertByteSlice:byteSlice inRange:HFRangeMake(0, 0)];
+    [self.hfController setByteArray:byteArray];
+    
+    HFLayoutRepresenter *layoutRep = [[HFLayoutRepresenter alloc] init];
+    HFLineCountingRepresenter *lcRep = [[HFLineCountingRepresenter alloc] init];
+    HFHexTextRepresenter *hexRep = [[HFHexTextRepresenter alloc] init];
+    HFStringEncodingTextRepresenter *asciiRep = [[HFStringEncodingTextRepresenter alloc] init];
+    HFVerticalScrollerRepresenter *scrollRep = [[HFVerticalScrollerRepresenter alloc] init];
+    HFStatusBarRepresenter *statusRep = [[HFStatusBarRepresenter alloc] init];
+    
+    [self.hfController addRepresenter:layoutRep];
+    [self.hfController addRepresenter:lcRep];
+    [self.hfController addRepresenter:hexRep];
+    [self.hfController addRepresenter:asciiRep];
+    [self.hfController addRepresenter:scrollRep];
+    [self.hfController addRepresenter:statusRep];
+
+    [layoutRep addRepresenter:lcRep];
+    [layoutRep addRepresenter:hexRep];
+    [layoutRep addRepresenter:asciiRep];
+    [layoutRep addRepresenter:scrollRep];
+    [layoutRep addRepresenter:statusRep];
+    
+    // shrink the window to exactly fit desired bytes per row
+    CGRect frame = self.filePreviewPanel.frame;
+    frame.size.width = [layoutRep minimumViewWidthForBytesPerLine:16];
+    [self.filePreviewPanel setFrame:frame display:NO];
+    
+    NSView *layoutView = [layoutRep view];
+    [layoutView setFrame:self.filePreviewPanel.contentView.bounds];
+    [layoutView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+    [self.filePreviewPanel.contentView addSubview:layoutView];
+    
+    [self.filePreviewPanel orderFront:self];
 }
 
 @end
