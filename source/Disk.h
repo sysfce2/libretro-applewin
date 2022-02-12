@@ -139,6 +139,7 @@ public:
 	void FlushCurrentTrack(const int drive);
 
 	const std::string & GetFullDiskFilename(const int drive);
+	const std::string & DiskGetFullPathName(const int drive);
 	const std::string & GetFullName(const int drive);
 	const std::string & GetBaseName(const int drive);
 	void GetFilenameAndPathForSaveState(std::string& filename, std::string& path);
@@ -183,10 +184,6 @@ public:
 	static BYTE __stdcall IORead(WORD pc, WORD addr, BYTE bWrite, BYTE d, ULONG nExecutedCycles);
 	static BYTE __stdcall IOWrite(WORD pc, WORD addr, BYTE bWrite, BYTE d, ULONG nExecutedCycles);
 
-#ifdef MARIANI
-    const std::string & DiskGetFullPathName(const int drive);
-#endif
-
 private:
 	void ResetSwitches(void);
 	void CheckSpinning(const bool stateChanged, const ULONG uExecutedCycles);
@@ -196,9 +193,6 @@ private:
 	void AllocTrack(const int drive, const UINT minSize=NIBBLES_PER_TRACK);
 	void ReadTrack(const int drive, ULONG uExecutedCycles);
 	void WriteTrack(const int drive);
-#ifndef MARIANI
-	const std::string & DiskGetFullPathName(const int drive);
-#endif
 	void ResetLogicStateSequencer(void);
 	UINT GetBitCellDelta(const ULONG uExecutedCycles);
 	void UpdateBitStreamPosition(FloppyDisk& floppy, const ULONG bitCellDelta);
