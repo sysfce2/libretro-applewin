@@ -227,7 +227,7 @@
 "Unknown Disk Format" = "不明資料格式";
 
 /* No comment provided by engineer. */
-"\n\nAdvanced disk image features include code from the CiderPress project by Andy McFadden." = "\n\n磁碟映像檔瀏覽等高階功能含有 Andy McFadden 為 CiderPress 計畫所寫的部分程式碼。";
+"\n\nAdvanced disk image features include code from the CiderPress and HexFiend projects." = "\n\n磁碟映像檔瀏覽等高階功能含有從 CiderPress 和 HexFiend 等計畫所擷取的部分程式碼。";
 
 /* browse disk image */
 "Examine…" = "檢視⋯";

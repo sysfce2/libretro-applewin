@@ -295,7 +295,7 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
 #ifdef FEATURE_BROWSER
             CGRect oldCreditsFrame = self.aboutCredits.frame;
             self.aboutCredits.stringValue = [self.aboutCredits.stringValue stringByAppendingString:
-                NSLocalizedString(@"\n\nAdvanced disk image features include code from the CiderPress project by Andy McFadden.", "")];
+                NSLocalizedString(@"\n\nAdvanced disk image features include code from the CiderPress and HexFiend projects.", "")];
             CGRect newCreditsFrame = oldCreditsFrame;
             newCreditsFrame.size = [self.aboutCredits sizeThatFits:CGSizeMake(oldCreditsFrame.size.width, 5000)];
             self.aboutCredits.frame = newCreditsFrame;

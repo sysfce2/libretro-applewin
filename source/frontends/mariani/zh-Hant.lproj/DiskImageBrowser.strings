@@ -33,3 +33,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Dec 13, 2021 at 6:03 PM"; ObjectID = "zu3-9f-tsc"; */
 "zu3-9f-tsc.title" = "Dec 13, 2021 at 6:03 PM";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "35H-tA-bcQ"; */
+"35H-tA-bcQ.title" = "Window";
