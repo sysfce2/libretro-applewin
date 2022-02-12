@@ -802,7 +802,6 @@
 		B049E7FA277A36CE00FC14A3 /* PropertySheetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertySheetHelper.h; path = source/Configuration/PropertySheetHelper.h; sourceTree = "<group>"; };
 		B049E7FB277A36CE00FC14A3 /* PageAdvanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageAdvanced.h; path = source/Configuration/PageAdvanced.h; sourceTree = "<group>"; };
 		B049E7FC277A36CE00FC14A3 /* PageAdvanced.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PageAdvanced.cpp; path = source/Configuration/PageAdvanced.cpp; sourceTree = "<group>"; };
-		B049E81A277A394500FC14A3 /* libslirp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libslirp.a; path = /opt/homebrew/Cellar/libslirp/4.6.1/lib/libslirp.a; sourceTree = "<absolute>"; };
 		B049E81E277B512500FC14A3 /* sdirectsound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdirectsound.cpp; path = source/frontends/sdl/sdirectsound.cpp; sourceTree = "<group>"; };
 		B049E81F277B512500FC14A3 /* sdirectsound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdirectsound.h; path = source/frontends/sdl/sdirectsound.h; sourceTree = "<group>"; };
 		B049E822277B517700FC14A3 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = /opt/homebrew/Cellar/sdl2/2.0.20/lib/libSDL2.a; sourceTree = "<absolute>"; };
@@ -1876,7 +1875,6 @@
 				B049E84D277B6F4A00FC14A3 /* libboost_program_options.a */,
 				B00ECBE5279EEBAB0041E16C /* libboost_program_options.a */,
 				B049E822277B517700FC14A3 /* libSDL2.a */,
-				B049E81A277A394500FC14A3 /* libslirp.a */,
 				B0A6BB76277A31F7008813DE /* libpcap.tbd */,
 			);
 			name = Frameworks;
@@ -3164,6 +3162,7 @@
 					libyaml/win32,
 					/opt/homebrew/opt/boost/include,
 					/opt/homebrew/opt/libslirp/include/slirp,
+					source/frontends/mariani,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3189,6 +3188,7 @@
 					libyaml/win32,
 					/opt/homebrew/opt/boost/include,
 					/opt/homebrew/opt/libslirp/include/slirp,
+					source/frontends/mariani,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
