@@ -45,26 +45,21 @@ static NSArray *BASICfonts()
     return fonts;
 }
 
-static NSArray *BASICDarkColors()
+static NSArray *BASICColors()
 {
     static dispatch_once_t onceToken;
     static NSArray *colors;
     dispatch_once(&onceToken, ^{
         colors = @[
-            [NSColor colorWithDeviceRed:1.000 green:1.000 blue:1.000 alpha:1.0],  // kDefaultColor
-            [NSColor colorWithDeviceRed:0.254 green:0.630 blue:0.755 alpha:1.0],  // kLineNumColor
-            [NSColor colorWithDeviceRed:0.998 green:0.374 blue:0.638 alpha:1.0],  // kKeywordColor
-            [NSColor colorWithDeviceRed:0.449 green:0.655 blue:0.305 alpha:1.0],  // kCommentColor
-            [NSColor colorWithDeviceRed:0.998 green:0.416 blue:0.366 alpha:1.0],  // kStringColor
-            [NSColor colorWithDeviceRed:0.991 green:0.561 blue:0.246 alpha:1.0],  // kColonColor
+            [NSColor colorNamed:@"BASICDefaultColor"],
+            [NSColor colorNamed:@"BASICLineNumberColor"],
+            [NSColor colorNamed:@"BASICKeywordColor"],
+            [NSColor colorNamed:@"BASICCommentColor"],
+            [NSColor colorNamed:@"BASICStringColor"],
+            [NSColor colorNamed:@"BASICColonColor"],
         ];
     });
     return colors;
-}
-
-static NSArray *BASICColors()
-{
-    return BASICDarkColors();
 }
 
 NSString *ApplesoftBASICDataToRTF(NSData *data)

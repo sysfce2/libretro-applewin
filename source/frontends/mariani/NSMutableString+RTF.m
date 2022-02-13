@@ -116,9 +116,11 @@ static NSString *RTFFontFamily(NSFont *font)
     [self appendString:rtfHdrFontTableEnd];
     
     [self appendString:rtfColorTableStart];
+    NSColorSpace *colorSpace = [NSColorSpace deviceRGBColorSpace];
     for (NSColor *color in colors) {
+        NSColor *c = [color colorUsingColorSpace:colorSpace];
         [self appendFormat:rtfColorTableFormat,
-            color.redComponent * 255, color.greenComponent * 255, color.blueComponent * 255];
+            c.redComponent * 255, c.greenComponent * 255, c.blueComponent * 255];
     }
     [self appendString:rtfColorTableEnd];
     
