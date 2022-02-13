@@ -58,6 +58,7 @@ using namespace DiskImgLib;
 @property (strong) IBOutlet NSWindow *window;
 @property (strong) IBOutlet NSMenu *createDiskImageMenu;
 @property (strong) IBOutlet NSMenu *openDiskImageMenu;
+@property (strong) IBOutlet NSMenuItem *editCopyMenu;
 @property (strong) IBOutlet NSMenuItem *showHideStatusBarMenuItem;
 @property (strong) IBOutlet NSMenu *displayTypeMenu;
 @property (strong) IBOutlet NSView *statusBarView;
@@ -196,6 +197,16 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
         }
     }];
     return NO;
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification {
+    // when the main window is key, add a hint that we're copying the
+    // screenshot to pasteboard
+    self.editCopyMenu.title = NSLocalizedString(@"Copy Screenshot", @"");
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification {
+    self.editCopyMenu.title = NSLocalizedString(@"Copy", @"");
 }
 
 #pragma mark - NSOpenSavePanelDelegate

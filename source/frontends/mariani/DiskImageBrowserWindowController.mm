@@ -313,6 +313,7 @@ NSArray *fileTypeStrings = @[
                                              options:@{}
                                   documentAttributes:nil
                                                error:nil]];
+        textView.editable = NO;
         layoutView = scrollView;
     }
     

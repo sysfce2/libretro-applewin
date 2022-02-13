@@ -234,3 +234,9 @@
 
 /* No comment provided by engineer. */
 "Slot %d Hard Disk" = "插槽 %d 硬碟";
+
+/* No comment provided by engineer. */
+"Copy" = "拷貝";
+
+/* No comment provided by engineer. */
+"Copy Screenshot" = "拷貝螢幕快照";

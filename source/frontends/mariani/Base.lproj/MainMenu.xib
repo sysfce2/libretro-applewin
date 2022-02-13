@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,6 +19,7 @@
                 <outlet property="createDiskImageMenu" destination="RjL-S4-oG8" id="8PI-CL-Q4I"/>
                 <outlet property="displayTypeMenu" destination="eeY-Un-lEj" id="N54-FR-NAN"/>
                 <outlet property="driveLightButtonTemplate" destination="NGY-eR-Avg" id="DBE-ke-cr3"/>
+                <outlet property="editCopyMenu" destination="wcB-ZJ-Gew" id="XXg-bZ-pNS"/>
                 <outlet property="emulatorVC" destination="S0z-N3-T9h" id="XAc-8o-NgU"/>
                 <outlet property="openDiskImageMenu" destination="aVZ-wx-6ML" id="h5M-nh-kdR"/>
                 <outlet property="screenRecordingButton" destination="DSR-xi-Jep" id="NmW-pv-4Ab"/>
