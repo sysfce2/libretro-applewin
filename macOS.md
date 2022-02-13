@@ -11,7 +11,7 @@ But if what you want is a macOS command-line app, you can build it from Andrea's
 - Native, universal macOS UI
 - Screen recording
 - Copy screenshot to pasteboard
-- Disk image browser
+- Disk image browser, including syntax-highlighted listings for Applesoft and Integer BASIC, as well as hex viewer for other file types
 - Floppy and hard disk image creation
 - Full-screen support
 
@@ -23,10 +23,10 @@ But if what you want is a macOS command-line app, you can build it from Andrea's
 
 ### Known Issues
 
-- plugging or unplugging a VidHD does not refresh the display correctly
+- plugging or unplugging a VidHD card does not refresh the display correctly
 - Screen recording does not record audio
 - Certain key combinations are not sent to the emulator
-- Code could be better commented
+- Colors in syntax-highlighted BASIC listings do not update with light/dark mode change
 
 ### Suspected Issues
 
@@ -55,7 +55,7 @@ Load up the Xcode project, and build the "Mariani" target for "My Mac".
 
 "Mariani Pro" contains an additional feature to browse inside a floppy disk image that you've loaded into the emulator. This uses code from the [CiderPress](https://github.com/fadden/ciderpress) and [HexFiend](https://github.com/HexFiend/HexFiend) projects, but you should no longer need to run `./configure` manually now.
 
-"Mariani Pro Universal" is even more of a pain. Unfortunately, Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and build Boost yourself. Here's a script that should help:
+"Mariani Pro Universal" is the target used to build a universal (x86 and ARM) app, and it's probably broken. Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and also download/build [Boost](https://www.boost.org/users/download/) yourself, then stitch the binaries from both x86 and ARM builds together. Here's a script that should help:
 
 ```
 #!/bin/sh
@@ -82,7 +82,7 @@ sa2 is the binary produced by Andrea's port.
 
 ### Dependencies
 
-You can easily pick up the libraries not available by default on macOS using [Homebrew](https://brew.sh). After you install Homebrew, pick up the required packages below:
+sa2 needs more external libraries than Mariani, which you can grab for macOS using [Homebrew](https://brew.sh). After you install Homebrew, pick up the required packages below:
 
 ```
 brew install cmake pkgconfig libyaml minizip libslirp libpcap Boost sdl2 sdl2_image
@@ -101,7 +101,7 @@ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_SA2=ON -G Xcode ..
 open applewin.xcodeproj
 ```
 
-The project should now launch in Xcode. Select the `ALL_BUILD` target and build. You can look under `Products` in the left pane to see where it is, because unfortunately Xcode does not seem to be able to run and debug the binary.
+The project should now launch in Xcode. Select the `ALL_BUILD` target and build. You can look under `Products` in the left pane to see where it is, because unfortunately Xcode does not seem to be able to run and debug the binary directly.
 
 Or, you can follow basically the same as in [Linux](linux.md), also simplified to build only the sa2 frontend:
 
