@@ -29,7 +29,7 @@ static inline uint16_t Read16(const uint8_t** pBuf, long* pLength) {
     return val;
 }
 
-NSString *BASICDataToRTF(NSData *data)
+NSString *ApplesoftBASICDataToRTF(NSData *data)
 {
     static const char gApplesoftTokens[128 * 8] = {
         "END\0    FOR\0    NEXT\0   DATA\0   INPUT\0  DEL\0    DIM\0    READ\0   "
@@ -52,7 +52,7 @@ NSString *BASICDataToRTF(NSData *data)
     
     NSMutableString *outputString = [NSMutableString string];
     
-    const uint8_t* srcPtr = (const uint8_t*)data.bytes;
+    const uint8_t* srcPtr = (const uint8_t *)data.bytes;
     long srcLen = data.length;
     long length = srcLen;
     
@@ -160,5 +160,204 @@ NSString *BASICDataToRTF(NSData *data)
 done:
     [outputString RTFEnd];
     
+    return outputString;
+}
+
+NSString *IntegerBASICDataToRTF(NSData *data)
+{
+    static const char* const gIntegerTokens[128] = {
+        "HIMEM:",   "<EOL>",    "_ ",       ":",
+        "LOAD ",    "SAVE ",    "CON ",     "RUN ",
+        "RUN ",     "DEL ",     ",",        "NEW ",
+        "CLR ",     "AUTO ",    ",",        "MAN ",
+        "HIMEM:",   "LOMEM:",   "+",        "-",
+        "*",        "/",        "=",        "#",
+        ">=",       ">",        "<=",       "<>",
+        "<",        "AND ",     "OR ",      "MOD ",
+
+        "^ ",       "+",        "(",        ",",
+        "THEN ",    "THEN ",    ",",        ",",
+        "\"",       "\"",       "(",        "!",
+        "!",        "(",        "PEEK ",    "RND ",
+        "SGN ",     "ABS ",     "PDL ",     "RNDX ",
+        "(",        "+",        "-",        "NOT ",
+        "(",        "=",        "#",        "LEN(",
+        "ASC( ",    "SCRN( ",   ",",        "(",
+
+        "$",        "$",        "(",        ",",
+        ",",        ";",        ";",        ";",
+        ",",        ",",        ",",        "TEXT ",
+        "GR ",      "CALL ",    "DIM ",     "DIM ",
+        "TAB ",     "END ",     "INPUT ",   "INPUT ",
+        "INPUT ",   "FOR ",     "=",        "TO ",
+        "STEP ",    "NEXT ",    ",",        "RETURN ",
+        "GOSUB ",   "REM ",     "LET ",     "GOTO ",
+
+        "IF ",      "PRINT ",   "PRINT ",   "PRINT ",
+        "POKE ",    ",",        "COLOR= ",  "PLOT ",
+        ",",        "HLIN ",    ",",        "AT ",
+        "VLIN ",    ",",        "AT ",      "VTAB ",
+        "=",        "=",        ")",        ")",
+        "LIST ",    ",",        "LIST ",    "POP ",
+        "NODSP ",   "NODSP ",   "NOTRACE ", "DSP ",
+        "DSP ",     "TRACE ",   "PR# ",     "IN# "
+    };
+
+    NSMutableString *outputString = [NSMutableString string];
+    
+    const uint8_t* srcPtr = (const uint8_t *)data.bytes;
+    long srcLen = data.length;
+    long length = srcLen;
+
+    const bool fUseRTF = true;
+
+    [outputString RTFBegin];
+    
+    /*
+     * Make sure there's enough here to get started.  We want to return an
+     * "okay" result because we want this treated like a reformatted empty
+     * BASIC program rather than a non-Integer file.
+     */
+    if (length < 2) {
+        NSLog(@"  INT truncated?");
+        [outputString appendString:@"\r\n"];
+        goto done;
+    }
+
+    while (length > 0) {
+        uint8_t lineLen;
+        uint16_t lineNum;
+        bool trailingSpace;
+        bool newTrailingSpace = false;
+
+        /* pull the length byte, which we sanity-check */
+        lineLen = *srcPtr++;
+        length--;
+        if (lineLen == 0) {
+            NSLog(@"  INT found zero-length line?");
+            break;
+        }
+
+        /* line number */
+        [outputString RTFSetColor:kLineNumColor];
+        lineNum = Read16(&srcPtr, &length);
+        [outputString appendFormat:@"%5u ", lineNum];
+        [outputString RTFSetColor:kDefaultColor];
+
+        trailingSpace = true;
+        while (*srcPtr != 0x01 && length > 0) {
+            if (*srcPtr == 0x28) {
+                /* start of quoted text */
+                [outputString RTFSetColor:kStringColor];
+                [outputString appendCharacter:'\"'];
+                length--;
+                while (*++srcPtr != 0x29 && length > 0) {
+                    /* escape chars, but let Ctrl-D and Ctrl-G through */
+                    if (fUseRTF && *srcPtr != 0x84 && *srcPtr != 0x87)
+                        [outputString appendCharacter:(*srcPtr & 0x7f)];
+                    else
+                        [outputString appendFormat:@"%c", *srcPtr & 0x7f];
+                    length--;
+                }
+                if (*srcPtr != 0x29) {
+                    NSLog(@"  INT ended while in a string constant");
+                    break;
+                }
+                [outputString appendCharacter:'\"'];
+                [outputString RTFSetColor:kDefaultColor];
+                srcPtr++;
+                length--;
+            } else if (*srcPtr == 0x5d) {
+                /* start of REM statement, run to EOL */
+                [outputString RTFSetColor:kCommentColor];
+                [outputString appendFormat:@"%sREM ", trailingSpace ? "" : " "];
+                length--;
+                while (*++srcPtr != 0x01) {
+                    if (fUseRTF)
+                        [outputString appendCharacter:(*srcPtr & 0x7f)];
+                    else
+                        [outputString appendFormat:@"%c", *srcPtr & 0x7f];
+                    length--;
+                }
+                [outputString RTFSetColor:kDefaultColor];
+                if (*srcPtr != 0x01) {
+                    NSLog(@"  INT ended while in a REM statement");
+                    break;
+                }
+            } else if (*srcPtr >= 0xb0 && *srcPtr <= 0xb9) {
+                /* start of integer constant */
+                srcPtr++;
+                length--;
+                if (length < 2) {
+                    NSLog(@"  INT ended while in an integer constant");
+                    break;
+                }
+                int val;
+                val = Read16(&srcPtr, &length);
+                [outputString appendFormat:@"%d", val];
+            } else if (*srcPtr >= 0xc1 && *srcPtr <= 0xda) {
+                /* start of variable name */
+                while ((*srcPtr >= 0xc1 && *srcPtr <= 0xda) ||
+                       (*srcPtr >= 0xb0 && *srcPtr <= 0xb9))
+                {
+                    /* note no RTF-escaped chars in this range */
+                    [outputString appendFormat:@"%c", *srcPtr & 0x7f];
+                    srcPtr++;
+                    length--;
+                }
+            } else if (*srcPtr < 0x80) {
+                /* found a token; try to get the whitespace right */
+                /* (maybe should've left whitespace on the ends of tokens
+                    that are always followed by whitespace...?) */
+                const char* token;
+                token = gIntegerTokens[*srcPtr];
+                if (*srcPtr == 0x03)    // colon
+                    [outputString RTFSetColor:kColonColor];
+                else
+                    [outputString RTFSetColor:kKeywordColor];
+                if ((token[0] >= 0x21 && token[0] <= 0x3f) || *srcPtr < 0x12) {
+                    /* does not need leading space */
+                    [outputString appendFormat:@"%s", token];
+                } else {
+                    /* needs leading space; combine with prev if it exists */
+                    if (trailingSpace)
+                        [outputString appendFormat:@"%s", token];
+                    else
+                        [outputString appendFormat:@" %s", token];
+                }
+                if (token[strlen(token)-1] == ' ')
+                    newTrailingSpace = true;
+                [outputString RTFSetColor:kDefaultColor];
+                srcPtr++;
+                length--;
+            } else {
+                /* should not happen */
+                NSLog(@"  INT unexpected value 0x%02x at byte %ld",
+                    *srcPtr, srcPtr - (const uint8_t *)data.bytes);
+
+                /* skip past it and keep trying */
+                srcPtr++;
+                length--;
+            }
+
+            trailingSpace = newTrailingSpace;
+            newTrailingSpace = false;
+        } /*while line*/
+
+        /* skip past EOL token */
+        if (*srcPtr != 0x01 && length > 0) {
+            NSLog(@"bailing");     // must've failed during processing
+            goto bail;
+        }
+        srcPtr++;
+        length--;
+
+        [outputString RTFNewPara];
+    }
+
+done:
+    [outputString RTFEnd];
+
+bail:
     return outputString;
 }

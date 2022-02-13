@@ -302,16 +302,17 @@ NSArray *fileTypeStrings = @[
 
     NSView *layoutView;
     
-    if ([fsItem.kind hasPrefix:@"BAS"]) {
+    const BOOL isApplesoftBASIC = [fsItem.kind hasPrefix:@"BAS"];
+    const BOOL isIntegerBASIC = [fsItem.kind hasPrefix:@"INT"];
+    if (isApplesoftBASIC || isIntegerBASIC) {
         NSScrollView *scrollView = [NSTextView scrollableTextView];
         NSTextView *textView = scrollView.documentView;
-        NSString *rtfString = BASICDataToRTF(data);
+        NSString *rtfString = isApplesoftBASIC ? ApplesoftBASICDataToRTF(data) : IntegerBASICDataToRTF(data);
         [textView.textStorage setAttributedString:
             [[NSAttributedString alloc] initWithData:[rtfString dataUsingEncoding:NSUTF8StringEncoding]
                                              options:@{}
                                   documentAttributes:nil
                                                error:nil]];
-        
         layoutView = scrollView;
     }
     

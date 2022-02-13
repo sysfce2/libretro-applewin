@@ -14,7 +14,8 @@
 extern "C" {
 #endif
 
-NSString *BASICDataToRTF(NSData *data);
+NSString *ApplesoftBASICDataToRTF(NSData *data);
+NSString *IntegerBASICDataToRTF(NSData *data);
 
 #ifdef __cplusplus
 }
