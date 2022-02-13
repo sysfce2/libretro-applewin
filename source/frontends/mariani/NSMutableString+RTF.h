@@ -37,7 +37,7 @@ typedef enum {
 
 - (void)appendCharacter:(unichar)character;
 
-- (void)RTFBegin;
+- (void)RTFBeginWithFonts:(NSArray *)fonts colors:(NSArray *)colors;
 - (void)RTFSetColor:(RTFTextColor)colorIndex;
 - (void)RTFNewPara;
 - (void)RTFEnd;

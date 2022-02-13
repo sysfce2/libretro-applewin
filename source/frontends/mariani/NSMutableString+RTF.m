@@ -7,6 +7,7 @@
 
 #import "NSMutableString+RTF.h"
 #import <objc/runtime.h>
+#import <Cocoa/Cocoa.h>
 
 @interface NSMutableStringRTFIVars : NSObject
 @property (assign, nonatomic) RTFTextColor rtfTextColor;
@@ -44,29 +45,84 @@
     [self appendFormat:@"%c", character];
 }
 
-- (void)RTFBegin {
+static NSString *RTFFontFamily(NSFont *font)
+{
+    NSFontDescriptorSymbolicTraits traits = font.fontDescriptor.symbolicTraits;
+    
+    if (traits & NSFontDescriptorTraitMonoSpace) {
+        return @"modern";
+    }
+    else if (traits & NSFontDescriptorClassScripts) {
+        return @"script";
+    }
+    else if (traits & NSFontDescriptorClassOrnamentals) {
+        return @"decor";
+    }
+    else if (traits & NSFontDescriptorClassSymbolic) {
+        return @"tech";
+    }
+    else if (traits & NSFontDescriptorClassSansSerif) {
+        return @"swiss";
+    }
+    else if (traits & (NSFontDescriptorClassOldStyleSerifs |
+                       NSFontDescriptorClassTransitionalSerifs |
+                       NSFontDescriptorClassModernSerifs |
+                       NSFontDescriptorClassClarendonSerifs |
+                       NSFontDescriptorClassSlabSerifs |
+                       NSFontDescriptorClassFreeformSerifs)) {
+        return @"roman";
+    }
+    return @"nil";
+}
+
+- (void)RTFBeginWithFonts:(NSArray *)fonts colors:(NSArray *)colors {
     NSString *rtfHdrStart =
-@"{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033\\deflangfe1033{\\fonttbl"
-    "{\\f0\\fmodern\\fprq1\\fcharset0 Courier New;}"
-    "{\\f1\\froman\\fprq2\\fcharset0 Times New Roman;}"
-    "{\\f2\\fswiss\\fprq2\\fcharset0 Arial;}"
-    "{\\f3\\froman\\fprq2\\fcharset2 Symbol;}"
-    "}\r\n";
+@"{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033\\deflangfe1033{";
+    
+    NSString *rtfHdrFontTableStart =
+    @"\\fonttbl";
+    
+    NSString *rtfHdrFontTableFormat =
+    @"{\\f%d\\f%@\\fprq%d\\fcharset%d %@;}";
+    
+    NSString *rtfHdrFontTableEnd =
+    @"}\r\n";
 
-    NSString *rtfColorTable =
-@"{\\colortbl;"
-    "\\red0\\green0\\blue0;\\red0\\green0\\blue255;\\red0\\green255\\blue255;\\red0\\green255\\blue0;"
-    "\\red255\\green0\\blue255;\\red255\\green0\\blue0;\\red255\\green255\\blue0;\\red255\\green255\\blue255;"
-    "\\red0\\green0\\blue128;\\red0\\green128\\blue128;\\red0\\green128\\blue0;\r\n"
-    "\\red128\\green0\\blue128;\\red128\\green0\\blue0;\\red128\\green128\\blue0;\\red128\\green128\\blue128;"
-    "\\red192\\green192\\blue192;\\red64\\green64\\blue64;\\red255\\green153\\blue0;}\r\n";
+    NSString *rtfColorTableStart =
+@"{\\colortbl;";
+    
+    NSString *rtfColorTableFormat =
+    @"\\red%.0f\\green%.0f\\blue%.0f;";
+    
+    NSString *rtfColorTableEnd =
+    @"}\r\n";
 
-    NSString *rtfHdrEnd =
-@"\\viewkind4\\uc1\\pard\\f0\\fs25 ";
+    NSString *rtfHdrEndFormat =
+@"\\viewkind4\\uc1\\pard\\f0\\fs%.0f ";
 
     [self setString:rtfHdrStart];
-    [self appendString:rtfColorTable];
-    [self appendString:rtfHdrEnd];
+    
+    [self appendString:rtfHdrFontTableStart];
+    NSInteger i = 0;
+    for (NSFont *font in fonts) {
+        [self appendFormat:rtfHdrFontTableFormat,
+            i++,
+            RTFFontFamily(font),
+            (font.fontDescriptor.symbolicTraits & NSFontDescriptorTraitMonoSpace) ? 1 : 2,
+            (font.fontDescriptor.symbolicTraits & NSFontDescriptorClassSymbolic) ? 2 : 0,
+            font.fontName
+        ];
+    }
+    [self appendString:rtfHdrFontTableEnd];
+    
+    [self appendString:rtfColorTableStart];
+    for (NSColor *color in colors) {
+        [self appendFormat:rtfColorTableFormat,
+            color.redComponent * 255, color.greenComponent * 255, color.blueComponent * 255];
+    }
+    [self appendString:rtfColorTableEnd];
+    
+    [self appendFormat:rtfHdrEndFormat, [NSFont systemFontSize] * 2];
     
     [self setRtfTextColor:kColorNone];
 }

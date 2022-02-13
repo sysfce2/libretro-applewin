@@ -7,15 +7,18 @@
 
 #import "DataFormatBASIC.h"
 #import "NSMutableString+RTF.h"
+#import <Cocoa/Cocoa.h>
 
-const RTFTextColor kDefaultColor = kColorLightGrey;
-const RTFTextColor kLineNumColor = kColorDarkGrey;
-const RTFTextColor kKeywordColor = kColorMediumAqua;
-const RTFTextColor kCommentColor = kColorOlive;
-const RTFTextColor kStringColor = kColorOrange;
-const RTFTextColor kColonColor = kColorRed;
+// should match the colors defined in BASICcolors(), but starts at 1
+const RTFTextColor kDefaultColor = 1;
+const RTFTextColor kLineNumColor = 2;
+const RTFTextColor kKeywordColor = 3;
+const RTFTextColor kCommentColor = 4;
+const RTFTextColor kStringColor = 5;
+const RTFTextColor kColonColor = 6;
 
-static inline uint16_t Read16(const uint8_t** pBuf, long* pLength) {
+static inline uint16_t Read16(const uint8_t** pBuf, long* pLength)
+{
     uint16_t val;
     if (*pLength >= 2) {
         val = *(*pBuf)++;
@@ -27,6 +30,41 @@ static inline uint16_t Read16(const uint8_t** pBuf, long* pLength) {
         val = (uint16_t) -1;
     }
     return val;
+}
+
+static NSArray *BASICfonts()
+{
+    static dispatch_once_t onceToken;
+    static NSArray *fonts;
+    dispatch_once(&onceToken, ^{
+        fonts = @[
+            [NSFont monospacedSystemFontOfSize:10 weight:NSFontWeightRegular],
+            [NSFont systemFontOfSize:10],
+        ];
+    });
+    return fonts;
+}
+
+static NSArray *BASICDarkColors()
+{
+    static dispatch_once_t onceToken;
+    static NSArray *colors;
+    dispatch_once(&onceToken, ^{
+        colors = @[
+            [NSColor colorWithDeviceRed:1.000 green:1.000 blue:1.000 alpha:1.0],  // kDefaultColor
+            [NSColor colorWithDeviceRed:0.254 green:0.630 blue:0.755 alpha:1.0],  // kLineNumColor
+            [NSColor colorWithDeviceRed:0.998 green:0.374 blue:0.638 alpha:1.0],  // kKeywordColor
+            [NSColor colorWithDeviceRed:0.449 green:0.655 blue:0.305 alpha:1.0],  // kCommentColor
+            [NSColor colorWithDeviceRed:0.998 green:0.416 blue:0.366 alpha:1.0],  // kStringColor
+            [NSColor colorWithDeviceRed:0.991 green:0.561 blue:0.246 alpha:1.0],  // kColonColor
+        ];
+    });
+    return colors;
+}
+
+static NSArray *BASICColors()
+{
+    return BASICDarkColors();
 }
 
 NSString *ApplesoftBASICDataToRTF(NSData *data)
@@ -67,8 +105,8 @@ NSString *ApplesoftBASICDataToRTF(NSData *data)
     }
     
     const bool fUseRTF = true;
-    [outputString RTFBegin];
-    
+    [outputString RTFBeginWithFonts:BASICfonts() colors:BASICColors()];
+
     while (length > 0) {
         uint16_t nextAddr;
         uint16_t lineNum;
@@ -211,8 +249,8 @@ NSString *IntegerBASICDataToRTF(NSData *data)
 
     const bool fUseRTF = true;
 
-    [outputString RTFBegin];
-    
+    [outputString RTFBeginWithFonts:BASICfonts() colors:BASICColors()];
+
     /*
      * Make sure there's enough here to get started.  We want to return an
      * "okay" result because we want this treated like a reformatted empty
@@ -249,7 +287,7 @@ NSString *IntegerBASICDataToRTF(NSData *data)
             if (*srcPtr == 0x28) {
                 /* start of quoted text */
                 [outputString RTFSetColor:kStringColor];
-                [outputString appendCharacter:'\"'];
+                [outputString appendCharacter:'"'];
                 length--;
                 while (*++srcPtr != 0x29 && length > 0) {
                     /* escape chars, but let Ctrl-D and Ctrl-G through */
@@ -263,7 +301,7 @@ NSString *IntegerBASICDataToRTF(NSData *data)
                     NSLog(@"  INT ended while in a string constant");
                     break;
                 }
-                [outputString appendCharacter:'\"'];
+                [outputString appendCharacter:'"'];
                 [outputString RTFSetColor:kDefaultColor];
                 srcPtr++;
                 length--;
