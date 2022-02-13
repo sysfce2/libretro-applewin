@@ -60,6 +60,7 @@ enum {
 }
 
 - (void)updateTrackingAreas {
+    [NSCursor unhide];
     [self removeTrackingRect:self.trackingRectTag];
     self.trackingRectTag = [self addTrackingRect:self.bounds owner:self userData:NULL assumeInside:YES];
 }
