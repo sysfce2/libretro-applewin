@@ -16,8 +16,8 @@
 /* Class = "NSMenuItem"; title = "About Mariani"; ObjectID = "5kV-Vb-QxS"; */
 "5kV-Vb-QxS.title" = "關於 Mariani";
 
-/* Class = "NSMenuItem"; title = "Actual Size"; ObjectID = "9TQ-ZY-lSP"; */
-"9TQ-ZY-lSP.title" = "實際大小";
+/* Class = "NSMenuItem"; title = "Default Size"; ObjectID = "9TQ-ZY-lSP"; */
+"9TQ-ZY-lSP.title" = "預設大小";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "Main Menu";
@@ -135,3 +135,6 @@
 
 /* Class = "NSMenuItem"; title = "Copy Screenshot"; ObjectID = "wcB-ZJ-Gew"; */
 "wcB-ZJ-Gew.title" = "拷貝螢幕快照";
+
+/* Class = "NSMenuItem"; title = "Actual Size"; ObjectID = "JAJ-vt-1IF"; */
+"JAJ-vt-1IF.title" = "實際大小";

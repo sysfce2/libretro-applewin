@@ -152,9 +152,14 @@
                                 <menu key="submenu" id="eeY-Un-lEj"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
-                            <menuItem title="Actual Size" keyEquivalent="1" id="9TQ-ZY-lSP">
+                            <menuItem title="Default Size" keyEquivalent="0" id="9TQ-ZY-lSP">
                                 <connections>
-                                    <action selector="actualSizeAction:" target="Voe-Tx-rLC" id="rgi-8Q-MDd"/>
+                                    <action selector="defaultSizeAction:" target="Voe-Tx-rLC" id="Eyy-dg-w0W"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Actual Size" keyEquivalent="1" id="JAJ-vt-1IF">
+                                <connections>
+                                    <action selector="actualSizeAction:" target="Voe-Tx-rLC" id="EF8-Vb-Cxq"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Double Size" keyEquivalent="2" id="0la-AK-P3R">

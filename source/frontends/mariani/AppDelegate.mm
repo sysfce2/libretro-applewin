@@ -420,6 +420,13 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
     }
 }
 
+- (IBAction)defaultSizeAction:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+    CGRect frame = [self windowRectAtScale:1.5];
+    [self.window setFrame:frame display:YES animate:NO];
+}
+
 - (IBAction)actualSizeAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
