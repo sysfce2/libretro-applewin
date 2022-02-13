@@ -1,0 +1,164 @@
+//
+//  DataFormatBASIC.m
+//  Mariani
+//
+//  Created by sh95014 on 2/12/22.
+//
+
+#import "DataFormatBASIC.h"
+#import "NSMutableString+RTF.h"
+
+const RTFTextColor kDefaultColor = kColorLightGrey;
+const RTFTextColor kLineNumColor = kColorDarkGrey;
+const RTFTextColor kKeywordColor = kColorMediumAqua;
+const RTFTextColor kCommentColor = kColorOlive;
+const RTFTextColor kStringColor = kColorOrange;
+const RTFTextColor kColonColor = kColorRed;
+
+static inline uint16_t Read16(const uint8_t** pBuf, long* pLength) {
+    uint16_t val;
+    if (*pLength >= 2) {
+        val = *(*pBuf)++;
+        val |= *(*pBuf)++ << 8;
+        *pLength -= 2;
+    } else {
+        // ought to throw an exception here
+        assert(false);
+        val = (uint16_t) -1;
+    }
+    return val;
+}
+
+NSString *BASICDataToRTF(NSData *data)
+{
+    static const char gApplesoftTokens[128 * 8] = {
+        "END\0    FOR\0    NEXT\0   DATA\0   INPUT\0  DEL\0    DIM\0    READ\0   "
+        "GR\0     TEXT\0   PR#\0    IN#\0    CALL\0   PLOT\0   HLIN\0   VLIN\0   "
+        "HGR2\0   HGR\0    HCOLOR=\0HPLOT\0  DRAW\0   XDRAW\0  HTAB\0   HOME\0   "
+        "ROT=\0   SCALE=\0 SHLOAD\0 TRACE\0  NOTRACE\0NORMAL\0 INVERSE\0FLASH\0  "
+        "COLOR=\0 POP\0    VTAB\0   HIMEM:\0 LOMEM:\0 ONERR\0  RESUME\0 RECALL\0 "
+        "STORE\0  SPEED=\0 LET\0    GOTO\0   RUN\0    IF\0     RESTORE\0&\0      "
+        "GOSUB\0  RETURN\0 REM\0    STOP\0   ON\0     WAIT\0   LOAD\0   SAVE\0   "
+        "DEF\0    POKE\0   PRINT\0  CONT\0   LIST\0   CLEAR\0  GET\0    NEW\0    "
+        "TAB(\0   TO\0     FN\0     SPC(\0   THEN\0   AT\0     NOT\0    STEP\0   "
+        "+\0      -\0      *\0      /\0      ^\0      AND\0    OR\0     >\0      "
+        "=\0      <\0      SGN\0    INT\0    ABS\0    USR\0    FRE\0    SCRN(\0  "
+        "PDL\0    POS\0    SQR\0    RND\0    LOG\0    EXP\0    COS\0    SIN\0    "
+        "TAN\0    ATN\0    PEEK\0   LEN\0    STR$\0   VAL\0    ASC\0    CHR$\0   "
+        "LEFT$\0  RIGHT$\0 MID$\0   ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  "
+        "ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  "
+        "ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0  ERROR\0 "
+    };
+    
+    NSMutableString *outputString = [NSMutableString string];
+    
+    const uint8_t* srcPtr = (const uint8_t*)data.bytes;
+    long srcLen = data.length;
+    long length = srcLen;
+    
+    /*
+     * Make sure there's enough here to get started.  We want to return an
+     * "okay" result because we want this treated like a reformatted empty
+     * BASIC program rather than a non-Applesoft file.
+     */
+    if (length < 2) {
+        NSLog(@"  BAS truncated?");
+        goto done;
+    }
+    
+    const bool fUseRTF = true;
+    [outputString RTFBegin];
+    
+    while (length > 0) {
+        uint16_t nextAddr;
+        uint16_t lineNum;
+        bool inQuote = false;
+        bool inRem = false;
+
+        nextAddr = Read16(&srcPtr, &length);
+        if (nextAddr == 0) {
+            /* ProDOS sticks an extra byte on the end? */
+            if (length > 1) {
+                NSLog(@"  BAS ended early; len is %ld", length);
+            }
+            break;
+        }
+
+        /* print line number */
+        [outputString RTFSetColor:kLineNumColor];
+        lineNum = Read16(&srcPtr, &length);
+        [outputString appendFormat:@" %u ", lineNum];
+
+        [outputString RTFSetColor:kDefaultColor];
+
+        /* print a line */
+        while (*srcPtr != 0 && length > 0) {
+            if (*srcPtr & 0x80) {
+                /* token */
+                switch (*srcPtr & 0x7F) {
+                    case 50:  // REM
+                        [outputString RTFSetColor:kCommentColor];
+                        inRem = true;
+                        break;
+                    default:
+                        [outputString RTFSetColor:kKeywordColor];
+                        break;
+                }
+                [outputString appendFormat:@" %s ", &gApplesoftTokens[((*srcPtr) & 0x7f) << 3]];
+                if (!inRem) {
+                    [outputString RTFSetColor:kDefaultColor];
+                }
+            } else {
+                /* simple character */
+                if (fUseRTF) {
+                    if (*srcPtr == '"' && !inRem) {
+                        if (!inQuote) {
+                            [outputString RTFSetColor:kStringColor];
+                            [outputString appendCharacter:*srcPtr];
+                        } else {
+                            [outputString appendCharacter:*srcPtr];
+                            [outputString RTFSetColor:kDefaultColor];
+                        }
+                        inQuote = !inQuote;
+                    } else if (*srcPtr == ':' && !inRem && !inQuote) {
+                        [outputString RTFSetColor:kColonColor];
+                        [outputString appendCharacter:*srcPtr];
+                        [outputString RTFSetColor:kDefaultColor];
+                    } else if (inRem && *srcPtr == '\r') {
+                        [outputString RTFNewPara];
+                    } else {
+                        [outputString appendCharacter:*srcPtr];
+                    }
+                } else {
+                    if (inRem && *srcPtr == '\r') {
+                        [outputString appendString:@"\r\n"];
+                    } else {
+                        [outputString appendCharacter:*srcPtr];
+                    }
+                }
+            }
+
+            srcPtr++;
+            length--;
+        }
+
+        if (inQuote || inRem)
+            [outputString RTFSetColor:kDefaultColor];
+        inQuote = inRem = false;
+
+        srcPtr++;
+        length--;
+
+        if (!length) {
+            NSLog(@"  BAS truncated in mid-line");
+            break;
+        }
+
+        [outputString RTFNewPara];
+    }
+
+done:
+    [outputString RTFEnd];
+    
+    return outputString;
+}

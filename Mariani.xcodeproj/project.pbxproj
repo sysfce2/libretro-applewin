@@ -340,6 +340,14 @@
 		B032DE38277A0C24006DC0F7 /* marianiTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE37277A0C24006DC0F7 /* marianiTests.mm */; };
 		B032DE42277A0C24006DC0F7 /* marianiUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE41277A0C24006DC0F7 /* marianiUITests.m */; };
 		B032DE44277A0C24006DC0F7 /* marianiUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */; };
+		B043659527B8769E00329469 /* NSMutableString+RTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B043659327B8769E00329469 /* NSMutableString+RTF.h */; };
+		B043659627B8769E00329469 /* NSMutableString+RTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B043659327B8769E00329469 /* NSMutableString+RTF.h */; };
+		B043659727B8769E00329469 /* NSMutableString+RTF.m in Sources */ = {isa = PBXBuildFile; fileRef = B043659427B8769E00329469 /* NSMutableString+RTF.m */; };
+		B043659827B8769E00329469 /* NSMutableString+RTF.m in Sources */ = {isa = PBXBuildFile; fileRef = B043659427B8769E00329469 /* NSMutableString+RTF.m */; };
+		B04365A127B887CB00329469 /* DataFormatBASIC.m in Sources */ = {isa = PBXBuildFile; fileRef = B04365A027B887CB00329469 /* DataFormatBASIC.m */; };
+		B04365A227B887CB00329469 /* DataFormatBASIC.m in Sources */ = {isa = PBXBuildFile; fileRef = B04365A027B887CB00329469 /* DataFormatBASIC.m */; };
+		B04365A427B8893F00329469 /* DataFormatBASIC.h in Headers */ = {isa = PBXBuildFile; fileRef = B04365A327B887F400329469 /* DataFormatBASIC.h */; };
+		B04365A527B8894000329469 /* DataFormatBASIC.h in Headers */ = {isa = PBXBuildFile; fileRef = B04365A327B887F400329469 /* DataFormatBASIC.h */; };
 		B045FE722782984F006E36F9 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5C2782984E006E36F9 /* Apple2e.rom */; };
 		B045FE732782984F006E36F9 /* Apple2_Plus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */; };
 		B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */; };
@@ -746,6 +754,10 @@
 		B032DE3D277A0C24006DC0F7 /* MarianiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarianiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B032DE41277A0C24006DC0F7 /* marianiUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITests.m; sourceTree = "<group>"; };
 		B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = marianiUITestsLaunchTests.m; sourceTree = "<group>"; };
+		B043659327B8769E00329469 /* NSMutableString+RTF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+RTF.h"; sourceTree = "<group>"; };
+		B043659427B8769E00329469 /* NSMutableString+RTF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+RTF.m"; sourceTree = "<group>"; };
+		B04365A027B887CB00329469 /* DataFormatBASIC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataFormatBASIC.m; sourceTree = "<group>"; };
+		B04365A327B887F400329469 /* DataFormatBASIC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataFormatBASIC.h; sourceTree = "<group>"; };
 		B045FE5C2782984E006E36F9 /* Apple2e.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e.rom; path = resource/Apple2e.rom; sourceTree = SOURCE_ROOT; };
 		B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2_Plus.rom; path = resource/Apple2_Plus.rom; sourceTree = SOURCE_ROOT; };
 		B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DISK2-13sector.rom"; path = "resource/DISK2-13sector.rom"; sourceTree = SOURCE_ROOT; };
@@ -1367,6 +1379,8 @@
 				B032DE24277A0C23006DC0F7 /* AppDelegate.h */,
 				B032DE25277A0C23006DC0F7 /* AppDelegate.mm */,
 				B049E8A8277C59D500FC14A3 /* CommonTypes.h */,
+				B04365A327B887F400329469 /* DataFormatBASIC.h */,
+				B04365A027B887CB00329469 /* DataFormatBASIC.m */,
 				B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */,
 				B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */,
 				B08CFE4727889D44002B841D /* DiskImageWrapper.h */,
@@ -1381,6 +1395,8 @@
 				B0689D082780B9B60029EB7D /* MarianiFrame.cpp */,
 				B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */,
 				B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */,
+				B043659327B8769E00329469 /* NSMutableString+RTF.h */,
+				B043659427B8769E00329469 /* NSMutableString+RTF.m */,
 				B0927414277D9399003FFB79 /* PreferencesViewController.h */,
 				B0927415277D9399003FFB79 /* PreferencesViewController.mm */,
 				B0927418277D9403003FFB79 /* PreferencesWindowController.h */,
@@ -2101,6 +2117,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B090CF2727B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
+				B04365A527B8894000329469 /* DataFormatBASIC.h in Headers */,
+				B043659627B8769E00329469 /* NSMutableString+RTF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2172,6 +2190,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B090CF2527B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
+				B04365A427B8893F00329469 /* DataFormatBASIC.h in Headers */,
+				B043659527B8769E00329469 /* NSMutableString+RTF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2722,6 +2742,7 @@
 				B00ECB83279EEB600041E16C /* FourPlay.cpp in Sources */,
 				B00ECB84279EEB600041E16C /* Debugger_Win32.cpp in Sources */,
 				B00ECB85279EEB600041E16C /* Keyboard.cpp in Sources */,
+				B043659827B8769E00329469 /* NSMutableString+RTF.m in Sources */,
 				B00ECB86279EEB600041E16C /* Debugger_Color.cpp in Sources */,
 				B00ECB87279EEB600041E16C /* SNESMAX.cpp in Sources */,
 				B00ECB88279EEB600041E16C /* Shaders.metal in Sources */,
@@ -2762,6 +2783,7 @@
 				B00ECBAB279EEB600041E16C /* PropertySheetHelper.cpp in Sources */,
 				B00ECBAC279EEB600041E16C /* Debugger_Disassembler.cpp in Sources */,
 				B00ECBAD279EEB600041E16C /* dmusicc.cpp in Sources */,
+				B04365A227B887CB00329469 /* DataFormatBASIC.m in Sources */,
 				B00ECBAE279EEB600041E16C /* PreferencesViewController.mm in Sources */,
 				B090CF2427B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */,
 				B00ECBAF279EEB600041E16C /* StdAfx.cpp in Sources */,
@@ -2852,6 +2874,7 @@
 				B09AB7D9277A21180002A6C3 /* FourPlay.cpp in Sources */,
 				B09AB7D3277A21180002A6C3 /* Debugger_Win32.cpp in Sources */,
 				B09AB7DA277A21180002A6C3 /* Keyboard.cpp in Sources */,
+				B043659727B8769E00329469 /* NSMutableString+RTF.m in Sources */,
 				B09AB73F277A1BA40002A6C3 /* Debugger_Color.cpp in Sources */,
 				B09AB7DB277A21180002A6C3 /* SNESMAX.cpp in Sources */,
 				B049E8A7277C4F6D00FC14A3 /* Shaders.metal in Sources */,
@@ -2892,6 +2915,7 @@
 				B049E800277A36CE00FC14A3 /* PropertySheetHelper.cpp in Sources */,
 				B09AB724277A1BA40002A6C3 /* Debugger_Disassembler.cpp in Sources */,
 				B09AB801277A21410002A6C3 /* dmusicc.cpp in Sources */,
+				B04365A127B887CB00329469 /* DataFormatBASIC.m in Sources */,
 				B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */,
 				B090CF2227B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */,
 				B09AB680277A14DB0002A6C3 /* StdAfx.cpp in Sources */,

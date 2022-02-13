@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "DiskImg.h"
 #import <HexFiend/HexFiend.h>
+#import "DataFormatBASIC.h"
 
 using namespace DiskImgLib;
 
@@ -298,39 +299,56 @@ NSArray *fileTypeStrings = @[
 - (void)previewFile:(FSItem *)fsItem withData:(NSData *)data {
     self.filePreviewPanel.contentView.subviews = @[];
     self.filePreviewPanel.title = fsItem.name;
-    
-    self.hfController = [[HFController alloc] init];
-    HFSharedMemoryByteSlice *byteSlice = [[HFSharedMemoryByteSlice alloc] initWithUnsharedData:data];
-    HFByteArray *byteArray = [[HFBTreeByteArray alloc] init];
-    [byteArray insertByteSlice:byteSlice inRange:HFRangeMake(0, 0)];
-    [self.hfController setByteArray:byteArray];
-    
-    HFLayoutRepresenter *layoutRep = [[HFLayoutRepresenter alloc] init];
-    HFLineCountingRepresenter *lcRep = [[HFLineCountingRepresenter alloc] init];
-    HFHexTextRepresenter *hexRep = [[HFHexTextRepresenter alloc] init];
-    HFStringEncodingTextRepresenter *asciiRep = [[HFStringEncodingTextRepresenter alloc] init];
-    HFVerticalScrollerRepresenter *scrollRep = [[HFVerticalScrollerRepresenter alloc] init];
-    HFStatusBarRepresenter *statusRep = [[HFStatusBarRepresenter alloc] init];
-    
-    [self.hfController addRepresenter:layoutRep];
-    [self.hfController addRepresenter:lcRep];
-    [self.hfController addRepresenter:hexRep];
-    [self.hfController addRepresenter:asciiRep];
-    [self.hfController addRepresenter:scrollRep];
-    [self.hfController addRepresenter:statusRep];
 
-    [layoutRep addRepresenter:lcRep];
-    [layoutRep addRepresenter:hexRep];
-    [layoutRep addRepresenter:asciiRep];
-    [layoutRep addRepresenter:scrollRep];
-    [layoutRep addRepresenter:statusRep];
+    NSView *layoutView;
     
-    // shrink the window to exactly fit desired bytes per row
-    CGRect frame = self.filePreviewPanel.frame;
-    frame.size.width = [layoutRep minimumViewWidthForBytesPerLine:16];
-    [self.filePreviewPanel setFrame:frame display:NO];
+    if ([fsItem.kind hasPrefix:@"BAS"]) {
+        NSScrollView *scrollView = [NSTextView scrollableTextView];
+        NSTextView *textView = scrollView.documentView;
+        NSString *rtfString = BASICDataToRTF(data);
+        [textView.textStorage setAttributedString:
+            [[NSAttributedString alloc] initWithData:[rtfString dataUsingEncoding:NSUTF8StringEncoding]
+                                             options:@{}
+                                  documentAttributes:nil
+                                               error:nil]];
+        
+        layoutView = scrollView;
+    }
     
-    NSView *layoutView = [layoutRep view];
+    if (layoutView == nil) {
+        self.hfController = [[HFController alloc] init];
+        HFSharedMemoryByteSlice *byteSlice = [[HFSharedMemoryByteSlice alloc] initWithUnsharedData:data];
+        HFByteArray *byteArray = [[HFBTreeByteArray alloc] init];
+        [byteArray insertByteSlice:byteSlice inRange:HFRangeMake(0, 0)];
+        [self.hfController setByteArray:byteArray];
+        
+        HFLayoutRepresenter *layoutRep = [[HFLayoutRepresenter alloc] init];
+        HFLineCountingRepresenter *lcRep = [[HFLineCountingRepresenter alloc] init];
+        HFHexTextRepresenter *hexRep = [[HFHexTextRepresenter alloc] init];
+        HFStringEncodingTextRepresenter *asciiRep = [[HFStringEncodingTextRepresenter alloc] init];
+        HFVerticalScrollerRepresenter *scrollRep = [[HFVerticalScrollerRepresenter alloc] init];
+        HFStatusBarRepresenter *statusRep = [[HFStatusBarRepresenter alloc] init];
+        
+        [self.hfController addRepresenter:layoutRep];
+        [self.hfController addRepresenter:lcRep];
+        [self.hfController addRepresenter:hexRep];
+        [self.hfController addRepresenter:asciiRep];
+        [self.hfController addRepresenter:scrollRep];
+        [self.hfController addRepresenter:statusRep];
+
+        [layoutRep addRepresenter:lcRep];
+        [layoutRep addRepresenter:hexRep];
+        [layoutRep addRepresenter:asciiRep];
+        [layoutRep addRepresenter:scrollRep];
+        [layoutRep addRepresenter:statusRep];
+        
+        // shrink the window to exactly fit desired bytes per row
+        CGRect frame = self.filePreviewPanel.frame;
+        frame.size.width = [layoutRep minimumViewWidthForBytesPerLine:16];
+        [self.filePreviewPanel setFrame:frame display:NO];
+        layoutView = [layoutRep view];
+    }
+    
     [layoutView setFrame:self.filePreviewPanel.contentView.bounds];
     [layoutView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
     [self.filePreviewPanel.contentView addSubview:layoutView];
