@@ -411,6 +411,8 @@
 		B0689D0D2780C85F0029EB7D /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
 		B0689D182781984F0029EB7D /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
 		B07612302789E4BE009E79BE /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07612332789E4BE009E79BE /* About.xib */; };
+		B089EF2E27BADA5200BDC415 /* Mariani.help in Resources */ = {isa = PBXBuildFile; fileRef = B089EF2D27BADA5200BDC415 /* Mariani.help */; };
+		B089EF2F27BADA5200BDC415 /* Mariani.help in Resources */ = {isa = PBXBuildFile; fileRef = B089EF2D27BADA5200BDC415 /* Mariani.help */; };
 		B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE4827889D44002B841D /* DiskImageWrapper.mm */; };
 		B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
 		B090CF1D27B5A04F00C6C23D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B090CF1C27B5A04F00C6C23D /* GameController.framework */; };
@@ -774,6 +776,8 @@
 		B0689D162781984F0029EB7D /* UserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefaults.m; sourceTree = "<group>"; };
 		B07612322789E4BE009E79BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/About.xib; sourceTree = "<group>"; };
 		B07612352789E4C2009E79BE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/About.strings"; sourceTree = "<group>"; };
+		B089EF2D27BADA5200BDC415 /* Mariani.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Mariani.help; sourceTree = "<group>"; };
+		B089EF3027BADA8100BDC415 /* Mariani-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Mariani-Info.plist"; sourceTree = "<group>"; };
 		B08CFE4727889D44002B841D /* DiskImageWrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = DiskImageWrapper.h; sourceTree = "<group>"; };
 		B08CFE4827889D44002B841D /* DiskImageWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageWrapper.mm; sourceTree = "<group>"; };
 		B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImageBrowserWindowController.h; sourceTree = "<group>"; };
@@ -1237,6 +1241,7 @@
 		B032DE18277A0C23006DC0F7 = {
 			isa = PBXGroup;
 			children = (
+				B089EF3027BADA8100BDC415 /* Mariani-Info.plist */,
 				B09AB6CE277A164F0002A6C3 /* zip_lib */,
 				B09AB68F277A15A90002A6C3 /* libyaml */,
 				B09AB5E4277A14850002A6C3 /* AppleWin */,
@@ -1307,6 +1312,7 @@
 				B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */,
 				B0F0138E2785A211002936B4 /* Preferences.storyboard */,
 				B0ED3FCD2785973C006E4784 /* Localizable.strings */,
+				B089EF2D27BADA5200BDC415 /* Mariani.help */,
 				B032DE2C277A0C24006DC0F7 /* main.m */,
 				B032DE2E277A0C24006DC0F7 /* mariani.entitlements */,
 			);
@@ -2390,6 +2396,7 @@
 				B00ECBC3279EEB600041E16C /* CHARSET8M.bmp in Resources */,
 				B00ECBC4279EEB600041E16C /* CHARSET4.BMP in Resources */,
 				B00ECBC5279EEB600041E16C /* PRAVETS8M.ROM in Resources */,
+				B089EF2F27BADA5200BDC415 /* Mariani.help in Resources */,
 				B00ECBC6279EEB600041E16C /* TKClock.rom in Resources */,
 				B00ECBC7279EEB600041E16C /* PRAVETS8C.ROM in Resources */,
 				B00ECBC8279EEB600041E16C /* ThunderClockPlus.rom in Resources */,
@@ -2428,6 +2435,7 @@
 				B045FE8F2782B9B3006E36F9 /* CHARSET8M.bmp in Resources */,
 				B045FE8C2782B9B3006E36F9 /* CHARSET4.BMP in Resources */,
 				B045FE772782984F006E36F9 /* PRAVETS8M.ROM in Resources */,
+				B089EF2E27BADA5200BDC415 /* Mariani.help in Resources */,
 				B045FE792782984F006E36F9 /* TKClock.rom in Resources */,
 				B045FE7F2782984F006E36F9 /* PRAVETS8C.ROM in Resources */,
 				B045FE842782984F006E36F9 /* ThunderClockPlus.rom in Resources */,
@@ -3191,6 +3199,7 @@
 					/usr/local/include,
 					/usr/local/include/SDL2,
 				);
+				INFOPLIST_FILE = "Mariani-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -3230,6 +3239,7 @@
 					/usr/local/include,
 					/usr/local/include/SDL2,
 				);
+				INFOPLIST_FILE = "Mariani-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
