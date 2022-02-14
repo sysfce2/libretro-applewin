@@ -237,7 +237,7 @@
 		B00ECBE0279EEB600041E16C /* CHARSET82.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */; };
 		B00ECBE6279EEBAB0041E16C /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B00ECBE5279EEBAB0041E16C /* libboost_program_options.a */; };
 		B00ECBE9279EEBDC0041E16C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00ECBE7279EEBD30041E16C /* SDL2.framework */; };
-		B00ECBEA279EEBDC0041E16C /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B00ECBE7279EEBD30041E16C /* SDL2.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B00ECBEA279EEBDC0041E16C /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B00ECBE7279EEBD30041E16C /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B020F8A62785D30E0071D3C7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020F8A32785D30E0071D3C7 /* stdafx.cpp */; };
 		B020F8A92785EA440071D3C7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8A82785EA440071D3C7 /* AVFoundation.framework */; };
 		B020F8AB2785F3920071D3C7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8AA2785F3920071D3C7 /* CoreMedia.framework */; };
@@ -340,14 +340,14 @@
 		B032DE38277A0C24006DC0F7 /* marianiTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B032DE37277A0C24006DC0F7 /* marianiTests.mm */; };
 		B032DE42277A0C24006DC0F7 /* marianiUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE41277A0C24006DC0F7 /* marianiUITests.m */; };
 		B032DE44277A0C24006DC0F7 /* marianiUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE43277A0C24006DC0F7 /* marianiUITestsLaunchTests.m */; };
-		B043659527B8769E00329469 /* NSMutableString+RTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B043659327B8769E00329469 /* NSMutableString+RTF.h */; };
-		B043659627B8769E00329469 /* NSMutableString+RTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B043659327B8769E00329469 /* NSMutableString+RTF.h */; };
 		B043659727B8769E00329469 /* NSMutableString+RTF.m in Sources */ = {isa = PBXBuildFile; fileRef = B043659427B8769E00329469 /* NSMutableString+RTF.m */; };
 		B043659827B8769E00329469 /* NSMutableString+RTF.m in Sources */ = {isa = PBXBuildFile; fileRef = B043659427B8769E00329469 /* NSMutableString+RTF.m */; };
 		B04365A127B887CB00329469 /* DataFormatBASIC.m in Sources */ = {isa = PBXBuildFile; fileRef = B04365A027B887CB00329469 /* DataFormatBASIC.m */; };
 		B04365A227B887CB00329469 /* DataFormatBASIC.m in Sources */ = {isa = PBXBuildFile; fileRef = B04365A027B887CB00329469 /* DataFormatBASIC.m */; };
-		B04365A427B8893F00329469 /* DataFormatBASIC.h in Headers */ = {isa = PBXBuildFile; fileRef = B04365A327B887F400329469 /* DataFormatBASIC.h */; };
-		B04365A527B8894000329469 /* DataFormatBASIC.h in Headers */ = {isa = PBXBuildFile; fileRef = B04365A327B887F400329469 /* DataFormatBASIC.h */; };
+		B04365D427BAD27A00329469 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06184A627B7303100B6D04C /* HexFiend.framework */; };
+		B04365D527BAD27A00329469 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B06184A627B7303100B6D04C /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B04365D727BAD29500329469 /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06184A627B7303100B6D04C /* HexFiend.framework */; };
+		B04365D827BAD29500329469 /* HexFiend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B06184A627B7303100B6D04C /* HexFiend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B045FE722782984F006E36F9 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5C2782984E006E36F9 /* Apple2e.rom */; };
 		B045FE732782984F006E36F9 /* Apple2_Plus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5D2782984E006E36F9 /* Apple2_Plus.rom */; };
 		B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */; };
@@ -390,8 +390,6 @@
 		B049E8A7277C4F6D00FC14A3 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A6277C4F6D00FC14A3 /* Shaders.metal */; };
 		B049E8AD277C880800FC14A3 /* EmulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E8AB277C880800FC14A3 /* EmulatorView.mm */; };
 		B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
-		B06184B127B7305E00B6D04C /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06184A627B7303100B6D04C /* HexFiend.framework */; };
-		B06184B227B741A900B6D04C /* HexFiend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06184A627B7303100B6D04C /* HexFiend.framework */; };
 		B06184BB27B7577D00B6D04C /* Gutenberg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37027B45D0700C0BF71 /* Gutenberg.cpp */; };
 		B06184BC27B7577D00B6D04C /* MacPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37927B45D0800C0BF71 /* MacPart.cpp */; };
 		B06184BD27B7577D00B6D04C /* VolumeUsage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37F27B45D0800C0BF71 /* VolumeUsage.cpp */; };
@@ -514,9 +512,6 @@
 		B090CF2227B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
 		B090CF2327B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
 		B090CF2427B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
-		B090CF2527B5A2A900C6C23D /* MarianiJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */; };
-		B090CF2627B5A2A900C6C23D /* MarianiJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */; };
-		B090CF2727B5A2A900C6C23D /* MarianiJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */; };
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
 		B09AB674277A14DB0002A6C3 /* Speech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB626277A14DB0002A6C3 /* Speech.cpp */; };
@@ -725,6 +720,18 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B00ECBEA279EEBDC0041E16C /* SDL2.framework in Embed Frameworks */,
+				B04365D827BAD29500329469 /* HexFiend.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B04365D627BAD27A00329469 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B04365D527BAD27A00329469 /* HexFiend.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1245,11 +1252,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B090CF1F27B5A05A00C6C23D /* GameController.framework in Frameworks */,
+				B04365D727BAD29500329469 /* HexFiend.framework in Frameworks */,
 				B00ECBBA279EEB600041E16C /* AVFoundation.framework in Frameworks */,
 				B00ECBB9279EEB600041E16C /* CoreMedia.framework in Frameworks */,
 				B00ECBBC279EEB600041E16C /* MetalKit.framework in Frameworks */,
 				B00ECBE9279EEBDC0041E16C /* SDL2.framework in Frameworks */,
-				B06184B227B741A900B6D04C /* HexFiend.framework in Frameworks */,
 				B00ECBBB279EEB600041E16C /* libAppleWin.a in Frameworks */,
 				B061853527B7798700B6D04C /* libnufx.a in Frameworks */,
 				B061852227B75C7300B6D04C /* libdiskimg.a in Frameworks */,
@@ -1279,10 +1286,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B090CF1D27B5A04F00C6C23D /* GameController.framework in Frameworks */,
+				B04365D427BAD27A00329469 /* HexFiend.framework in Frameworks */,
 				B020F8A92785EA440071D3C7 /* AVFoundation.framework in Frameworks */,
 				B020F8AB2785F3920071D3C7 /* CoreMedia.framework in Frameworks */,
 				B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */,
-				B06184B127B7305E00B6D04C /* HexFiend.framework in Frameworks */,
 				B0098CF3277E187900F38E0C /* libAppleWin.a in Frameworks */,
 				B049E84E277B6F4A00FC14A3 /* libboost_program_options.a in Frameworks */,
 				B061853227B7796000B6D04C /* libnufx.a in Frameworks */,
@@ -2116,9 +2123,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B090CF2727B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
-				B04365A527B8894000329469 /* DataFormatBASIC.h in Headers */,
-				B043659627B8769E00329469 /* NSMutableString+RTF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2126,7 +2130,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B090CF2627B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2189,9 +2192,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B090CF2527B5A2A900C6C23D /* MarianiJoystick.h in Headers */,
-				B04365A427B8893F00329469 /* DataFormatBASIC.h in Headers */,
-				B043659527B8769E00329469 /* NSMutableString+RTF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2276,6 +2276,7 @@
 				B032DE1D277A0C23006DC0F7 /* Sources */,
 				B032DE1E277A0C23006DC0F7 /* Frameworks */,
 				B032DE1F277A0C23006DC0F7 /* Resources */,
+				B04365D627BAD27A00329469 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
