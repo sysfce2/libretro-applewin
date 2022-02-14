@@ -1,0 +1,87 @@
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+div {
+    margin: 10px 0px 10px 0px;
+}
+
+div.command {
+    font-family: 'SFMono-Regular', ui-monospace, monospace;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 3px;
+}
+
+div.related {
+    font-size: 0.8em;
+}
+
+div.roundrect {
+    border-radius: 8px;
+    border: 1px solid #C0C0C0;
+    padding: 10px;
+    margin: 20px 0px 20px 0px;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-weight: lighter;
+}
+
+h2 {
+    font-weight: lighter;
+}
+
+h3.howto {
+    color: #7F7F7F;
+    margin: 0;
+}
+
+h5.related {
+    margin: 30px 0px 0px 0px;
+    padding: 0px;
+}
+
+ol li {
+    margin: 10px 0px 10px 0px;
+}
+
+span.command {
+    font-family: 'SFMono-Regular', ui-monospace, monospace;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0px 2px 0px 2px;
+    border-radius: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #202020;
+        color: #C0C0C0;
+    }
+    
+    div.command {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    div.roundrect {
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+        border-color: #3F3F3F;
+    }
+    
+    h1 {
+        color: #F0F0F0;
+    }
+    
+    h2 {
+        color: #F0F0F0;
+    }
+    
+    span.command {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
