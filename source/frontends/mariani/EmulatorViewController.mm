@@ -49,6 +49,9 @@
 #define SCREEN_RECORDING_FILE_NAME  NSLocalizedString(@"Mariani Recording", @"default name for new screen recording")
 #define SCREENSHOT_FILE_NAME        NSLocalizedString(@"Mariani Screen Shot", @"default name for new screenshot")
 
+// display emulated CPU speed in the status bar
+#undef SHOW_EMULATED_CPU_SPEED
+
 @interface EmulatorViewController ()
 
 @property (strong) EmulatorRenderer *renderer;
@@ -57,9 +60,11 @@
 @property RegistryContext *registryContext;
 @property Initialisation *initialisation;
 
+#ifdef SHOW_EMULATED_CPU_SPEED
 @property NSDate *samplePeriodBeginClockTime;
 @property uint64_t samplePeriodBeginCumulativeCycles;
 @property NSInteger frameCount;
+#endif // SHOW_EMULATED_CPU_SPEED
 @property NSTimer *runLoopTimer;
 @property CVDisplayLinkRef displayLink;
 
@@ -133,10 +138,12 @@ std::shared_ptr<mariani::MarianiFrame> frame;
 }
 
 - (void)start {
+#ifdef SHOW_EMULATED_CPU_SPEED
     // reset the effective CPU clock speed meters
     self.samplePeriodBeginClockTime = [NSDate now];
     self.samplePeriodBeginCumulativeCycles = g_nCumulativeCycles;
     self.frameCount = 0;
+#endif // SHOW_EMULATED_CPU_SPEED
     
     CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
     CVDisplayLinkSetOutputCallback(self.displayLink, &MyDisplayLinkCallback, (__bridge void *)self);
@@ -184,6 +191,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     NSTimeInterval executionTimeOffset = -[start timeIntervalSinceNow];
 #endif
 
+#ifdef SHOW_EMULATED_CPU_SPEED
     self.frameCount++;
     static uint64_t timeOfLastUpdate = clock_gettime_nsec_np(CLOCK_UPTIME_RAW);
     uint64_t currentTime = clock_gettime_nsec_np(CLOCK_UPTIME_RAW);
@@ -199,6 +207,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         self.frameCount = 0;
         timeOfLastUpdate = currentTime;
     }
+#endif // SHOW_EMULATED_CPU_SPEED
     
 #ifdef DEBUG
     NSTimeInterval duration = -[start timeIntervalSinceNow];
