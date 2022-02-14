@@ -413,6 +413,8 @@
 		B07612302789E4BE009E79BE /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07612332789E4BE009E79BE /* About.xib */; };
 		B089EF2E27BADA5200BDC415 /* Mariani.help in Resources */ = {isa = PBXBuildFile; fileRef = B089EF2D27BADA5200BDC415 /* Mariani.help */; };
 		B089EF2F27BADA5200BDC415 /* Mariani.help in Resources */ = {isa = PBXBuildFile; fileRef = B089EF2D27BADA5200BDC415 /* Mariani.help */; };
+		B089EF3327BB051900BDC415 /* StrFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = B089EF3127BB051900BDC415 /* StrFormat.h */; };
+		B089EF3427BB051900BDC415 /* StrFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B089EF3227BB051900BDC415 /* StrFormat.cpp */; };
 		B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE4827889D44002B841D /* DiskImageWrapper.mm */; };
 		B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
 		B090CF1D27B5A04F00C6C23D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B090CF1C27B5A04F00C6C23D /* GameController.framework */; };
@@ -778,6 +780,8 @@
 		B07612352789E4C2009E79BE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/About.strings"; sourceTree = "<group>"; };
 		B089EF2D27BADA5200BDC415 /* Mariani.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Mariani.help; sourceTree = "<group>"; };
 		B089EF3027BADA8100BDC415 /* Mariani-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Mariani-Info.plist"; sourceTree = "<group>"; };
+		B089EF3127BB051900BDC415 /* StrFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StrFormat.h; path = source/StrFormat.h; sourceTree = "<group>"; };
+		B089EF3227BB051900BDC415 /* StrFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StrFormat.cpp; path = source/StrFormat.cpp; sourceTree = "<group>"; };
 		B08CFE4727889D44002B841D /* DiskImageWrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = DiskImageWrapper.h; sourceTree = "<group>"; };
 		B08CFE4827889D44002B841D /* DiskImageWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageWrapper.mm; sourceTree = "<group>"; };
 		B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImageBrowserWindowController.h; sourceTree = "<group>"; };
@@ -1571,6 +1575,8 @@
 				B09AB61A277A14DB0002A6C3 /* SSI263Phonemes.h */,
 				B09AB63A277A14DB0002A6C3 /* StdAfx.cpp */,
 				B09AB60C277A14DA0002A6C3 /* StdAfx.h */,
+				B089EF3227BB051900BDC415 /* StrFormat.cpp */,
+				B089EF3127BB051900BDC415 /* StrFormat.h */,
 				B09AB5FF277A14DA0002A6C3 /* SynchronousEventManager.cpp */,
 				B09AB650277A14DB0002A6C3 /* SynchronousEventManager.h */,
 				B09AB64D277A14DB0002A6C3 /* Tape.cpp */,
@@ -1978,6 +1984,7 @@
 				B0098CE8277E171100F38E0C /* Core.h in Headers */,
 				B0098CCD277E171100F38E0C /* ParallelPrinter.h in Headers */,
 				B0098CBB277E171100F38E0C /* DiskLog.h in Headers */,
+				B089EF3327BB051900BDC415 /* StrFormat.h in Headers */,
 				B0098CBD277E171100F38E0C /* LanguageCard.h in Headers */,
 				B0098CCB277E171100F38E0C /* 6821.h in Headers */,
 				B0098CB7277E171100F38E0C /* SSI263Phonemes.h in Headers */,
@@ -2528,6 +2535,7 @@
 				B0098C8B277E140100F38E0C /* z80emu.cpp in Sources */,
 				B0098CA2277E144E00F38E0C /* registry.cpp in Sources */,
 				B0098C94277E140100F38E0C /* AY8910.cpp in Sources */,
+				B089EF3427BB051900BDC415 /* StrFormat.cpp in Sources */,
 				B0098C9B277E141600F38E0C /* PropertySheetHelper.cpp in Sources */,
 				B0098C9F277E144E00F38E0C /* linuxframe.cpp in Sources */,
 				B0098C76277E140100F38E0C /* CmdLine.cpp in Sources */,
