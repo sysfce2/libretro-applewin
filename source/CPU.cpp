@@ -339,9 +339,7 @@ static void DebugHddEntrypoint(const USHORT PC)
 		if (!bOldPCAtC7xx /*&& PC != 0xc70a*/)
 		{
 			Count++;
-			char szDebug[100];
-			sprintf(szDebug, "HDD Entrypoint: $%04X\n", PC);
-			OutputDebugString(szDebug);
+			LogOutput("HDD Entrypoint: $%04X\n", PC);
 		}
 
 		bOldPCAtC7xx = true;
@@ -633,23 +631,30 @@ DWORD CpuExecute(const DWORD uCycles, const bool bVideoUpdate)
 
 //===========================================================================
 
-// Called from RepeatInitialization():
-// 1) FrameCreateWindow() -> WM_CREATE
-//    - done to init g_CriticalSection
-//    - but can't call CpuReset() as mem == NULL
-// 2) MemInitialize() -> MemReset()
-void CpuInitialize(bool reset)
+// Called by:
+// . CpuInitialize()
+// . SY6522.Reset()
+void CpuCreateCriticalSection(void)
 {
-	regs.a = regs.x = regs.y = 0xFF;
-	regs.sp = 0x01FF;
-	if (reset)
-		CpuReset();
-
 	if (!g_bCritSectionValid)
 	{
 		InitializeCriticalSection(&g_CriticalSection);
 		g_bCritSectionValid = true;
 	}
+}
+
+//===========================================================================
+
+// Called from RepeatInitialization():
+// . MemInitialize() -> MemReset()
+void CpuInitialize(void)
+{
+	regs.a = regs.x = regs.y = 0xFF;
+	regs.sp = 0x01FF;
+
+	CpuReset();
+
+	CpuCreateCriticalSection();
 
 	CpuIrqReset();
 	CpuNmiReset();
@@ -673,6 +678,8 @@ void CpuDestroy()
 
 void CpuReset()
 {
+	_ASSERT(mem != NULL);
+
 	// 7 cycles
 	regs.ps = (regs.ps | AF_INTERRUPT) & ~AF_DECIMAL;
 	regs.pc = *(WORD*)(mem + 0xFFFC);

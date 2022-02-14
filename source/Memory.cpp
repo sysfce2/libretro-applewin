@@ -1926,7 +1926,7 @@ void MemReset()
 
 	// INITIALIZE & RESET THE CPU
 	// . Do this after ROM has been copied back to mem[], so that PC is correctly init'ed from 6502's reset vector
-	CpuInitialize(true);
+	CpuInitialize();
 	//Sets Caps Lock = false (Pravets 8A/C only)
 
 	z80_reset();	// NB. Also called above in CpuInitialize()
@@ -1978,9 +1978,7 @@ static void DebugFlip(WORD address, ULONG nExecutedCycles)
 
 	const double fFreq = CLK_6502 / (double)uCyclesBetweenFlips;
 
-	char szStr[100];
-	sprintf(szStr, "Cycles between flips = %d (%f Hz)\n", uCyclesBetweenFlips, fFreq);
-	OutputDebugString(szStr);
+	LogOutput("Cycles between flips = %d (%f Hz)\n", uCyclesBetweenFlips, fFreq);
 }
 #endif
 
