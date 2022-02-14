@@ -33,12 +33,10 @@
 #import "PreferencesWindowController.h"
 #import "UserDefaults.h"
 
-#ifdef FEATURE_BROWSER
 #import "DiskImg.h"
 #import "DiskImageBrowserWindowController.h"
 #import "DiskImageWrapper.h"
 using namespace DiskImgLib;
-#endif // FEATURE_BROWSER
 
 #define STATUS_BAR_HEIGHT   32
 #define BLANK_FILE_NAME     NSLocalizedString(@"Blank", @"default file name for new blank disk")
@@ -88,9 +86,7 @@ using namespace DiskImgLib;
 
 @end
 
-#ifdef FEATURE_BROWSER
 static void DiskImgMsgHandler(const char *file, int line, const char *msg);
-#endif
 
 @interface NSAlert (Synchronous)
 
@@ -107,10 +103,8 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     self.processInfo = [[NSProcessInfo alloc] init];
     
-#ifdef FEATURE_BROWSER
     Global::SetDebugMsgHandler(DiskImgMsgHandler);
     Global::AppInit();
-#endif
     
     _hasStatusBar = YES;
     self.driveLightButtonTemplate.hidden = YES;
@@ -159,9 +153,7 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     [self.emulatorVC stop];
 
-#ifdef FEATURE_BROWSER
     Global::AppCleanup();
-#endif
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
@@ -301,22 +293,7 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             self.aboutVersion.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)", @""),
                 infoDictionary[@"CFBundleShortVersionString"],
-                infoDictionary[@"CFBundleVersion"]];
-            
-#ifdef FEATURE_BROWSER
-            CGRect oldCreditsFrame = self.aboutCredits.frame;
-            self.aboutCredits.stringValue = [self.aboutCredits.stringValue stringByAppendingString:
-                NSLocalizedString(@"\n\nAdvanced disk image features include code from the CiderPress and HexFiend projects.", "")];
-            CGRect newCreditsFrame = oldCreditsFrame;
-            newCreditsFrame.size = [self.aboutCredits sizeThatFits:CGSizeMake(oldCreditsFrame.size.width, 5000)];
-            self.aboutCredits.frame = newCreditsFrame;
-            
-            CGRect aboutWindowFrame = self.aboutWindow.frame;
-            CGFloat gap = newCreditsFrame.size.height - oldCreditsFrame.size.height;
-            aboutWindowFrame.size.height += gap;
-            aboutWindowFrame.origin.y -= gap / 2;
-            [self.aboutWindow setFrame:aboutWindowFrame display:YES];
-#endif // FEATURE_BROWSER
+                infoDictionary[@"CFBundleVersion"]];            
         }
     }
     [self.aboutWindow orderFront:sender];
@@ -473,7 +450,6 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
         if ([diskName length] > 0) {
             [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
             
-#ifdef FEATURE_BROWSER
             // see if this disk is browseable
             DiskImg *diskImg = new DiskImg;
             std::string diskPathname = card->DiskGetFullPathName(drive);
@@ -486,7 +462,6 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
                 menuItem.representedObject = [[DiskImageWrapper alloc] initWithPath:pathString diskImg:diskImg];
                 [menu addItem:menuItem];
             }
-#endif // FEATURE_BROWSER
             
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Eject", @"eject disk image")
                                                               action:@selector(ejectDisk:)
@@ -512,7 +487,6 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
         if ([diskName length] > 0) {
             [menu addItemWithTitle:diskName action:nil keyEquivalent:@""];
         
-#ifdef FEATURE_BROWSER
             // see if this disk is browseable
             DiskImg *diskImg = new DiskImg;
             if (diskImg->OpenImage(pathString.UTF8String, '/', true) == kDIErrNone &&
@@ -523,7 +497,6 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
                 menuItem.representedObject = [[DiskImageWrapper alloc] initWithPath:pathString diskImg:diskImg];
                 [menu addItem:menuItem];
             }
-#endif // FEATURE_BROWSER
         }
     }
 
@@ -534,7 +507,6 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
     }
 }
 
-#ifdef FEATURE_BROWSER
 - (void)browseDisk:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
@@ -561,7 +533,6 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
         }
     }
 }
-#endif // FEATURE_BROWSER
 
 - (void)ejectDisk:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -1068,7 +1039,6 @@ const char *GetSupportDirectory() {
     return supportDirectoryPath.UTF8String;
 }
 
-#ifdef FEATURE_BROWSER
 static void
 DiskImgMsgHandler(const char *file, int line, const char *msg)
 {
@@ -1079,7 +1049,6 @@ DiskImgMsgHandler(const char *file, int line, const char *msg)
     fprintf(stderr, "%s:%d: %s\n", file, line, msg);
 #endif
 }
-#endif // FEATURE_BROWSER
 
 bool GamepadGetButton(int i)
 {

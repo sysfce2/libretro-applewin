@@ -39,10 +39,8 @@ void CreateLanguageCard(void); // FIXME should be in Memory.h
 #import "registry.h"
 #undef BOOL
 
-#ifdef FEATURE_BROWSER
 #include "DiskImg.h"
 using namespace DiskImgLib;
-#endif // FEATURE_BROWSER
 
 // these need to match the values set in Preferences.storyboard for key "vcId"
 #define GENERAL_PANE_ID         @"general"
@@ -279,16 +277,6 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 
         [self performSelector:@selector(updateHardDiskPreferences) inViewControllerWithID:STORAGE_PANE_ID];
     }
-
-#ifndef FEATURE_BROWSER
-    // hide "Create New Hard Disk" button and shrink the pane height
-    self.storageCreateHardDiskButton.hidden = YES;
-    CGFloat adjustment = CGRectGetMinY(self.storageHardDiskFolderButton.frame) - CGRectGetMinY(self.storageCreateHardDiskButton.frame);
-    CGRect viewFrame = self.view.frame;
-    viewFrame.size.height -= adjustment;
-    self.view.frame = viewFrame;
-    self.preferredContentSize = self.view.frame.size;
-#endif // FEATURE_BROWSER
 }
 
 - (void)updateHardDiskPreferences {
@@ -536,7 +524,6 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
 - (IBAction)createHardDiskAction:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-#ifdef FEATURE_BROWSER
     NSSavePanel *savePanel = [[NSSavePanel alloc] init];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -611,7 +598,6 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         }
         [self performSelector:@selector(updateHardDiskPreferences) inViewControllerWithID:STORAGE_PANE_ID];
     }
-#endif // FEATURE_BROWSER
 }
 
 #pragma mark - NSOpenSavePanelDelegate
