@@ -2,6 +2,10 @@
 //  EmulatorRenderer.m
 //  Mariani
 //
+
+//  Parts of this code are derived from an Apple sample project, whose copyright
+//  terms are replicated below:
+
 //  Copyright © 2021 Apple Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
@@ -21,7 +25,6 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 //  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 //  DEALINGS IN THE SOFTWARE.
-//
 
 #import "EmulatorRenderer.h"
 #import "ShaderTypes.h"
