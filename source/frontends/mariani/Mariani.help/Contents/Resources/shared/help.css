@@ -36,7 +36,7 @@ div.related {
 div.roundrect {
     border-radius: 8px;
     border: 1px solid rgb(192, 192, 192);
-    padding: 10px;
+    padding: 0px 10px 10px 10px;
     margin: 20px 0px 20px 0px;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 }
@@ -51,7 +51,7 @@ h2 {
 
 h3.howto {
     color: rgb(127, 127, 127);
-    margin: 0px;
+    margin: 10px 0px 0px 0px;
 }
 
 h4 {
@@ -63,8 +63,21 @@ h5.related {
     padding: 0px;
 }
 
+img.screenshot {
+    width: 80%;
+    height: auto;
+}
+
+ol {
+    margin-bottom: 0;
+}
+
 ol li {
-    margin: 10px 0px 10px 0px;
+    margin: 10px 0px 0px 0px;
+}
+
+p {
+    margin: 10px 0px 0px 0px;
 }
 
 span.command {
@@ -80,6 +93,10 @@ span.key {
     padding: 0px 2px 0px 2px;
     border-radius: 3px;
     color: white;
+}
+
+span.nowrap {
+    white-space: nowrap;
 }
 
 @media (prefers-color-scheme: dark) {
