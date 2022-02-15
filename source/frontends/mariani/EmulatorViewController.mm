@@ -87,7 +87,7 @@ std::shared_ptr<mariani::MarianiFrame> frame;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    const Uint32 flags = SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO;
+    const Uint32 flags = SDL_INIT_AUDIO;
     if (SDL_Init(flags) != 0) {
         NSLog(@"SDL_Init error %s", SDL_GetError());
     }

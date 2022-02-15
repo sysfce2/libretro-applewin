@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Disk Image Formats</title>
+    <meta name="AppleTitle" content="Disk Image Formats" />
+    <link rel="stylesheet" href="../shared/help.css" />
+</head>
+<body>
+    <!-- from help/ddi-formats.html -->
+    <h2>Disk Image Formats</h2>
+    <p>Disk images can be in a number of different formats, depending on how they were created.</p>
+    
+    <div class="roundrect">
+        <h3 class="howto">DOS Order Images:</h3>
+        <p>DOS order disk images contain the data from each sector, stored in the same order that DOS 3.3 numbers sectors. If you run a DOS program on the Apple which reads in sectors one by one and then transfers them over a serial line to the other computer, you will get a DOS order disk image.</p>
+        <p>Apple floppy disks contained 35 tracks with 16 sectors per track, for a total of 560 sectors. Each of these
+sectors contained 256 bytes of information, for a total of 143,360 bytes per disk. Therefore, DOS order disk images are always at least 143,360 bytes long. Sometimes on the Internet you will see a disk image that is 143,488 or 143,616 bytes long; this is probably a DOS order image with extra header information before or after the image. In most cases, Mariani can automatically detect this and handle it. </p>
+    </div>
+    
+    <div class="roundrect">
+        <h3 class="howto">ProDOS Order Images: </h3>
+        <p>ProDOS order disk images are very similar to DOS order images, except that they contain the sectors in the order that ProDOS numbers them. If you compress a disk with Shrinkit on an Apple, then transfer it over a modem and uncompress it on the other computer, you will get a ProDOS order disk image. </p>
+        <p>Since ProDOS order disk images contain the same information as DOS order disk images, simply in a different order, they are also about 143,360 bytes long. When you use a disk image of this size, Mariani attempts to automatically detect whether it is in DOS order or ProDOS order by examining the contents of the disk. If the disk was formatted with a standard operating system such as DOS or ProDOS, Mariani will successfully detect the format. Otherwise, it will revert to DOS order, which is by far the most common format. To force ProDOS order, give the file an extension of ".PO". </p>
+    </div>
+    
+    <div class="roundrect">
+        <h3 class="howto">Nibble Images:</h3>
+        <p>Nibble images contain all of the data on a disk; not just the data in sectors but also the sector headers and synchronization areas, all stored in the same encoded format that would be recorded on a real disk's surface. At 232,960 bytes, nibble images are bigger than other images, but they can be useful for making images of copy protected software. </p>
+    </div>
+
+    <div class="roundrect">
+        <h3 class="howto">2mg Images:</h3>
+        <p>2mg (or 2img) images are a wrapper around DOS, ProDOS or Nibble images. They contain extra meta-data describing for example, DOS volume number and write-protection.</p>
+    </div>
+
+    <div class="roundrect">
+        <h3 class="howto">WOZ Images:</h3>
+        <p>The WOZ Disk Image format is an offshoot of the <A href="https://applesaucefdc.com/woz">Applesauce project</A>. Capturing highly accurate bit data is of no use if you don't have a container to hold the data. The WOZ format was designed to be able to contain every possible Apple ][ disk structure and layout. It can be so accurate that even copy protected software can't tell that it isn't an original disk.</p>
+    </div>
+
+    <div class="roundrect">
+        <h3 class="howto">Compressed Images:</h3>
+        <p>All of the above can optionally be either gzip'ed or zipped. If a zip archive contains multiple files, then Mariani only supports using the first file. For best results with hard disk images, uncompress first, as writing back to the image requires a full image re-compression after every block write. Examples of typical extensions are:
+            <ul>
+                <li>.gz, .dsk.gz, .nib.gz, .2mg.gz, .woz.gz</li>
+                <li>.zip, .dsk.zip, .nib.zip, .2mg.zip, .woz.zip</li>
+            </ul>
+        </p>
+    </div>
+
+    <h5 class="related">Related Topics</h5>
+    <div class="related"><a href="CopyProtectedDisks.html">Copy-Protected Disks</a></div>
+</body>
+</html>
