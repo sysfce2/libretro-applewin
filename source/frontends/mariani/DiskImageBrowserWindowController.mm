@@ -339,6 +339,7 @@ NSArray *fileTypeStrings = @[
                                   documentAttributes:nil
                                                error:nil]];
         textView.editable = NO;
+        textView.richText = YES;
         layoutView = scrollView;
     }
     
