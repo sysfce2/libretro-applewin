@@ -70,7 +70,7 @@ namespace mariani
     return std::string(PathToResourceNamed(filename.c_str()));
   }
 
-  std::string MarianiFrame::Video_GetScreenShotFolder()
+  std::string MarianiFrame::Video_GetScreenShotFolder() const
   {
     return {};
   }

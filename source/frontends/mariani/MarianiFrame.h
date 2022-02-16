@@ -33,7 +33,7 @@ namespace mariani
     void FrameDrawDiskLEDS() override;
     void FrameRefreshStatus(int flags) override;
 
-    virtual std::string Video_GetScreenShotFolder() override;
+    virtual std::string Video_GetScreenShotFolder() const override;
 
     void *FrameBufferData();
 
