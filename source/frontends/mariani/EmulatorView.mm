@@ -271,12 +271,20 @@ enum {
 
 - (void)mouseEntered:(NSEvent *)event {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [NSCursor hide];
+    
+    CardManager & cardManager = GetCardMgr();
+    if (cardManager.IsMouseCardInstalled() && cardManager.GetMouseCard()->IsActiveAndEnabled()) {
+        [NSCursor hide];
+    }
 }
 
 - (void)mouseExited:(NSEvent *)event {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    [NSCursor unhide];
+
+    CardManager & cardManager = GetCardMgr();
+    if (cardManager.IsMouseCardInstalled() && cardManager.GetMouseCard()->IsActiveAndEnabled()) {
+        [NSCursor unhide];
+    }
 }
 
 @end
