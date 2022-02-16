@@ -233,15 +233,15 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
 }
 
 - (void)screenRecordingDidTick {
-    self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"video.fill" accessibilityDescription:@""];
+    self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"record.circle.fill" accessibilityDescription:@""];
 }
 
 - (void)screenRecordingDidTock {
-    self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"video" accessibilityDescription:@""];
+    self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"record.circle" accessibilityDescription:@""];
 }
 
 - (void)screenRecordingDidStop {
-    self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"video" accessibilityDescription:@""];
+    self.screenRecordingButton.image = [NSImage imageWithSystemSymbolName:@"record.circle" accessibilityDescription:@""];
     self.screenRecordingButton.contentTintColor = [NSColor secondaryLabelColor];
 }
 
@@ -293,7 +293,7 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             self.aboutVersion.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)", @""),
                 infoDictionary[@"CFBundleShortVersionString"],
-                infoDictionary[@"CFBundleVersion"]];            
+                infoDictionary[@"CFBundleVersion"]];
         }
     }
     [self.aboutWindow orderFront:sender];
