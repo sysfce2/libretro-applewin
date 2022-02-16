@@ -7,6 +7,10 @@ a:visited {
     color: rgb(65, 110, 214);
 }
 
+a img.icon {
+    filter: brightness(0) saturate(100%) invert(36%) sepia(84%) saturate(846%) hue-rotate(191deg) brightness(98%) contrast(81%)
+}
+
 body {
     font-size: 12pt;
     font-family: -apple-system, sans-serif;
@@ -55,6 +59,10 @@ h3.howto {
     margin: 10px 0px 0px 0px;
 }
 
+h3.howto img.icon {
+    filter: brightness(0) saturate(100%) invert(52%) sepia(0%) saturate(0%) hue-rotate(192deg) brightness(95%) contrast(88%);
+}
+
 h4 {
     margin: 0px;
 }
@@ -73,11 +81,25 @@ img.headericon {
     height: 0.8em;
     vertical-align: -5%;
     margin-right: 8px;
+    filter: brightness(30%) saturate(100%);
 }
 
 img.icon {
     height: 0.8em;
     vertical-align: -5%;
+    filter: brightness(0%) saturate(100%);
+}
+
+img.key {
+    height: 0.8em;
+    vertical-align: -5%;
+    filter: brightness(100%) saturate(100%);
+}
+
+img.largeicon {
+    height: 1.2em;
+    vertical-align: middle;
+    filter: brightness(0%) saturate(100%);
 }
 
 ol {
@@ -132,6 +154,22 @@ span.nowrap {
 
     h2 {
         color: rgb(225, 225, 225);
+    }
+
+    img.headericon {
+        filter: brightness(70%) saturate(100%);
+    }
+
+    img.icon {
+        filter: brightness(100%) saturate(100%);
+    }
+
+    img.key {
+        filter: brightness(0%) saturate(100%);
+    }
+
+    img.largeicon {
+        filter: brightness(100%) saturate(100%);
     }
 
     span.command {
