@@ -20,5 +20,9 @@
 	<string>Mariani Help</string>
 	<key>HPDBookType</key>
 	<string>3</string>
+	<key>HPDBookCSIndexPath</key>
+	<string>Mariani.cshelpindex</string>
+	<key>HPDBookIndexPath</key>
+	<string>Mariani.helpindex</string>
 </dict>
 </plist>
