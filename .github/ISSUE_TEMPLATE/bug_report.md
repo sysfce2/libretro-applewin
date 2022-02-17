@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Versions (please complete the following information):**
  - OS: [e.g. macOS 12.2.1]
- - Mariani [e.g. git hash]
+ - Mariani: [e.g. git hash]
 
 **Additional context**
 Add any other context about the problem here.
