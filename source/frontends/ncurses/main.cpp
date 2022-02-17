@@ -20,6 +20,7 @@
 #include "linux/context.h"
 #include "frontends/common2/fileregistry.h"
 #include "frontends/common2/programoptions.h"
+#include "frontends/common2/argparser.h"
 #include "frontends/common2/utils.h"
 #include "frontends/ncurses/world.h"
 #include "frontends/ncurses/nframe.h"
@@ -137,7 +138,7 @@ namespace
     }
   }
 
-  int run_ncurses(int argc, const char * argv [])
+  int run_ncurses(int argc, char * argv [])
   {
     common2::EmulatorOptions options;
     const bool run = getEmulatorOptions(argc, argv, "ncurses", options);
@@ -178,7 +179,7 @@ namespace
 
 }
 
-int main(int argc, const char * argv [])
+int main(int argc, char * argv [])
 {
   try
   {

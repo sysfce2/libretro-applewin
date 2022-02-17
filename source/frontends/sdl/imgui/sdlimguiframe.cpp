@@ -2,7 +2,7 @@
 #include "frontends/sdl/imgui/sdlimguiframe.h"
 
 #include "frontends/sdl/utils.h"
-#include "frontends/common2/fileregistry.h"
+#include "frontends/common2/utils.h"
 #include "frontends/common2/programoptions.h"
 #include "frontends/sdl/imgui/image.h"
 

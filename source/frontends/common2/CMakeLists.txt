@@ -1,6 +1,7 @@
 include(GNUInstallDirs)
 
 set(SOURCE_FILES
+  argparser.cpp
   commonframe.cpp
   gnuframe.cpp
   fileregistry.cpp
@@ -12,6 +13,7 @@ set(SOURCE_FILES
   )
 
 set(HEADER_FILES
+  argparser.h
   commonframe.h
   gnuframe.h
   fileregistry.h
@@ -28,7 +30,6 @@ add_library(common2 STATIC
   )
 
 find_package(Boost REQUIRED
-  COMPONENTS program_options
   )
 
 target_include_directories(common2 PRIVATE
@@ -37,7 +38,6 @@ target_include_directories(common2 PRIVATE
   )
 
 target_link_libraries(common2 PRIVATE
-  Boost::program_options
   appleii
   windows
 )

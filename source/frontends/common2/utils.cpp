@@ -4,12 +4,41 @@
 
 #include "SaveState.h"
 #include "Registry.h"
+#include "Log.h"
 
 #include <libgen.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 namespace common2
 {
+
+  std::string GetHomeDir()
+  {
+    const char* homeDir = getenv("HOME");
+    if (!homeDir)
+    {
+      throw std::runtime_error("${HOME} not set, cannot locate configuration file");
+    }
+
+    return std::string(homeDir);
+  }
+
+  std::string GetConfigFile(const std::string & filename)
+  {
+    const std::string dir = GetHomeDir() + "/.applewin";
+    const int status = mkdir(dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    if (!status || (errno == EEXIST))
+    {
+      return dir + "/" + filename;
+    }
+    else
+    {
+      const char * s = strerror(errno);
+      LogFileOutput("No registry. Cannot create %s in %s: %s\n", filename.c_str(), dir.c_str(), s);
+      return std::string();
+    }
+  }
 
   void setSnapshotFilename(const std::string & filename)
   {

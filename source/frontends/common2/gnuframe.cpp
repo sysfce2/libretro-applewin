@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "frontends/common2/gnuframe.h"
-#include "frontends/common2/fileregistry.h"
+#include "frontends/common2/utils.h"
 
 #include <sys/stat.h>
 #include <unistd.h>

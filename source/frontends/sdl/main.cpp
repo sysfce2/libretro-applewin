@@ -11,6 +11,7 @@
 #include "frontends/common2/fileregistry.h"
 #include "frontends/common2/utils.h"
 #include "frontends/common2/programoptions.h"
+#include "frontends/common2/argparser.h"
 #include "frontends/common2/timer.h"
 #include "frontends/sdl/gamepad.h"
 #include "frontends/sdl/sdirectsound.h"
@@ -56,7 +57,7 @@ namespace
 
 }
 
-void run_sdl(int argc, const char * argv [])
+void run_sdl(int argc, char * argv [])
 {
   std::cerr << std::fixed << std::setprecision(2);
 
@@ -183,7 +184,7 @@ void run_sdl(int argc, const char * argv [])
 #endif
 }
 
-int main(int argc, const char * argv [])
+int main(int argc, char * argv [])
 {
   //First we need to start up SDL, and make sure it went ok
   const Uint32 flags = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO | SDL_INIT_TIMER;
