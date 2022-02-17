@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Mariani is a native macOS UI for [AppleWin](https://github.com/AppleWin/AppleWin), by way of [Andrea](https://github.com/audetto)'s [Raspberry Pi port](https://github.com/audetto/AppleWin). I built this because while I greatly respect cross-platform UI, I don't actually like to use it, and I wanted a native experience under macOS and one did not seem to exist.
+Mariani is a native macOS UI for [AppleWin](https://github.com/AppleWin/AppleWin), by way of [Andrea](https://github.com/audetto)'s [Raspberry Pi port](https://github.com/audetto/AppleWin).
 
-But if what you want is a macOS command-line app, you can build it from Andrea's repo with the instructions below.
+But if what you want is a macOS command-line app, you can build it with the instructions below.
 
 ### Features
 
@@ -15,15 +15,22 @@ But if what you want is a macOS command-line app, you can build it from Andrea's
 - Floppy and hard disk image creation
 - Full-screen support
 
-### AppleWin Features Not Yet Supported
+### Known Issues
+
+I consider Mariani to be at v1.0 in terms of functionality and stability. Here are the known issues:
+
+https://github.com/sh95014/AppleWin/issues
+
+Specifically, the following AppleWin features are not yet supported:
 
 - [Debugger and Memory viewer](https://github.com/sh95014/AppleWin/issues/12)
 - [Load/Save State](https://github.com/sh95014/AppleWin/issues/13)
 - [Cassette support](https://github.com/sh95014/AppleWin/issues/16)
+- [Numeric keypad joystick emulation](https://github.com/sh95014/AppleWin/issues/10)
 
-### Known Issues
+### Roadmap
 
-https://github.com/sh95014/AppleWin/issues
+I plan to spend some time building (graphical) printer support, but I don't expect to spend a lot of time with the remaining known issues. I think the most generally useful ones in the list are the joystick emulation and maybe cassette support.
 
 ## Build Mariani
 
@@ -37,7 +44,7 @@ brew install Boost sdl2
 
 ### Checkout
 
-Now we're ready to grab the source code:
+Now grab the source code:
 
 ```
 git clone https://github.com/sh95014/AppleWin.git --recursive
@@ -45,7 +52,7 @@ git clone https://github.com/sh95014/AppleWin.git --recursive
 
 Load up the Xcode project, and build the "Mariani" target for "My Mac".
 
-"Mariani Universal" is the target used to build a universal (x86 and ARM) app, and it's probably broken. Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and also download/build [Boost](https://www.boost.org/users/download/) yourself, then stitch the binaries from both x86 and ARM builds together. Here's a script that should help:
+"Mariani Universal" is the target used to build a universal (x86 and ARM) app, and will not build out of the box. Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and also download/build [Boost](https://www.boost.org/users/download/) yourself. Here's a script that should help stitch the Boost binaries from both x86 and ARM builds together into an universal static library:
 
 ```
 #!/bin/sh
@@ -68,7 +75,7 @@ done
 
 ## Build sa2
 
-sa2 is the binary produced by Andrea's port.
+sa2 is the binary produced by Andrea's port. It's not the focus of this repository but it's a more "faithful" AppleWin and very useful to compare behaviors and bugs.
 
 ### Dependencies
 
@@ -93,7 +100,7 @@ open applewin.xcodeproj
 
 The project should now launch in Xcode. Select the `ALL_BUILD` target and build. You can look under `Products` in the left pane to see where it is, because unfortunately Xcode does not seem to be able to run and debug the binary directly.
 
-Or, you can follow basically the same as in [Linux](linux.md), also simplified to build only the sa2 frontend:
+Or, you can follow basically the same instructions as in [Linux](linux.md), but in this case also simplified to build only the sa2 frontend:
 
 ```
 git clone https://github.com/sh95014/AppleWin.git --recursive
@@ -104,4 +111,4 @@ cmake -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_SA2=ON ..
 make
 ```
 
-It works pretty well (macOS Monterey on M1 Pro) as far as I can tell, but I certainly haven't tried all the peripherals and available software. YMMV.
+Note that some of the settings (most of the ones stored in `~/.applewin/applewin.conf`) will affect both Mariani and sa2.
