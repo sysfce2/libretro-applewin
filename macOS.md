@@ -17,21 +17,13 @@ But if what you want is a macOS command-line app, you can build it from Andrea's
 
 ### AppleWin Features Not Yet Supported
 
-- Debugger and memory viewer
-- Load/save emulator state
-- Cassette support
+- [Debugger and Memory viewer](https://github.com/sh95014/AppleWin/issues/12)
+- [Load/Save State](https://github.com/sh95014/AppleWin/issues/13)
+- [Cassette support](https://github.com/sh95014/AppleWin/issues/16)
 
 ### Known Issues
 
-- plugging or unplugging a VidHD card does not refresh the display correctly
-- Screen recording does not record audio
-- Certain key combinations are not sent to the emulator
-- Colors in syntax-highlighted BASIC listings do not update with light/dark mode change
-
-### Suspected Issues
-
-- AppleWin supports lots of esoteric hardware, I've really just been using the floppy drive, hard drive, 80-column card, a [GameController](https://developer.apple.com/documentation/gamecontroller)-compatible gamepad (Steelseries Nimbus), and Mockingboard.
-- Moving the main window to another monitor may cause issues.
+https://github.com/sh95014/AppleWin/issues
 
 ## Build Mariani
 
@@ -53,9 +45,7 @@ git clone https://github.com/sh95014/AppleWin.git --recursive
 
 Load up the Xcode project, and build the "Mariani" target for "My Mac".
 
-"Mariani Pro" contains an additional feature to browse inside a floppy disk image that you've loaded into the emulator. This uses code from the [CiderPress](https://github.com/fadden/ciderpress) and [HexFiend](https://github.com/HexFiend/HexFiend) projects, but you should no longer need to run `./configure` manually now.
-
-"Mariani Pro Universal" is the target used to build a universal (x86 and ARM) app, and it's probably broken. Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and also download/build [Boost](https://www.boost.org/users/download/) yourself, then stitch the binaries from both x86 and ARM builds together. Here's a script that should help:
+"Mariani Pro" is the target used to build a universal (x86 and ARM) app, and it's probably broken. Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and also download/build [Boost](https://www.boost.org/users/download/) yourself, then stitch the binaries from both x86 and ARM builds together. Here's a script that should help:
 
 ```
 #!/bin/sh
