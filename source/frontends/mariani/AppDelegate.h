@@ -33,5 +33,3 @@ int ShowModalAlertOfType(int type, const char *message, const char *information)
 void UpdateDriveLights(void);
 const char *PathToResourceNamed(const char *name);
 const char *GetSupportDirectory(void);
-bool GamepadGetButton(int i);
-double GamepadGetAxis(int i);

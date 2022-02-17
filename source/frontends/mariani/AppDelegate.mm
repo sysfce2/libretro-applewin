@@ -1007,6 +1007,10 @@ const NSOperatingSystemVersion macOS12 = { 12, 0, 0 };
 
 #pragma mark - C++ Helpers
 
+// These are needed because AppleWin redeclares BOOL in wincompat.h, so
+// MarianiFrame can't be compile as Objective-C++ to call these methods
+// itself.
+
 int ShowModalAlertOfType(int type, const char *message, const char *information) {
     return [theAppDelegate showModalAlertofType:type
                                     withMessage:[NSString stringWithUTF8String:message]
@@ -1048,32 +1052,4 @@ DiskImgMsgHandler(const char *file, int line, const char *msg)
 #ifdef DEBUG
     fprintf(stderr, "%s:%d: %s\n", file, line, msg);
 #endif
-}
-
-bool GamepadGetButton(int i)
-{
-    GCController *gc = [GCController current];
-    GCExtendedGamepad *gamepad = [gc extendedGamepad];
-    
-    if (gamepad != nil) {
-        switch (i) {
-            case 0:  return gamepad.buttonA.isPressed;
-            case 1:  return gamepad.buttonB.isPressed;
-        }
-    }
-    return 0;
-}
-
-double GamepadGetAxis(int i)
-{
-    GCController *gc = [GCController current];
-    GCExtendedGamepad *gamepad = [gc extendedGamepad];
-    
-    if (gamepad != nil) {
-        switch (i) {
-            case 0:  return gamepad.leftThumbstick.xAxis.value;
-            case 1:  return -gamepad.leftThumbstick.yAxis.value;
-        }
-    }
-    return 0;
 }

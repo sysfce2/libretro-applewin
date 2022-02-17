@@ -419,8 +419,8 @@
 		B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
 		B090CF1D27B5A04F00C6C23D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B090CF1C27B5A04F00C6C23D /* GameController.framework */; };
 		B090CF1F27B5A05A00C6C23D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B090CF1C27B5A04F00C6C23D /* GameController.framework */; };
-		B090CF2227B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
-		B090CF2427B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */; };
+		B090CF2227B5A2A900C6C23D /* MarianiJoystick.mm in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.mm */; };
+		B090CF2427B5A2A900C6C23D /* MarianiJoystick.mm in Sources */ = {isa = PBXBuildFile; fileRef = B090CF2027B5A2A900C6C23D /* MarianiJoystick.mm */; };
 		B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B092741B277D9403003FFB79 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0927419277D9403003FFB79 /* PreferencesWindowController.m */; };
 		B09AB674277A14DB0002A6C3 /* Speech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB626277A14DB0002A6C3 /* Speech.cpp */; };
@@ -787,7 +787,7 @@
 		B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImageBrowserWindowController.h; sourceTree = "<group>"; };
 		B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageBrowserWindowController.mm; sourceTree = "<group>"; };
 		B090CF1C27B5A04F00C6C23D /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
-		B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarianiJoystick.cpp; sourceTree = "<group>"; };
+		B090CF2027B5A2A900C6C23D /* MarianiJoystick.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MarianiJoystick.mm; sourceTree = "<group>"; };
 		B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarianiJoystick.h; sourceTree = "<group>"; };
 		B0927414277D9399003FFB79 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
 		B0927415277D9399003FFB79 /* PreferencesViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PreferencesViewController.mm; sourceTree = "<group>"; };
@@ -1298,7 +1298,7 @@
 				B0689D092780B9B60029EB7D /* MarianiFrame.h */,
 				B0689D082780B9B60029EB7D /* MarianiFrame.cpp */,
 				B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */,
-				B090CF2027B5A2A900C6C23D /* MarianiJoystick.cpp */,
+				B090CF2027B5A2A900C6C23D /* MarianiJoystick.mm */,
 				B043659327B8769E00329469 /* NSMutableString+RTF.h */,
 				B043659427B8769E00329469 /* NSMutableString+RTF.m */,
 				B0927414277D9399003FFB79 /* PreferencesViewController.h */,
@@ -2627,7 +2627,7 @@
 				B00ECBAD279EEB600041E16C /* dmusicc.cpp in Sources */,
 				B04365A227B887CB00329469 /* DataFormatBASIC.m in Sources */,
 				B00ECBAE279EEB600041E16C /* PreferencesViewController.mm in Sources */,
-				B090CF2427B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */,
+				B090CF2427B5A2A900C6C23D /* MarianiJoystick.mm in Sources */,
 				B00ECBAF279EEB600041E16C /* StdAfx.cpp in Sources */,
 				B00ECBB0279EEB600041E16C /* EmulatorViewController.mm in Sources */,
 				B00ECBB1279EEB600041E16C /* Registry.cpp in Sources */,
@@ -2695,7 +2695,7 @@
 				B09AB801277A21410002A6C3 /* dmusicc.cpp in Sources */,
 				B04365A127B887CB00329469 /* DataFormatBASIC.m in Sources */,
 				B0927417277D9399003FFB79 /* PreferencesViewController.mm in Sources */,
-				B090CF2227B5A2A900C6C23D /* MarianiJoystick.cpp in Sources */,
+				B090CF2227B5A2A900C6C23D /* MarianiJoystick.mm in Sources */,
 				B09AB680277A14DB0002A6C3 /* StdAfx.cpp in Sources */,
 				B049E89F277C43BF00FC14A3 /* EmulatorViewController.mm in Sources */,
 				B09AB7D6277A21180002A6C3 /* Registry.cpp in Sources */,
