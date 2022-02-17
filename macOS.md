@@ -45,7 +45,7 @@ git clone https://github.com/sh95014/AppleWin.git --recursive
 
 Load up the Xcode project, and build the "Mariani" target for "My Mac".
 
-"Mariani Pro" is the target used to build a universal (x86 and ARM) app, and it's probably broken. Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and also download/build [Boost](https://www.boost.org/users/download/) yourself, then stitch the binaries from both x86 and ARM builds together. Here's a script that should help:
+"Mariani Universal" is the target used to build a universal (x86 and ARM) app, and it's probably broken. Homebrew does not support universal (x86 and ARM) libraries, so you'll have to grab the [Development Library for SDL](https://www.libsdl.org/download-2.0.php) and also download/build [Boost](https://www.boost.org/users/download/) yourself, then stitch the binaries from both x86 and ARM builds together. Here's a script that should help:
 
 ```
 #!/bin/sh
