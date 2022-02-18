@@ -59,8 +59,6 @@
 
 @property (strong) EmulatorRenderer *renderer;
 
-@property LoggerContext *logger;
-@property RegistryContext *registryContext;
 @property Initialisation *initialisation;
 
 #ifdef SHOW_EMULATED_CPU_SPEED
@@ -96,9 +94,6 @@ std::shared_ptr<mariani::MarianiFrame> frame;
     }
     
     common2::EmulatorOptions options;
-    self.logger = new LoggerContext(options.log);
-    self.registryContext = new RegistryContext(CreateFileRegistry(options));
-
     frame.reset(new mariani::MarianiFrame(options));
 
     std::shared_ptr<Paddle> paddle(new mariani::Gamepad());
