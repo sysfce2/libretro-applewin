@@ -786,6 +786,7 @@
 		B08CFE4827889D44002B841D /* DiskImageWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageWrapper.mm; sourceTree = "<group>"; };
 		B08CFE53278949F2002B841D /* DiskImageBrowserWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImageBrowserWindowController.h; sourceTree = "<group>"; };
 		B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DiskImageBrowserWindowController.mm; sourceTree = "<group>"; };
+		B08DC27527C06B03004987FC /* Mariani-Universal-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Mariani-Universal-Info.plist"; sourceTree = "<group>"; };
 		B090CF1C27B5A04F00C6C23D /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		B090CF2027B5A2A900C6C23D /* MarianiJoystick.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MarianiJoystick.mm; sourceTree = "<group>"; };
 		B090CF2127B5A2A900C6C23D /* MarianiJoystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarianiJoystick.h; sourceTree = "<group>"; };
@@ -1245,6 +1246,7 @@
 		B032DE18277A0C23006DC0F7 = {
 			isa = PBXGroup;
 			children = (
+				B08DC27527C06B03004987FC /* Mariani-Universal-Info.plist */,
 				B089EF3027BADA8100BDC415 /* Mariani-Info.plist */,
 				B09AB6CE277A164F0002A6C3 /* zip_lib */,
 				B09AB68F277A15A90002A6C3 /* libyaml */,
@@ -3015,6 +3017,7 @@
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
 				);
+				INFOPLIST_FILE = "Mariani-Universal-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -3050,6 +3053,7 @@
 					/opt/homebrew/include,
 					/opt/homebrew/include/SDL2,
 				);
+				INFOPLIST_FILE = "Mariani-Universal-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
