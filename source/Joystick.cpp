@@ -936,7 +936,7 @@ void JoyportControl(const UINT uControl)
 #define SS_YAML_KEY_JOY1TRIMY "Joystick1 TrimY"
 #define SS_YAML_KEY_PDL_INACTIVE_CYCLE "Paddle%1d Inactive Cycle"
 
-static std::string JoyGetSnapshotStructName(void)
+static const std::string& JoyGetSnapshotStructName(void)
 {
 	static const std::string name("Joystick");
 	return name;
@@ -952,9 +952,8 @@ void JoySaveSnapshot(YamlSaveHelper& yamlSaveHelper)
 
 	for (UINT n = 0; n < 4; n++)
 	{
-		char str[sizeof(SS_YAML_KEY_PDL_INACTIVE_CYCLE)+1];
-		sprintf_s(str, sizeof(str), SS_YAML_KEY_PDL_INACTIVE_CYCLE, n);
-		yamlSaveHelper.SaveHexUint64(str, g_paddleInactiveCycle[n]);
+		std::string str = StrFormat(SS_YAML_KEY_PDL_INACTIVE_CYCLE, n);
+		yamlSaveHelper.SaveHexUint64(str.c_str(), g_paddleInactiveCycle[n]);
 	}
 }
 
@@ -972,8 +971,7 @@ void JoyLoadSnapshot(YamlLoadHelper& yamlLoadHelper, UINT version)
 	{
 		for (UINT n = 0; n < 4; n++)
 		{
-			char str[sizeof(SS_YAML_KEY_PDL_INACTIVE_CYCLE) + 1];
-			sprintf_s(str, sizeof(str), SS_YAML_KEY_PDL_INACTIVE_CYCLE, n);
+			std::string str = StrFormat(SS_YAML_KEY_PDL_INACTIVE_CYCLE, n);
 			g_paddleInactiveCycle[n] = yamlLoadHelper.LoadUint64(str);
 		}
 	}

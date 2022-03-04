@@ -96,7 +96,7 @@ Update_t _PrintSymbolInvalidTable()
 	// TODO: display the user specified file name
 	ConsoleBufferPush( "Invalid symbol table." );
 
-	ConsolePrintFormat( sText, "Only %s%d%s symbol tables are supported:"
+	ConsolePrintFormat( "Only %s%d%s symbol tables are supported:"
 		, CHC_NUM_DEC, NUM_SYMBOL_TABLES
 		, CHC_DEFAULT
 	);
@@ -125,13 +125,13 @@ Update_t _PrintSymbolInvalidTable()
 
 
 //===========================================================================
-const char* GetSymbol (WORD nAddress, int nBytes)
+std::string const& GetSymbol (WORD nAddress, int nBytes, std::string& strAddressBuf)
 {
-	const char* pSymbol = FindSymbolFromAddress( nAddress );
+	std::string const* pSymbol = FindSymbolFromAddress( nAddress );
 	if (pSymbol)
-		return pSymbol;
+		return *pSymbol;
 
-	return FormatAddress( nAddress, nBytes );
+	return strAddressBuf = FormatAddress( nAddress, nBytes );
 }
 
 //===========================================================================
@@ -142,7 +142,7 @@ int GetSymbolTableFromCommand()
 
 // @param iTable_ Which symbol table the symbol is in if any.  If none will be NUM_SYMBOL_TABLES
 //===========================================================================
-const char* FindSymbolFromAddress (WORD nAddress, int * iTable_ )
+std::string const* FindSymbolFromAddress (WORD nAddress, int * iTable_ )
 {
 	// Bugfix/User feature: User symbols should be searched first
 	int iTable = NUM_SYMBOL_TABLES;
@@ -166,10 +166,10 @@ const char* FindSymbolFromAddress (WORD nAddress, int * iTable_ )
 			{
 				*iTable_ = iTable;
 			}
-			return iSymbols->second.c_str();
+			return &iSymbols->second;
 		}
 	}	
-	return NULL;	
+	return NULL;
 }
 
 //===========================================================================
@@ -360,13 +360,11 @@ Update_t CmdSymbolsInfo (int nArgs)
 //===========================================================================
 void _CmdPrintSymbol( LPCTSTR pSymbol, WORD nAddress, int iTable )
 {
-	char   sText[ CONSOLE_WIDTH * 2 ];
-
 	// 2.6.2.19 Color for name of symbol table: _CmdPrintSymbol() "SYM HOME" _CmdSymbolsInfoHeader "SYM"
 	// CHC_STRING and CHC_NUM_DEC are both cyan, using CHC_USAGE instead of CHC_STRING
 
 	// 2.6.2.20 Changed: Output of found symbol more table friendly.  Symbol table name displayed first.
-	ConsolePrintFormat( sText, "  %s%s%s: $%s%04X %s%s"
+	ConsolePrintFormat( "  %s%s%s: $%s%04X %s%s"
 		, CHC_USAGE, g_aSymbolTableNames[ iTable ]
 		, CHC_ARG_SEP
 		, CHC_ADDRESS, nAddress
@@ -413,14 +411,14 @@ int _GetSymbolTableFromFlag( int bSymbolTables )
 //=========================================================================== */
 bool _CmdSymbolList_Address2Symbol( int nAddress, int bSymbolTables )
 {
-	int  iTable;
-	const char* pSymbol = FindSymbolFromAddress( nAddress, &iTable );
+	int iTable = 0;
+	std::string const* pSymbol = FindSymbolFromAddress( nAddress, &iTable );
 
 	if (pSymbol)
 	{				
 		if (_FindSymbolTable( bSymbolTables, iTable ))
 		{
-			_CmdPrintSymbol( pSymbol, nAddress, iTable );
+			_CmdPrintSymbol( pSymbol->c_str(), nAddress, iTable);
 			return true;
 		}
 	}
@@ -522,8 +520,7 @@ Update_t _CmdSymbolsListTables (int nArgs, int bSymbolTables )
 				// nope, ok, try as address
 				if (! _CmdSymbolList_Address2Symbol( nAddress, bSymbolTables))
 				{
-					ConsolePrintFormat( sText
-						, TEXT(" Address not found: %s$%s%04X%s" )
+					ConsolePrintFormat( " Address not found: %s$%s%04X%s"
 						, CHC_ARG_SEP
 						, CHC_ADDRESS, nAddress, CHC_DEFAULT );
 				}
@@ -537,16 +534,14 @@ Update_t _CmdSymbolsListTables (int nArgs, int bSymbolTables )
 				{
 					if (! _CmdSymbolList_Address2Symbol( nAddress, bSymbolTables ))
 					{
-						ConsolePrintFormat( sText
-							, TEXT(" %sSymbol not found: %s%s%s")
+						ConsolePrintFormat( " %sSymbol not found: %s%s%s"
 							, CHC_ERROR, CHC_SYMBOL, pSymbol, CHC_DEFAULT
 						);
 					}
 				}
 				else
 				{
-					ConsolePrintFormat( sText
-						, TEXT(" %sSymbol not found: %s%s%s")
+					ConsolePrintFormat( " %sSymbol not found: %s%s%s"
 						, CHC_ERROR, CHC_SYMBOL, pSymbol, CHC_DEFAULT
 					);
 				}
@@ -560,7 +555,6 @@ Update_t _CmdSymbolsListTables (int nArgs, int bSymbolTables )
 //===========================================================================
 int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSymbolTableWrite, int nSymbolOffset )
 {
-	char sText[ CONSOLE_WIDTH * 3 ];
 	bool bFileDisplayed = false;
 
 	const int nMaxLen = MIN(DISASM_DISPLAY_MAX_TARGET_LEN, MAX_SYMBOLS_LEN);
@@ -570,16 +564,8 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 	if (pPathFileName.empty())
 		return nSymbolsLoaded;
 
-//#if _UNICODE
-//	TCHAR sFormat1[ MAX_SYMBOLS_LEN ];
-//	TCHAR sFormat2[ MAX_SYMBOLS_LEN ];
-//	wsprintf( sFormat1, "%%x %%%ds", MAX_SYMBOLS_LEN ); // i.e. "%x %13s"
-//	wsprintf( sFormat2, "%%%ds %%x", MAX_SYMBOLS_LEN ); // i.e. "%13s %x"
-// ascii
-	char sFormat1[ MAX_SYMBOLS_LEN ];
-	char sFormat2[ MAX_SYMBOLS_LEN ];
-	sprintf( sFormat1, "%%x %%%ds", MAX_SYMBOLS_LEN ); // i.e. "%x %13s"
-	sprintf( sFormat2, "%%%ds %%x", MAX_SYMBOLS_LEN ); // i.e. "%13s %x"
+	std::string strFormat1 = StrFormat( "%%x %%%ds", MAX_SYMBOLS_LEN ); // i.e. "%x %13s"
+	std::string strFormat2 = StrFormat( "%%%ds %%x", MAX_SYMBOLS_LEN ); // i.e. "%13s %x"
 
 	FILE *hFile = fopen( pPathFileName.c_str(), "rt" );
 
@@ -618,7 +604,7 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 
 			if(strstr(szLine, "$") == NULL)
 			{
-				sscanf(szLine, sFormat1, &nAddress, sName);
+				sscanf(szLine, strFormat1.c_str(), &nAddress, sName);
 			}
 			else
 			{
@@ -637,7 +623,7 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 						memset(&szLine[MAX_SYMBOLS_LEN], ' ', nLen - MAX_SYMBOLS_LEN);	// sscanf fails for nAddress if string too long
 					}
 				}
-				sscanf(szLine, sFormat2, sName, &nAddress);
+				sscanf(szLine, strFormat2.c_str(), sName, &nAddress);
 			}
 
 			// SymbolOffset
@@ -646,15 +632,11 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 			if( (nAddress > _6502_MEM_END) || (sName[0] == 0) )
 				continue;
 
-			// If updating symbol, print duplicate symbols
-			WORD nAddressPrev;
-			int  iTable;
-
 			// 2.9.0.11 Bug #479
 			int nLen = strlen( sName );
 			if (nLen > nMaxLen)
 			{
-				ConsolePrintFormat( sText, " %sWarn.: %s%s %s(%s%d %s> %s%d%s)"
+				ConsolePrintFormat( " %sWarn.: %s%s %s(%s%d %s> %s%d%s)"
 					, CHC_WARNING
 					, CHC_SYMBOL
 					, sName
@@ -669,8 +651,10 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 				ConsoleUpdate(); // Flush buffered output so we don't ask the user to pause
 			}
 
+			int iTable = 0;
+
 			// 2.8.0.5 Bug #244 (Debugger) Duplicate symbols for identical memory addresses in APPLE2E.SYM
-			const char *pSymbolPrev = FindSymbolFromAddress( (WORD)nAddress, &iTable ); // don't care which table it is in
+			std::string const* pSymbolPrev = FindSymbolFromAddress( (WORD)nAddress, &iTable ); // don't care which table it is in
 			if( pSymbolPrev )
 			{
 				if( !bFileDisplayed )
@@ -678,13 +662,13 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 					bFileDisplayed = true;
 
 					// TODO: Must check for buffer overflow !
-					ConsolePrintFormat( sText, "%s%s"
+					ConsolePrintFormat( "%s%s"
 						, CHC_PATH
 						, pPathFileName.c_str()
 					);
 				}
 
-				ConsolePrintFormat( sText, " %sInfo.: %s%-16s %saliases %s$%s%04X %s%-12s%s (%s%s%s)" // MAGIC NUMBER: -MAX_SYMBOLS_LEN
+				ConsolePrintFormat( " %sInfo.: %s%-16s %saliases %s$%s%04X %s%-12s%s (%s%s%s)" // MAGIC NUMBER: -MAX_SYMBOLS_LEN
 					, CHC_INFO // 2.9.0.10 was CHC_WARNING, see #479
 					, CHC_SYMBOL
 					, sName
@@ -693,7 +677,7 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 					, CHC_ADDRESS
 					, nAddress
 					, CHC_SYMBOL
-					, pSymbolPrev
+					, pSymbolPrev->c_str()
 					, CHC_DEFAULT
 					, CHC_STRING
 					, g_aSymbolTableNames[ iTable ]
@@ -702,7 +686,7 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 
 				ConsoleUpdate(); // Flush buffered output so we don't ask the user to pause
 /*
-				ConsolePrintFormat( sText, " %sWarning: %sAddress already has symbol Name%s (%s%s%s): %s%s"
+				ConsolePrintFormat( " %sWarning: %sAddress already has symbol Name%s (%s%s%s): %s%s"
 					, CHC_WARNING
 					, CHC_INFO
 					, CHC_ARG_SEP
@@ -713,7 +697,7 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 					, pSymbolPrev
 				);
 
-				ConsolePrintFormat( sText, "  %s$%s%04X %s%-31s%s"
+				ConsolePrintFormat( "  %s$%s%04X %s%-31s%s"
 					, CHC_ARG_SEP
 					, CHC_ADDRESS
 					, nAddress
@@ -724,13 +708,16 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 */
 			}
 
+			// If updating symbol, print duplicate symbols
+			WORD nAddressPrev = 0;
+
 			bool bExists  = FindAddressFromSymbol( sName, &nAddressPrev, &iTable );
 			if( bExists )
 			{
 				if( !bDupSymbolHeader )
 				{
 					bDupSymbolHeader = true;
-					ConsolePrintFormat( sText, " %sDup Symbol Name%s (%s%s%s) %s"
+					ConsolePrintFormat( " %sDup Symbol Name%s (%s%s%s) %s"
 						, CHC_ERROR
 						, CHC_DEFAULT
 						, CHC_STRING
@@ -740,7 +727,7 @@ int ParseSymbolTable(const std::string & pPathFileName, SymbolTable_Index_e eSym
 					);
 				}
 
-				ConsolePrintFormat( sText, "  %s$%s%04X %s%-31s%s"
+				ConsolePrintFormat( "  %s$%s%04X %s%-31s%s"
 					, CHC_ARG_SEP
 					, CHC_ADDRESS
 					, nAddress
@@ -868,8 +855,7 @@ void SymbolUpdate( SymbolTable_Index_e eSymbolTable, const char *pSymbolName, WO
 
 				if (bUpdateSymbol)
 				{
-					char sText[ CONSOLE_WIDTH * 2 ];
-					ConsolePrintFormat( sText, " Updating %s%s%s from %s$%s%04X%s to %s$%s%04X%s"
+					ConsolePrintFormat( " Updating %s%s%s from %s$%s%04X%s to %s$%s%04X%s"
 						, CHC_SYMBOL, pSymbolName, CHC_DEFAULT
 						, CHC_ARG_SEP					
 						, CHC_ADDRESS, nAddressPrev, CHC_DEFAULT
@@ -890,7 +876,7 @@ void SymbolUpdate( SymbolTable_Index_e eSymbolTable, const char *pSymbolName, WO
 		if (bUpdateSymbol)
 		{
 #if _DEBUG
-			const char* pSymbol = FindSymbolFromAddress( nAddress, &iTable );
+			std::string const* pSymbol = FindSymbolFromAddress( nAddress, &iTable );
 			{
 				// Found another symbol for this address.  Harmless.
 				// TODO: Probably should check if same name?
@@ -899,8 +885,7 @@ void SymbolUpdate( SymbolTable_Index_e eSymbolTable, const char *pSymbolName, WO
 			g_aSymbols[ eSymbolTable ][ nAddress ] = pSymbolName;
 
 			// Tell user symbol was added
-			char sText[ CONSOLE_WIDTH * 2 ];
-			ConsolePrintFormat( sText, " Added symbol: %s%s%s %s$%s%04X%s"
+			ConsolePrintFormat( " Added symbol: %s%s%s %s$%s%04X%s"
 				, CHC_SYMBOL, pSymbolName, CHC_DEFAULT
 				, CHC_ARG_SEP					
 				, CHC_ADDRESS, nAddress, CHC_DEFAULT
@@ -984,7 +969,7 @@ Update_t _CmdSymbolsCommon ( int nArgs, int bSymbolTables )
 				if (iTable != NUM_SYMBOL_TABLES)
 				{
 					Update_t iUpdate = _CmdSymbolsClear( (SymbolTable_Index_e) iTable );
-					ConsolePrintFormat( sText, TEXT(" Cleared symbol table: %s%s")
+					ConsolePrintFormat( " Cleared symbol table: %s%s"
 						, CHC_STRING, g_aSymbolTableNames[ iTable ]
 					 );
 					iUpdate |= ConsoleUpdate();

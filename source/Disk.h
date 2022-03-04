@@ -159,6 +159,7 @@ public:
 	BYTE GetCurrentLSSBitMask(void);
 	double GetCurrentExtraCycles(void);
 	int GetTrack(const int drive);
+	static std::string FormatPhaseString(float phase);
 	std::string GetCurrentTrackString(void);
 	std::string GetCurrentPhaseString(void);
 	LPCTSTR GetCurrentState(void);
@@ -166,7 +167,7 @@ public:
 	bool DriveSwap(void);
 	bool IsDriveConnected(int drive) { return m_floppyDrive[drive].m_isConnected; }
 
-	static std::string GetSnapshotCardName(void);
+	static const std::string& GetSnapshotCardName(void);
 	virtual void SaveSnapshot(YamlSaveHelper& yamlSaveHelper);
 	virtual bool LoadSnapshot(YamlLoadHelper& yamlLoadHelper, UINT version);
 

@@ -54,7 +54,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "SerialComms.h"
 #include "Speaker.h"
 #include "Tape.h"
-#include "Tfe/tfe.h"
 #include "RGBMonitor.h"
 #include "VidHD.h"
 
@@ -1080,22 +1079,34 @@ void SetMemMode(DWORD uNewMemMode)
 	if (dwOldDiff != dwDiff)
 	{
 		dwOldDiff = dwDiff;
-		char szStr[100];
-		char* psz = szStr;
-		psz += sprintf(psz, "diff = %08X ", dwDiff);
-		psz += sprintf(psz, "80=%d "   , SW_80STORE   ? 1 : 0);
-		psz += sprintf(psz, "ALTZP=%d ", SW_ALTZP     ? 1 : 0);
-		psz += sprintf(psz, "AUXR=%d " , SW_AUXREAD   ? 1 : 0);
-		psz += sprintf(psz, "AUXW=%d " , SW_AUXWRITE  ? 1 : 0);
-		psz += sprintf(psz, "BANK2=%d ", SW_BANK2     ? 1 : 0);
-		psz += sprintf(psz, "HIRAM=%d ", SW_HIGHRAM   ? 1 : 0);
-		psz += sprintf(psz, "HIRES=%d ", SW_HIRES     ? 1 : 0);
-		psz += sprintf(psz, "PAGE2=%d ", SW_PAGE2     ? 1 : 0);
-		psz += sprintf(psz, "C3=%d "   , SW_SLOTC3ROM ? 1 : 0);
-		psz += sprintf(psz, "CX=%d "   , SW_INTCXROM  ? 1 : 0);
-		psz += sprintf(psz, "WRAM=%d " , SW_WRITERAM  ? 1 : 0);
-		psz += sprintf(psz, "\n");
-		OutputDebugString(szStr);
+		std::string str = StrFormat(
+			/*01*/ "diff = %08X "
+			/*02*/ "80=%d "
+			/*03*/ "ALTZP=%d "
+			/*04*/ "AUXR=%d "
+			/*05*/ "AUXW=%d "
+			/*06*/ "BANK2=%d "
+			/*07*/ "HIRAM=%d "
+			/*08*/ "HIRES=%d "
+			/*09*/ "PAGE2=%d "
+			/*10*/ "C3=%d "
+			/*11*/ "CX=%d "
+			/*12*/ "WRAM=%d "
+			"\n",
+			/*01*/ dwDiff,
+			/*02*/ SW_80STORE   ? 1 : 0,
+			/*03*/ SW_ALTZP     ? 1 : 0,
+			/*04*/ SW_AUXREAD   ? 1 : 0,
+			/*05*/ SW_AUXWRITE  ? 1 : 0,
+			/*06*/ SW_BANK2     ? 1 : 0,
+			/*07*/ SW_HIGHRAM   ? 1 : 0,
+			/*08*/ SW_HIRES     ? 1 : 0,
+			/*09*/ SW_PAGE2     ? 1 : 0,
+			/*10*/ SW_SLOTC3ROM ? 1 : 0,
+			/*11*/ SW_INTCXROM  ? 1 : 0,
+			/*12*/ SW_WRITERAM  ? 1 : 0
+			);
+		OutputDebugString(str.c_str());
 	}
 #endif
 	memmode = uNewMemMode;
@@ -1757,8 +1768,8 @@ void MemInitializeFromSnapshot(void)
 
 	if (IsApple2PlusOrClone(GetApple2Type()) && (GetCardMgr().QuerySlot(SLOT3) == CT_VidHD))
 	{
-		VidHDCard* vidHD = dynamic_cast<VidHDCard*>(GetCardMgr().GetObj(SLOT3));
-		memVidHD = vidHD->IsWriteAux() ? memaux : NULL;
+		VidHDCard& vidHD = dynamic_cast<VidHDCard&>(GetCardMgr().GetRef(SLOT3));
+		memVidHD = vidHD.IsWriteAux() ? memaux : NULL;
 	}
 }
 
@@ -2026,9 +2037,9 @@ BYTE __stdcall MemSetPaging(WORD programcounter, WORD address, BYTE write, BYTE 
 	{
 		if (GetCardMgr().QuerySlot(SLOT3) == CT_VidHD)
 		{
-			VidHDCard* vidHD = dynamic_cast<VidHDCard*>(GetCardMgr().GetObj(SLOT3));
-			vidHD->VideoIOWrite(programcounter, address, write, value, nExecutedCycles);
-			memVidHD = vidHD->IsWriteAux() ? memaux : NULL;
+			VidHDCard& vidHD = dynamic_cast<VidHDCard&>(GetCardMgr().GetRef(SLOT3));
+			vidHD.VideoIOWrite(programcounter, address, write, value, nExecutedCycles);
+			memVidHD = vidHD.IsWriteAux() ? memaux : NULL;
 		}
 	}
 
@@ -2197,25 +2208,25 @@ static const UINT kUNIT_CARD_VER = 3;
 #define SS_YAML_KEY_NUMAUXBANKS "Num Aux Banks"
 #define SS_YAML_KEY_ACTIVEAUXBANK "Active Aux Bank"
 
-static std::string MemGetSnapshotStructName(void)
+static const std::string& MemGetSnapshotStructName(void)
 {
 	static const std::string name("Memory");
 	return name;
 }
 
-std::string MemGetSnapshotUnitAuxSlotName(void)
+const std::string& MemGetSnapshotUnitAuxSlotName(void)
 {
 	static const std::string name("Auxiliary Slot");
 	return name;
 }
 
-static std::string MemGetSnapshotMainMemStructName(void)
+static const std::string& MemGetSnapshotMainMemStructName(void)
 {
 	static const std::string name("Main Memory");
 	return name;
 }
 
-static std::string MemGetSnapshotAuxMemStructName(void)
+static const std::string& MemGetSnapshotAuxMemStructName(void)
 {
 	static const std::string name("Auxiliary Memory Bank");
 	return name;
@@ -2431,9 +2442,7 @@ static void MemLoadSnapshotAuxCommon(YamlLoadHelper& yamlLoadHelper, const std::
 		}
 
 		// "Auxiliary Memory Bankxx"
-		char szBank[3];
-		sprintf(szBank, "%02X", uBank-1);
-		std::string auxMemName = MemGetSnapshotAuxMemStructName() + szBank;
+		std::string auxMemName = MemGetSnapshotAuxMemStructName() + StrFormat("%02X", uBank-1);
 
 		if (!yamlLoadHelper.GetSubMap(auxMemName))
 			throw std::runtime_error("Memory: Missing map name: " + auxMemName);

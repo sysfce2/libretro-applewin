@@ -37,6 +37,7 @@
 #define MR_RST              0x80  // 7
 
 #define SN_MR_PROTO_MASK    0x0F
+#define SN_MR_MF            0x40  // 6
 #define SN_MR_CLOSED        0x00
 #define SN_MR_TCP           0x01
 #define SN_MR_UDP           0x02
@@ -58,6 +59,8 @@
 #define SN_PORT0            0x04
 #define SN_PORT1            0x05
 #define SN_DIPR0            0x0C
+#define SN_DIPR1            0x0D
+#define SN_DIPR2            0x0E
 #define SN_DIPR3            0x0F
 #define SN_DPORT0           0x10
 #define SN_DPORT1           0x11

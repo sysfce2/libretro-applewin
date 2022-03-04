@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B0098C73277E133D00F38E0C /* tfearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB835277A22530002A6C3 /* tfearch.cpp */; };
 		B0098C74277E133D00F38E0C /* tfesupp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB833277A22530002A6C3 /* tfesupp.cpp */; };
-		B0098C75277E133D00F38E0C /* tfe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB830277A22520002A6C3 /* tfe.cpp */; };
 		B0098C76277E140100F38E0C /* CmdLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB643277A14DB0002A6C3 /* CmdLine.cpp */; };
 		B0098C77277E140100F38E0C /* Disk2CardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB613277A14DA0002A6C3 /* Disk2CardManager.cpp */; };
 		B0098C78277E140100F38E0C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB637277A14DB0002A6C3 /* Log.cpp */; };
@@ -55,10 +54,8 @@
 		B0098CA0277E144E00F38E0C /* version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A4277A20FA0002A6C3 /* version.cpp */; };
 		B0098CA1277E144E00F38E0C /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB79E277A20FA0002A6C3 /* context.cpp */; };
 		B0098CA2277E144E00F38E0C /* registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A6277A20FA0002A6C3 /* registry.cpp */; };
-		B0098CA3277E144E00F38E0C /* uthernet2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB81F277A21640002A6C3 /* uthernet2.cpp */; };
 		B0098CA4277E144E00F38E0C /* resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB798277A20FA0002A6C3 /* resources.cpp */; };
 		B0098CA5277E144E00F38E0C /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7AA277A20FA0002A6C3 /* keyboard.cpp */; };
-		B0098CA6277E144E00F38E0C /* tfe2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB81E277A21640002A6C3 /* tfe2.cpp */; };
 		B0098CA7277E144E00F38E0C /* paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7A2277A20FA0002A6C3 /* paddle.cpp */; };
 		B0098CA8277E147500F38E0C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C8277A21180002A6C3 /* Joystick.cpp */; };
 		B0098CA9277E147500F38E0C /* SNESMAX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D1277A21180002A6C3 /* SNESMAX.cpp */; };
@@ -72,8 +69,6 @@
 		B0098CB1277E148600F38E0C /* z80.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7CC277A339600FC14A3 /* z80.cpp */; };
 		B0098CB2277E148600F38E0C /* daa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7CE277A339700FC14A3 /* daa.cpp */; };
 		B0098CB3277E148600F38E0C /* z80mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7CF277A339700FC14A3 /* z80mem.cpp */; };
-		B0098CB4277E171100F38E0C /* uthernet2.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB824277A21640002A6C3 /* uthernet2.h */; };
-		B0098CB5277E171100F38E0C /* tfe2.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB821277A21640002A6C3 /* tfe2.h */; };
 		B0098CB6277E171100F38E0C /* Card.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB618277A14DB0002A6C3 /* Card.h */; };
 		B0098CB7277E171100F38E0C /* SSI263Phonemes.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB61A277A14DB0002A6C3 /* SSI263Phonemes.h */; };
 		B0098CB8277E171100F38E0C /* linuxinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB79B277A20FA0002A6C3 /* linuxinterface.h */; };
@@ -88,7 +83,6 @@
 		B0098CC1277E171100F38E0C /* Pravets.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB64A277A14DB0002A6C3 /* Pravets.h */; };
 		B0098CC2277E171100F38E0C /* keyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A7277A20FA0002A6C3 /* keyboard.h */; };
 		B0098CC3277E171100F38E0C /* DiskDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB5E8277A14DA0002A6C3 /* DiskDefs.h */; };
-		B0098CC4277E171100F38E0C /* registers.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB823277A21640002A6C3 /* registers.h */; };
 		B0098CC5277E171100F38E0C /* NTSC.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB624277A14DB0002A6C3 /* NTSC.h */; };
 		B0098CC6277E171100F38E0C /* tape.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB7A1277A20FA0002A6C3 /* tape.h */; };
 		B0098CC7277E171100F38E0C /* Mockingboard.h in Headers */ = {isa = PBXBuildFile; fileRef = B09AB63B277A14DB0002A6C3 /* Mockingboard.h */; };
@@ -476,6 +470,15 @@
 		B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
 		B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
 		B0F25BCD2789B2DB0080523F /* DiskImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */; };
+		B0F84FF927D1B3F30015F642 /* Uthernet2.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FF427D1B3F30015F642 /* Uthernet2.h */; };
+		B0F84FFA27D1B3F30015F642 /* Uthernet1.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FF527D1B3F30015F642 /* Uthernet1.h */; };
+		B0F84FFB27D1B3F30015F642 /* Uthernet1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F84FF627D1B3F30015F642 /* Uthernet1.cpp */; };
+		B0F84FFC27D1B3F30015F642 /* Uthernet2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F84FF727D1B3F30015F642 /* Uthernet2.cpp */; };
+		B0F84FFD27D1B3F30015F642 /* W5100.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FF827D1B3F30015F642 /* W5100.h */; };
+		B0F8500227D1B44F0015F642 /* NetworkBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F84FFE27D1B44F0015F642 /* NetworkBackend.cpp */; };
+		B0F8500327D1B44F0015F642 /* PCapBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FFF27D1B44F0015F642 /* PCapBackend.h */; };
+		B0F8500427D1B44F0015F642 /* NetworkBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F8500027D1B44F0015F642 /* NetworkBackend.h */; };
+		B0F8500527D1B44F0015F642 /* PCapBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F8500127D1B44F0015F642 /* PCapBackend.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1013,18 +1016,11 @@
 		B09AB7F9277A21410002A6C3 /* fileapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fileapi.cpp; path = source/linux/libwindows/fileapi.cpp; sourceTree = "<group>"; };
 		B09AB7FA277A21410002A6C3 /* winnls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = winnls.cpp; path = source/linux/libwindows/winnls.cpp; sourceTree = "<group>"; };
 		B09AB7FB277A21410002A6C3 /* gdi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gdi.h; path = source/linux/libwindows/gdi.h; sourceTree = "<group>"; };
-		B09AB81E277A21640002A6C3 /* tfe2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tfe2.cpp; path = source/linux/network/tfe2.cpp; sourceTree = "<group>"; };
-		B09AB81F277A21640002A6C3 /* uthernet2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uthernet2.cpp; path = source/linux/network/uthernet2.cpp; sourceTree = "<group>"; };
 		B09AB820277A21640002A6C3 /* slirp2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slirp2.cpp; path = source/linux/network/slirp2.cpp; sourceTree = "<group>"; };
-		B09AB821277A21640002A6C3 /* tfe2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tfe2.h; path = source/linux/network/tfe2.h; sourceTree = "<group>"; };
 		B09AB822277A21640002A6C3 /* slirp2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slirp2.h; path = source/linux/network/slirp2.h; sourceTree = "<group>"; };
-		B09AB823277A21640002A6C3 /* registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = registers.h; path = source/linux/network/registers.h; sourceTree = "<group>"; };
-		B09AB824277A21640002A6C3 /* uthernet2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uthernet2.h; path = source/linux/network/uthernet2.h; sourceTree = "<group>"; };
 		B09AB82D277A22520002A6C3 /* tfearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tfearch.h; path = source/Tfe/tfearch.h; sourceTree = "<group>"; };
 		B09AB82E277A22520002A6C3 /* tfesupp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tfesupp.h; path = source/Tfe/tfesupp.h; sourceTree = "<group>"; };
 		B09AB82F277A22520002A6C3 /* Uilib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Uilib.cpp; path = source/Tfe/Uilib.cpp; sourceTree = "<group>"; };
-		B09AB830277A22520002A6C3 /* tfe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tfe.cpp; path = source/Tfe/tfe.cpp; sourceTree = "<group>"; };
-		B09AB831277A22530002A6C3 /* tfe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tfe.h; path = source/Tfe/tfe.h; sourceTree = "<group>"; };
 		B09AB832277A22530002A6C3 /* Bpf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bpf.h; path = source/Tfe/Bpf.h; sourceTree = "<group>"; };
 		B09AB833277A22530002A6C3 /* tfesupp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tfesupp.cpp; path = source/Tfe/tfesupp.cpp; sourceTree = "<group>"; };
 		B09AB834277A22530002A6C3 /* Ip6_misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ip6_misc.h; path = source/Tfe/Ip6_misc.h; sourceTree = "<group>"; };
@@ -1149,6 +1145,15 @@
 		B0F013902785A218002936B4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Preferences.strings"; sourceTree = "<group>"; };
 		B0F25BCE2789B2DB0080523F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DiskImageBrowser.xib; sourceTree = "<group>"; };
 		B0F25BD12789B2E10080523F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/DiskImageBrowser.strings"; sourceTree = "<group>"; };
+		B0F84FF427D1B3F30015F642 /* Uthernet2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uthernet2.h; path = source/Uthernet2.h; sourceTree = "<group>"; };
+		B0F84FF527D1B3F30015F642 /* Uthernet1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uthernet1.h; path = source/Uthernet1.h; sourceTree = "<group>"; };
+		B0F84FF627D1B3F30015F642 /* Uthernet1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Uthernet1.cpp; path = source/Uthernet1.cpp; sourceTree = "<group>"; };
+		B0F84FF727D1B3F30015F642 /* Uthernet2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Uthernet2.cpp; path = source/Uthernet2.cpp; sourceTree = "<group>"; };
+		B0F84FF827D1B3F30015F642 /* W5100.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = W5100.h; path = source/W5100.h; sourceTree = "<group>"; };
+		B0F84FFE27D1B44F0015F642 /* NetworkBackend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkBackend.cpp; path = source/Tfe/NetworkBackend.cpp; sourceTree = "<group>"; };
+		B0F84FFF27D1B44F0015F642 /* PCapBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCapBackend.h; path = source/Tfe/PCapBackend.h; sourceTree = "<group>"; };
+		B0F8500027D1B44F0015F642 /* NetworkBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkBackend.h; path = source/Tfe/NetworkBackend.h; sourceTree = "<group>"; };
+		B0F8500127D1B44F0015F642 /* PCapBackend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PCapBackend.cpp; path = source/Tfe/PCapBackend.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1584,12 +1589,17 @@
 				B09AB64D277A14DB0002A6C3 /* Tape.cpp */,
 				B09AB62B277A14DB0002A6C3 /* Tape.h */,
 				B09AB82C277A22460002A6C3 /* Tfe */,
+				B0F84FF627D1B3F30015F642 /* Uthernet1.cpp */,
+				B0F84FF527D1B3F30015F642 /* Uthernet1.h */,
+				B0F84FF727D1B3F30015F642 /* Uthernet2.cpp */,
+				B0F84FF427D1B3F30015F642 /* Uthernet2.h */,
 				B09AB609277A14DA0002A6C3 /* Utilities.cpp */,
 				B09AB5F1277A14DA0002A6C3 /* Utilities.h */,
 				B09AB63E277A14DB0002A6C3 /* Video.cpp */,
 				B09AB610277A14DA0002A6C3 /* Video.h */,
 				B09AB604277A14DA0002A6C3 /* VidHD.cpp */,
 				B09AB632277A14DB0002A6C3 /* VidHD.h */,
+				B0F84FF827D1B3F30015F642 /* W5100.h */,
 				B09AB60D277A14DA0002A6C3 /* YamlHelper.cpp */,
 				B09AB642277A14DB0002A6C3 /* YamlHelper.h */,
 				B09AB5EE277A14DA0002A6C3 /* z80emu.cpp */,
@@ -1760,13 +1770,8 @@
 		B09AB81D277A21510002A6C3 /* network */ = {
 			isa = PBXGroup;
 			children = (
-				B09AB823277A21640002A6C3 /* registers.h */,
 				B09AB820277A21640002A6C3 /* slirp2.cpp */,
 				B09AB822277A21640002A6C3 /* slirp2.h */,
-				B09AB81E277A21640002A6C3 /* tfe2.cpp */,
-				B09AB821277A21640002A6C3 /* tfe2.h */,
-				B09AB81F277A21640002A6C3 /* uthernet2.cpp */,
-				B09AB824277A21640002A6C3 /* uthernet2.h */,
 			);
 			name = network;
 			sourceTree = "<group>";
@@ -1776,9 +1781,11 @@
 			children = (
 				B09AB832277A22530002A6C3 /* Bpf.h */,
 				B09AB834277A22530002A6C3 /* Ip6_misc.h */,
+				B0F84FFE27D1B44F0015F642 /* NetworkBackend.cpp */,
+				B0F8500027D1B44F0015F642 /* NetworkBackend.h */,
 				B09AB837277A22530002A6C3 /* Pcap.h */,
-				B09AB830277A22520002A6C3 /* tfe.cpp */,
-				B09AB831277A22530002A6C3 /* tfe.h */,
+				B0F8500127D1B44F0015F642 /* PCapBackend.cpp */,
+				B0F84FFF27D1B44F0015F642 /* PCapBackend.h */,
 				B09AB835277A22530002A6C3 /* tfearch.cpp */,
 				B09AB82D277A22520002A6C3 /* tfearch.h */,
 				B09AB833277A22530002A6C3 /* tfesupp.cpp */,
@@ -1957,10 +1964,8 @@
 				B0098CC2277E171100F38E0C /* keyboard.h in Headers */,
 				B0098CC8277E171100F38E0C /* RGBMonitor.h in Headers */,
 				B0098CF1277E171200F38E0C /* paddle.h in Headers */,
-				B0098CC4277E171100F38E0C /* registers.h in Headers */,
 				B0098CC1277E171100F38E0C /* Pravets.h in Headers */,
 				B0098CBC277E171100F38E0C /* registry.h in Headers */,
-				B0098CB4277E171100F38E0C /* uthernet2.h in Headers */,
 				B0098CD5277E171100F38E0C /* MouseInterface.h in Headers */,
 				B0098CE2277E171100F38E0C /* YamlHelper.h in Headers */,
 				B0098CD9277E171100F38E0C /* SaveState_Structs_v1.h in Headers */,
@@ -1970,12 +1975,14 @@
 				B0098CD3277E171100F38E0C /* FrameBase.h in Headers */,
 				B0098CC9277E171100F38E0C /* Riff.h in Headers */,
 				B0098CEC277E171200F38E0C /* Speaker.h in Headers */,
+				B0F8500327D1B44F0015F642 /* PCapBackend.h in Headers */,
+				B0F84FF927D1B3F30015F642 /* Uthernet2.h in Headers */,
 				B0098CB6277E171100F38E0C /* Card.h in Headers */,
 				B0098CCF277E171100F38E0C /* z80.h in Headers */,
-				B0098CB5277E171100F38E0C /* tfe2.h in Headers */,
 				B0098CDF277E171100F38E0C /* SNESMAX.h in Headers */,
 				B0098CD8277E171100F38E0C /* resources.h in Headers */,
 				B0098CE7277E171100F38E0C /* z80emu.h in Headers */,
+				B0F8500427D1B44F0015F642 /* NetworkBackend.h in Headers */,
 				B0098CDD277E171100F38E0C /* Memory.h in Headers */,
 				B0098CD0277E171100F38E0C /* DiskImageHelper.h in Headers */,
 				B0098CCC277E171100F38E0C /* version.h in Headers */,
@@ -1997,6 +2004,7 @@
 				B0098CDA277E171100F38E0C /* SynchronousEventManager.h in Headers */,
 				B0098CD6277E171100F38E0C /* SAM.h in Headers */,
 				B0098CC6277E171100F38E0C /* tape.h in Headers */,
+				B0F84FFD27D1B3F30015F642 /* W5100.h in Headers */,
 				B0098CD4277E171100F38E0C /* Tape.h in Headers */,
 				B0098CB8277E171100F38E0C /* linuxinterface.h in Headers */,
 				B0098CED277E171200F38E0C /* z80mem.h in Headers */,
@@ -2013,6 +2021,7 @@
 				B0098CC3277E171100F38E0C /* DiskDefs.h in Headers */,
 				B0098CEB277E171200F38E0C /* Disk2CardManager.h in Headers */,
 				B0098D08277E244F00F38E0C /* Registry.h in Headers */,
+				B0F84FFA27D1B3F30015F642 /* Uthernet1.h in Headers */,
 				B0098CBA277E171100F38E0C /* SoundCore.h in Headers */,
 				B0098CE4277E171100F38E0C /* Log.h in Headers */,
 				B0098CE3277E171100F38E0C /* Utilities.h in Headers */,
@@ -2496,6 +2505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0F8500227D1B44F0015F642 /* NetworkBackend.cpp in Sources */,
 				B0098D06277E1D4F00F38E0C /* unzip.c in Sources */,
 				B0098C88277E140100F38E0C /* RGBMonitor.cpp in Sources */,
 				B0098C9D277E144E00F38E0C /* slirp2.cpp in Sources */,
@@ -2523,7 +2533,6 @@
 				B0098C98277E140100F38E0C /* DiskImage.cpp in Sources */,
 				B0098CAD277E147500F38E0C /* SerialComms.cpp in Sources */,
 				B0098CB1277E148600F38E0C /* z80.cpp in Sources */,
-				B0098CA3277E144E00F38E0C /* uthernet2.cpp in Sources */,
 				B0098CA4277E144E00F38E0C /* resources.cpp in Sources */,
 				B0098CA5277E144E00F38E0C /* keyboard.cpp in Sources */,
 				B0098C82277E140100F38E0C /* Memory.cpp in Sources */,
@@ -2534,6 +2543,9 @@
 				B0A8D66627B1119D00D4314F /* 6522.cpp in Sources */,
 				B0098CA7277E144E00F38E0C /* paddle.cpp in Sources */,
 				B0098CB0277E147500F38E0C /* Debugger_Win32.cpp in Sources */,
+				B0F84FFB27D1B3F30015F642 /* Uthernet1.cpp in Sources */,
+				B0F8500527D1B44F0015F642 /* PCapBackend.cpp in Sources */,
+				B0F84FFC27D1B3F30015F642 /* Uthernet2.cpp in Sources */,
 				B0098C8B277E140100F38E0C /* z80emu.cpp in Sources */,
 				B0098CA2277E144E00F38E0C /* registry.cpp in Sources */,
 				B0098C94277E140100F38E0C /* AY8910.cpp in Sources */,
@@ -2552,14 +2564,12 @@
 				B0098C90277E140100F38E0C /* Speaker.cpp in Sources */,
 				B0098C8E277E140100F38E0C /* 6821.cpp in Sources */,
 				B0098D04277E1D4F00F38E0C /* mztools.c in Sources */,
-				B0098CA6277E144E00F38E0C /* tfe2.cpp in Sources */,
 				B0098C8C277E140100F38E0C /* MouseInterface.cpp in Sources */,
 				B0098C85277E140100F38E0C /* Card.cpp in Sources */,
 				B0098C7D277E140100F38E0C /* SaveState.cpp in Sources */,
 				B0098D07277E1D4F00F38E0C /* ioapi.c in Sources */,
 				B0098C81277E140100F38E0C /* Disk.cpp in Sources */,
 				B0098C96277E140100F38E0C /* VidHD.cpp in Sources */,
-				B0098C75277E133D00F38E0C /* tfe.cpp in Sources */,
 				B0098C7A277E140100F38E0C /* CardManager.cpp in Sources */,
 				B0098C73277E133D00F38E0C /* tfearch.cpp in Sources */,
 				B0098C9E277E144E00F38E0C /* tape.cpp in Sources */,

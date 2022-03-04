@@ -84,11 +84,10 @@ void SSI_Output(void)
 	int ssi2 = ssiRegs[SSI_RATEINF];
 
 	LogOutput("SSI: ");
-	for (int i=0; i<=4; i++)
+	for (int i = 0; i <= 4; i++)
 	{
-		char r[3]="--";
-		if (ssiRegs[i]>=0) sprintf(r,"%02X",ssiRegs[i]);
-		LogOutput("%s ", r);
+		std::string r = (ssiRegs[i] >= 0) ? StrFormat("%02X", ssiRegs[i]) : "--";
+		LogOutput("%s ", r.c_str());
 		ssiRegs[i] = -1;
 	}
 
@@ -175,9 +174,8 @@ void SSI263::Write(BYTE nReg, BYTE nValue)
 		//
 		{
 			bool H2L = (m_ctrlArtAmp & CONTROL_MASK) && !(nValue & CONTROL_MASK);
-			char newMode[20];
-			sprintf_s(newMode, sizeof(newMode), "(new mode=%d)", m_durationPhoneme>>6);
-			LogOutput("CTRL  = %d->%d, ART = 0x%02X, AMP=0x%02X %s\n", m_ctrlArtAmp>>7, nValue>>7, (nValue&ARTICULATION_MASK)>>4, nValue&AMPLITUDE_MASK, H2L?newMode:"");
+			std::string newMode = StrFormat(" (new mode=%d)", m_durationPhoneme>>6);
+			LogOutput("CTRL  = %d->%d, ART = 0x%02X, AMP=0x%02X%s\n", m_ctrlArtAmp>>7, nValue>>7, (nValue&ARTICULATION_MASK)>>4, nValue&AMPLITUDE_MASK, H2L?newMode.c_str() : "");
 		}
 #endif
 #if LOG_SSI263B

@@ -28,7 +28,7 @@
 void CreateLanguageCard(void); // FIXME should be in Memory.h
 #import "Mockingboard.h"
 #import "Speaker.h"
-#import "Tfe.h"
+#import "PCapBackend.h"
 #import "tfesupp.h"
 
 // Objective-C typedefs BOOL to be bool, but wincompat.h typedefs it to be
@@ -217,19 +217,18 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         [self.computerExansionSlotButton selectItemWithTag:GetCurrentExpansionMemType()];
         
         // pcap
-        if (tfe_enumadapter_open()) {
+        if (PCapBackend::tfe_enumadapter_open()) {
             char *name;
             char *description;
             
-            while (tfe_enumadapter(&name, &description)) {
+            while (PCapBackend::tfe_enumadapter(&name, &description)) {
                 [self.computerPcapSlotButton addItemWithTitle:[NSString stringWithUTF8String:name]];
                 lib_free(name);
                 lib_free(description);
             }
-            tfe_enumadapter_close();
+            PCapBackend::tfe_enumadapter_close();
             
-            const std::string currentInterface = get_tfe_interface();
-            [self.computerPcapSlotButton selectItemWithTitle:[NSString stringWithUTF8String:currentInterface.c_str()]];
+            [self.computerPcapSlotButton selectItemWithTitle:[NSString stringWithUTF8String:PCapBackend::tfe_interface.c_str()]];
         }
     }
 }
@@ -425,8 +424,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         NSPopUpButton *slotButton = (NSPopUpButton *)sender;
         const std::string newInterface([slotButton.selectedItem.title cStringUsingEncoding:NSUTF8StringEncoding]);
 
-        update_tfe_interface(newInterface);
-        tfe_SetRegistryInterface(SLOT3, newInterface);
+        PCapBackend::tfe_SetRegistryInterface(SLOT3, newInterface);
     }
     
     self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];

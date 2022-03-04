@@ -23,8 +23,8 @@
 
 #include "Debugger/Debugger_Types.h"
 
-#include "Tfe/tfe.h"
 #include "Tfe/tfesupp.h"
+#include "Tfe/PCapBackend.h"
 
 namespace
 {
@@ -359,22 +359,22 @@ namespace sa2
 
           ImGui::Separator();
 
-          const std::string current_interface = get_tfe_interface();
+          const std::string current_interface = PCapBackend::tfe_interface;
 
           if (ImGui::BeginCombo("pcap", current_interface.c_str()))
           {
             std::vector<char *> ifaces;
-            if (tfe_enumadapter_open())
+            if (PCapBackend::tfe_enumadapter_open())
             {
               char *pname;
               char *pdescription;
 
-              while (tfe_enumadapter(&pname, &pdescription))
+              while (PCapBackend::tfe_enumadapter(&pname, &pdescription))
               {
                 ifaces.push_back(pname);
                 lib_free(pdescription);
               }
-              tfe_enumadapter_close();
+              PCapBackend::tfe_enumadapter_close();
 
               for (const auto & iface : ifaces)
               {
@@ -382,8 +382,8 @@ namespace sa2
                 if (ImGui::Selectable(iface, isSelected))
                 {
                   // the following line interacts with tfe_enumadapter, so we must run it outside the above loop
-                  update_tfe_interface(iface);
-                  tfe_SetRegistryInterface(SLOT3, iface);
+                  PCapBackend::tfe_interface = iface;
+                  PCapBackend::tfe_SetRegistryInterface(SLOT3, PCapBackend::tfe_interface);
                 }
                 if (isSelected)
                 {
@@ -915,7 +915,7 @@ namespace sa2
         {
           ImGui::PushID(nAddress);
           DisasmLine_t line;
-          const char* pSymbol = FindSymbolFromAddress(nAddress);
+          std::string const* pSymbol = FindSymbolFromAddress(nAddress);
           const int bDisasmFormatFlags = GetDisassemblyLine(nAddress, line);
 
           ImGui::TableNextRow();
@@ -979,7 +979,7 @@ namespace sa2
           ImGui::TableNextColumn();
           if (pSymbol)
           {
-            debuggerTextColored(FG_DISASM_SYMBOL, pSymbol);
+            debuggerTextColored(FG_DISASM_SYMBOL, pSymbol->c_str());
           }
 
           ImGui::TableNextColumn();
@@ -1179,7 +1179,7 @@ namespace sa2
             frame->ChangeMode(MODE_RUNNING);
           }
           ImGui::SameLine();
-          ImGui::Text("%016" PRIu64 " - %04X", g_nCumulativeCycles, regs.pc);
+          ImGui::Text("%016llu - %04X", g_nCumulativeCycles, regs.pc);
 
           if (!mySyncCPU)
           {

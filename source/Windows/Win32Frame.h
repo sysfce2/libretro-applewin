@@ -57,6 +57,8 @@ public:
 
 	virtual std::string Video_GetScreenShotFolder() const;
 
+	virtual std::shared_ptr<NetworkBackend> CreateNetworkBackend();
+
 	bool GetFullScreenShowSubunitStatus(void);
 	int GetFullScreenOffsetX(void);
 	int GetFullScreenOffsetY(void);
@@ -185,10 +187,10 @@ private:
 	int    g_nTrackDrive2;
 	int    g_nSectorDrive1;
 	int    g_nSectorDrive2;
-	TCHAR  g_sTrackDrive1[8];
-	TCHAR  g_sTrackDrive2[8];
-	TCHAR  g_sSectorDrive1[8];
-	TCHAR  g_sSectorDrive2[8];
+	std::string g_strTrackDrive1;
+	std::string g_strTrackDrive2;
+	std::string g_strSectorDrive1;
+	std::string g_strSectorDrive2;
 	Disk_Status_e g_eStatusDrive1;
 	Disk_Status_e g_eStatusDrive2;
 
