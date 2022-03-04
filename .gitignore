@@ -246,9 +246,6 @@ target_wrapper.*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
-# VSCode
-.vscode
-
 # Xcode/macOS
 *.DS_Store
 *.pbxuser
@@ -259,3 +256,6 @@ CMakeLists.txt.user*
 *.xcscheme
 project.xcworkspace/
 xcuserdata/
+
+# VSCode
+.vscode
