@@ -2,6 +2,7 @@
 #include "linux/linuxframe.h"
 #include "linux/context.h"
 #include "linux/network/slirp2.h"
+#include "linux/monitor/binarymonitor.cpp"
 #include "Tfe/PCapBackend.h"
 #include "Interface.h"
 #include "Log.h"
@@ -65,11 +66,13 @@ void LinuxFrame::Initialize(bool resetVideoState)
   myFramebuffer.resize(numberOfBytes);
   video.Initialize(myFramebuffer.data(), resetVideoState);
   LogFileTimeUntilFirstKeyReadReset();
+  myBinaryMonitor.reset(new BinaryMonitor);
 }
 
 void LinuxFrame::Destroy()
 {
   myFramebuffer.clear();
+  myBinaryMonitor.reset();
   GetVideo().Destroy(); // this resets the Video's FrameBuffer pointer
 }
 
@@ -137,6 +140,14 @@ std::shared_ptr<NetworkBackend> LinuxFrame::CreateNetworkBackend(const std::stri
 #else
   return std::make_shared<PCapBackend>(interfaceName);
 #endif
+}
+
+void LinuxFrame::Update()
+{
+  if (myBinaryMonitor)
+  {
+    myBinaryMonitor->process();
+  }
 }
 
 int MessageBox(HWND, LPCSTR lpText, LPCSTR lpCaption, UINT uType)

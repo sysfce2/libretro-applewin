@@ -3,6 +3,8 @@
 #include "FrameBase.h"
 #include <vector>
 
+class BinaryMonitor;
+
 class LinuxFrame : public FrameBase
 {
 public:
@@ -40,8 +42,12 @@ public:
   virtual void Begin();
   virtual void End();
 
+  void Update();
+
 protected:
   std::vector<uint8_t> myFramebuffer;
+
+  std::shared_ptr<BinaryMonitor> myBinaryMonitor;
 };
 
 int MessageBox(HWND, LPCSTR lpText, LPCSTR lpCaption, UINT uType);

@@ -106,6 +106,7 @@ set(SOURCE_FILES
   linux/context.cpp
   linux/tape.cpp
   linux/network/slirp2.cpp
+  linux/monitor/binarymonitor.cpp
 
   linux/duplicates/Debugger_Display.cpp
   linux/duplicates/Debugger_Win32.cpp
