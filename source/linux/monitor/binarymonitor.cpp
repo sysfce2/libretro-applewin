@@ -1,8 +1,12 @@
 #include "StdAfx.h"
 #include "linux/monitor/binarymonitor.h"
+#include "linux/monitor/commands.h"
 
 #include "Log.h"
 #include "Interface.h"
+#include "CPU.h"
+#include "Memory.h"
+#include "Debugger/Debug.h"
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -12,6 +16,8 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <cstring>
+
+#define MON_EVENT_ID 0xffffffff
 
 enum t_binary_command {
   e_MON_CMD_INVALID = 0x00,
@@ -128,7 +134,6 @@ void BinaryClient::Command::reset()
 
 BinaryClient::BinaryClient(const int socket)
   : mySocket(socket)
-  , myAlive(true)
 {
   LogOutput("New client: %d\n", mySocket);
 }
@@ -141,22 +146,17 @@ BinaryClient::~BinaryClient()
 
 ssize_t BinaryClient::readData(char * dest, size_t len)
 {
-  if (!myAlive)
-  {
-    return 0;
-  }
-
   const ssize_t data = recv(mySocket, dest, len, 0);
   if (data == 0)
   {
-    myAlive = false;
+    throw std::runtime_error("graceful termination");
   }
   else if (data < 0);
   {
     const int error = errno;
     if (error != EAGAIN && error != EWOULDBLOCK)
     {
-      myAlive = false;
+      throw std::runtime_error(strerror(error));
     }
   }
   return data;
@@ -185,24 +185,46 @@ bool BinaryClient::readPayload()
 
 void BinaryClient::sendReply(const uint8_t type, const uint32_t request, const uint8_t error)
 {
-  if (myAlive)
+  myResponse.stx = 0x02;
+  myResponse.version = 0x02;
+  myResponse.type = type;
+  myResponse.error = error;
+  myResponse.request = request;
+  myResponse.length = myPayloadOut.size();
+  ssize_t sent = send(mySocket, &myResponse, sizeof(Response), MSG_NOSIGNAL);
+  if (!myPayloadOut.empty())
   {
-    myResponse.stx = myCommand.stx;
-    myResponse.version = myCommand.version;
-    myResponse.type = type;
-    myResponse.error = error;
-    myResponse.request = request;
-    myResponse.length = myPayloadOut.size();
-    ssize_t sent = send(mySocket, &myResponse, sizeof(Response), 0);
-    if (!myPayloadOut.empty())
-    {
-      sent = send(mySocket, myPayloadOut.data(), myPayloadOut.size(), 0);
-    }
-    LogOutput("RESPONSE: %d, LEN: %9d, REQ: %9d, CMD: 0x%2x, ERR: 0x%02x\n", mySocket, myResponse.length, myResponse.request, myResponse.type, myResponse.error);
+    sent = send(mySocket, myPayloadOut.data(), myPayloadOut.size(), MSG_NOSIGNAL);
   }
+  LogOutput("RESPONSE: %d, LEN: %9d, REQ: %9d, CMD: 0x%02x, ERR: 0x%02x\n", mySocket, myResponse.length, myResponse.request, myResponse.type, myResponse.error);
 }
 
-bool BinaryClient::process()
+void BinaryClient::sendBreakpoint(const uint32_t request, const uint8_t error, const size_t i)
+{
+  if (i >= MAX_BREAKPOINTS || !g_aBreakpoints[i].bSet)
+  {
+    sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
+    return;
+  }
+
+  Breakpoint_t & bp = g_aBreakpoints[i];
+
+  writeInt32(i);
+  writeInt8(0);
+  writeInt16(bp.nAddress);
+  writeInt16(bp.nAddress + bp.nLength - 1);
+  writeInt8(1);
+  writeInt8(bp.bEnabled);
+  writeInt8(4);
+  writeInt8(bp.bTemp);
+  writeInt32(0);
+  writeInt32(0);
+  writeInt8(0);
+  writeInt8(0);
+  sendReply(e_MON_RESPONSE_CHECKPOINT_INFO, myCommand.request, e_MON_ERR_OK);
+}
+
+void BinaryClient::process()
 {
   if (myCommand.stx != 0x02)
   {
@@ -218,23 +240,22 @@ bool BinaryClient::process()
       myCommand.reset();
     }
   }
-  return myAlive;
 }
 
 void BinaryClient::cmdViceInfo()
 {
-  myPayloadOut.resize(10);
-  myPayloadOut[0] = 4;
-  myPayloadOut[1] = 3;
-  myPayloadOut[2] = 6;
-  myPayloadOut[3] = 1;
-  myPayloadOut[4] = 0;
+  uint8_t * dest = enlargeBuffer(10);
+  dest[0] = 4;
+  dest[1] = 3;
+  dest[2] = 6;
+  dest[3] = 2;
+  dest[4] = 0;
 
-  myPayloadOut[5] = 4;
-  myPayloadOut[6] = 0;
-  myPayloadOut[7] = 0;
-  myPayloadOut[8] = 0;
-  myPayloadOut[9] = 0;
+  dest[5] = 4;
+  dest[6] = 0;
+  dest[7] = 0;
+  dest[8] = 0;
+  dest[9] = 0;
   sendReply(e_MON_RESPONSE_VICE_INFO, myCommand.request, e_MON_ERR_OK);
 }
 
@@ -255,9 +276,9 @@ void BinaryClient::cmdResourceGet()
       {
         sendResourceStringReply(myCommand.request, e_MON_ERR_OK, "127.0.0.1");
       }
-      else
+      else if (name == "VICIIPaletteFile")
       {
-        sendError(e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING);
+        sendResourceStringReply(myCommand.request, e_MON_ERR_OK, "pepto-ntsc");
       }
       return;
     }
@@ -284,10 +305,33 @@ void BinaryClient::cmdRegistersAvailable()
   const char * name = "PC";
   const uint8_t size = 1 + 1 + 1 + strlen(name);
   writeInt8(size);
-  writeInt8(0);
-  writeInt8(16);
+  writeInt8(0);       // ID
+  writeInt8(16);      // bits
   writeString(name);
   sendReply(e_MON_RESPONSE_REGISTERS_AVAILABLE, myCommand.request, e_MON_ERR_OK);
+}
+
+void BinaryClient::cmdRegistersGet()
+{
+  if (myPayloadIn.size() < 1)
+  {
+    sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_CMD_INVALID_LENGTH);
+    return;
+  }
+
+  const uint8_t memspace = myPayloadIn[0];
+  if (memspace != 0)
+  {
+    sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE);
+    return;
+  }
+
+  writeInt16(1);
+  const uint8_t size = 1 + 2;
+  writeInt8(size);
+  writeInt8(0);
+  writeInt16(regs.pc);
+  sendReply(e_MON_RESPONSE_REGISTER_INFO, myCommand.request, e_MON_ERR_OK);
 }
 
 void BinaryClient::cmdDisplayGet()
@@ -299,7 +343,7 @@ void BinaryClient::cmdDisplayGet()
   }
 
   const uint8_t format = myPayloadIn[1];
-  if (format != 0)
+  if (format != 3) // RGBA
   {
     sendError(e_MON_RESPONSE_DISPLAY_GET, e_MON_ERR_INVALID_PARAMETER);
     return;
@@ -314,8 +358,9 @@ void BinaryClient::cmdDisplayGet()
   const uint16_t y = video.GetFrameBufferBorderHeight();
   const uint16_t sw = video.GetFrameBufferBorderlessWidth();
   const uint16_t sh = video.GetFrameBufferBorderlessHeight();
-  const uint8_t bpp = 8;
+  const uint8_t bpp = sizeof(bgra_t) * 8;
 
+  writeInt32(infoLength);
   writeInt16(width);
   writeInt16(height);
   writeInt16(x);
@@ -324,21 +369,12 @@ void BinaryClient::cmdDisplayGet()
   writeInt16(sh);
   writeInt8(bpp);
 
-  const uint32_t displayBuffer = width * height;
+  const uint32_t displayBuffer = width * height * sizeof(bgra_t);
   writeInt32(displayBuffer);
 
-  const size_t size = myPayloadOut.size();
-  myPayloadOut.resize(size + displayBuffer);
-  
-  uint8_t * dest = myPayloadOut.data() + size;
-
+  uint8_t * dest = enlargeBuffer(displayBuffer);
   const uint8_t * data = video.GetFrameBuffer();
-  for (size_t i = 0; i < displayBuffer; ++i)
-  {
-    *dest = *(data + 1);
-    dest += 1;
-    data += 4;
-  }
+  memcpy(dest, data, displayBuffer);
   sendReply(e_MON_RESPONSE_DISPLAY_GET, myCommand.request, e_MON_ERR_OK);
 }
 
@@ -353,43 +389,105 @@ void BinaryClient::cmdBanksAvailable()
   sendReply(e_MON_RESPONSE_BANKS_AVAILABLE, myCommand.request, e_MON_ERR_OK);
 }
 
+void BinaryClient::cmdStopped()
+{
+  writeInt16(regs.pc);
+  sendReply(e_MON_RESPONSE_STOPPED, MON_EVENT_ID, e_MON_ERR_OK);
+}
+
+void BinaryClient::cmdCheckpointSet()
+{
+  if (myPayloadIn.size() < sizeof(CheckPointSet_t))
+  {
+    sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_CMD_INVALID_LENGTH);
+    return;
+  }
+
+  const CheckPointSet_t & checkpointSet = *(const CheckPointSet_t *)myPayloadIn.data();
+
+  size_t i = 0;
+  while ((i < MAX_BREAKPOINTS) && g_aBreakpoints[i].bSet)
+  {
+    ++i;
+  }
+
+  if (i >= MAX_BREAKPOINTS)
+  {
+    sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
+    return;
+  }
+
+  Breakpoint_t & bp = g_aBreakpoints[i];
+  bp.nAddress = checkpointSet.startAddress;
+  bp.nLength = checkpointSet.endAddress - checkpointSet.startAddress + 1;
+  bp.eSource = BP_SRC_REG_PC;
+  bp.bSet = true;
+  bp.eOperator = BP_OP_EQUAL;
+  bp.bEnabled = checkpointSet.enabled;
+  bp.bTemp = checkpointSet.temporary;
+  ++g_nBreakpoints;
+
+  sendBreakpoint(myCommand.request, e_MON_ERR_OK, i);
+}
+
+void BinaryClient::cmdMemoryGet()
+{
+  if (myPayloadIn.size() < sizeof(MemoryGet_t))
+  {
+    sendError(e_MON_RESPONSE_MEM_GET, e_MON_ERR_CMD_INVALID_LENGTH);
+    return;
+  }
+
+  const MemoryGet_t & memoryGet = *(const MemoryGet_t *)myPayloadIn.data();
+
+  if (memoryGet.memspace != 0 || memoryGet.bankID != 0)
+  {
+    sendError(e_MON_RESPONSE_MEM_GET, e_MON_ERR_INVALID_PARAMETER);
+    return;
+  }
+
+  const uint16_t length = memoryGet.endAddress - memoryGet.startAddress + 1;
+  writeInt16(length);
+
+  uint8_t * dest = enlargeBuffer(length);
+  memcpy(dest, mem + memoryGet.startAddress, length);
+  sendReply(e_MON_RESPONSE_MEM_GET, myCommand.request, e_MON_ERR_OK);
+}
+
+uint8_t * BinaryClient::enlargeBuffer(const size_t size)
+{
+  const size_t current = myPayloadOut.size();
+  myPayloadOut.resize(current + size);
+  uint8_t * data = myPayloadOut.data() + current;
+  return data;
+}
+
 void BinaryClient::writeString(const char * value)
 {
   const size_t len = strlen(value);
-  const size_t size = myPayloadOut.size();
-  myPayloadOut.resize(size + 1 + len);
-  uint8_t * dest = myPayloadOut.data() + size;
+  writeInt8(len);
 
-  dest[0] = len;
-  void * data = dest + 1;
-  memcpy(data, value, len);
+  uint8_t * dest = enlargeBuffer(len);
+  memcpy(dest, value, len);
 }
 
 void BinaryClient::writeInt32(const uint32_t value)
 {
-  const size_t size = myPayloadOut.size();
-  myPayloadOut.resize(size + sizeof(value));
-  uint8_t * dest = myPayloadOut.data() + size;
-
+  uint8_t * dest = enlargeBuffer(sizeof(value));
   uint32_t * data = (uint32_t *)dest;
   *data = value;
 }
 
 void BinaryClient::writeInt16(const uint16_t value)
 {
-  const size_t size = myPayloadOut.size();
-  myPayloadOut.resize(size + sizeof(value));
-  uint8_t * dest = myPayloadOut.data() + size;
-
+  uint8_t * dest = enlargeBuffer(sizeof(value));
   uint16_t * data = (uint16_t *)dest;
   *data = value;
 }
 
 void BinaryClient::writeInt8(const uint8_t value)
 {
-  const size_t size = myPayloadOut.size();
-  myPayloadOut.resize(size + sizeof(value));
-  uint8_t * dest = myPayloadOut.data() + size;
+  uint8_t * dest = enlargeBuffer(sizeof(value));
   *dest = value;
 }
 
@@ -413,6 +511,12 @@ void BinaryClient::sendError(const uint8_t type, const uint8_t error)
   sendReply(type, myCommand.request, error);
 }
 
+void BinaryClient::cmdQuit()
+{
+  sendReply(e_MON_RESPONSE_QUIT, myCommand.request, e_MON_ERR_OK);
+  throw std::runtime_error("quit");
+}
+
 void BinaryClient::processCommand()
 {
   myPayloadOut.clear();
@@ -433,6 +537,21 @@ void BinaryClient::processCommand()
     case e_MON_CMD_DISPLAY_GET:
       cmdDisplayGet();
       break;
+    case e_MON_CMD_CHECKPOINT_SET:
+      cmdCheckpointSet();
+      break;
+    case e_MON_CMD_REGISTERS_GET:
+      cmdRegistersGet();
+      break;
+    case e_MON_CMD_MEM_GET:
+      cmdMemoryGet();
+      break;
+    case e_MON_CMD_PING:
+      sendReply(e_MON_RESPONSE_PING, myCommand.request, e_MON_ERR_OK);
+      break;
+    case e_MON_CMD_QUIT:
+      cmdQuit();
+      break;
     default:
       sendError(myCommand.type, e_MON_ERR_CMD_INVALID_TYPE);
       break;
@@ -446,7 +565,7 @@ BinaryMonitor::BinaryMonitor()
   server.sin_family = AF_INET;
   server.sin_addr.s_addr = INADDR_ANY;
   server.sin_port = htons(6502);
-	
+
   if (bind(mySocket, (sockaddr *)&server , sizeof(server)) < 0)
   {
     LogOutput("Monitor: bind failed: %s\n", strerror(errno));
@@ -491,13 +610,14 @@ void BinaryMonitor::process()
   std::vector<std::shared_ptr<BinaryClient>>::iterator iter = myClients.begin();
   while (iter != myClients.end())
   {
-    const bool ok = (*iter)->process();
-    if (ok)
+    try
     {
+      (*iter)->process();
       ++iter;
     }
-    else
+    catch (const std::exception & e)
     {
+      LogOutput("Client: %s\n", e.what());
       iter = myClients.erase(iter);
     }
   }

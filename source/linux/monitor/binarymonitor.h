@@ -4,7 +4,7 @@ public:
   BinaryClient(const int socket);
   ~BinaryClient();
 
-  bool process();
+  void process();
 
 private:
 
@@ -33,7 +33,6 @@ private:
 #pragma pack(pop)
 
   int mySocket;
-  bool myAlive;
 
   Command myCommand;
   std::vector<uint8_t> myPayloadIn;
@@ -50,18 +49,25 @@ private:
   
   void sendResourceStringReply(const uint32_t request, const uint8_t error, const char * value);
   void sendResourceIntReply(const uint32_t request, const uint8_t error, const uint32_t value);
+  void sendBreakpoint(const uint32_t request, const uint8_t error, const size_t i);
 
   void sendError(const uint8_t type, const uint8_t error);
   void writeString(const char * value);
   void writeInt32(const uint32_t value);
   void writeInt16(const uint16_t value);
   void writeInt8(const uint8_t value);
+  uint8_t * enlargeBuffer(const size_t size);
 
   void cmdViceInfo();
   void cmdResourceGet();
   void cmdRegistersAvailable();
   void cmdDisplayGet();
   void cmdBanksAvailable();
+  void cmdCheckpointSet();
+  void cmdRegistersGet();
+  void cmdMemoryGet();
+  void cmdQuit();
+  void cmdStopped();
 };
 
 class BinaryMonitor
