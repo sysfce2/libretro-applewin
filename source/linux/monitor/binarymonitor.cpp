@@ -135,6 +135,7 @@ void BinaryClient::Command::reset()
 BinaryClient::BinaryClient(const int socket)
   : mySocket(socket)
 {
+  myCommand.reset();
   LogOutput("New client: %d\n", mySocket);
 }
 
@@ -146,12 +147,21 @@ BinaryClient::~BinaryClient()
 
 ssize_t BinaryClient::readData(char * dest, size_t len)
 {
-  const ssize_t data = recv(mySocket, dest, len, 0);
+  const ssize_t data = recv(mySocket, dest, len, MSG_DONTWAIT);
   if (data == 0)
   {
     throw std::runtime_error("graceful termination");
   }
-  else if (data < 0);
+  else
+  {
+    throwIfError(data);
+  }
+  return data;
+}
+
+void BinaryClient::throwIfError(const ssize_t result)
+{
+  if (result < 0);
   {
     const int error = errno;
     if (error != EAGAIN && error != EWOULDBLOCK)
@@ -159,9 +169,7 @@ ssize_t BinaryClient::readData(char * dest, size_t len)
       throw std::runtime_error(strerror(error));
     }
   }
-  return data;
 }
-
 
 bool BinaryClient::readCommand()
 {
@@ -191,12 +199,16 @@ void BinaryClient::sendReply(const uint8_t type, const uint32_t request, const u
   myResponse.error = error;
   myResponse.request = request;
   myResponse.length = myPayloadOut.size();
-  ssize_t sent = send(mySocket, &myResponse, sizeof(Response), MSG_NOSIGNAL);
-  if (!myPayloadOut.empty())
+  ssize_t sent1 = send(mySocket, &myResponse, sizeof(Response), MSG_NOSIGNAL);
+  throwIfError(sent1);
+  if (sent1 == sizeof(Response) && !myPayloadOut.empty())
   {
-    sent = send(mySocket, myPayloadOut.data(), myPayloadOut.size(), MSG_NOSIGNAL);
+    ssize_t sent2 = send(mySocket, myPayloadOut.data(), myPayloadOut.size(), MSG_NOSIGNAL);
+    throwIfError(sent2);
+    sent1 += sent2;
   }
-  LogOutput("RESPONSE: %d, LEN: %9d, REQ: %9d, CMD: 0x%02x, ERR: 0x%02x\n", mySocket, myResponse.length, myResponse.request, myResponse.type, myResponse.error);
+  const bool ok = sent1 == (sizeof(Response) + myPayloadOut.size());
+  LogOutput("RESPONSE: %d, LEN: %9d, REQ: %9d, CMD: 0x%02x, ERR: 0x%02x, OK: %d\n\n", mySocket, myResponse.length, myResponse.request, myResponse.type, myResponse.error, ok);
 }
 
 void BinaryClient::sendBreakpoint(const uint32_t request, const uint8_t error, const size_t i)
@@ -593,7 +605,7 @@ void BinaryMonitor::process()
 {
   sockaddr_in client;
   socklen_t len = sizeof(client);
-  const int clientSocket = accept4(mySocket, (sockaddr *)&client, &len, SOCK_NONBLOCK);
+  const int clientSocket = accept4(mySocket, (sockaddr *)&client, &len, 0);
   if (clientSocket >= 0)
   {
     myClients.push_back(std::make_shared<BinaryClient>(clientSocket));

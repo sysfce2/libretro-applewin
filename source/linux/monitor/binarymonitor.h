@@ -45,13 +45,15 @@ private:
   bool readCommand();
   bool readPayload();
   void processCommand();
+
+  void throwIfError(const ssize_t result);
+
   void sendReply(const uint8_t type, const uint32_t request, const uint8_t error);
-  
   void sendResourceStringReply(const uint32_t request, const uint8_t error, const char * value);
   void sendResourceIntReply(const uint32_t request, const uint8_t error, const uint32_t value);
   void sendBreakpoint(const uint32_t request, const uint8_t error, const size_t i);
-
   void sendError(const uint8_t type, const uint8_t error);
+
   void writeString(const char * value);
   void writeInt32(const uint32_t value);
   void writeInt16(const uint16_t value);
