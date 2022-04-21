@@ -1,3 +1,5 @@
+class BinaryBuffer;
+
 class BinaryClient
 {
 public:
@@ -39,7 +41,6 @@ private:
   std::vector<uint8_t> myPayloadIn;
 
   Response myResponse;
-  std::vector<uint8_t> myPayloadOut;
 
   ssize_t readData(char * dest, size_t len);
 
@@ -49,19 +50,13 @@ private:
 
   void throwIfError(const ssize_t result);
 
-  void sendReply(const uint8_t type, const uint32_t request, const uint8_t error);
+  void sendReply(const BinaryBuffer & buffer, const uint8_t type, const uint32_t request, const uint8_t error);
   void sendResourceStringReply(const uint32_t request, const uint8_t error, const char * value);
   void sendResourceIntReply(const uint32_t request, const uint8_t error, const uint32_t value);
   void sendBreakpoint(const uint32_t request, const uint8_t error, const size_t i);
   void sendResume(const uint32_t request);
 
   void sendError(const uint8_t type, const uint8_t error);
-
-  void writeString(const char * value);
-  void writeInt32(const uint32_t value);
-  void writeInt16(const uint16_t value);
-  void writeInt8(const uint8_t value);
-  uint8_t * enlargeBuffer(const size_t size);
 
   void cmdViceInfo();
   void cmdResourceGet();
@@ -77,6 +72,7 @@ private:
   void cmdExit();
   void cmdAutostart();
   void cmdQuit();
+  void cmdPing();
 
   void sendRegisters(const uint32_t request);
   void sendStopped();
