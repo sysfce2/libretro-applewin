@@ -33,6 +33,7 @@ private:
 #pragma pack(pop)
 
   int mySocket;
+  bool myRunning;
 
   Command myCommand;
   std::vector<uint8_t> myPayloadIn;
@@ -52,6 +53,8 @@ private:
   void sendResourceStringReply(const uint32_t request, const uint8_t error, const char * value);
   void sendResourceIntReply(const uint32_t request, const uint8_t error, const uint32_t value);
   void sendBreakpoint(const uint32_t request, const uint8_t error, const size_t i);
+  void sendResume(const uint32_t request);
+
   void sendError(const uint8_t type, const uint8_t error);
 
   void writeString(const char * value);
@@ -68,8 +71,15 @@ private:
   void cmdCheckpointSet();
   void cmdRegistersGet();
   void cmdMemoryGet();
+  void cmdPaletteGet();
+  void cmdCheckpointList();
+  void cmdCheckpointToggle();
+  void cmdExit();
+  void cmdAutostart();
   void cmdQuit();
-  void cmdStopped();
+
+  void sendRegisters(const uint32_t request);
+  void sendStopped();
 };
 
 class BinaryMonitor
