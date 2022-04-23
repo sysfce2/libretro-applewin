@@ -31,6 +31,7 @@ struct Autostart_t
   bool run;
   uint16_t fileIndex;
   uint8_t length;
+  // char[0] name
 };
 
 #pragma pack(pop)

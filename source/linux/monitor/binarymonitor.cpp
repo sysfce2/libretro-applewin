@@ -231,18 +231,18 @@ void BinaryClient::sendBreakpoint(const uint32_t request, const uint8_t error, c
   Breakpoint_t & bp = g_aBreakpoints[i];
 
   BinaryBuffer buffer;
-  buffer.writeInt32(i);
-  buffer.writeInt8(0);
-  buffer.writeInt16(bp.nAddress);
-  buffer.writeInt16(bp.nAddress + bp.nLength - 1);
-  buffer.writeInt8(1);
-  buffer.writeInt8(bp.bEnabled);
-  buffer.writeInt8(4);
-  buffer.writeInt8(bp.bTemp);
-  buffer.writeInt32(0);
-  buffer.writeInt32(0);
-  buffer.writeInt8(0);
-  buffer.writeInt8(0);
+  buffer.writeInt32(i);                               // id
+  buffer.writeInt8(0);                                // hit
+  buffer.writeInt16(bp.nAddress);                     // start
+  buffer.writeInt16(bp.nAddress + bp.nLength - 1);    // end
+  buffer.writeInt8(1);                                // stop?
+  buffer.writeInt8(bp.bEnabled);                      // enabled
+  buffer.writeInt8(4);                                // operation
+  buffer.writeInt8(bp.bTemp);                         // temporary
+  buffer.writeInt32(0);                               // hit count
+  buffer.writeInt32(0);                               // ignore count
+  buffer.writeInt8(0);                                // condition?
+  buffer.writeInt8(0);                                // memspace
   sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_INFO, myCommand.request, e_MON_ERR_OK);
 }
 
