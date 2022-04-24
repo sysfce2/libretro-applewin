@@ -1,3 +1,7 @@
+#include <cstdint>
+#include <cstddef>
+#include <vector>
+
 class BinaryBuffer
 {
 public:

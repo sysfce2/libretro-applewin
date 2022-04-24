@@ -293,7 +293,8 @@ void BinaryClient::cmdResourceGet()
     const uint8_t length = myPayloadIn[0];
     if (myPayloadIn.size() >= 1 + length)
     {
-      const std::string name(myPayloadIn.data() + 1, myPayloadIn.data() + 1 + length);
+      const char * begin = (const char *)(myPayloadIn.data() + 1);
+      const std::string name(begin, begin + length);
       LogOutput("ResourceGet: %s\n", name.c_str());
       if (name == "MonitorServer")
       {
@@ -306,6 +307,10 @@ void BinaryClient::cmdResourceGet()
       else if (name == "VICIIPaletteFile")
       {
         sendResourceStringReply(myCommand.request, e_MON_ERR_OK, "pepto-pal");
+      }
+      else
+      {
+        sendError(e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING);
       }
       return;
     }
