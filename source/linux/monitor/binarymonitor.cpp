@@ -217,6 +217,10 @@ void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, co
   {
     LogOutput(" %02x", data[i]);
   }
+  if (data.size() > 30UL)
+  {
+    LogOutput(" ...");
+  }
   LogOutput("\n");
 }
 
@@ -297,11 +301,11 @@ void BinaryClient::cmdResourceGet()
       } 
       else if (name == "MonitorServerAddress")
       {
-        sendResourceStringReply(myCommand.request, e_MON_ERR_OK, "127.0.0.1");
+        sendResourceStringReply(myCommand.request, e_MON_ERR_OK, "ip4://127.0.0.1:6510");
       }
       else if (name == "VICIIPaletteFile")
       {
-        sendResourceStringReply(myCommand.request, e_MON_ERR_OK, "pepto-ntsc");
+        sendResourceStringReply(myCommand.request, e_MON_ERR_OK, "pepto-pal");
       }
       return;
     }
@@ -405,10 +409,15 @@ void BinaryClient::cmdDisplayGet()
     BinaryBufferSize<uint32_t> binarySize(buffer);
     buffer.writeInt16(width);
     buffer.writeInt16(height);
-    buffer.writeInt16(x);
-    buffer.writeInt16(y);
-    buffer.writeInt16(sw);
-    buffer.writeInt16(sh);
+    // I am not sure how this works, so we set the offset to 0.
+    // buffer.writeInt16(x);
+    // buffer.writeInt16(y);
+    // buffer.writeInt16(sw);
+    // buffer.writeInt16(sh);
+    buffer.writeInt16(0);
+    buffer.writeInt16(0);
+    buffer.writeInt16(width);
+    buffer.writeInt16(height);
     buffer.writeInt8(bpp);
   }
 

@@ -107,6 +107,7 @@ set(SOURCE_FILES
   linux/tape.cpp
   linux/network/slirp2.cpp
   linux/monitor/binarymonitor.cpp
+  linux/monitor/binarybuffer.cpp
 
   linux/duplicates/Debugger_Display.cpp
   linux/duplicates/Debugger_Win32.cpp
@@ -212,6 +213,8 @@ set(HEADER_FILES
   linux/linuxframe.h
   linux/tape.h
   linux/network/slirp2.h
+  linux/monitor/binarymonitor.h
+  linux/monitor/binarybuffer.h
 
   Z80VICE/z80.h
   Z80VICE/z80mem.h
