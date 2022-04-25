@@ -136,12 +136,12 @@ namespace
 
 BinaryClient::BinaryClient(const int socket)
   : myAvailableRegisters({
-      // {0, {"A",  sizeof(regs.a),  &regs.a}},
-      // {1, {"X",  sizeof(regs.x),  &regs.x}},
-      // {2, {"Y",  sizeof(regs.y),  &regs.y}},
+      {0, {"A",  sizeof(regs.a),  &regs.a}},
+      {1, {"X",  sizeof(regs.x),  &regs.x}},
+      {2, {"Y",  sizeof(regs.y),  &regs.y}},
       {3, {"PC", sizeof(regs.pc), &regs.pc}},
-      // {4, {"SP", sizeof(regs.sp), &regs.sp}},
-      // {5, {"PS", sizeof(regs.ps), &regs.ps}},
+      {4, {"SP", sizeof(regs.sp), &regs.sp}},
+      {5, {"PS", sizeof(regs.ps), &regs.ps}},
     })
   , mySocket(socket)
   , myRunning(true)
@@ -399,8 +399,8 @@ void BinaryClient::cmdRegistersSet()
       return;
     }
     const Register_t & reg = it->second;
-    const uint8_t * ptr = registerPayload.ensureAvailable(reg.size);
-    memcpy(reg.ptr, ptr, reg.size);
+    const uint16_t value = registerPayload.read<uint16_t>();
+    memcpy(reg.ptr, &value, reg.size);
   }
 
   sendRegisters(myCommand.request);
@@ -415,7 +415,9 @@ void BinaryClient::sendRegisters(const uint32_t request)
   {
     BinaryBufferSize<uint8_t> binarySize(buffer);
     buffer.writeInt8(reg.first);
-    buffer.writeMem(reg.second.ptr, reg.second.size);
+    uint16_t value = 0;
+    memcpy(&value, reg.second.ptr, reg.second.size);
+    buffer.writeInt16(value);
   }
 
   sendReply(buffer, e_MON_RESPONSE_REGISTER_INFO, request, e_MON_ERR_OK);

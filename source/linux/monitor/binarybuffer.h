@@ -9,7 +9,6 @@ public:
   void writeInt32(const uint32_t value);
   void writeInt16(const uint16_t value);
   void writeInt8(const uint8_t value);
-  void writeMem(const void * ptr, const size_t size);
   uint8_t * enlargeBuffer(const size_t size);
 
   std::vector<uint8_t> & getData();
