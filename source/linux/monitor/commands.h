@@ -43,7 +43,6 @@ struct Autostart_t
 {
   bool run;
   uint16_t fileIndex;
-  uint8_t length;
 };
 
 struct RegistersSet_t

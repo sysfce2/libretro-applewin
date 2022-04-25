@@ -108,6 +108,7 @@ set(SOURCE_FILES
   linux/network/slirp2.cpp
   linux/monitor/binarymonitor.cpp
   linux/monitor/binarybuffer.cpp
+  linux/monitor/payloadbuffer.cpp
 
   linux/duplicates/Debugger_Display.cpp
   linux/duplicates/Debugger_Win32.cpp
@@ -215,6 +216,7 @@ set(HEADER_FILES
   linux/network/slirp2.h
   linux/monitor/binarymonitor.h
   linux/monitor/binarybuffer.h
+  linux/monitor/payloadbuffer.h
 
   Z80VICE/z80.h
   Z80VICE/z80mem.h

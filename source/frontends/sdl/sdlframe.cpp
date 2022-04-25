@@ -578,7 +578,6 @@ namespace sa2
     // check at the end because we want to always execute at least 1 cycle even for "0"
     do
     {
-      Update();
       const DWORD thisCyclesToExecute = std::min(fExecutionPeriodClks, cyclesToExecute - totalCyclesExecuted);
       const DWORD executedCycles = CpuExecute(thisCyclesToExecute, bVideoUpdate);
       totalCyclesExecuted += executedCycles;

@@ -11,7 +11,7 @@ public:
   BinaryClient(const int socket);
   ~BinaryClient();
 
-  void process();
+  bool process();
 
 private:
 

@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "linux/monitor/binarymonitor.h"
 #include "linux/monitor/binarybuffer.h"
+#include "linux/monitor/payloadbuffer.h"
 #include "linux/monitor/commands.h"
 
 #include "Log.h"
@@ -236,7 +237,7 @@ void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, co
     sent1 += sent2;
   }
   const bool ok = sent1 == (sizeof(Response) + data.size());
-  LogOutput("RESPONSE: %d, LEN: %9d, REQ: %08x, CMD: 0x%02x, ERR: 0x%02x, OK: %d\n", mySocket, myResponse.length, myResponse.request, myResponse.type, myResponse.error, ok);
+  LogOutput("RESPONSE [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x, ERR: 0x%02x, OK: %d\n", mySocket, myResponse.type, myResponse.length, myResponse.request, myResponse.error, ok);
   LogOutput("PAYLOAD:");
   for (size_t i = 0; i < std::min(30UL, data.size()); ++i)
   {
@@ -275,7 +276,7 @@ void BinaryClient::sendBreakpoint(const uint32_t request, const size_t i)
   sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_INFO, myCommand.request, e_MON_ERR_OK);
 }
 
-void BinaryClient::process()
+bool BinaryClient::process()
 {
   if (readCommand())
   {
@@ -288,8 +289,10 @@ void BinaryClient::process()
     {
       processCommand();
       reset();
+      return true;
     }
   }
+  return false;
 }
 
 void BinaryClient::cmdViceInfo()
@@ -312,45 +315,33 @@ void BinaryClient::cmdViceInfo()
 
 void BinaryClient::cmdResourceGet()
 {
-  if (!myPayloadIn.empty())
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_RESOURCE_GET);
+
+  const std::string name = payload.readString();
+  LogOutput("ResourceGet: %s\n", name.c_str());
+  if (name == "MonitorServer")
   {
-    const uint8_t length = myPayloadIn[0];
-    if (myPayloadIn.size() >= 1 + length)
-    {
-      const char * begin = (const char *)(myPayloadIn.data() + 1);
-      const std::string name(begin, begin + length);
-      LogOutput("ResourceGet: %s\n", name.c_str());
-      if (name == "MonitorServer")
-      {
-        sendResourceIntReply(myCommand.request, 0);
-      } 
-      else if (name == "MonitorServerAddress")
-      {
-        sendResourceStringReply(myCommand.request, "ip4://127.0.0.1:6510");
-      }
-      else if (name == "VICIIPaletteFile")
-      {
-        sendResourceStringReply(myCommand.request, "pepto-pal");
-      }
-      else
-      {
-        sendError(e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING);
-      }
-      return;
-    }
+    sendResourceIntReply(myCommand.request, 0);
   }
-  sendError(e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_CMD_INVALID_LENGTH);
+  else if (name == "MonitorServerAddress")
+  {
+    sendResourceStringReply(myCommand.request, "ip4://127.0.0.1:6510");
+  }
+  else if (name == "VICIIPaletteFile")
+  {
+    sendResourceStringReply(myCommand.request, "pepto-pal");
+  }
+  else
+  {
+    sendError(e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING);
+  }
 }
 
 void BinaryClient::cmdRegistersAvailable()
 {
-  if (myPayloadIn.size() < 1)
-  {
-    sendError(e_MON_RESPONSE_REGISTERS_AVAILABLE, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_REGISTERS_AVAILABLE);
 
-  const uint8_t memspace = myPayloadIn[0];
+  const uint8_t memspace = payload.read<uint8_t>();
   if (memspace != 0)
   {
     sendError(e_MON_RESPONSE_REGISTERS_AVAILABLE, e_MON_ERR_INVALID_MEMSPACE);
@@ -373,13 +364,9 @@ void BinaryClient::cmdRegistersAvailable()
 
 void BinaryClient::cmdRegistersGet()
 {
-  if (myPayloadIn.size() < 1)
-  {
-    sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_REGISTER_INFO);
 
-  const uint8_t memspace = myPayloadIn[0];
+  const uint8_t memspace = payload.read<uint8_t>();
   if (memspace != 0)
   {
     sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE);
@@ -391,13 +378,9 @@ void BinaryClient::cmdRegistersGet()
 
 void BinaryClient::cmdRegistersSet()
 {
-  if (myPayloadIn.size() < sizeof(RegistersSet_t))
-  {
-    sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_REGISTER_INFO);
 
-  const RegistersSet_t & registersSet = *(const RegistersSet_t *)myPayloadIn.data();
+  const RegistersSet_t & registersSet = payload.read<RegistersSet_t>();
 
   if (registersSet.memspace != 0)
   {
@@ -405,12 +388,10 @@ void BinaryClient::cmdRegistersSet()
     return;
   }
 
-  size_t pos = sizeof(RegistersSet_t);
   for (size_t i = 0; i < registersSet.n; ++i)
   {
-    const uint8_t size = myPayloadIn[pos];
-    ++pos;
-    const uint8_t id = myPayloadIn[pos];
+    PayloadBuffer registerPayload = payload.readSubBuffer();
+    const uint8_t id = registerPayload.read<uint8_t>();
     const auto it = myAvailableRegisters.find(id);
     if (it == myAvailableRegisters.end())
     {
@@ -418,8 +399,7 @@ void BinaryClient::cmdRegistersSet()
       return;
     }
     const Register_t & reg = it->second;
-    const uint8_t * ptr = myPayloadIn.data() + pos + 1;
-    pos += size;
+    const uint8_t * ptr = registerPayload.ensureAvailable(reg.size);
     memcpy(reg.ptr, ptr, reg.size);
   }
 
@@ -443,13 +423,10 @@ void BinaryClient::sendRegisters(const uint32_t request)
 
 void BinaryClient::cmdDisplayGet()
 {
-  if (myPayloadIn.size() < 2)
-  {
-    sendError(e_MON_RESPONSE_DISPLAY_GET, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_DISPLAY_GET);
+  payload.read<uint8_t>(); // discard
 
-  const uint8_t format = myPayloadIn[1];
+  const uint8_t format = payload.read<uint8_t>();
   if (format != 0) // RGBA
   {
     sendError(e_MON_RESPONSE_DISPLAY_GET, e_MON_ERR_INVALID_PARAMETER);
@@ -543,13 +520,9 @@ void BinaryClient::sendStopped()
 
 void BinaryClient::cmdCheckpointSet()
 {
-  if (myPayloadIn.size() < sizeof(CheckpointSet_t))
-  {
-    sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_CHECKPOINT_INFO);
 
-  const CheckpointSet_t & checkpointSet = *(const CheckpointSet_t *)myPayloadIn.data();
+  const CheckpointSet_t & checkpointSet = payload.read<CheckpointSet_t>();
 
   size_t i = 0;
   while ((i < MAX_BREAKPOINTS) && g_aBreakpoints[i].bSet)
@@ -578,26 +551,18 @@ void BinaryClient::cmdCheckpointSet()
 
 void BinaryClient::cmdCheckpointGet()
 {
-  if (myPayloadIn.size() < sizeof(CheckpointGet_t))
-  {
-    sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_CHECKPOINT_INFO);
 
-  const CheckpointGet_t & checkpointGet = *(const CheckpointGet_t *)myPayloadIn.data();
+  const CheckpointGet_t & checkpointGet = payload.read<CheckpointGet_t>();
 
   sendBreakpoint(myCommand.request, checkpointGet.id);
 }
 
 void BinaryClient::cmdCheckpointToggle()
 {
-  if (myPayloadIn.size() < sizeof(CheckpointToggle_t))
-  {
-    sendError(e_MON_RESPONSE_CHECKPOINT_TOGGLE, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_CHECKPOINT_TOGGLE);
 
-  const CheckpointToggle_t & checkpointToggle = *(const CheckpointToggle_t *)myPayloadIn.data();
+  const CheckpointToggle_t & checkpointToggle = payload.read<CheckpointToggle_t>();
 
   if (checkpointToggle.id >= MAX_BREAKPOINTS || !g_aBreakpoints[checkpointToggle.id].bSet)
   {
@@ -614,13 +579,9 @@ void BinaryClient::cmdCheckpointToggle()
 
 void BinaryClient::cmdCheckpointDelete()
 {
-  if (myPayloadIn.size() < sizeof(CheckpointDelete_t))
-  {
-    sendError(e_MON_RESPONSE_CHECKPOINT_DELETE, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_CHECKPOINT_DELETE);
 
-  const CheckpointDelete_t & checkpointDelete = *(const CheckpointDelete_t *)myPayloadIn.data();
+  const CheckpointDelete_t & checkpointDelete = payload.read<CheckpointDelete_t>();
 
   if (checkpointDelete.id >= MAX_BREAKPOINTS || !g_aBreakpoints[checkpointDelete.id].bSet)
   {
@@ -654,13 +615,9 @@ void BinaryClient::cmdCheckpointList()
 
 void BinaryClient::cmdMemoryGet()
 {
-  if (myPayloadIn.size() < sizeof(MemoryGet_t))
-  {
-    sendError(e_MON_RESPONSE_MEM_GET, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_MEM_GET);
 
-  const MemoryGet_t & memoryGet = *(const MemoryGet_t *)myPayloadIn.data();
+  const MemoryGet_t & memoryGet = payload.read<MemoryGet_t>();
 
   if (memoryGet.memspace != 0 || memoryGet.bankID != 0)
   {
@@ -682,22 +639,10 @@ void BinaryClient::cmdMemoryGet()
 
 void BinaryClient::cmdAutostart()
 {
-  if (myPayloadIn.size() < sizeof(Autostart_t))
-  {
-    sendError(e_MON_RESPONSE_AUTOSTART, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
+  PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_AUTOSTART);
 
-  const Autostart_t & autostart = *(const Autostart_t *)myPayloadIn.data();
-
-  if (myPayloadIn.size() < sizeof(Autostart_t) + autostart.length)
-  {
-    sendError(e_MON_RESPONSE_AUTOSTART, e_MON_ERR_CMD_INVALID_LENGTH);
-    return;
-  }
-
-  const char * begin = (const char *)(myPayloadIn.data() + sizeof(Autostart_t));
-  const std::string filename(begin, begin + autostart.length);
+  const Autostart_t & autostart = payload.read<Autostart_t>();
+  const std::string filename = payload.readString();
 
   BinaryBuffer buffer;
   sendReply(buffer, e_MON_RESPONSE_AUTOSTART, myCommand.request, e_MON_ERR_OK);
@@ -772,7 +717,7 @@ void BinaryClient::cmdReset()
 
 void BinaryClient::processCommand()
 {
-  LogOutput("COMMAND:  %d, LEN: %9d, REQ: %08x, CMD: 0x%02x\n", mySocket, myCommand.length, myCommand.request, myCommand.type);
+  LogOutput("COMMAND  [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x\n", mySocket, myCommand.type, myCommand.length, myCommand.request);
 
   if (myRunning)
   {
@@ -781,68 +726,75 @@ void BinaryClient::processCommand()
     myRunning = false;
   }
 
-  switch (myCommand.type)
+  try
   {
-    case e_MON_CMD_VICE_INFO:
-      cmdViceInfo();
-      break;
-    case e_MON_CMD_RESOURCE_GET:
-      cmdResourceGet();
-      break;
-    case e_MON_CMD_REGISTERS_AVAILABLE:
-      cmdRegistersAvailable();
-      break;
-    case e_MON_CMD_REGISTERS_GET:
-      cmdRegistersGet();
-      break;
-    case e_MON_CMD_REGISTERS_SET:
-      cmdRegistersSet();
-      break;
-    case e_MON_CMD_BANKS_AVAILABLE:
-      cmdBanksAvailable();
-      break;
-    case e_MON_CMD_DISPLAY_GET:
-      cmdDisplayGet();
-      break;
-    case e_MON_CMD_PALETTE_GET:
-      cmdPaletteGet();
-      break;
-    case e_MON_CMD_CHECKPOINT_SET:
-      cmdCheckpointSet();
-      break;
-    case e_MON_CMD_CHECKPOINT_GET:
-      cmdCheckpointGet();
-      break;
-    case e_MON_CMD_CHECKPOINT_LIST:
-      cmdCheckpointList();
-      break;
-    case e_MON_CMD_CHECKPOINT_DELETE:
-      cmdCheckpointDelete();
-      break;
-    case e_MON_CMD_CHECKPOINT_TOGGLE:
-      cmdCheckpointToggle();
-      break;
-    case e_MON_CMD_MEM_GET:
-      cmdMemoryGet();
-      break;
-    case e_MON_CMD_PING:
-      cmdPing();
-      break;
-    case e_MON_CMD_EXIT:
-      cmdExit();
-      break;
-    case e_MON_CMD_AUTOSTART:
-      cmdAutostart();
-      break;
-    case e_MON_CMD_RESET:
-      cmdReset();
-      break;
-    case e_MON_CMD_QUIT:
-      cmdQuit();
-      break;
-    default:
-      sendError(myCommand.type, e_MON_ERR_CMD_INVALID_TYPE);
-      break;
+    switch (myCommand.type)
+    {
+      case e_MON_CMD_VICE_INFO:
+        cmdViceInfo();
+        break;
+      case e_MON_CMD_RESOURCE_GET:
+        cmdResourceGet();
+        break;
+      case e_MON_CMD_REGISTERS_AVAILABLE:
+        cmdRegistersAvailable();
+        break;
+      case e_MON_CMD_REGISTERS_GET:
+        cmdRegistersGet();
+        break;
+      case e_MON_CMD_REGISTERS_SET:
+        cmdRegistersSet();
+        break;
+      case e_MON_CMD_BANKS_AVAILABLE:
+        cmdBanksAvailable();
+        break;
+      case e_MON_CMD_DISPLAY_GET:
+        cmdDisplayGet();
+        break;
+      case e_MON_CMD_PALETTE_GET:
+        cmdPaletteGet();
+        break;
+      case e_MON_CMD_CHECKPOINT_SET:
+        cmdCheckpointSet();
+        break;
+      case e_MON_CMD_CHECKPOINT_GET:
+        cmdCheckpointGet();
+        break;
+      case e_MON_CMD_CHECKPOINT_LIST:
+        cmdCheckpointList();
+        break;
+      case e_MON_CMD_CHECKPOINT_DELETE:
+        cmdCheckpointDelete();
+        break;
+      case e_MON_CMD_CHECKPOINT_TOGGLE:
+        cmdCheckpointToggle();
+        break;
+      case e_MON_CMD_MEM_GET:
+        cmdMemoryGet();
+        break;
+      case e_MON_CMD_PING:
+        cmdPing();
+        break;
+      case e_MON_CMD_EXIT:
+        cmdExit();
+        break;
+      case e_MON_CMD_AUTOSTART:
+        cmdAutostart();
+        break;
+      case e_MON_CMD_RESET:
+        cmdReset();
+        break;
+      case e_MON_CMD_QUIT:
+        cmdQuit();
+        break;
+      default:
+        sendError(myCommand.type, e_MON_ERR_CMD_INVALID_TYPE);
+        break;
+    }
+  }
+  catch (const PayloadBuffer::LengthException & length)
+  {
+    sendError(length.type, e_MON_ERR_CMD_INVALID_LENGTH);
   }
   LogOutput("\n");
 }
@@ -901,7 +853,13 @@ void BinaryMonitor::process()
   {
     try
     {
-      (*iter)->process();
+      for (size_t i = 0; i < 4; ++i)
+      {
+        if (!(*iter)->process())
+        {
+          break;
+        }
+      }
       ++iter;
     }
     catch (const std::exception & e)
