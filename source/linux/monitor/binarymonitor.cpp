@@ -501,12 +501,19 @@ void BinaryClient::cmdPaletteGet()
 void BinaryClient::cmdBanksAvailable()
 {
   BinaryBuffer buffer;
-  buffer.writeInt16(1);
+  buffer.writeInt16(2);
 
   {
     BinaryBufferSize<uint8_t> binarySize(buffer);
     buffer.writeInt16(0);
     const char * name = "ram";
+    buffer.writeString(name);
+  }
+
+  {
+    BinaryBufferSize<uint8_t> binarySize(buffer);
+    buffer.writeInt16(1);
+    const char * name = "io";
     buffer.writeString(name);
   }
 
