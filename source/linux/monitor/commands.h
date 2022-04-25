@@ -1,3 +1,6 @@
+#include <cstdint>
+#include <cstddef>
+
 #pragma pack(push)
 #pragma pack(1)
 
@@ -17,6 +20,16 @@ struct CheckpointToggle_t
   bool enabled;
 };
 
+struct CheckpointGet_t
+{
+  uint32_t id;
+};
+
+struct CheckpointDelete_t
+{
+  uint32_t id;
+};
+
 struct MemoryGet_t
 {
   bool sideEffects;
@@ -31,7 +44,12 @@ struct Autostart_t
   bool run;
   uint16_t fileIndex;
   uint8_t length;
-  // char[0] name
+};
+
+struct RegistersSet_t
+{
+  uint8_t memspace;
+  uint16_t n;
 };
 
 #pragma pack(pop)

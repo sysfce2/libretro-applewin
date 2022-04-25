@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <vector>
+#include <map>
 
 class BinaryBuffer;
 
@@ -23,8 +24,6 @@ private:
     uint32_t length;
     uint32_t request;
     uint8_t type;
-
-    void reset();
   };
 
   struct Response
@@ -38,16 +37,27 @@ private:
   };
 #pragma pack(pop)
 
+  struct Register_t
+  {
+    const char * name;
+    uint8_t size;  // in bytes
+    void * ptr;
+  };
+
+  const std::map<uint8_t, Register_t> myAvailableRegisters;
   int mySocket;
   bool myRunning;
 
   Command myCommand;
+  size_t myCommandRead;
   std::vector<uint8_t> myPayloadIn;
+  size_t myPayloadRead;
 
   Response myResponse;
 
-  ssize_t readData(char * dest, size_t len);
+  size_t readData(char * dest, size_t len);
 
+  void reset();
   bool readCommand();
   bool readPayload();
   void processCommand();
@@ -55,9 +65,9 @@ private:
   void throwIfError(const ssize_t result);
 
   void sendReply(const BinaryBuffer & buffer, const uint8_t type, const uint32_t request, const uint8_t error);
-  void sendResourceStringReply(const uint32_t request, const uint8_t error, const char * value);
-  void sendResourceIntReply(const uint32_t request, const uint8_t error, const uint32_t value);
-  void sendBreakpoint(const uint32_t request, const uint8_t error, const size_t i);
+  void sendResourceStringReply(const uint32_t request, const char * value);
+  void sendResourceIntReply(const uint32_t request, const uint32_t value);
+  void sendBreakpoint(const uint32_t request, const size_t i);
   void sendResume(const uint32_t request);
 
   void sendError(const uint8_t type, const uint8_t error);
@@ -68,12 +78,16 @@ private:
   void cmdDisplayGet();
   void cmdBanksAvailable();
   void cmdCheckpointSet();
-  void cmdRegistersGet();
-  void cmdMemoryGet();
-  void cmdPaletteGet();
+  void cmdCheckpointGet();
+  void cmdCheckpointDelete();
   void cmdCheckpointList();
   void cmdCheckpointToggle();
+  void cmdRegistersGet();
+  void cmdRegistersSet();
+  void cmdMemoryGet();
+  void cmdPaletteGet();
   void cmdExit();
+  void cmdReset();
   void cmdAutostart();
   void cmdQuit();
   void cmdPing();

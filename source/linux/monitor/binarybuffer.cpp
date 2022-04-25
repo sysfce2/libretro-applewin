@@ -47,3 +47,9 @@ void BinaryBuffer::writeInt8(const uint8_t value)
   uint8_t * dest = enlargeBuffer(sizeof(value));
   *dest = value;
 }
+
+void BinaryBuffer::writeMem(const void * ptr, const size_t size)
+{
+  uint8_t * dest = enlargeBuffer(size);
+  memcpy(dest, ptr, size);
+}
