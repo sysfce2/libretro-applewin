@@ -71,7 +71,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	static int g_iDebugBreakOnDmaToOrFromIoMemory = 0;
 	static WORD g_uDebugBreakOnDmaIoMemoryAddr = 0;
 
-	static int  g_bDebugBreakpointHit = 0;	// See: BreakpointHit_t
+	int  g_bDebugBreakpointHit = 0;	// See: BreakpointHit_t
 
 	int  g_nBreakpoints          = 0;
 	Breakpoint_t g_aBreakpoints[ MAX_BREAKPOINTS ];

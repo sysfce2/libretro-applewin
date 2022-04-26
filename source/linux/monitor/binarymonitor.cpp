@@ -1,10 +1,13 @@
 #include "StdAfx.h"
 #include "linux/monitor/binarymonitor.h"
+
+#include "linux/linuxframe.h"
 #include "linux/monitor/binarybuffer.h"
 #include "linux/monitor/payloadbuffer.h"
 #include "linux/monitor/commands.h"
 
 #include "Log.h"
+#include "Core.h"
 #include "Interface.h"
 #include "CPU.h"
 #include "Memory.h"
@@ -132,9 +135,29 @@ namespace
     e_MON_RESOURCE_TYPE_INT = 0x01,
   };
 
+  std::map<uint8_t, std::string> getBankNames()
+  {
+    size_t id = 0;
+    std::map<uint8_t, std::string> names;
+    names[id++] = "default";
+    names[id++] = "ram";
+    names[id++] = "io";
+
+    size_t i = 0;
+    void * bank;
+    while ((bank = MemGetBankPtr(i)))
+    {
+      const std::string name = "bank " + std::to_string(i);
+      names[id++] = name;
+      ++i;
+    }
+
+    return names;
+  }
+
 }
 
-BinaryClient::BinaryClient(const int socket)
+BinaryClient::BinaryClient(const int socket, LinuxFrame * frame)
   : myAvailableRegisters({
       {0, {"A",  sizeof(regs.a),  &regs.a}},
       {1, {"X",  sizeof(regs.x),  &regs.x}},
@@ -143,8 +166,10 @@ BinaryClient::BinaryClient(const int socket)
       {4, {"SP", sizeof(regs.sp), &regs.sp}},
       {5, {"PS", sizeof(regs.ps), &regs.ps}},
     })
+  , myBankNames(getBankNames())
   , mySocket(socket)
-  , myRunning(true)
+  , myFrame(frame)
+  , myStopped(g_nAppMode == MODE_DEBUG)
 {
   reset();
 
@@ -250,6 +275,14 @@ void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, co
   LogOutput("\n");
 }
 
+void BinaryClient::sendBreakpointIfHit()
+{
+  if (g_bDebugBreakpointHit)
+  {
+    LogOutput("Hit: %d\n", g_bDebugBreakpointHit);
+  }
+}
+
 void BinaryClient::sendBreakpoint(const uint32_t request, const size_t i)
 {
   if (i >= MAX_BREAKPOINTS || !g_aBreakpoints[i].bSet)
@@ -278,6 +311,17 @@ void BinaryClient::sendBreakpoint(const uint32_t request, const size_t i)
 
 bool BinaryClient::process()
 {
+  bool newStopped = g_nAppMode == MODE_DEBUG;
+  if (newStopped != myStopped)
+  {
+    sendMonitorState(g_nAppMode);
+    myStopped = newStopped;
+    if (myStopped)
+    {
+      sendBreakpointIfHit();
+    }
+  }
+
   if (readCommand())
   {
     if (myCommand.stx != 0x02)
@@ -501,20 +545,13 @@ void BinaryClient::cmdPaletteGet()
 void BinaryClient::cmdBanksAvailable()
 {
   BinaryBuffer buffer;
-  buffer.writeInt16(2);
+  buffer.writeInt16(myBankNames.size());
 
+  for (const auto & bank : myBankNames)
   {
     BinaryBufferSize<uint8_t> binarySize(buffer);
-    buffer.writeInt16(0);
-    const char * name = "ram";
-    buffer.writeString(name);
-  }
-
-  {
-    BinaryBufferSize<uint8_t> binarySize(buffer);
-    buffer.writeInt16(1);
-    const char * name = "io";
-    buffer.writeString(name);
+    buffer.writeInt16(bank.first);
+    buffer.writeString(bank.second.c_str());
   }
 
   sendReply(buffer, e_MON_RESPONSE_BANKS_AVAILABLE, myCommand.request, e_MON_ERR_OK);
@@ -652,13 +689,13 @@ void BinaryClient::cmdAutostart()
 
   const Autostart_t & autostart = payload.read<Autostart_t>();
   const std::string filename = payload.readString();
+  LogOutput("Loading %s\n", filename.c_str());
 
   BinaryBuffer buffer;
   sendReply(buffer, e_MON_RESPONSE_AUTOSTART, myCommand.request, e_MON_ERR_OK);
 
   if (autostart.run)
   {
-    myRunning = true;
     sendResume(MON_EVENT_ID);
   }
 }
@@ -699,16 +736,16 @@ void BinaryClient::sendResume(const uint32_t request)
 
 void BinaryClient::cmdExit()
 {
-  myRunning = true;
   BinaryBuffer buffer;
   sendReply(buffer, e_MON_RESPONSE_EXIT, myCommand.request, e_MON_ERR_OK);
-  sendResume(MON_EVENT_ID);
+  enterMonitorState(MODE_RUNNING);
 }
 
 void BinaryClient::cmdQuit()
 {
   BinaryBuffer buffer;
   sendReply(buffer, e_MON_RESPONSE_QUIT, myCommand.request, e_MON_ERR_OK);
+  enterMonitorState(MODE_RUNNING);
   throw std::runtime_error("quit");
 }
 
@@ -724,16 +761,33 @@ void BinaryClient::cmdReset()
   sendReply(buffer, e_MON_RESPONSE_RESET, myCommand.request, e_MON_ERR_OK);
 }
 
+void BinaryClient::sendMonitorState(const AppMode_e mode)
+{
+  switch (mode)
+  {
+  case MODE_RUNNING:
+    sendResume(MON_EVENT_ID);
+    break;
+  case MODE_DEBUG:
+    sendRegisters(MON_EVENT_ID);
+    sendStopped();
+    break;
+  }
+}
+
+void BinaryClient::enterMonitorState(const AppMode_e mode)
+{
+  if (myFrame->ChangeMode(mode))
+  {
+    sendMonitorState(mode);
+  }
+}
+
 void BinaryClient::processCommand()
 {
   LogOutput("COMMAND  [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x\n", mySocket, myCommand.type, myCommand.length, myCommand.request);
 
-  if (myRunning)
-  {
-    sendRegisters(MON_EVENT_ID);
-    sendStopped();
-    myRunning = false;
-  }
+  enterMonitorState(MODE_DEBUG);
 
   try
   {
@@ -808,7 +862,7 @@ void BinaryClient::processCommand()
   LogOutput("\n");
 }
 
-BinaryMonitor::BinaryMonitor()
+BinaryMonitor::BinaryMonitor(LinuxFrame * frame) : myFrame(frame)
 {
   mySocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
   sockaddr_in server;
@@ -846,7 +900,7 @@ void BinaryMonitor::process()
   const int clientSocket = accept4(mySocket, (sockaddr *)&client, &len, 0);
   if (clientSocket >= 0)
   {
-    myClients.push_back(std::make_shared<BinaryClient>(clientSocket));
+    myClients.push_back(std::make_shared<BinaryClient>(clientSocket, myFrame));
   }
   else
   {

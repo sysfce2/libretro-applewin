@@ -2,11 +2,14 @@
 #include "linux/linuxframe.h"
 #include "linux/context.h"
 #include "linux/network/slirp2.h"
-#include "linux/monitor/binarymonitor.cpp"
+#include "linux/monitor/binarymonitor.h"
+
 #include "Tfe/PCapBackend.h"
 #include "Interface.h"
 #include "Log.h"
 #include "Core.h"
+#include "SoundCore.h"
+#include "Debugger/Debug.h"
 
 void LinuxFrame::FrameDrawDiskLEDS()
 {
@@ -66,7 +69,7 @@ void LinuxFrame::Initialize(bool resetVideoState)
   myFramebuffer.resize(numberOfBytes);
   video.Initialize(myFramebuffer.data(), resetVideoState);
   LogFileTimeUntilFirstKeyReadReset();
-  myBinaryMonitor.reset(new BinaryMonitor);
+  myBinaryMonitor.reset(new BinaryMonitor(this));
 }
 
 void LinuxFrame::Destroy()
@@ -148,6 +151,31 @@ void LinuxFrame::Update()
   {
     myBinaryMonitor->process();
   }
+}
+
+bool LinuxFrame::ChangeMode(const AppMode_e mode)
+{
+  if (mode != g_nAppMode)
+  {
+    switch (mode)
+    {
+    case MODE_RUNNING:
+      DebugExitDebugger();
+      SoundCore_SetFade(FADE_IN);
+      break;
+    case MODE_DEBUG:
+      DebugBegin();
+      CmdWindowViewConsole(0);
+      break;
+    default:
+      g_nAppMode = mode;
+      SoundCore_SetFade(FADE_OUT);
+      break;
+    }
+    FrameRefreshStatus(DRAW_TITLE);
+    return true;
+  }
+  return false;
 }
 
 int MessageBox(HWND, LPCSTR lpText, LPCSTR lpCaption, UINT uType)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FrameBase.h"
+#include "Common.h"
 #include <vector>
 
 class BinaryMonitor;
@@ -41,6 +42,7 @@ public:
   // in AppleWin this happens in AppleWin.cpp, but it is useful to share it
   virtual void Begin();
   virtual void End();
+  virtual bool ChangeMode(const AppMode_e mode);
 
   void Update();
 

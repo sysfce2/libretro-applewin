@@ -21,6 +21,7 @@ namespace sa2
 
     void Begin() override;
     void End() override;
+    bool ChangeMode(const AppMode_e mode) override;
 
     void FrameRefreshStatus(int drawflags) override;
     int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;
@@ -29,7 +30,6 @@ namespace sa2
     void ProcessEvents(bool &quit);
 
     void ExecuteOneFrame(const size_t msNextFrame);
-    void ChangeMode(const AppMode_e mode);
     void SingleStep();
     void ResetHardware();
     bool HardwareChanged() const;

@@ -2,13 +2,17 @@
 #include <cstddef>
 #include <vector>
 #include <map>
+#include <memory>
+
+#include "Core.h"
 
 class BinaryBuffer;
+class LinuxFrame;
 
 class BinaryClient
 {
 public:
-  BinaryClient(const int socket);
+  BinaryClient(const int socket, LinuxFrame * frame);
   ~BinaryClient();
 
   bool process();
@@ -45,8 +49,11 @@ private:
   };
 
   const std::map<uint8_t, Register_t> myAvailableRegisters;
+  const std::map<uint8_t, std::string> myBankNames;
+
   int mySocket;
-  bool myRunning;
+  LinuxFrame * myFrame;
+  bool myStopped;
 
   Command myCommand;
   size_t myCommandRead;
@@ -64,6 +71,7 @@ private:
 
   void throwIfError(const ssize_t result);
 
+  void sendBreakpointIfHit();
   void sendReply(const BinaryBuffer & buffer, const uint8_t type, const uint32_t request, const uint8_t error);
   void sendResourceStringReply(const uint32_t request, const char * value);
   void sendResourceIntReply(const uint32_t request, const uint32_t value);
@@ -94,17 +102,21 @@ private:
 
   void sendRegisters(const uint32_t request);
   void sendStopped();
+
+  void enterMonitorState(const AppMode_e mode);
+  void sendMonitorState(const AppMode_e mode);
 };
 
 class BinaryMonitor
 {
 public:
-  BinaryMonitor();
+  BinaryMonitor(LinuxFrame * frame);
   ~BinaryMonitor();
 
   void process();
 
 private:
+  LinuxFrame * myFrame;
   int mySocket;
   std::vector<std::shared_ptr<BinaryClient>> myClients;
 };
