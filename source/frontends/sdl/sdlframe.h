@@ -21,7 +21,7 @@ namespace sa2
 
     void Begin() override;
     void End() override;
-    bool ChangeMode(const AppMode_e mode) override;
+    void ResetSpeed() override;
 
     void FrameRefreshStatus(int drawflags) override;
     int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;
@@ -33,7 +33,6 @@ namespace sa2
     void SingleStep();
     void ResetHardware();
     bool HardwareChanged() const;
-    virtual void ResetSpeed();
     void LoadSnapshot() override;
 
     const std::shared_ptr<SDL_Window> & GetWindow() const;

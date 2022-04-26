@@ -634,16 +634,6 @@ namespace sa2
     mySpeed.reset();
   }
 
-  bool SDLFrame::ChangeMode(const AppMode_e mode)
-  {
-    const bool result = common2::CommonFrame::ChangeMode(mode);
-    if (result)
-    {
-      ResetSpeed();
-    }
-    return result;
-  }
-
   void SDLFrame::getDragDropSlotAndDrive(size_t & slot, size_t & drive) const
   {
     slot = myDragAndDropSlot;
@@ -706,7 +696,6 @@ namespace sa2
   void SDLFrame::LoadSnapshot()
   {
     common2::CommonFrame::LoadSnapshot();
-    mySpeed.reset();
     ResetHardware();
   }
 

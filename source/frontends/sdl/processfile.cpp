@@ -13,7 +13,7 @@
 namespace
 {
 
-  void insertDisk(sa2::SDLFrame * frame, const char * filename, const size_t dragAndDropSlot, const size_t dragAndDropDrive)
+  void insertDisk(FrameBase * frame, const char * filename, const size_t dragAndDropSlot, const size_t dragAndDropDrive)
   {
     CardManager & cardManager = GetCardMgr();
     const SS_CARDTYPE cardInSlot = cardManager.QuerySlot(dragAndDropSlot);
@@ -45,7 +45,7 @@ namespace
     }
   }
 
-  void insertTape(sa2::SDLFrame * frame, const char * filename)
+  void insertTape(FrameBase * frame, const char * filename)
   {
     SDL_AudioSpec wavSpec;
     Uint32 wavLength;
@@ -83,7 +83,7 @@ namespace
 namespace sa2
 {
 
-  void processFile(SDLFrame * frame, const char * filename, const size_t dragAndDropSlot, const size_t dragAndDropDrive)
+  void processFile(common2::CommonFrame * frame, const char * filename, const size_t dragAndDropSlot, const size_t dragAndDropDrive)
   {
     const char * yaml = ".yaml";
     const char * wav = ".wav";

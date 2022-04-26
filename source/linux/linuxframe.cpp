@@ -145,6 +145,11 @@ std::shared_ptr<NetworkBackend> LinuxFrame::CreateNetworkBackend(const std::stri
 #endif
 }
 
+void LinuxFrame::ResetSpeed()
+{
+
+}
+
 void LinuxFrame::Update()
 {
   if (myBinaryMonitor)
@@ -173,6 +178,7 @@ bool LinuxFrame::ChangeMode(const AppMode_e mode)
       break;
     }
     FrameRefreshStatus(DRAW_TITLE);
+    ResetSpeed();
     return true;
   }
   return false;

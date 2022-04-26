@@ -16,6 +16,7 @@ namespace common2
   void CommonFrame::LoadSnapshot()
   {
     Snapshot_LoadState();
+    ResetSpeed();
   }
 
   BYTE* CommonFrame::GetResource(WORD id, LPCSTR lpType, DWORD expectedSize)

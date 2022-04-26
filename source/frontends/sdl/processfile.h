@@ -1,6 +1,9 @@
+namespace common2
+{
+  class CommonFrame;
+}
+
 namespace sa2
 {
-  class SDLFrame;
-
-  void processFile(SDLFrame * frame, const char * filename, const size_t dragAndDropSlot, const size_t dragAndDropDrive);
+  void processFile(common2::CommonFrame * frame, const char * filename, const size_t dragAndDropSlot, const size_t dragAndDropDrive);
 }
