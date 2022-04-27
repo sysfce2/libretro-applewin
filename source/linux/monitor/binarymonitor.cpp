@@ -11,6 +11,8 @@
 #include "Interface.h"
 #include "CPU.h"
 #include "Memory.h"
+#include "CardManager.h"
+#include "Disk.h"
 #include "Debugger/Debug.h"
 
 #include <sys/socket.h>
@@ -208,7 +210,7 @@ size_t BinaryClient::readData(char * dest, size_t len)
 
 void BinaryClient::throwIfError(const ssize_t result)
 {
-  if (result < 0);
+  if (result < 0)
   {
     const int error = errno;
     if (error != EAGAIN && error != EWOULDBLOCK)
@@ -247,22 +249,26 @@ bool BinaryClient::readPayload()
 void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, const uint32_t request, const uint8_t error)
 {
   const std::vector<uint8_t> & data = buffer.getData();
-  myResponse.stx = 0x02;
-  myResponse.version = 0x02;
-  myResponse.type = type;
-  myResponse.error = error;
-  myResponse.request = request;
-  myResponse.length = data.size();
-  ssize_t sent1 = send(mySocket, &myResponse, sizeof(Response), MSG_NOSIGNAL);
+
+  Response response;
+
+  response.stx = 0x02;
+  response.version = 0x02;
+  response.type = type;
+  response.error = error;
+  response.request = request;
+  response.length = data.size();
+
+  ssize_t sent1 = send(mySocket, &response, sizeof(Response), MSG_NOSIGNAL);
   throwIfError(sent1);
   if (sent1 == sizeof(Response) && !data.empty())
   {
-    ssize_t sent2 = send(mySocket, data.data(), data.size(), MSG_NOSIGNAL);
+    const ssize_t sent2 = send(mySocket, data.data(), data.size(), MSG_NOSIGNAL);
     throwIfError(sent2);
     sent1 += sent2;
   }
   const bool ok = sent1 == (sizeof(Response) + data.size());
-  LogOutput("RESPONSE [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x, ERR: 0x%02x, OK: %d\n", mySocket, myResponse.type, myResponse.length, myResponse.request, myResponse.error, ok);
+  LogOutput("RESPONSE [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x, ERR: 0x%02x, OK: %d\n", mySocket, response.type, response.length, response.request, response.error, ok);
   LogOutput("PAYLOAD:");
   for (size_t i = 0; i < std::min(30UL, data.size()); ++i)
   {
@@ -689,14 +695,25 @@ void BinaryClient::cmdAutostart()
 
   const Autostart_t & autostart = payload.read<Autostart_t>();
   const std::string filename = payload.readString();
-  LogOutput("Loading %s\n", filename.c_str());
 
-  BinaryBuffer buffer;
-  sendReply(buffer, e_MON_RESPONSE_AUTOSTART, myCommand.request, e_MON_ERR_OK);
+  CardManager & cardManager = GetCardMgr();
+  const SS_CARDTYPE cardInSlot = cardManager.QuerySlot(6);
+  Disk2InterfaceCard * card2 = dynamic_cast<Disk2InterfaceCard*>(cardManager.GetObj(6));
+  const ImageError_e error = card2->InsertDisk(0, filename, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_DONT_CREATE);
 
-  if (autostart.run)
+  if (error == eIMAGE_ERROR_NONE)
   {
-    sendResume(MON_EVENT_ID);
+    BinaryBuffer buffer;
+    sendReply(buffer, e_MON_RESPONSE_AUTOSTART, myCommand.request, e_MON_ERR_OK);
+
+    if (autostart.run)
+    {
+      enterMonitorState(MODE_RUNNING);
+    }
+  }
+  else
+  {
+    sendError(e_MON_RESPONSE_AUTOSTART, e_MON_ERR_CMD_FAILURE);
   }
 }
 

@@ -60,8 +60,6 @@ private:
   std::vector<uint8_t> myPayloadIn;
   size_t myPayloadRead;
 
-  Response myResponse;
-
   size_t readData(char * dest, size_t len);
 
   void reset();
