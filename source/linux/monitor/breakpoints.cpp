@@ -48,6 +48,11 @@ int getOperation(const Breakpoint_t & bp)
 int addBreakpoint(const CheckpointSet_t & checkpointSet)
 {
   const BreakpointSource_t source = getSource(checkpointSet);
+
+  // there are some issues with memory breakpoints
+  // keep them disabled
+  const bool enabled = checkpointSet.enabled && (BP_SRC_REG_PC == source);
+
   for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
   {
     Breakpoint_t & bp = g_aBreakpoints[i];
@@ -57,7 +62,7 @@ int addBreakpoint(const CheckpointSet_t & checkpointSet)
         bp.nAddress == checkpointSet.startAddress &&
         bp.nLength == checkpointSet.endAddress - checkpointSet.startAddress + 1)
     {
-      bp.bEnabled = checkpointSet.enabled;
+      bp.bEnabled = enabled;
       bp.bTemp = checkpointSet.temporary;
       return i;
     }
@@ -80,7 +85,7 @@ int addBreakpoint(const CheckpointSet_t & checkpointSet)
   bp.eSource = source;
   bp.bSet = true;
   bp.eOperator = BP_OP_EQUAL;
-  bp.bEnabled = checkpointSet.enabled;
+  bp.bEnabled = enabled;
   bp.bTemp = checkpointSet.temporary;
   ++g_nBreakpoints;
 

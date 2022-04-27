@@ -27,6 +27,8 @@
 
 #define MON_EVENT_ID 0xffffffff
 
+// #define LOG_COMMANDS
+
 namespace
 {
 
@@ -176,12 +178,16 @@ BinaryClient::BinaryClient(const int socket, LinuxFrame * frame)
 {
   reset();
 
+#ifdef LOG_COMMANDS
   LogOutput("New client: %d\n", mySocket);
+#endif
 }
 
 BinaryClient::~BinaryClient()
 {
+#ifdef LOG_COMMANDS
   LogOutput("Del client: %d\n", mySocket);
+#endif
   close(mySocket);
 }
 
@@ -268,6 +274,8 @@ void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, co
     throwIfError(sent2);
     sent1 += sent2;
   }
+
+#ifdef LOG_COMMANDS
   const bool ok = sent1 == (sizeof(Response) + data.size());
   LogOutput("RESPONSE [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x, ERR: 0x%02x, OK: %d\n", mySocket, response.type, response.length, response.request, response.error, ok);
   LogOutput("PAYLOAD:");
@@ -280,10 +288,13 @@ void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, co
     LogOutput(" ...");
   }
   LogOutput("\n");
+#endif
+
 }
 
 void BinaryClient::sendBreakpointIfHit()
 {
+  LogOutput("\nDebugger stopped: %d\n", g_bDebugBreakpointHit);
   const int hit = findPCBreakpointHit();
   if (hit >= 0)
   {
@@ -376,7 +387,6 @@ void BinaryClient::cmdResourceGet()
   PayloadBuffer payload(myPayloadIn, e_MON_RESPONSE_RESOURCE_GET);
 
   const std::string name = payload.readString();
-  LogOutput("ResourceGet: %s\n", name.c_str());
   if (name == "MonitorServer")
   {
     sendResourceIntReply(myCommand.request, 0);
@@ -580,6 +590,7 @@ void BinaryClient::cmdBanksAvailable()
 
 void BinaryClient::sendStopped()
 {
+  LogOutput("\nStopping... @ %04x\n", regs.pc);
   BinaryBuffer buffer;
   buffer.writeInt16(regs.pc);
   sendReply(buffer, e_MON_RESPONSE_STOPPED, MON_EVENT_ID, e_MON_ERR_OK);
@@ -746,9 +757,11 @@ void BinaryClient::sendError(const uint8_t type, const uint8_t error)
 
 void BinaryClient::sendResume(const uint32_t request)
 {
+  LogOutput("\nResuming...\n");
   BinaryBuffer buffer;
   buffer.writeInt16(regs.pc);
   sendReply(buffer, e_MON_RESPONSE_RESUMED, request, e_MON_ERR_OK);
+  LogOutput("%d breakpoints...\n", g_nBreakpoints);
   for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
   {
     const Breakpoint_t & bp = g_aBreakpoints[i];
@@ -807,7 +820,9 @@ void BinaryClient::enterMonitorState(const AppMode_e mode)
 
 void BinaryClient::processCommand()
 {
+#ifdef LOG_COMMANDS
   LogOutput("COMMAND  [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x\n", mySocket, myCommand.type, myCommand.length, myCommand.request);
+#endif
 
   enterMonitorState(MODE_DEBUG);
 
@@ -881,7 +896,10 @@ void BinaryClient::processCommand()
   {
     sendError(length.type, e_MON_ERR_CMD_INVALID_LENGTH);
   }
+
+#ifdef LOG_COMMANDS
   LogOutput("\n");
+#endif
 }
 
 BinaryMonitor::BinaryMonitor(LinuxFrame * frame) : myFrame(frame)
