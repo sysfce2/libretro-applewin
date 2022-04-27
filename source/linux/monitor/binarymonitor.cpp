@@ -4,6 +4,7 @@
 #include "linux/linuxframe.h"
 #include "linux/monitor/binarybuffer.h"
 #include "linux/monitor/payloadbuffer.h"
+#include "linux/monitor/breakpoints.h"
 #include "linux/monitor/commands.h"
 
 #include "Log.h"
@@ -283,9 +284,11 @@ void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, co
 
 void BinaryClient::sendBreakpointIfHit()
 {
-  if (g_bDebugBreakpointHit)
+  const int hit = findPCBreakpointHit();
+  if (hit >= 0)
   {
     LogOutput("Hit: %d\n", g_bDebugBreakpointHit);
+    sendBreakpoint(MON_EVENT_ID, hit);
   }
 }
 
@@ -297,21 +300,26 @@ void BinaryClient::sendBreakpoint(const uint32_t request, const size_t i)
     return;
   }
 
-  Breakpoint_t & bp = g_aBreakpoints[i];
+  const Breakpoint_t & bp = g_aBreakpoints[i];
+
+  const int operation = getOperation(bp);
+  const int hit = isPCBreakpointHit(bp);
 
   BinaryBuffer buffer;
   buffer.writeInt32(i);                               // id
-  buffer.writeInt8(0);                                // hit
+  buffer.writeInt8(hit);                              // hit
   buffer.writeInt16(bp.nAddress);                     // start
   buffer.writeInt16(bp.nAddress + bp.nLength - 1);    // end
-  buffer.writeInt8(1);                                // stop?
+  buffer.writeInt8(true);                             // stop?
   buffer.writeInt8(bp.bEnabled);                      // enabled
-  buffer.writeInt8(4);                                // operation
+  buffer.writeInt8(operation);                        // operation
   buffer.writeInt8(bp.bTemp);                         // temporary
   buffer.writeInt32(0);                               // hit count
   buffer.writeInt32(0);                               // ignore count
   buffer.writeInt8(0);                                // condition?
   buffer.writeInt8(0);                                // memspace
+
+  logBreakpoint(bp);
   sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_INFO, myCommand.request, e_MON_ERR_OK);
 }
 
@@ -523,11 +531,18 @@ void BinaryClient::cmdDisplayGet()
   uint8_t * dest = buffer.enlargeBuffer(displayBuffer);
   const bgra_t * data = (const bgra_t *)video.GetFrameBuffer();
 
-  for (size_t i = 0; i < displayBuffer; ++i)
+  for (size_t row = 0; row < height; ++row)
   {
-    const bgra_t & source = data[i];
-    const uint8_t grey = (source.b + source.g + source.r) / 3;
-    dest[i] = grey;
+    // the image is vertically flipped
+    const bgra_t * sourceImage = data + (height - (row + 1)) * width;
+    uint8_t * destImage = dest + row * width;
+
+    for (size_t column = 0; column < width; ++column)
+    {
+      const bgra_t & source = sourceImage[column];
+      const uint8_t grey = (source.b + source.g + source.r) / 3;
+      destImage[column] = grey;
+    }
   }
 
   sendReply(buffer, e_MON_RESPONSE_DISPLAY_GET, myCommand.request, e_MON_ERR_OK);
@@ -576,27 +591,12 @@ void BinaryClient::cmdCheckpointSet()
 
   const CheckpointSet_t & checkpointSet = payload.read<CheckpointSet_t>();
 
-  size_t i = 0;
-  while ((i < MAX_BREAKPOINTS) && g_aBreakpoints[i].bSet)
-  {
-    ++i;
-  }
+  const size_t i = addBreakpoint(checkpointSet);
 
-  if (i >= MAX_BREAKPOINTS)
+  if (i < 0)
   {
     sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
-    return;
   }
-
-  Breakpoint_t & bp = g_aBreakpoints[i];
-  bp.nAddress = checkpointSet.startAddress;
-  bp.nLength = checkpointSet.endAddress - checkpointSet.startAddress + 1;
-  bp.eSource = BP_SRC_REG_PC;
-  bp.bSet = true;
-  bp.eOperator = BP_OP_EQUAL;
-  bp.bEnabled = checkpointSet.enabled;
-  bp.bTemp = checkpointSet.temporary;
-  ++g_nBreakpoints;
 
   sendBreakpoint(myCommand.request, i);
 }
@@ -749,6 +749,11 @@ void BinaryClient::sendResume(const uint32_t request)
   BinaryBuffer buffer;
   buffer.writeInt16(regs.pc);
   sendReply(buffer, e_MON_RESPONSE_RESUMED, request, e_MON_ERR_OK);
+  for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
+  {
+    const Breakpoint_t & bp = g_aBreakpoints[i];
+    logBreakpoint(bp);
+  }
 }
 
 void BinaryClient::cmdExit()
