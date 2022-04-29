@@ -295,11 +295,15 @@ void BinaryClient::sendReply(const BinaryBuffer & buffer, const uint8_t type, co
 void BinaryClient::sendBreakpointIfHit()
 {
   LogOutput("\nDebugger stopped: %d\n", g_bDebugBreakpointHit);
-  const int hit = findPCBreakpointHit();
-  if (hit >= 0)
+  for (int i = 0; i < MAX_BREAKPOINTS; ++i)
   {
-    LogOutput("Hit: %d\n", g_bDebugBreakpointHit);
-    sendBreakpoint(MON_EVENT_ID, hit);
+    const Breakpoint_t & bp = g_aBreakpoints[i];
+    if (bp.bHit)
+    {
+      LogOutput("Hit: %d\n", i);
+      sendBreakpoint(MON_EVENT_ID, i);
+      break;
+    }
   }
 }
 
@@ -313,12 +317,11 @@ void BinaryClient::sendBreakpoint(const uint32_t request, const size_t i)
 
   const Breakpoint_t & bp = g_aBreakpoints[i];
 
-  const int operation = getOperation(bp);
-  const int hit = isPCBreakpointHit(bp);
+  const int operation = getBreakpointOperation(bp);
 
   BinaryBuffer buffer;
   buffer.writeInt32(i);                               // id
-  buffer.writeInt8(hit);                              // hit
+  buffer.writeInt8(bp.bHit);                          // hit
   buffer.writeInt16(bp.nAddress);                     // start
   buffer.writeInt16(bp.nAddress + bp.nLength - 1);    // end
   buffer.writeInt8(true);                             // stop?
@@ -330,7 +333,7 @@ void BinaryClient::sendBreakpoint(const uint32_t request, const size_t i)
   buffer.writeInt8(0);                                // condition?
   buffer.writeInt8(0);                                // memspace
 
-  logBreakpoint(bp);
+  // logBreakpoint(bp);
   sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_INFO, myCommand.request, e_MON_ERR_OK);
 }
 
@@ -607,7 +610,11 @@ void BinaryClient::cmdCheckpointSet()
   if (i < 0)
   {
     sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
+    return;
   }
+
+  LogOutput("Add %d\n", int(i));
+  logBreakpoint(g_aBreakpoints[i]);
 
   sendBreakpoint(myCommand.request, i);
 }
@@ -636,6 +643,9 @@ void BinaryClient::cmdCheckpointToggle()
   Breakpoint_t & bp = g_aBreakpoints[checkpointToggle.id];
   bp.bEnabled = checkpointToggle.enabled;
 
+  LogOutput("Toggle %d\n", int(checkpointToggle.id));
+  logBreakpoint(bp);
+
   BinaryBuffer buffer;
   sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_TOGGLE, myCommand.request, e_MON_ERR_OK);
 }
@@ -652,8 +662,11 @@ void BinaryClient::cmdCheckpointDelete()
     return;
   }
 
+  LogOutput("Delete %d\n", int(checkpointDelete.id));
+
   Breakpoint_t & bp = g_aBreakpoints[checkpointDelete.id];
   bp.bSet = false;
+  --g_nBreakpoints;
 
   BinaryBuffer buffer;
   sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_DELETE, myCommand.request, e_MON_ERR_OK);
@@ -662,7 +675,7 @@ void BinaryClient::cmdCheckpointDelete()
 void BinaryClient::cmdCheckpointList()
 {
   size_t n = 0;
-  for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
+  for (int i = 0; i < MAX_BREAKPOINTS; ++i)
   {
     if (g_aBreakpoints[i].bSet)
     {
@@ -761,12 +774,12 @@ void BinaryClient::sendResume(const uint32_t request)
   BinaryBuffer buffer;
   buffer.writeInt16(regs.pc);
   sendReply(buffer, e_MON_RESPONSE_RESUMED, request, e_MON_ERR_OK);
-  LogOutput("%d breakpoints...\n", g_nBreakpoints);
-  for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
-  {
-    const Breakpoint_t & bp = g_aBreakpoints[i];
-    logBreakpoint(bp);
-  }
+  // LogOutput("%d breakpoints...\n", g_nBreakpoints);
+  // for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
+  // {
+  //   const Breakpoint_t & bp = g_aBreakpoints[i];
+  //   logBreakpoint(bp);
+  // }
 }
 
 void BinaryClient::cmdExit()
@@ -780,7 +793,10 @@ void BinaryClient::cmdQuit()
 {
   BinaryBuffer buffer;
   sendReply(buffer, e_MON_RESPONSE_QUIT, myCommand.request, e_MON_ERR_OK);
+
+  removeAllBReakpoints();
   enterMonitorState(MODE_RUNNING);
+
   throw std::runtime_error("quit");
 }
 

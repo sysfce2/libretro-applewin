@@ -1134,6 +1134,7 @@ bool _CheckBreakpointValue( Breakpoint_t *pBP, int nVal )
 			break;
 	}
 
+	pBP->bHit = bStatus;
 	return bStatus;
 }
 
@@ -8125,6 +8126,15 @@ void DebugExitDebugger ()
 		CmdGoFullSpeed(0);
 }
 
+static void ClearAllBreakpointHits()
+{
+	for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
+	{
+		Breakpoint_t *pBP = &g_aBreakpoints[iBreakpoint];
+		pBP->bHit = false;
+	}
+}
+
 //===========================================================================
 
 static void CheckBreakOpcode( int iOpcode )
@@ -8228,6 +8238,8 @@ void DebugContinueStepping(const bool bCallerWillUpdateDisplay/*=false*/)
 	if (g_nDebugSteps)
 	{
 		bool bDoSingleStep = true;
+
+		ClearAllBreakpointHits();
 
 		if (bForceSingleStepNext)
 		{

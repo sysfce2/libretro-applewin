@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 
+#include "linux/monitor/breakpoints.h"
 #include "linux/monitor/commands.h"
 
 #include "Debugger/Debug.h"
@@ -26,9 +27,10 @@ namespace
       return NUM_BREAKPOINT_SOURCES;
     }
   }
+
 }
 
-int getOperation(const Breakpoint_t & bp)
+int getBreakpointOperation(const Breakpoint_t & bp)
 {
   switch (bp.eSource)
   {
@@ -49,9 +51,7 @@ int addBreakpoint(const CheckpointSet_t & checkpointSet)
 {
   const BreakpointSource_t source = getSource(checkpointSet);
 
-  // there are some issues with memory breakpoints
-  // keep them disabled
-  const bool enabled = checkpointSet.enabled && (BP_SRC_REG_PC == source);
+  const bool enabled = checkpointSet.enabled;
 
   for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
   {
@@ -62,7 +62,7 @@ int addBreakpoint(const CheckpointSet_t & checkpointSet)
         bp.nAddress == checkpointSet.startAddress &&
         bp.nLength == checkpointSet.endAddress - checkpointSet.startAddress + 1)
     {
-      bp.bEnabled = enabled;
+      bp.bEnabled = checkpointSet.enabled;
       bp.bTemp = checkpointSet.temporary;
       return i;
     }
@@ -85,36 +85,11 @@ int addBreakpoint(const CheckpointSet_t & checkpointSet)
   bp.eSource = source;
   bp.bSet = true;
   bp.eOperator = BP_OP_EQUAL;
-  bp.bEnabled = enabled;
+  bp.bEnabled = checkpointSet.enabled;
   bp.bTemp = checkpointSet.temporary;
   ++g_nBreakpoints;
 
   return i;
-}
-
-bool isPCBreakpointHit(const Breakpoint_t & bp)
-{
-  if (bp.bSet && bp.eSource == BP_SRC_REG_PC)
-  {
-  	if ((regs.pc >= bp.nAddress) && (regs.pc < bp.nAddress + bp.nLength))
-    {
-      return true;
-    }
-  }
-  return false;
-}
-
-int findPCBreakpointHit()
-{
-  for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
-  {
-    const Breakpoint_t & bp = g_aBreakpoints[i];
-    if (isPCBreakpointHit(bp))
-    {
-      return i;
-    }
-  }
-  return -1;
 }
 
 void logBreakpoint(const Breakpoint_t & bp)
@@ -123,4 +98,14 @@ void logBreakpoint(const Breakpoint_t & bp)
   {
     LogOutput("BREAKPOINT [%04X-%04X] src: %2d op: %d enabled: %d temp: %d\n", bp.nAddress, bp.nAddress + bp.nLength - 1, bp.eSource, bp.eOperator, bp.bEnabled, bp.bTemp);
   }
+}
+
+void removeAllBReakpoints()
+{
+  for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
+  {
+    Breakpoint_t & bp = g_aBreakpoints[i];
+    bp.bSet = false;
+  }
+  g_nBreakpoints = 0;
 }

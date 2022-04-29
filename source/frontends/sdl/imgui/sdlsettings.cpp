@@ -2,6 +2,7 @@
 #include "frontends/sdl/imgui/sdlsettings.h"
 #include "frontends/sdl/imgui/settingshelper.h"
 #include "frontends/sdl/sdlframe.h"
+#include "linux/monitor/breakpoints.h"
 #include "linux/registry.h"
 #include "linux/version.h"
 #include "linux/tape.h"
@@ -1104,7 +1105,7 @@ namespace sa2
 
   void ImGuiSettings::drawBreakpoints()
   {
-    if (ImGui::BeginTable("Breakpoints", 7, ImGuiTableFlags_RowBg))
+    if (ImGui::BeginTable("Breakpoints", 8, ImGuiTableFlags_RowBg))
     {
       ImGui::TableSetupColumn("ID");
       ImGui::TableSetupColumn("First");
@@ -1113,6 +1114,7 @@ namespace sa2
       ImGui::TableSetupColumn("Operator");
       ImGui::TableSetupColumn("Enabled");
       ImGui::TableSetupColumn("Temporary");
+      ImGui::TableSetupColumn("Hit");
       ImGui::TableHeadersRow();
 
       for (int i = 0; i < MAX_BREAKPOINTS; ++i)
@@ -1136,6 +1138,10 @@ namespace sa2
           ImGui::Checkbox("##Enabled", &bp.bEnabled);
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Temp", &bp.bTemp);
+          ImGui::TableNextColumn();
+          ImGui::BeginDisabled();
+          ImGui::Checkbox("##Hit", &bp.bHit);
+          ImGui::EndDisabled();
           ImGui::PopID();
         }
       }
