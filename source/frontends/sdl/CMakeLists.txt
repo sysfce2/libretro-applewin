@@ -36,6 +36,11 @@ set(SOURCE_FILES
   sdlframe.cpp
   processfile.cpp
   renderer/sdlrendererframe.cpp
+
+  monitor/binarymonitor.cpp
+  monitor/binarybuffer.cpp
+  monitor/payloadbuffer.cpp
+  monitor/breakpoints.cpp
   )
 
 set(HEADER_FILES
@@ -45,6 +50,12 @@ set(HEADER_FILES
   sdlframe.h
   processfile.h
   renderer/sdlrendererframe.h
+
+  monitor/binarymonitor.h
+  monitor/binarybuffer.h
+  monitor/payloadbuffer.h
+  monitor/breakpoints.h
+  monitor/commands.h
   )
 
 

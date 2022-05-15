@@ -4,8 +4,6 @@
 #include "Common.h"
 #include <vector>
 
-class BinaryMonitor;
-
 class LinuxFrame : public FrameBase
 {
 public:
@@ -45,12 +43,8 @@ public:
   virtual void ResetSpeed();
   bool ChangeMode(const AppMode_e mode);
 
-  void Update();
-
 protected:
   std::vector<uint8_t> myFramebuffer;
-
-  std::shared_ptr<BinaryMonitor> myBinaryMonitor;
 };
 
 int MessageBox(HWND, LPCSTR lpText, LPCSTR lpCaption, UINT uType);

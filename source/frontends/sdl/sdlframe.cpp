@@ -3,6 +3,9 @@
 #include "frontends/sdl/sdlframe.h"
 #include "frontends/sdl/utils.h"
 #include "frontends/sdl/sdirectsound.h"
+
+#include "frontends/sdl/monitor/binarymonitor.h"
+
 #include "frontends/common2/programoptions.h"
 #include "frontends/common2/utils.h"
 
@@ -697,6 +700,26 @@ namespace sa2
   {
     common2::CommonFrame::LoadSnapshot();
     ResetHardware();
+  }
+
+  void SDLFrame::Initialize(bool resetVideoState)
+  {
+    CommonFrame::Initialize(resetVideoState);
+    myBinaryMonitor.reset(new binarymonitor::BinaryMonitor(this));
+  }
+
+  void SDLFrame::Destroy()
+  {
+    myBinaryMonitor.reset();
+    CommonFrame::Destroy();
+  }
+
+  void SDLFrame::Update()
+  {
+    if (myBinaryMonitor)
+    {
+      myBinaryMonitor->process();
+    }
   }
 
 }

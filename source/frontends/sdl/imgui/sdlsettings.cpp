@@ -2,7 +2,7 @@
 #include "frontends/sdl/imgui/sdlsettings.h"
 #include "frontends/sdl/imgui/settingshelper.h"
 #include "frontends/sdl/sdlframe.h"
-#include "linux/monitor/breakpoints.h"
+#include "frontends/sdl/monitor/breakpoints.h"
 #include "linux/registry.h"
 #include "linux/version.h"
 #include "linux/tape.h"

@@ -11,6 +11,11 @@ namespace common2
   struct EmulatorOptions;
 }
 
+namespace binarymonitor
+{
+  class BinaryMonitor;
+}
+
 namespace sa2
 {
 
@@ -22,6 +27,8 @@ namespace sa2
     void Begin() override;
     void End() override;
     void ResetSpeed() override;
+    void Initialize(bool resetVideoState) override;
+    void Destroy() override;
 
     void FrameRefreshStatus(int drawflags) override;
     int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;
@@ -34,6 +41,8 @@ namespace sa2
     void ResetHardware();
     bool HardwareChanged() const;
     void LoadSnapshot() override;
+
+    void Update();
 
     const std::shared_ptr<SDL_Window> & GetWindow() const;
 
@@ -79,6 +88,8 @@ namespace sa2
     std::shared_ptr<SDL_Window> myWindow;
 
     CConfigNeedingRestart myHardwareConfig;
+
+    std::shared_ptr<binarymonitor::BinaryMonitor> myBinaryMonitor;
   };
 
 }
