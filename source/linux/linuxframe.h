@@ -40,8 +40,6 @@ public:
   // in AppleWin this happens in AppleWin.cpp, but it is useful to share it
   virtual void Begin();
   virtual void End();
-  virtual void ResetSpeed();
-  bool ChangeMode(const AppMode_e mode);
 
 protected:
   std::vector<uint8_t> myFramebuffer;

@@ -13,6 +13,9 @@ namespace common2
     BYTE* GetResource(WORD id, LPCSTR lpType, DWORD expectedSize) override;
     virtual void LoadSnapshot();
 
+    virtual void ResetSpeed();
+    bool ChangeMode(const AppMode_e mode);
+
   protected:
     virtual std::string getResourcePath(const std::string & filename) = 0;
 

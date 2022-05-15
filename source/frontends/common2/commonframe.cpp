@@ -9,6 +9,9 @@
 
 #include "Log.h"
 #include "SaveState.h"
+#include "SoundCore.h"
+#include "Core.h"
+#include "Debugger/Debug.h"
 
 namespace common2
 {
@@ -60,6 +63,36 @@ namespace common2
     if (resource == "CHARSET8C") return "CHARSET8C.bmp";
 
     return resource;
+  }
+
+  bool CommonFrame::ChangeMode(const AppMode_e mode)
+  {
+    if (mode != g_nAppMode)
+    {
+      switch (mode)
+      {
+      case MODE_RUNNING:
+        DebugExitDebugger();
+        SoundCore_SetFade(FADE_IN);
+        break;
+      case MODE_DEBUG:
+        DebugBegin();
+        CmdWindowViewConsole(0);
+        break;
+      default:
+        g_nAppMode = mode;
+        SoundCore_SetFade(FADE_OUT);
+        break;
+      }
+      FrameRefreshStatus(DRAW_TITLE);
+      ResetSpeed();
+      return true;
+    }
+    return false;
+  }
+
+  void CommonFrame::ResetSpeed()
+  {
   }
 
 }

@@ -7,8 +7,6 @@
 #include "Interface.h"
 #include "Log.h"
 #include "Core.h"
-#include "SoundCore.h"
-#include "Debugger/Debug.h"
 
 void LinuxFrame::FrameDrawDiskLEDS()
 {
@@ -140,37 +138,6 @@ std::shared_ptr<NetworkBackend> LinuxFrame::CreateNetworkBackend(const std::stri
 #else
   return std::make_shared<PCapBackend>(interfaceName);
 #endif
-}
-
-void LinuxFrame::ResetSpeed()
-{
-
-}
-
-bool LinuxFrame::ChangeMode(const AppMode_e mode)
-{
-  if (mode != g_nAppMode)
-  {
-    switch (mode)
-    {
-    case MODE_RUNNING:
-      DebugExitDebugger();
-      SoundCore_SetFade(FADE_IN);
-      break;
-    case MODE_DEBUG:
-      DebugBegin();
-      CmdWindowViewConsole(0);
-      break;
-    default:
-      g_nAppMode = mode;
-      SoundCore_SetFade(FADE_OUT);
-      break;
-    }
-    FrameRefreshStatus(DRAW_TITLE);
-    ResetSpeed();
-    return true;
-  }
-  return false;
 }
 
 int MessageBox(HWND, LPCSTR lpText, LPCSTR lpCaption, UINT uType)

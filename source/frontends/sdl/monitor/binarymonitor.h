@@ -6,7 +6,10 @@
 
 #include "Core.h"
 
-class LinuxFrame;
+namespace common2
+{
+  class CommonFrame;
+}
 
 namespace binarymonitor
 {
@@ -16,7 +19,7 @@ namespace binarymonitor
   class BinaryClient
   {
   public:
-    BinaryClient(const int socket, LinuxFrame * frame);
+    BinaryClient(const int socket, common2::CommonFrame * frame);
     ~BinaryClient();
 
     bool process();
@@ -56,7 +59,7 @@ namespace binarymonitor
     const std::map<uint8_t, std::string> myBankNames;
 
     int mySocket;
-    LinuxFrame * myFrame;
+    common2::CommonFrame * myFrame;
     bool myStopped;
 
     Command myCommand;
@@ -112,13 +115,13 @@ namespace binarymonitor
   class BinaryMonitor
   {
   public:
-    BinaryMonitor(LinuxFrame * frame);
+    BinaryMonitor(common2::CommonFrame * frame);
     ~BinaryMonitor();
 
     void process();
 
   private:
-    LinuxFrame * myFrame;
+    common2::CommonFrame * myFrame;
     int mySocket;
     std::vector<std::shared_ptr<BinaryClient>> myClients;
   };

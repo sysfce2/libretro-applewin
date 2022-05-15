@@ -1,11 +1,11 @@
 #include "StdAfx.h"
 #include "frontends/sdl/monitor/binarymonitor.h"
-
-#include "linux/linuxframe.h"
 #include "frontends/sdl/monitor/binarybuffer.h"
 #include "frontends/sdl/monitor/payloadbuffer.h"
 #include "frontends/sdl/monitor/breakpoints.h"
 #include "frontends/sdl/monitor/commands.h"
+
+#include "frontends/common2/commonframe.h"
 
 #include "Log.h"
 #include "Core.h"
@@ -166,7 +166,7 @@ namespace
 namespace binarymonitor
 {
 
-  BinaryClient::BinaryClient(const int socket, LinuxFrame * frame)
+  BinaryClient::BinaryClient(const int socket, common2::CommonFrame * frame)
     : myAvailableRegisters({
         {0, {"A",  sizeof(regs.a),  &regs.a}},
         {1, {"X",  sizeof(regs.x),  &regs.x}},
@@ -922,7 +922,7 @@ namespace binarymonitor
   #endif
   }
 
-  BinaryMonitor::BinaryMonitor(LinuxFrame * frame) : myFrame(frame)
+  BinaryMonitor::BinaryMonitor(common2::CommonFrame * frame) : myFrame(frame)
   {
     mySocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
     sockaddr_in server;
