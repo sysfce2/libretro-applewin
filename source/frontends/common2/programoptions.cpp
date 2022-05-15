@@ -63,6 +63,7 @@ namespace common2
     po::options_description configDesc("Configuration");
     configDesc.add_options()
       ("conf", po::value<std::string>()->default_value(options.configurationFile), "Select configuration file")
+      ("default", "Run without a configuration file")
       ("registry,r", po::value<std::vector<std::string>>(), "Registry options section.path=value")
       ("qt-ini,q", "Use Qt ini file (read only)")
       ;
@@ -135,6 +136,12 @@ namespace common2
       }
 
       options.configurationFile = vm["conf"].as<std::string>();
+
+      if (vm.count("default"))
+      {
+        options.configurationFile.clear();
+      }
+
       options.useQtIni = vm.count("qt-ini");
       options.sdlDriver = vm["sdl-driver"].as<int>();
       options.glSwapInterval = vm["gl-swap"].as<int>();

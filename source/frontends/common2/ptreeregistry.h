@@ -3,6 +3,7 @@
 #include "linux/registry.h"
 #include <boost/property_tree/ptree.hpp>
 #include <string>
+#include <vector>
 
 namespace common2
 {
@@ -34,6 +35,7 @@ namespace common2
     void putValue(const std::string & section, const std::string & key, const T & value);
 
     std::map<std::string, std::map<std::string, std::string>> getAllValues() const override;
+    void addExtraOptions(const std::vector<std::string> & options);
 
   protected:
     ini_t myINI;

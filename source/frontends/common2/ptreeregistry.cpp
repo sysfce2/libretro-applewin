@@ -14,6 +14,19 @@ namespace
     return result;
   }
 
+  void parseOption(const std::string & s, std::string & path, std::string & value)
+  {
+    const size_t pos = s.find('=');
+    if (pos == std::string::npos)
+    {
+      throw std::runtime_error("Invalid option format: " + s + ", expected: section.key=value");
+    }
+    path = s.substr(0, pos);
+    std::replace(path.begin(), path.end(), '_', ' ');
+    value = s.substr(pos + 1);
+    std::replace(value.begin(), value.end(), '_', ' ');
+  }
+
 }
 
 namespace common2
@@ -77,6 +90,16 @@ namespace common2
       }
     }
     return values;
+  }
+
+  void PTreeRegistry::addExtraOptions(const std::vector<std::string> & options)
+  {
+    for (const std::string & option : options)
+    {
+      std::string path, value;
+      parseOption(option, path, value);
+      myINI.put(path, value);
+    }
   }
 
 }

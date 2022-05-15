@@ -15,26 +15,11 @@
 namespace
 {
 
-  void parseOption(const std::string & s, std::string & path, std::string & value)
-  {
-    const size_t pos = s.find('=');
-    if (pos == std::string::npos)
-    {
-      throw std::runtime_error("Invalid option format: " + s + ", expected: section.key=value");
-    }
-    path = s.substr(0, pos);
-    std::replace(path.begin(), path.end(), '_', ' ');
-    value = s.substr(pos + 1);
-    std::replace(value.begin(), value.end(), '_', ' ');
-  }
-
   class Configuration : public common2::PTreeRegistry
   {
   public:
     Configuration(const std::string & filename, const bool saveOnExit);
     ~Configuration();
-
-    void addExtraOptions(const std::vector<std::string> & options);
 
   private:
     const std::string myFilename;
@@ -49,7 +34,7 @@ namespace
     }
     else
     {
-      LogFileOutput("Registry: configuration file '%s' not found\n", filename.c_str());
+      LogFileOutput("Registry: configuration file '%s' not found\n", myFilename.c_str());
     }
   }
 
@@ -65,16 +50,6 @@ namespace
       {
         LogFileOutput("Registry: cannot save settings to '%s': %s\n", myFilename.c_str(), e.what());
       }
-    }
-  }
-
-  void Configuration::addExtraOptions(const std::vector<std::string> & options)
-  {
-    for (const std::string & option : options)
-    {
-      std::string path, value;
-      parseOption(option, path, value);
-      myINI.put(path, value);
     }
   }
 
@@ -128,7 +103,16 @@ namespace common2
       saveOnExit = true;
     }
 
-    std::shared_ptr<Configuration> config(new Configuration(filename, saveOnExit));
+    std::shared_ptr<common2::PTreeRegistry> config;
+    if (filename.empty())
+    {
+      config = std::make_shared<common2::PTreeRegistry>();
+    }
+    else
+    {
+      config = std::make_shared<Configuration>(filename, saveOnExit);
+    }
+
     config->addExtraOptions(options.registryOptions);
 
     return config;
