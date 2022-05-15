@@ -115,14 +115,17 @@ namespace binarymonitor
   class BinaryMonitor
   {
   public:
-    BinaryMonitor(common2::CommonFrame * frame);
+    static std::shared_ptr<BinaryMonitor> create(const std::string & address, common2::CommonFrame * frame);
+
+    BinaryMonitor(const int socket, common2::CommonFrame * frame);
     ~BinaryMonitor();
 
     void process();
 
   private:
+    const int mySocket;
+
     common2::CommonFrame * myFrame;
-    int mySocket;
     std::vector<std::shared_ptr<BinaryClient>> myClients;
   };
 

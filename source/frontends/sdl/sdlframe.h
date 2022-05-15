@@ -27,8 +27,6 @@ namespace sa2
     void Begin() override;
     void End() override;
     void ResetSpeed() override;
-    void Initialize(bool resetVideoState) override;
-    void Destroy() override;
 
     void FrameRefreshStatus(int drawflags) override;
     int FrameMessageBox(LPCSTR lpText, LPCSTR lpCaption, UINT uType) override;

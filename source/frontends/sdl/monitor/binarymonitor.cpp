@@ -15,6 +15,7 @@
 #include "CardManager.h"
 #include "Disk.h"
 #include "Debugger/Debug.h"
+#include "Tfe/DNS.h"
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -25,12 +26,33 @@
 #include <errno.h>
 #include <cstring>
 
+
 #define MON_EVENT_ID 0xffffffff
 
 // #define LOG_COMMANDS
 
 namespace
 {
+
+  void parseAddress(const std::string & address, sockaddr_in & server)
+  {
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_port = htons(6502);  // default
+
+    const size_t posOfColon = address.find(':');
+    const std::string name = address.substr(0, posOfColon);
+    server.sin_addr.s_addr = getHostByName(name);
+
+    if (posOfColon != std::string::npos)
+    {
+      const std::string port = address.substr(posOfColon + 1);
+      if (!port.empty())
+      {
+        server.sin_port = htons(strtoul(port.c_str(), nullptr, 10));
+      }
+    }
+  }
 
   enum t_binary_command {
     e_MON_CMD_INVALID = 0x00,
@@ -922,35 +944,39 @@ namespace binarymonitor
   #endif
   }
 
-  BinaryMonitor::BinaryMonitor(common2::CommonFrame * frame) : myFrame(frame)
+  std::shared_ptr<BinaryMonitor> BinaryMonitor::create(const std::string & address, common2::CommonFrame * frame)
   {
-    mySocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
     sockaddr_in server;
-    server.sin_family = AF_INET;
-    server.sin_addr.s_addr = INADDR_ANY;
-    server.sin_port = htons(6502);
+    parseAddress(address, server);
 
-    if (bind(mySocket, (sockaddr *)&server , sizeof(server)) < 0)
+    const int sk = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
+
+    if (bind(sk, (sockaddr *)&server , sizeof(server)) < 0)
     {
       LogOutput("Monitor: bind failed: %s\n", strerror(errno));
     }
-    else if (listen(mySocket, 5))
+    else if (listen(sk, 5))
     {
       LogOutput("Monitor: listen failed: %s\n", strerror(errno));
     }
     else
     {
       LogOutput("Monitor: listening for incoming connections\n");
+      return std::make_shared<BinaryMonitor>(sk, frame);
     }
+
+    close(sk);
+    return nullptr;
+  }
+
+  BinaryMonitor::BinaryMonitor(const int socket, common2::CommonFrame * frame) : mySocket(socket), myFrame(frame)
+  {
   }
 
   BinaryMonitor::~BinaryMonitor()
   {
-    if (mySocket >= 0)
-    {
-      LogOutput("Monitor: closing socket\n");
-      close(mySocket);
-    }
+    LogOutput("Monitor: closing socket\n");
+    close(mySocket);
   }
 
   void BinaryMonitor::process()

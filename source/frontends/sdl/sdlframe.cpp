@@ -137,6 +137,10 @@ namespace sa2
     , myScrollLockFullSpeed(false)
     , mySpeed(options.fixedSpeed)
   {
+    if (options.binaryMonitor)
+    {
+      myBinaryMonitor = binarymonitor::BinaryMonitor::create(options.binaryMonitorAddress, this);
+    }
   }
 
   void SDLFrame::End()
@@ -700,18 +704,6 @@ namespace sa2
   {
     common2::CommonFrame::LoadSnapshot();
     ResetHardware();
-  }
-
-  void SDLFrame::Initialize(bool resetVideoState)
-  {
-    CommonFrame::Initialize(resetVideoState);
-    myBinaryMonitor.reset(new binarymonitor::BinaryMonitor(this));
-  }
-
-  void SDLFrame::Destroy()
-  {
-    myBinaryMonitor.reset();
-    CommonFrame::Destroy();
   }
 
   void SDLFrame::Update()
