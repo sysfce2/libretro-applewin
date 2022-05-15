@@ -55,6 +55,9 @@ namespace common2
     std::string customRom;
 
     std::vector<std::string> registryOptions;
+
+    bool binaryMonitor = false;
+    std::string binaryMonitorAddress = "127.0.0.1:6502";
   };
 
   bool getEmulatorOptions(int argc, const char * argv [], const std::string & edition, EmulatorOptions & options);

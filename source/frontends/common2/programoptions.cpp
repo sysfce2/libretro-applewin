@@ -68,6 +68,13 @@ namespace common2
       ;
     desc.add(configDesc);
 
+    po::options_description monitorDesc("Binary monitor");
+    monitorDesc.add_options()
+      ("binary-monitor", "Enable binary monitor")
+      ("binary-monitor-address", po::value<std::string>()->default_value(options.binaryMonitorAddress), "Binary monitor address")
+      ;
+    desc.add(monitorDesc);
+
     po::options_description diskDesc("Disk");
     diskDesc.add_options()
       ("d1,1", po::value<std::string>(), "Disk in 1st drive")
@@ -190,6 +197,12 @@ namespace common2
       {
         options.geometry.empty = false;
         parseGeometry(vm["geometry"].as<std::string>(), options.geometry);
+      }
+
+      options.binaryMonitor = vm.count("binary-monitor") > 0;
+      if (vm.count("binary-monitor-address"))
+      {
+        options.binaryMonitorAddress = vm["binary-monitor-address"].as<std::string>();
       }
 
       return true;
