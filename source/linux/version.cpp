@@ -8,3 +8,8 @@ std::string getVersion()
 {
   return xstr2(APPLEWIN_VERSION);
 }
+
+void getVersion(std::vector<size_t> & version)
+{
+  version = {APPLEWIN_VERSION};
+}

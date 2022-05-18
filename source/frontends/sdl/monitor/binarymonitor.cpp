@@ -7,6 +7,8 @@
 
 #include "frontends/common2/commonframe.h"
 
+#include "linux/version.h"
+
 #include "Log.h"
 #include "Core.h"
 #include "Interface.h"
@@ -396,18 +398,26 @@ namespace binarymonitor
   void BinaryClient::cmdViceInfo()
   {
     BinaryBuffer buffer;
-    uint8_t * dest = buffer.enlargeBuffer(10);
-    dest[0] = 4;
-    dest[1] = 3;
-    dest[2] = 6;
-    dest[3] = 2;
-    dest[4] = 0;
 
-    dest[5] = 4;
-    dest[6] = 0;
-    dest[7] = 0;
-    dest[8] = 0;
-    dest[9] = 0;
+    {
+      BinaryBufferSize<uint8_t> binarySize(buffer);
+      std::vector<size_t> version;
+      getVersion(version);
+      for (size_t i : version)
+      {
+        buffer.writeInt8(static_cast<uint8_t>(i));
+      }
+    }
+
+    {
+      // no svn info
+      BinaryBufferSize<uint8_t> binarySize(buffer);
+      for (size_t i = 0; i < 4; ++i)
+      {
+        buffer.writeInt8(0);
+      }
+    }
+
     sendReply(buffer, e_MON_RESPONSE_VICE_INFO, myCommand.request, e_MON_ERR_OK);
   }
 
