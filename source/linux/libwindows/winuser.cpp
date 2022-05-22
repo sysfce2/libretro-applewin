@@ -14,7 +14,7 @@ HCURSOR SetCursor(HCURSOR hCursor)
 
 UINT_PTR SetTimer(HWND,UINT_PTR,UINT,TIMERPROC)
 {
-  return 0;
+  return 1;  // dummy timer
 }
 
 BOOL KillTimer(HWND hWnd, UINT uIDEvent)
