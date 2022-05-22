@@ -1103,9 +1103,12 @@ namespace sa2
     ImGui::EndDisabled();
   }
 
-  void ImGuiSettings::drawBreakpoints()
+  void ImGuiSettings::drawBreakpoints(SDLFrame * frame)
   {
-    if (ImGui::BeginTable("Breakpoints", 8, ImGuiTableFlags_RowBg))
+    ImGui::LabelText("Mode", "%s", getAppModeName(g_nAppMode).c_str());
+    drawDebuggerCommands(frame);
+    ImGui::Separator();
+    if (ImGui::BeginTable("Breakpoints", 9, ImGuiTableFlags_RowBg))
     {
       ImGui::TableSetupColumn("ID");
       ImGui::TableSetupColumn("First");
@@ -1115,6 +1118,7 @@ namespace sa2
       ImGui::TableSetupColumn("Enabled");
       ImGui::TableSetupColumn("Temporary");
       ImGui::TableSetupColumn("Hit");
+      ImGui::TableSetupColumn("Delete");
       ImGui::TableHeadersRow();
 
       for (int i = 0; i < MAX_BREAKPOINTS; ++i)
@@ -1131,23 +1135,50 @@ namespace sa2
           ImGui::TableNextColumn();
           ImGui::Text("%04X", bp.nAddress + bp.nLength - 1);
           ImGui::TableNextColumn();
-          ImGui::Text("%2d", bp.eSource);
+          ImGui::TextUnformatted(getSourceName(bp.eSource).c_str());
           ImGui::TableNextColumn();
-          ImGui::Text("%2d", bp.eOperator);
+          ImGui::TextUnformatted(getOperatorName(bp.eOperator).c_str());
           ImGui::TableNextColumn();
+          ImGui::BeginDisabled();
           ImGui::Checkbox("##Enabled", &bp.bEnabled);
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Temp", &bp.bTemp);
           ImGui::TableNextColumn();
-          ImGui::BeginDisabled();
           ImGui::Checkbox("##Hit", &bp.bHit);
           ImGui::EndDisabled();
+          ImGui::TableNextColumn();
+          if (ImGui::Button("Delete"))
+          {
+            binarymonitor::deleteBreakpoint(bp);
+          }
           ImGui::PopID();
         }
       }
 
       ImGui::EndTable();
     }
+  }
+
+  void ImGuiSettings::drawDebuggerCommands(SDLFrame* frame)
+  {
+    if (ImGui::Button("Step"))
+    {
+      frame->ChangeMode(MODE_DEBUG);
+      frame->SingleStep();
+    }
+    ImGui::SameLine();
+
+    if ((ImGui::SameLine(), ImGui::Button("Debug")))
+    {
+      frame->ChangeMode(MODE_DEBUG);
+      resetDebuggerCycles();
+    }
+    if ((ImGui::SameLine(), ImGui::Button("Continue")))
+    {
+      frame->ChangeMode(MODE_RUNNING);
+    }
+    ImGui::SameLine();
+    ImGui::Text("%016llu - %04X", g_nCumulativeCycles, regs.pc);
   }
 
   void ImGuiSettings::drawConsole()
@@ -1234,24 +1265,7 @@ namespace sa2
             g_nDisasmCurAddress = regs.pc;
           }
 
-          if (ImGui::Button("Step"))
-          {
-            frame->ChangeMode(MODE_DEBUG);
-            frame->SingleStep();
-          }
-          ImGui::SameLine();
-
-          if ((ImGui::SameLine(), ImGui::Button("Debug")))
-          {
-            frame->ChangeMode(MODE_DEBUG);
-            resetDebuggerCycles();
-          }
-          if ((ImGui::SameLine(), ImGui::Button("Continue")))
-          {
-            frame->ChangeMode(MODE_RUNNING);
-          }
-          ImGui::SameLine();
-          ImGui::Text("%016llu - %04X", g_nCumulativeCycles, regs.pc);
+          drawDebuggerCommands(frame);
 
           if (!mySyncCPU)
           {
@@ -1296,7 +1310,7 @@ namespace sa2
         }
         if (ImGui::BeginTabItem("Breakpoints"))
         {
-          drawBreakpoints();
+          drawBreakpoints(frame);
           ImGui::EndTabItem();
         }
         ImGui::EndTabBar();

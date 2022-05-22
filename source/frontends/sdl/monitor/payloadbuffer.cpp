@@ -1,4 +1,6 @@
 #include "frontends/sdl/monitor/payloadbuffer.h"
+#include "frontends/sdl/monitor/exception.h"
+#include "frontends/sdl/monitor/commands.h"
 
 namespace binarymonitor
 {
@@ -24,7 +26,7 @@ namespace binarymonitor
   {
     if (myBegin + size > myEnd)
     {
-      throw LengthException({myType});
+      throw BinaryException({myType, e_MON_ERR_CMD_INVALID_LENGTH});
     }
     const uint8_t * result = myBegin;
     myBegin += size;

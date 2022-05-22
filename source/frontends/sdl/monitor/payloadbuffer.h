@@ -9,10 +9,6 @@ namespace binarymonitor
   class PayloadBuffer
   {
   public:
-    struct LengthException
-    {
-      uint8_t type;
-    };
 
     PayloadBuffer(const uint8_t * begin, const uint8_t * end, const uint8_t type);
     PayloadBuffer(const std::vector<uint8_t> & payload, const uint8_t type);

@@ -44,12 +44,13 @@ namespace sa2
 
     void showSettings(SDLFrame* frame);
     void showDebugger(SDLFrame* frame);
+    void drawDebuggerCommands(SDLFrame* frame);
     void showMemory();
     void showAboutWindow();
 
     void drawDisassemblyTable(SDLFrame * frame);
     void drawConsole();
-    void drawBreakpoints();
+    void drawBreakpoints(SDLFrame * frame);
     void drawRegisters();
     void drawAnnunciators();
     void drawSwitches();

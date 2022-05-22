@@ -96,6 +96,44 @@ namespace
     {VT_MONO_WHITE, "Monochrome (White)"},
   };
 
+  const std::map<BreakpointOperator_t, std::string> operators =
+  {
+    {BP_OP_LESS_EQUAL, "<="},
+    {BP_OP_LESS_THAN, "<"},
+    {BP_OP_EQUAL, "=="},
+    {BP_OP_NOT_EQUAL, "!="},
+    {BP_OP_GREATER_THAN, ">"},
+    {BP_OP_GREATER_EQUAL, ">="},
+    {BP_OP_READ, "read"},
+    {BP_OP_WRITE, "write"},
+    {BP_OP_READ_WRITE, "r/w"},
+  };
+
+  const std::map<BreakpointSource_t, std::string> sources =
+  {
+    {BP_SRC_REG_A, "A"},
+    {BP_SRC_REG_X, "X"},
+    {BP_SRC_REG_Y, "Y"},
+
+    {BP_SRC_REG_PC, "PC"},
+    {BP_SRC_REG_S, "SP"},
+
+    {BP_SRC_REG_P, "P"},
+    {BP_SRC_FLAG_C, "[C]"},
+    {BP_SRC_FLAG_Z, "[Z]"},
+    {BP_SRC_FLAG_I, "[I]"},
+    {BP_SRC_FLAG_D, "[D]"},
+    {BP_SRC_FLAG_B, "[B]"},
+    {BP_SRC_FLAG_R, "[R]"},
+    {BP_SRC_FLAG_V, "[V]"},
+    {BP_SRC_FLAG_N, "[N]"},
+
+    {BP_SRC_OPCODE, "opcode"},
+    {BP_SRC_MEM_RW, "r/w"},
+    {BP_SRC_MEM_READ_ONLY, "read"},
+    {BP_SRC_MEM_WRITE_ONLY, "write"},
+  };
+
   const std::map<size_t, std::vector<SS_CARDTYPE>> cardsForSlots =
     {
       {0, {CT_Empty, CT_LanguageCard, CT_Saturn128K}},
@@ -159,6 +197,16 @@ namespace sa2
   const std::string & getDiskStatusName(Disk_Status_e status)
   {
     return statuses.at(status);
+  }
+
+  const std::string & getOperatorName(BreakpointOperator_t op)
+  {
+    return operators.at(op);
+  }
+
+  const std::string & getSourceName(BreakpointSource_t source)
+  {
+    return sources.at(source);
   }
 
   void insertCard(size_t slot, SS_CARDTYPE card, FrameBase * frame)

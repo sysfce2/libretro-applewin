@@ -5,6 +5,7 @@
 #include "Common.h"
 #include "DiskImage.h"
 #include "Video.h"
+#include "Debugger/Debugger_Types.h"
 
 #include <string>
 #include <vector>
@@ -21,6 +22,8 @@ namespace sa2
   const std::string & getAppModeName(AppMode_e mode);
   const std::string & getDiskStatusName(Disk_Status_e status);
   const std::string & getVideoTypeName(VideoType_e type);
+  const std::string & getOperatorName(BreakpointOperator_t op);
+  const std::string & getSourceName(BreakpointSource_t source);
 
   const std::vector<SS_CARDTYPE> & getCardsForSlot(size_t slot);
   const std::vector<SS_CARDTYPE> & getExpansionCards();

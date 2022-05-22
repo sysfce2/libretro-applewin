@@ -9,5 +9,6 @@ namespace binarymonitor
   int addBreakpoint(const CheckpointSet_t & checkpointSet);
   void logBreakpoint(const Breakpoint_t & bp);
   void removeAllBReakpoints();
+  void deleteBreakpoint(Breakpoint_t & bp);
 
 }

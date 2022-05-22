@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 
 #include "frontends/sdl/monitor/breakpoints.h"
+#include "frontends/sdl/monitor/exception.h"
 #include "frontends/sdl/monitor/commands.h"
 
 #include "Debugger/Debug.h"
@@ -24,7 +25,8 @@ namespace
     case 1 + 2:
       return BP_SRC_MEM_RW;
     default:
-      return NUM_BREAKPOINT_SOURCES;
+      throw binarymonitor::BinaryException({binarymonitor::e_MON_RESPONSE_CHECKPOINT_INFO,
+                                            binarymonitor::e_MON_ERR_INVALID_PARAMETER});
     }
   }
 
@@ -46,30 +48,36 @@ namespace binarymonitor
     case BP_SRC_MEM_RW:
       return 1 + 2;
     default:
-      return 0;
+      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
     }
   }
 
   int addBreakpoint(const CheckpointSet_t & checkpointSet)
   {
+    if (!checkpointSet.stop)
+    {
+      // unsupported as of now
+      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
+    }
+
     const BreakpointSource_t source = getSource(checkpointSet);
 
-    const bool enabled = checkpointSet.enabled;
-
+#if 0
     for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
     {
       Breakpoint_t & bp = g_aBreakpoints[i];
-      if (bp.bSet && 
-          bp.eSource == source && 
-          bp.eOperator == BP_OP_EQUAL && 
+      if (bp.eSource == source &&
+          bp.eOperator == BP_OP_EQUAL &&
           bp.nAddress == checkpointSet.startAddress &&
           bp.nLength == checkpointSet.endAddress - checkpointSet.startAddress + 1)
       {
+        bp.bSet = true;
         bp.bEnabled = checkpointSet.enabled;
         bp.bTemp = checkpointSet.temporary;
         return i;
       }
     }
+#endif
 
     size_t i = 0;
     while ((i < MAX_BREAKPOINTS) && g_aBreakpoints[i].bSet)
@@ -79,7 +87,7 @@ namespace binarymonitor
 
     if (i >= MAX_BREAKPOINTS)
     {
-      return -1;
+      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
     }
 
     Breakpoint_t & bp = g_aBreakpoints[i];
@@ -108,9 +116,20 @@ namespace binarymonitor
     for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
     {
       Breakpoint_t & bp = g_aBreakpoints[i];
-      bp.bSet = false;
+      deleteBreakpoint(bp);
     }
     g_nBreakpoints = 0;
+  }
+
+  void deleteBreakpoint(Breakpoint_t & bp)
+  {
+    if (bp.bSet)
+    {
+      --g_nBreakpoints;
+    }
+    bp.bEnabled = false;
+    bp.bSet = false;
+    bp.nLength = 0;
   }
 
 }

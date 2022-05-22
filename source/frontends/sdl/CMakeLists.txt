@@ -56,6 +56,7 @@ set(HEADER_FILES
   monitor/payloadbuffer.h
   monitor/breakpoints.h
   monitor/commands.h
+  monitor/exception.h
   )
 
 

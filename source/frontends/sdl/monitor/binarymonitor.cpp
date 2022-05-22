@@ -3,6 +3,7 @@
 #include "frontends/sdl/monitor/binarybuffer.h"
 #include "frontends/sdl/monitor/payloadbuffer.h"
 #include "frontends/sdl/monitor/breakpoints.h"
+#include "frontends/sdl/monitor/exception.h"
 #include "frontends/sdl/monitor/commands.h"
 
 #include "frontends/common2/commonframe.h"
@@ -56,114 +57,6 @@ namespace
     }
   }
 
-  enum t_binary_command {
-    e_MON_CMD_INVALID = 0x00,
-
-    e_MON_CMD_MEM_GET = 0x01,
-    e_MON_CMD_MEM_SET = 0x02,
-
-    e_MON_CMD_CHECKPOINT_GET = 0x11,
-    e_MON_CMD_CHECKPOINT_SET = 0x12,
-    e_MON_CMD_CHECKPOINT_DELETE = 0x13,
-    e_MON_CMD_CHECKPOINT_LIST = 0x14,
-    e_MON_CMD_CHECKPOINT_TOGGLE = 0x15,
-
-    e_MON_CMD_CONDITION_SET = 0x22,
-
-    e_MON_CMD_REGISTERS_GET = 0x31,
-    e_MON_CMD_REGISTERS_SET = 0x32,
-
-    e_MON_CMD_DUMP = 0x41,
-    e_MON_CMD_UNDUMP = 0x42,
-
-    e_MON_CMD_RESOURCE_GET = 0x51,
-    e_MON_CMD_RESOURCE_SET = 0x52,
-
-    e_MON_CMD_ADVANCE_INSTRUCTIONS = 0x71,
-    e_MON_CMD_KEYBOARD_FEED = 0x72,
-    e_MON_CMD_EXECUTE_UNTIL_RETURN = 0x73,
-
-    e_MON_CMD_PING = 0x81,
-    e_MON_CMD_BANKS_AVAILABLE = 0x82,
-    e_MON_CMD_REGISTERS_AVAILABLE = 0x83,
-    e_MON_CMD_DISPLAY_GET = 0x84,
-    e_MON_CMD_VICE_INFO = 0x85,
-
-    e_MON_CMD_PALETTE_GET = 0x91,
-
-    e_MON_CMD_JOYPORT_SET = 0xa2,
-
-    e_MON_CMD_USERPORT_SET = 0xb2,
-
-    e_MON_CMD_EXIT = 0xaa,
-    e_MON_CMD_QUIT = 0xbb,
-    e_MON_CMD_RESET = 0xcc,
-    e_MON_CMD_AUTOSTART = 0xdd,
-  };
-
-  enum t_binary_response {
-    e_MON_RESPONSE_INVALID = 0x00,
-    e_MON_RESPONSE_MEM_GET = 0x01,
-    e_MON_RESPONSE_MEM_SET = 0x02,
-
-    e_MON_RESPONSE_CHECKPOINT_INFO = 0x11,
-
-    e_MON_RESPONSE_CHECKPOINT_DELETE = 0x13,
-    e_MON_RESPONSE_CHECKPOINT_LIST = 0x14,
-    e_MON_RESPONSE_CHECKPOINT_TOGGLE = 0x15,
-
-    e_MON_RESPONSE_CONDITION_SET = 0x22,
-
-    e_MON_RESPONSE_REGISTER_INFO = 0x31,
-
-    e_MON_RESPONSE_DUMP = 0x41,
-    e_MON_RESPONSE_UNDUMP = 0x42,
-
-    e_MON_RESPONSE_RESOURCE_GET = 0x51,
-    e_MON_RESPONSE_RESOURCE_SET = 0x52,
-
-    e_MON_RESPONSE_JAM = 0x61,
-    e_MON_RESPONSE_STOPPED = 0x62,
-    e_MON_RESPONSE_RESUMED = 0x63,
-
-    e_MON_RESPONSE_ADVANCE_INSTRUCTIONS = 0x71,
-    e_MON_RESPONSE_KEYBOARD_FEED = 0x72,
-    e_MON_RESPONSE_EXECUTE_UNTIL_RETURN = 0x73,
-
-    e_MON_RESPONSE_PING = 0x81,
-    e_MON_RESPONSE_BANKS_AVAILABLE = 0x82,
-    e_MON_RESPONSE_REGISTERS_AVAILABLE = 0x83,
-    e_MON_RESPONSE_DISPLAY_GET = 0x84,
-    e_MON_RESPONSE_VICE_INFO = 0x85,
-
-    e_MON_RESPONSE_PALETTE_GET = 0x91,
-
-    e_MON_RESPONSE_JOYPORT_SET = 0xa2,
-
-    e_MON_RESPONSE_USERPORT_SET = 0xb2,
-
-    e_MON_RESPONSE_EXIT = 0xaa,
-    e_MON_RESPONSE_QUIT = 0xbb,
-    e_MON_RESPONSE_RESET = 0xcc,
-    e_MON_RESPONSE_AUTOSTART = 0xdd,
-  };
-
-  enum t_mon_error {
-    e_MON_ERR_OK = 0x00,
-    e_MON_ERR_OBJECT_MISSING = 0x01,
-    e_MON_ERR_INVALID_MEMSPACE = 0x02,
-    e_MON_ERR_CMD_INVALID_LENGTH = 0x80,
-    e_MON_ERR_INVALID_PARAMETER = 0x81,
-    e_MON_ERR_CMD_INVALID_API_VERSION = 0x82,
-    e_MON_ERR_CMD_INVALID_TYPE = 0x83,
-    e_MON_ERR_CMD_FAILURE = 0x8f,
-  };
-
-  enum t_mon_resource_type {
-    e_MON_RESOURCE_TYPE_STRING = 0x00,
-    e_MON_RESOURCE_TYPE_INT = 0x01,
-  };
-
   std::map<uint8_t, std::string> getBankNames()
   {
     size_t id = 0;
@@ -184,6 +77,20 @@ namespace
     return names;
   }
 
+  bool isStopped(const AppMode_e mode)
+  {
+    switch (mode)
+    {
+    case MODE_RUNNING:
+    case MODE_STEPPING:
+      return false;
+    case MODE_DEBUG:
+    case MODE_PAUSED:
+    default:
+      return true;
+    }
+  }
+
 }
 
 
@@ -202,7 +109,7 @@ namespace binarymonitor
     , myBankNames(getBankNames())
     , mySocket(socket)
     , myFrame(frame)
-    , myStopped(g_nAppMode == MODE_DEBUG)
+    , myStopped(isStopped(g_nAppMode))
   {
     reset();
 
@@ -339,8 +246,7 @@ namespace binarymonitor
   {
     if (i >= MAX_BREAKPOINTS || !g_aBreakpoints[i].bSet)
     {
-      sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
-      return;
+      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
     }
 
     const Breakpoint_t & bp = g_aBreakpoints[i];
@@ -367,11 +273,10 @@ namespace binarymonitor
 
   bool BinaryClient::process()
   {
-    bool newStopped = g_nAppMode == MODE_DEBUG;
+    const bool newStopped = isStopped(g_nAppMode);
     if (newStopped != myStopped)
     {
       sendMonitorState(g_nAppMode);
-      myStopped = newStopped;
       if (myStopped)
       {
         sendBreakpointIfHit();
@@ -440,7 +345,7 @@ namespace binarymonitor
     }
     else
     {
-      sendError(e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING);
+      throw BinaryException({e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING});
     }
   }
 
@@ -451,8 +356,7 @@ namespace binarymonitor
     const uint8_t memspace = payload.read<uint8_t>();
     if (memspace != 0)
     {
-      sendError(e_MON_RESPONSE_REGISTERS_AVAILABLE, e_MON_ERR_INVALID_MEMSPACE);
-      return;
+      throw BinaryException({e_MON_RESPONSE_REGISTERS_AVAILABLE, e_MON_ERR_INVALID_MEMSPACE});
     }
 
     BinaryBuffer buffer;
@@ -476,8 +380,7 @@ namespace binarymonitor
     const uint8_t memspace = payload.read<uint8_t>();
     if (memspace != 0)
     {
-      sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE);
-      return;
+      throw BinaryException({e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE});
     }
 
     sendRegisters(myCommand.request);
@@ -491,8 +394,7 @@ namespace binarymonitor
 
     if (registersSet.memspace != 0)
     {
-      sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE);
-      return;
+      throw BinaryException({e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE});
     }
 
     for (size_t i = 0; i < registersSet.n; ++i)
@@ -502,8 +404,7 @@ namespace binarymonitor
       const auto it = myAvailableRegisters.find(id);
       if (it == myAvailableRegisters.end())
       {
-        sendError(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_OBJECT_MISSING);
-        return;
+        throw BinaryException({e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_OBJECT_MISSING});
       }
       const Register_t & reg = it->second;
       const uint16_t value = registerPayload.read<uint16_t>();
@@ -538,8 +439,7 @@ namespace binarymonitor
     const uint8_t format = payload.read<uint8_t>();
     if (format != 0) // RGBA
     {
-      sendError(e_MON_RESPONSE_DISPLAY_GET, e_MON_ERR_INVALID_PARAMETER);
-      return;
+      throw BinaryException({e_MON_RESPONSE_DISPLAY_GET, e_MON_ERR_INVALID_PARAMETER});
     }
 
     const uint32_t infoLength = 13;
@@ -629,10 +529,14 @@ namespace binarymonitor
 
   void BinaryClient::sendStopped()
   {
-    LogOutput("\nStopping... @ %04x\n", regs.pc);
-    BinaryBuffer buffer;
-    buffer.writeInt16(regs.pc);
-    sendReply(buffer, e_MON_RESPONSE_STOPPED, MON_EVENT_ID, e_MON_ERR_OK);
+    if (!myStopped)
+    {
+      LogOutput("\nStopping... @ %04x\n", regs.pc);
+      BinaryBuffer buffer;
+      buffer.writeInt16(regs.pc);
+      sendReply(buffer, e_MON_RESPONSE_STOPPED, MON_EVENT_ID, e_MON_ERR_OK);
+      myStopped = true;
+    }
   }
 
   void BinaryClient::cmdCheckpointSet()
@@ -641,16 +545,10 @@ namespace binarymonitor
 
     const CheckpointSet_t & checkpointSet = payload.read<CheckpointSet_t>();
 
-    const size_t i = addBreakpoint(checkpointSet);
+    const int i = addBreakpoint(checkpointSet);
 
-    if (i < 0)
-    {
-      sendError(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
-      return;
-    }
-
-    LogOutput("Add %d\n", int(i));
-    logBreakpoint(g_aBreakpoints[i]);
+    // LogOutput("Add %d\n", int(i));
+    // logBreakpoint(g_aBreakpoints[i]);
 
     sendBreakpoint(myCommand.request, i);
   }
@@ -672,15 +570,14 @@ namespace binarymonitor
 
     if (checkpointToggle.id >= MAX_BREAKPOINTS || !g_aBreakpoints[checkpointToggle.id].bSet)
     {
-      sendError(e_MON_RESPONSE_CHECKPOINT_TOGGLE, e_MON_ERR_INVALID_PARAMETER);
-      return;
+      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_TOGGLE, e_MON_ERR_INVALID_PARAMETER});
     }
 
     Breakpoint_t & bp = g_aBreakpoints[checkpointToggle.id];
     bp.bEnabled = checkpointToggle.enabled;
 
-    LogOutput("Toggle %d\n", int(checkpointToggle.id));
-    logBreakpoint(bp);
+    // LogOutput("Toggle %d\n", int(checkpointToggle.id));
+    // logBreakpoint(bp);
 
     BinaryBuffer buffer;
     sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_TOGGLE, myCommand.request, e_MON_ERR_OK);
@@ -694,15 +591,13 @@ namespace binarymonitor
 
     if (checkpointDelete.id >= MAX_BREAKPOINTS || !g_aBreakpoints[checkpointDelete.id].bSet)
     {
-      sendError(e_MON_RESPONSE_CHECKPOINT_DELETE, e_MON_ERR_INVALID_PARAMETER);
-      return;
+      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_DELETE, e_MON_ERR_INVALID_PARAMETER});
     }
 
-    LogOutput("Delete %d\n", int(checkpointDelete.id));
+    // LogOutput("Delete %d\n", int(checkpointDelete.id));
 
     Breakpoint_t & bp = g_aBreakpoints[checkpointDelete.id];
-    bp.bSet = false;
-    --g_nBreakpoints;
+    deleteBreakpoint(bp);
 
     BinaryBuffer buffer;
     sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_DELETE, myCommand.request, e_MON_ERR_OK);
@@ -733,8 +628,7 @@ namespace binarymonitor
 
     if (memoryGet.memspace != 0 || memoryGet.bankID != 0)
     {
-      sendError(e_MON_RESPONSE_MEM_GET, e_MON_ERR_INVALID_PARAMETER);
-      return;
+      throw BinaryException({e_MON_RESPONSE_MEM_GET, e_MON_ERR_INVALID_PARAMETER});
     }
 
     BinaryBuffer buffer;
@@ -773,7 +667,7 @@ namespace binarymonitor
     }
     else
     {
-      sendError(e_MON_RESPONSE_AUTOSTART, e_MON_ERR_CMD_FAILURE);
+      throw BinaryException({e_MON_RESPONSE_AUTOSTART, e_MON_ERR_CMD_FAILURE});
     }
   }
 
@@ -802,20 +696,21 @@ namespace binarymonitor
   {
     BinaryBuffer buffer;
     sendReply(buffer, type, myCommand.request, error);
+
+    LogOutput("ERROR [%d]: CMD: 0x%02x, REQ: %8x, ERR: 0x%02x\n", mySocket, type, myCommand.request, error);
+    LogOutput("\n");
   }
 
   void BinaryClient::sendResume(const uint32_t request)
   {
-    LogOutput("\nResuming...\n");
-    BinaryBuffer buffer;
-    buffer.writeInt16(regs.pc);
-    sendReply(buffer, e_MON_RESPONSE_RESUMED, request, e_MON_ERR_OK);
-    // LogOutput("%d breakpoints...\n", g_nBreakpoints);
-    // for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
-    // {
-    //   const Breakpoint_t & bp = g_aBreakpoints[i];
-    //   logBreakpoint(bp);
-    // }
+    if (myStopped)
+    {
+      LogOutput("\nResuming...\n");
+      BinaryBuffer buffer;
+      buffer.writeInt16(regs.pc);
+      sendReply(buffer, e_MON_RESPONSE_RESUMED, request, e_MON_ERR_OK);
+      myStopped = false;
+    }
   }
 
   void BinaryClient::cmdExit()
@@ -853,9 +748,11 @@ namespace binarymonitor
     switch (mode)
     {
     case MODE_RUNNING:
+    case MODE_STEPPING:
       sendResume(MON_EVENT_ID);
       break;
     case MODE_DEBUG:
+    case MODE_PAUSED:
       sendRegisters(MON_EVENT_ID);
       sendStopped();
       break;
@@ -940,13 +837,12 @@ namespace binarymonitor
           cmdQuit();
           break;
         default:
-          sendError(myCommand.type, e_MON_ERR_CMD_INVALID_TYPE);
-          break;
+          throw BinaryException({myCommand.type, e_MON_ERR_CMD_INVALID_TYPE});
       }
     }
-    catch (const PayloadBuffer::LengthException & length)
+    catch (const BinaryException & e)
     {
-      sendError(length.type, e_MON_ERR_CMD_INVALID_LENGTH);
+      sendError(e.type, e.type);
     }
 
   #ifdef LOG_COMMANDS
