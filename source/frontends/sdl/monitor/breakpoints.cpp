@@ -48,7 +48,7 @@ namespace binarymonitor
     case BP_SRC_MEM_RW:
       return 1 + 2;
     default:
-      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
     }
   }
 
@@ -57,7 +57,7 @@ namespace binarymonitor
     if (!checkpointSet.stop)
     {
       // unsupported as of now
-      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
     }
 
     const BreakpointSource_t source = getSource(checkpointSet);
@@ -87,7 +87,7 @@ namespace binarymonitor
 
     if (i >= MAX_BREAKPOINTS)
     {
-      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
     }
 
     Breakpoint_t & bp = g_aBreakpoints[i];

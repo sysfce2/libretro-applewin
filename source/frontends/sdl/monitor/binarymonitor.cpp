@@ -246,7 +246,7 @@ namespace binarymonitor
   {
     if (i >= MAX_BREAKPOINTS || !g_aBreakpoints[i].bSet)
     {
-      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
     }
 
     const Breakpoint_t & bp = g_aBreakpoints[i];
@@ -345,7 +345,7 @@ namespace binarymonitor
     }
     else
     {
-      throw BinaryException({e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING});
+      throwBinaryException(e_MON_RESPONSE_RESOURCE_GET, e_MON_ERR_OBJECT_MISSING);
     }
   }
 
@@ -356,7 +356,7 @@ namespace binarymonitor
     const uint8_t memspace = payload.read<uint8_t>();
     if (memspace != 0)
     {
-      throw BinaryException({e_MON_RESPONSE_REGISTERS_AVAILABLE, e_MON_ERR_INVALID_MEMSPACE});
+      throwBinaryException(e_MON_RESPONSE_REGISTERS_AVAILABLE, e_MON_ERR_INVALID_MEMSPACE);
     }
 
     BinaryBuffer buffer;
@@ -380,7 +380,7 @@ namespace binarymonitor
     const uint8_t memspace = payload.read<uint8_t>();
     if (memspace != 0)
     {
-      throw BinaryException({e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE});
+      throwBinaryException(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE);
     }
 
     sendRegisters(myCommand.request);
@@ -394,7 +394,7 @@ namespace binarymonitor
 
     if (registersSet.memspace != 0)
     {
-      throw BinaryException({e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE});
+      throwBinaryException(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_INVALID_MEMSPACE);
     }
 
     for (size_t i = 0; i < registersSet.n; ++i)
@@ -404,7 +404,7 @@ namespace binarymonitor
       const auto it = myAvailableRegisters.find(id);
       if (it == myAvailableRegisters.end())
       {
-        throw BinaryException({e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_OBJECT_MISSING});
+        throwBinaryException(e_MON_RESPONSE_REGISTER_INFO, e_MON_ERR_OBJECT_MISSING);
       }
       const Register_t & reg = it->second;
       const uint16_t value = registerPayload.read<uint16_t>();
@@ -439,7 +439,7 @@ namespace binarymonitor
     const uint8_t format = payload.read<uint8_t>();
     if (format != 0) // RGBA
     {
-      throw BinaryException({e_MON_RESPONSE_DISPLAY_GET, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_DISPLAY_GET, e_MON_ERR_INVALID_PARAMETER);
     }
 
     const uint32_t infoLength = 13;
@@ -570,7 +570,7 @@ namespace binarymonitor
 
     if (checkpointToggle.id >= MAX_BREAKPOINTS || !g_aBreakpoints[checkpointToggle.id].bSet)
     {
-      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_TOGGLE, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_CHECKPOINT_TOGGLE, e_MON_ERR_INVALID_PARAMETER);
     }
 
     Breakpoint_t & bp = g_aBreakpoints[checkpointToggle.id];
@@ -591,7 +591,7 @@ namespace binarymonitor
 
     if (checkpointDelete.id >= MAX_BREAKPOINTS || !g_aBreakpoints[checkpointDelete.id].bSet)
     {
-      throw BinaryException({e_MON_RESPONSE_CHECKPOINT_DELETE, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_CHECKPOINT_DELETE, e_MON_ERR_INVALID_PARAMETER);
     }
 
     // LogOutput("Delete %d\n", int(checkpointDelete.id));
@@ -628,7 +628,7 @@ namespace binarymonitor
 
     if (memoryGet.memspace != 0 || memoryGet.bankID != 0)
     {
-      throw BinaryException({e_MON_RESPONSE_MEM_GET, e_MON_ERR_INVALID_PARAMETER});
+      throwBinaryException(e_MON_RESPONSE_MEM_GET, e_MON_ERR_INVALID_PARAMETER);
     }
 
     BinaryBuffer buffer;
@@ -667,7 +667,7 @@ namespace binarymonitor
     }
     else
     {
-      throw BinaryException({e_MON_RESPONSE_AUTOSTART, e_MON_ERR_CMD_FAILURE});
+      throwBinaryException(e_MON_RESPONSE_AUTOSTART, e_MON_ERR_CMD_FAILURE);
     }
   }
 
@@ -837,7 +837,7 @@ namespace binarymonitor
           cmdQuit();
           break;
         default:
-          throw BinaryException({myCommand.type, e_MON_ERR_CMD_INVALID_TYPE});
+          throwBinaryException(myCommand.type, e_MON_ERR_CMD_INVALID_TYPE);
       }
     }
     catch (const BinaryException & e)

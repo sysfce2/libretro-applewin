@@ -26,7 +26,7 @@ namespace binarymonitor
   {
     if (myBegin + size > myEnd)
     {
-      throw BinaryException({myType, e_MON_ERR_CMD_INVALID_LENGTH});
+      throwBinaryException(myType, e_MON_ERR_CMD_INVALID_LENGTH);
     }
     const uint8_t * result = myBegin;
     myBegin += size;
