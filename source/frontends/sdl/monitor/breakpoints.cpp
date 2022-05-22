@@ -54,11 +54,13 @@ namespace binarymonitor
 
   int addBreakpoint(const CheckpointSet_t & checkpointSet)
   {
+#if 0
     if (!checkpointSet.stop)
     {
       // unsupported as of now
       throwBinaryException(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
     }
+#endif
 
     const BreakpointSource_t source = getSource(checkpointSet);
 
