@@ -1139,13 +1139,11 @@ namespace sa2
           ImGui::TableNextColumn();
           ImGui::TextUnformatted(getOperatorName(bp.eOperator).c_str());
           ImGui::TableNextColumn();
-          ImGui::BeginDisabled();
           ImGui::Checkbox("##Enabled", &bp.bEnabled);
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Temp", &bp.bTemp);
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Hit", &bp.bHit);
-          ImGui::EndDisabled();
           ImGui::TableNextColumn();
           if (ImGui::Button("Delete"))
           {
