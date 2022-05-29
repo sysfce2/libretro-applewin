@@ -1108,7 +1108,7 @@ namespace sa2
     ImGui::LabelText("Mode", "%s", getAppModeName(g_nAppMode).c_str());
     drawDebuggerCommands(frame);
     ImGui::Separator();
-    if (ImGui::BeginTable("Breakpoints", 9, ImGuiTableFlags_RowBg))
+    if (ImGui::BeginTable("Breakpoints", 10, ImGuiTableFlags_RowBg))
     {
       ImGui::TableSetupColumn("ID");
       ImGui::TableSetupColumn("First");
@@ -1116,6 +1116,7 @@ namespace sa2
       ImGui::TableSetupColumn("Source");
       ImGui::TableSetupColumn("Operator");
       ImGui::TableSetupColumn("Enabled");
+      ImGui::TableSetupColumn("Stop");
       ImGui::TableSetupColumn("Temporary");
       ImGui::TableSetupColumn("Hit");
       ImGui::TableSetupColumn("Delete");
@@ -1140,6 +1141,8 @@ namespace sa2
           ImGui::TextUnformatted(getOperatorName(bp.eOperator).c_str());
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Enabled", &bp.bEnabled);
+          ImGui::TableNextColumn();
+          ImGui::Checkbox("##Stop", &bp.bStop);
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Temp", &bp.bTemp);
           ImGui::TableNextColumn();

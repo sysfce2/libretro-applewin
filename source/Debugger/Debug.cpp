@@ -1134,7 +1134,6 @@ bool _CheckBreakpointValue( Breakpoint_t *pBP, int nVal )
 			break;
 	}
 
-	pBP->bHit = bStatus;
 	return bStatus;
 }
 
@@ -1151,7 +1150,7 @@ int CheckBreakpointsIO ()
 		NO_6502_TARGET
 	};
 	int  nBytes;
-	bool bBreakpointHit = 0;
+	int bBreakpointHit = 0;
 
 	int  iTarget;
 	int  nAddress;
@@ -1182,17 +1181,24 @@ int CheckBreakpointsIO ()
 
 								if (pBP->eSource == BP_SRC_MEM_RW)
 								{
-									return BP_HIT_MEM;
+									bBreakpointHit = BP_HIT_MEM;
+									pBP->bHit = true;
 								}
 								else if (pBP->eSource == BP_SRC_MEM_READ_ONLY)
 								{
 									if (g_aOpcodes[opcode].nMemoryAccess & (MEM_RI|MEM_R))
-										return BP_HIT_MEMR;
+									{
+										bBreakpointHit = BP_HIT_MEMR;
+										pBP->bHit = true;
+									}
 								}
 								else if (pBP->eSource == BP_SRC_MEM_WRITE_ONLY)
 								{
 									if (g_aOpcodes[opcode].nMemoryAccess & (MEM_WI|MEM_W))
-										return BP_HIT_MEMW;
+									{
+										bBreakpointHit = BP_HIT_MEMW;
+										pBP->bHit = true;
+									}
 								}
 								else
 								{
@@ -1212,7 +1218,7 @@ int CheckBreakpointsIO ()
 //===========================================================================
 int CheckBreakpointsReg ()
 {
-	int bBreakpointHit = 0;
+	int bAllBreakpointHit = 0;
 
 	for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
 	{
@@ -1220,6 +1226,8 @@ int CheckBreakpointsReg ()
 
 		if (! _BreakpointValid( pBP ))
 			continue;
+
+		int bBreakpointHit = 0;
 
 		switch (pBP->eSource)
 		{
@@ -1247,15 +1255,14 @@ int CheckBreakpointsReg ()
 
 		if (bBreakpointHit)
 		{
-			bBreakpointHit = BP_HIT_REG;
+			pBP->bHit = true;
+			bAllBreakpointHit = BP_HIT_REG;
 			if (pBP->bTemp)
 				_BWZ_Clear(pBP, iBreakpoint);
-
-			break;
 		}
 	}
 
-	return bBreakpointHit;
+	return bAllBreakpointHit;
 }
 
 void ClearTempBreakpoints ()
@@ -1410,6 +1417,8 @@ bool _CmdBreakpointAddReg( Breakpoint_t *pBP, BreakpointSource_t iSrc, Breakpoin
 		pBP->bSet      = true;
 		pBP->bEnabled  = true;
 		pBP->bTemp     = bIsTempBreakpoint;
+		pBP->bHit      = false;
+		pBP->bStop     = true;
 		bStatus = true;
 	}
 
@@ -8126,15 +8135,6 @@ void DebugExitDebugger ()
 		CmdGoFullSpeed(0);
 }
 
-static void ClearAllBreakpointHits()
-{
-	for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
-	{
-		Breakpoint_t *pBP = &g_aBreakpoints[iBreakpoint];
-		pBP->bHit = false;
-	}
-}
-
 //===========================================================================
 
 static void CheckBreakOpcode( int iOpcode )
@@ -8238,8 +8238,6 @@ void DebugContinueStepping(const bool bCallerWillUpdateDisplay/*=false*/)
 	if (g_nDebugSteps)
 	{
 		bool bDoSingleStep = true;
-
-		ClearAllBreakpointHits();
 
 		if (bForceSingleStepNext)
 		{

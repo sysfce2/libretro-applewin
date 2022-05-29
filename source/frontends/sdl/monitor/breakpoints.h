@@ -10,5 +10,6 @@ namespace binarymonitor
   void logBreakpoint(const Breakpoint_t & bp);
   void removeAllBReakpoints();
   void deleteBreakpoint(Breakpoint_t & bp);
+  void clearAllBreakpointHits();
 
 }

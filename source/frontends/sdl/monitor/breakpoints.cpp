@@ -54,32 +54,7 @@ namespace binarymonitor
 
   int addBreakpoint(const CheckpointSet_t & checkpointSet)
   {
-#if 0
-    if (!checkpointSet.stop)
-    {
-      // unsupported as of now
-      throwBinaryException(e_MON_RESPONSE_CHECKPOINT_INFO, e_MON_ERR_INVALID_PARAMETER);
-    }
-#endif
-
     const BreakpointSource_t source = getSource(checkpointSet);
-
-#if 0
-    for (size_t i = 0; i < MAX_BREAKPOINTS; ++i)
-    {
-      Breakpoint_t & bp = g_aBreakpoints[i];
-      if (bp.eSource == source &&
-          bp.eOperator == BP_OP_EQUAL &&
-          bp.nAddress == checkpointSet.startAddress &&
-          bp.nLength == checkpointSet.endAddress - checkpointSet.startAddress + 1)
-      {
-        bp.bSet = true;
-        bp.bEnabled = checkpointSet.enabled;
-        bp.bTemp = checkpointSet.temporary;
-        return i;
-      }
-    }
-#endif
 
     size_t i = 0;
     while ((i < MAX_BREAKPOINTS) && g_aBreakpoints[i].bSet)
@@ -98,7 +73,8 @@ namespace binarymonitor
     bp.eSource = source;
     bp.bSet = true;
     bp.eOperator = BP_OP_EQUAL;
-    bp.bEnabled = checkpointSet.enabled;
+    bp.bEnabled = checkpointSet.enabled && checkpointSet.stop;
+    bp.bStop = checkpointSet.stop;
     bp.bTemp = checkpointSet.temporary;
     ++g_nBreakpoints;
 
@@ -132,6 +108,15 @@ namespace binarymonitor
     bp.bEnabled = false;
     bp.bSet = false;
     bp.nLength = 0;
+  }
+
+  void clearAllBreakpointHits()
+  {
+    for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
+    {
+      Breakpoint_t *pBP = &g_aBreakpoints[iBreakpoint];
+      pBP->bHit = false;
+    }
   }
 
 }

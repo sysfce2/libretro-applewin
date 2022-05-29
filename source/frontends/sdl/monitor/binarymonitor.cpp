@@ -237,7 +237,6 @@ namespace binarymonitor
       {
         LogOutput("Hit: %d\n", i);
         sendBreakpoint(MON_EVENT_ID, i);
-        break;
       }
     }
   }
@@ -574,7 +573,7 @@ namespace binarymonitor
     }
 
     Breakpoint_t & bp = g_aBreakpoints[checkpointToggle.id];
-    bp.bEnabled = checkpointToggle.enabled;
+    bp.bEnabled = bp.bStop && checkpointToggle.enabled;
 
     // LogOutput("Toggle %d\n", int(checkpointToggle.id));
     // logBreakpoint(bp);

@@ -5,6 +5,7 @@
 #include "frontends/sdl/sdirectsound.h"
 
 #include "frontends/sdl/monitor/binarymonitor.h"
+#include "frontends/sdl/monitor/breakpoints.h"
 
 #include "frontends/common2/programoptions.h"
 #include "frontends/common2/utils.h"
@@ -606,6 +607,8 @@ namespace sa2
 
   void SDLFrame::ExecuteInDebugMode(const size_t msNextFrame)
   {
+    binarymonitor::clearAllBreakpointHits();
+
     // In AppleWin this is called without a timer for just one iteration
     // because we run a "frame" at a time, we need a bit of ingenuity
     const uint64_t cyclesToExecute = mySpeed.getCyclesAtFixedSpeed(msNextFrame * 1000);
@@ -685,6 +688,7 @@ namespace sa2
 
   void SDLFrame::SingleStep()
   {
+    binarymonitor::clearAllBreakpointHits();
     SetFullSpeed(CanDoFullSpeed());
     Execute(0);
   }

@@ -215,6 +215,7 @@
 		bool                 bEnabled;
 		bool                 bTemp;    // If true then remove BP when hit or stepping cancelled (eg. G xxxx)
 		bool                 bHit;
+		bool                 bStop;
 	};
 
 	typedef Breakpoint_t Bookmark_t;
