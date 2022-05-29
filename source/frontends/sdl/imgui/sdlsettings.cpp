@@ -1143,7 +1143,9 @@ namespace sa2
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Temp", &bp.bTemp);
           ImGui::TableNextColumn();
+          ImGui::BeginDisabled();
           ImGui::Checkbox("##Hit", &bp.bHit);
+          ImGui::EndDisabled();
           ImGui::TableNextColumn();
           if (ImGui::Button("Delete"))
           {
