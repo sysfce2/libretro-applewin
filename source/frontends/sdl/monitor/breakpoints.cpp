@@ -114,8 +114,15 @@ namespace binarymonitor
   {
     for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
     {
-      Breakpoint_t *pBP = &g_aBreakpoints[iBreakpoint];
-      pBP->bHit = false;
+      Breakpoint_t &pBP = g_aBreakpoints[iBreakpoint];
+      if (pBP.bSet && pBP.bHit && pBP.bTemp)
+      {
+        deleteBreakpoint(pBP);
+      }
+      else
+      {
+        pBP.bHit = false;
+      }
     }
   }
 
