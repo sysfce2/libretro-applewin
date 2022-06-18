@@ -27,7 +27,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Tfe/IPRaw.h"
 #include "Tfe/DNS.h"
 #include "W5100.h"
+#ifdef MARIANI
+#include "Registry.h"
+#else
 #include "../Registry.h"
+#endif
 
 
 // Virtual DNS
