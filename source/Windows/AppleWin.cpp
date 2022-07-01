@@ -756,6 +756,11 @@ static void RepeatInitialization(void)
 			GetCardMgr().Insert(SLOT1, g_cmdLine.slotInsert[SLOT1]);
 		}
 
+		if (g_cmdLine.slotInsert[SLOT2] != CT_Empty && g_cmdLine.slotInsert[SLOT2] == CT_SSC)	// For now just support SSC in slot 2
+		{
+			GetCardMgr().Insert(SLOT2, g_cmdLine.slotInsert[SLOT2]);
+		}
+
 		if (g_cmdLine.enableDumpToRealPrinter && GetCardMgr().IsParallelPrinterCardInstalled())
 		{
 			GetCardMgr().GetParallelPrinterCard()->SetEnableDumpToRealPrinter(true);
@@ -832,6 +837,9 @@ static void RepeatInitialization(void)
 
 		if (g_cmdLine.bRemoveNoSlotClock)
 			MemRemoveNoSlotClock();
+
+		if (g_cmdLine.noDisk2StepperDefer)
+			GetCardMgr().GetDisk2CardMgr().SetStepperDefer(false);
 
 		// Call DebugInitialize() after SetCurrentImageDir()
 		DebugInitialize();
