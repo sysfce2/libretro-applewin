@@ -226,10 +226,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
             }
             PCapBackend::tfe_enumadapter_close();
             
-// FIXME: PCAP Configuration
-#if 0
-            [self.computerPcapSlotButton selectItemWithTitle:[NSString stringWithUTF8String:PCapBackend::tfe_interface.c_str()]];
-#endif
+            [self.computerPcapSlotButton selectItemWithTitle:[NSString stringWithUTF8String:PCapBackend::GetRegistryInterface(SLOT3).c_str()]];
         }
     }
 }
@@ -425,10 +422,7 @@ const SS_CARDTYPE expansionSlotTypes[] = { CT_LanguageCard, CT_Extended80Col, CT
         NSPopUpButton *slotButton = (NSPopUpButton *)sender;
         const std::string newInterface([slotButton.selectedItem.title cStringUsingEncoding:NSUTF8StringEncoding]);
 
-// FIXME: PCAP Configuration
-#if 0
-        PCapBackend::tfe_SetRegistryInterface(SLOT3, newInterface);
-#endif
+        PCapBackend::SetRegistryInterface(SLOT3, newInterface);
     }
     
     self.computerRebootEmulatorButton.enabled = [theAppDelegate emulationHardwareChanged];
