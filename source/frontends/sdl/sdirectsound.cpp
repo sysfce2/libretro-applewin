@@ -45,6 +45,7 @@ OSStatus DirectSoundRenderProc(void * inRefCon,
                                           UInt32 inBusNumber,
                                           UInt32 inNumberFrames,
                                           AudioBufferList * ioData);
+    void setVolumeIfNecessary();
 #endif // USE_COREAUDIO
 
   private:
@@ -59,6 +60,7 @@ OSStatus DirectSoundRenderProc(void * inRefCon,
     std::vector<uint8_t> myMixerBuffer;
 
     AudioUnit outputUnit;
+    Float32 volume;
 #endif // USE_COREAUDIO
 
     int myBytesPerSecond;
@@ -79,6 +81,7 @@ OSStatus DirectSoundRenderProc(void * inRefCon,
     , myAudioDevice(0)
 #else
     , outputUnit(0)
+    , volume(0)
 #endif
     , myBytesPerSecond(0)
   {
@@ -206,16 +209,7 @@ OSStatus DirectSoundRenderProc(void * inRefCon,
       return false;
     }
     
-    if (AudioUnitSetParameter(outputUnit,
-                            kHALOutputParam_Volume,
-                            kAudioUnitScope_Global,
-                            0,
-                            0.2,
-                            0))
-    {
-      fprintf(stderr, "can't set volume\n");
-      return false;
-    }
+    setVolumeIfNecessary();
     
     if (AudioUnitInitialize(outputUnit) != noErr)
     {
@@ -351,13 +345,36 @@ OSStatus DirectSoundRenderProc(void * inRefCon,
   }
 
 #ifdef USE_COREAUDIO
-OSStatus DirectSoundRenderProc(void * inRefCon,
-                               AudioUnitRenderActionFlags * ioActionFlags,
-                               const AudioTimeStamp * inTimeStamp,
-                               UInt32 inBusNumber,
-                               UInt32 inNumberFrames,
-                               AudioBufferList * ioData)
-{
+
+  void DirectSoundGenerator::setVolumeIfNecessary()
+  {
+    const double logVolume = myBuffer->GetLogarithmicVolume();
+    // same formula as QAudio::convertVolume()
+    const Float32 linVolume = logVolume > 0.99 ? 1.0 : -std::log(1.0 - logVolume) / std::log(100.0);
+    if (fabs(linVolume - volume) > FLT_EPSILON) {
+      if (AudioUnitSetParameter(outputUnit,
+                                kHALOutputParam_Volume,
+                                kAudioUnitScope_Global,
+                                0,
+                                linVolume,
+                                0) == noErr)
+      {
+        volume = linVolume;
+      }
+      else
+      {
+        fprintf(stderr, "can't set volume\n");
+      }
+    }
+  }
+
+  OSStatus DirectSoundRenderProc(void * inRefCon,
+                                 AudioUnitRenderActionFlags * ioActionFlags,
+                                 const AudioTimeStamp * inTimeStamp,
+                                 UInt32 inBusNumber,
+                                 UInt32 inNumberFrames,
+                                 AudioBufferList * ioData)
+  {
     DirectSoundGenerator *dsg = (DirectSoundGenerator *)inRefCon;
     UInt8 * data = (UInt8 *)ioData->mBuffers[0].mData;
     
@@ -383,10 +400,12 @@ OSStatus DirectSoundRenderProc(void * inRefCon,
     }
     // fill the rest with 0
     memset(data + dwAudioBytes1 + dwAudioBytes2, 0, size - (dwAudioBytes1 + dwAudioBytes2));
-
+    
+    dsg->setVolumeIfNecessary();
+    
     return noErr;
-}
-#endif
+  }
+#endif // USE_COREAUDIO
 
 }
 
