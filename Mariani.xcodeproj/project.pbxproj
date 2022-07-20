@@ -297,6 +297,7 @@
 		B05778E6285D7F5B00614907 /* DNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05778E4285D7F5B00614907 /* DNS.cpp */; };
 		B05778E7285D7F5B00614907 /* DNS.h in Headers */ = {isa = PBXBuildFile; fileRef = B05778E5285D7F5B00614907 /* DNS.h */; };
 		B05779072886047E00614907 /* libslirp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05779062886047E00614907 /* libslirp.a */; };
+		B057791A2887D51D00614907 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05779192887D51D00614907 /* AudioToolbox.framework */; };
 		B06184BB27B7577D00B6D04C /* Gutenberg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37027B45D0700C0BF71 /* Gutenberg.cpp */; };
 		B06184BC27B7577D00B6D04C /* MacPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37927B45D0800C0BF71 /* MacPart.cpp */; };
 		B06184BD27B7577D00B6D04C /* VolumeUsage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0D1C37F27B45D0800C0BF71 /* VolumeUsage.cpp */; };
@@ -779,6 +780,7 @@
 		B05778E4285D7F5B00614907 /* DNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DNS.cpp; path = source/Tfe/DNS.cpp; sourceTree = "<group>"; };
 		B05778E5285D7F5B00614907 /* DNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNS.h; path = source/Tfe/DNS.h; sourceTree = "<group>"; };
 		B05779062886047E00614907 /* libslirp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libslirp.a; path = ../../../../opt/homebrew/Cellar/libslirp/4.6.1/lib/libslirp.a; sourceTree = "<group>"; };
+		B05779192887D51D00614907 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B061849827B7303100B6D04C /* HexFiend_2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HexFiend_2.xcodeproj; path = source/frontends/mariani/HexFiend/HexFiend_2.xcodeproj; sourceTree = "<group>"; };
 		B06184B727B7575E00B6D04C /* libdiskimg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdiskimg.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B06184FE27B75AE900B6D04C /* libhfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libhfs.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1203,6 +1205,7 @@
 			files = (
 				B090CF1D27B5A04F00C6C23D /* GameController.framework in Frameworks */,
 				B04365D427BAD27A00329469 /* HexFiend.framework in Frameworks */,
+				B057791A2887D51D00614907 /* AudioToolbox.framework in Frameworks */,
 				B020F8A92785EA440071D3C7 /* AVFoundation.framework in Frameworks */,
 				B020F8AB2785F3920071D3C7 /* CoreMedia.framework in Frameworks */,
 				B049E8AF277C9A8000FC14A3 /* MetalKit.framework in Frameworks */,
@@ -1818,6 +1821,7 @@
 		B09AB844277A282A0002A6C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B05779192887D51D00614907 /* AudioToolbox.framework */,
 				B05779062886047E00614907 /* libslirp.a */,
 				B090CF1C27B5A04F00C6C23D /* GameController.framework */,
 				B00ECBE7279EEBD30041E16C /* SDL2.framework */,
@@ -3152,6 +3156,7 @@
 					"DEBUG=1",
 					"MARIANI=1",
 					"U2_USE_SLIRP=1",
+					"USE_COREAUDIO=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3211,6 +3216,8 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MARIANI=1",
+					"U2_USE_SLIRP=1",
+					"USE_COREAUDIO=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3280,10 +3287,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"U2_USE_SLIRP=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					source,
