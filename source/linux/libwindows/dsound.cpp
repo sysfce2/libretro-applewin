@@ -49,7 +49,7 @@ HRESULT IDirectSoundBuffer::Unlock( LPVOID lpvAudioPtr1, DWORD dwAudioBytes1, LP
   const size_t totalWrittenBytes = dwAudioBytes1 + dwAudioBytes2;
   this->myWritePosition = (this->myWritePosition + totalWrittenBytes) % this->mySoundBuffer.size();
 #ifdef MARIANI
-  if (totalWrittenBytes)
+  if (totalWrittenBytes && this->channels == 1)
   {
     SubmitAudio(lpvAudioPtr1, dwAudioBytes1, lpvAudioPtr2, dwAudioBytes2);
   }
