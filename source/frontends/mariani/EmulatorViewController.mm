@@ -434,6 +434,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         };
         AVAssetWriterInput *audioWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio
                                                                                   outputSettings:audioSettings];
+        audioWriterInput.expectsMediaDataInRealTime = YES;
         self.audioWriterInputs = [NSMutableArray arrayWithObject:audioWriterInput];
         [self.videoWriter addInput:audioWriterInput];
         
