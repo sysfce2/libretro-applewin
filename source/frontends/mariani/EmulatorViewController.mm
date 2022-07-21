@@ -30,6 +30,7 @@
 #import "EmulatorView.h"
 #import <MetalKit/MetalKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <CoreMedia/CMBlockBuffer.h>
 
 #import "windows.h"
 
@@ -77,8 +78,10 @@ Video& GetVideo();
 @property AVAssetWriterInput *videoWriterInput;
 @property AVAssetWriterInputPixelBufferAdaptor *videoWriterAdaptor;
 @property int64_t videoWriterFrameNumber;
-@property (getter=isRecordingScreen) BOOL recordingScreen;
 @property NSTimer *recordingTimer;
+
+@property NSMutableArray *audioDataArray;
+@property NSMutableArray *audioWriterInputs;
 
 @end
 
@@ -251,6 +254,76 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
             self.videoWriterFrameNumber++;
         }
     }
+    AVAssetWriterInput *audioWriterInput = self.audioWriterInputs[0];
+    for (NSMutableData *data in self.audioDataArray) {
+        if (data.length == 0 || !audioWriterInput.readyForMoreMediaData) {
+            continue;
+        }
+        
+        CMBlockBufferRef blockBuffer = NULL;
+        OSStatus status = CMBlockBufferCreateWithMemoryBlock(kCFAllocatorDefault,
+                                                             (void *)data.bytes,
+                                                             data.length,
+                                                             kCFAllocatorNull,
+                                                             NULL,
+                                                             0,
+                                                             data.length,
+                                                             0,
+                                                             &blockBuffer);
+        if (status != kCMBlockBufferNoErr) {
+            NSLog(@"failed CMBlockBufferCreateWithMemoryBlock");
+        }
+        
+        AudioStreamBasicDescription asbd = { 0 };
+        asbd.mFormatID         = kAudioFormatLinearPCM;
+        asbd.mSampleRate       = 44100;
+        asbd.mChannelsPerFrame = 1;
+        asbd.mBitsPerChannel   = 16;
+        asbd.mFramesPerPacket  = 1;  // uncompressed audio
+        asbd.mBytesPerFrame    = asbd.mChannelsPerFrame * asbd.mBitsPerChannel / 8;
+        asbd.mBytesPerPacket   = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
+        asbd.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
+        
+        CMFormatDescriptionRef format = NULL;
+        status = CMAudioFormatDescriptionCreate(kCFAllocatorDefault,
+                                                &asbd,
+                                                0,
+                                                NULL,
+                                                0,
+                                                NULL,
+                                                NULL,
+                                                &format);
+        if (status != noErr) {
+            NSLog(@"failed CMAudioFormatDescriptionCreate");
+            if (blockBuffer) { CFRelease(blockBuffer); }
+            continue;
+        }
+        
+        CMSampleBufferRef sampleBuffer = NULL;
+        status = CMSampleBufferCreateReady(kCFAllocatorDefault,
+                                           blockBuffer,
+                                           format,
+                                           data.length / asbd.mBytesPerFrame,
+                                           0,
+                                           NULL,
+                                           0,
+                                           NULL,
+                                           &sampleBuffer);
+        if (status != noErr) {
+            NSLog(@"failed CMSampleBufferCreateReady");
+            if (format) { CFRelease(format); }
+            if (blockBuffer) { CFRelease(blockBuffer); }
+            continue;
+        }
+        
+        [audioWriterInput appendSampleBuffer:sampleBuffer];
+        
+        // clean up
+        if (sampleBuffer) { CFRelease(sampleBuffer); }
+        if (format) { CFRelease(format); }
+        if (blockBuffer) { CFRelease(blockBuffer); }
+        data.length = 0;
+    }
     if (self.isRecordingScreen) {
         // blink the screen recording button
         if (self.videoWriterFrameNumber % TARGET_FPS == 0) {
@@ -335,6 +408,21 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
             [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.videoWriterInput
                                                                              sourcePixelBufferAttributes:nil];
         [self.videoWriter addInput:self.videoWriterInput];
+        
+        self.audioDataArray = [NSMutableArray arrayWithObject:[NSMutableData data]];
+        
+        AudioChannelLayout acl = { 0 };
+        acl.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
+        NSDictionary *audioSettings = @{
+            AVFormatIDKey: @(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: @(44100),
+            AVChannelLayoutKey: [NSData dataWithBytes:&acl length:sizeof(acl)],
+        };
+        AVAssetWriterInput *audioWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio
+                                                                                  outputSettings:audioSettings];
+        self.audioWriterInputs = [NSMutableArray arrayWithObject:audioWriterInput];
+        [self.videoWriter addInput:audioWriterInput];
+        
         [self.videoWriter startWriting];
         [self.videoWriter startSessionAtSourceTime:kCMTimeZero];
         self.videoWriterFrameNumber = 0;
@@ -346,6 +434,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         NSLog(@"Ending screen recording");
         [self.recordingTimer invalidate];
         self.recordingScreen = NO;
+        for (AVAssetWriterInput *audioWriterInput in self.audioWriterInputs) {
+            [audioWriterInput markAsFinished];
+        }
         [self.videoWriterInput markAsFinished];
         [self.videoWriter finishWritingWithCompletionHandler:^(void) {
             if (self.videoWriter.status != AVAssetWriterStatusCompleted) {
@@ -357,6 +448,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
             self.videoWriterInput = nil;
             self.videoWriterAdaptor = nil;
             self.videoWriterFrameNumber = 0;
+            self.audioDataArray = nil;
+            self.audioWriterInputs = nil;
             
             self.recordingScreen = NO;
 
@@ -366,6 +459,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
                 [self.delegate screenRecordingDidStop];
             });
         }];
+    }
+}
+
+- (void)submitAudioData:(NSData *)data {
+    if (self.isRecordingScreen) {
+        NSMutableData *buffer = self.audioDataArray[0];
+        [buffer appendData:data];
     }
 }
 

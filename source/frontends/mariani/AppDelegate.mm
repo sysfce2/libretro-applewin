@@ -1018,6 +1018,16 @@ const char *GetSupportDirectory() {
     return supportDirectoryPath.UTF8String;
 }
 
+void SubmitAudio(void *p1, size_t len1, void *p2, size_t len2) {
+    if (theAppDelegate.emulatorVC.isRecordingScreen) {
+        NSMutableData *data = [NSMutableData dataWithBytes:p1 length:len1];
+        if (len2 > 0) {
+            [data appendBytes:p2 length:len2];
+        }
+        [theAppDelegate.emulatorVC submitAudioData:data];
+    }
+}
+
 static void
 DiskImgMsgHandler(const char *file, int line, const char *msg)
 {

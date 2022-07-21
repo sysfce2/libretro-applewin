@@ -33,3 +33,4 @@ int ShowModalAlertOfType(int type, const char *message, const char *information)
 void UpdateDriveLights(void);
 const char *PathToResourceNamed(const char *name);
 const char *GetSupportDirectory(void);
+void SubmitAudio(void *p1, size_t len1, void *p2, size_t len2);
