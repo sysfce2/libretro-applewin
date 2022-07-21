@@ -260,29 +260,43 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
             continue;
         }
         
+        const UInt32 channels = 1;
+        const UInt32 sampleRate = 44100;
+        const UInt32 bytesPerFrame = channels * sizeof(UInt16);
+        const UInt32 frames = (UInt32)data.length / bytesPerFrame;
+        const UInt32 blockSize = frames * bytesPerFrame;
+        
         CMBlockBufferRef blockBuffer = NULL;
         OSStatus status = CMBlockBufferCreateWithMemoryBlock(kCFAllocatorDefault,
-                                                             (void *)data.bytes,
-                                                             data.length,
-                                                             kCFAllocatorNull,
+                                                             NULL,
+                                                             blockSize,
+                                                             NULL,
                                                              NULL,
                                                              0,
-                                                             data.length,
+                                                             blockSize,
                                                              0,
                                                              &blockBuffer);
         if (status != kCMBlockBufferNoErr) {
             NSLog(@"failed CMBlockBufferCreateWithMemoryBlock");
         }
         
+        status = CMBlockBufferReplaceDataBytes(data.bytes,
+                                               blockBuffer,
+                                               0,
+                                               blockSize);
+        if (status != kCMBlockBufferNoErr) {
+            NSLog(@"failed CMBlockBufferReplaceDataBytes");
+        }
+        
         AudioStreamBasicDescription asbd = { 0 };
         asbd.mFormatID         = kAudioFormatLinearPCM;
-        asbd.mSampleRate       = 44100;
-        asbd.mChannelsPerFrame = 1;
-        asbd.mBitsPerChannel   = 16;
+        asbd.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger;
+        asbd.mSampleRate       = sampleRate;
+        asbd.mChannelsPerFrame = channels;
+        asbd.mBitsPerChannel   = sizeof(UInt16) * CHAR_BIT;
         asbd.mFramesPerPacket  = 1;  // uncompressed audio
-        asbd.mBytesPerFrame    = asbd.mChannelsPerFrame * asbd.mBitsPerChannel / 8;
-        asbd.mBytesPerPacket   = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
-        asbd.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
+        asbd.mBytesPerFrame    = bytesPerFrame;
+        asbd.mBytesPerPacket   = bytesPerFrame;
         
         CMFormatDescriptionRef format = NULL;
         status = CMAudioFormatDescriptionCreate(kCFAllocatorDefault,
@@ -303,7 +317,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         status = CMSampleBufferCreateReady(kCFAllocatorDefault,
                                            blockBuffer,
                                            format,
-                                           data.length / asbd.mBytesPerFrame,
+                                           frames,
                                            0,
                                            NULL,
                                            0,
