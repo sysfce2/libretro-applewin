@@ -12,7 +12,6 @@
 
 #import "context.h"
 
-#import <SDL.h>
 #import "benchmark.h"
 #import "fileregistry.h"
 #import "programoptions.h"

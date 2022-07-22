@@ -744,6 +744,7 @@ namespace sa2
     ResetHardware();
   }
 
+#ifndef MARIANI
   common2::Geometry SDLFrame::getGeometryOrDefault(const std::optional<common2::Geometry> & geometry) const
   {
     if (geometry)
@@ -757,6 +758,7 @@ namespace sa2
 
     return {.width = sw * 2, .height = sh * 2, .x = SDL_WINDOWPOS_UNDEFINED, .y = SDL_WINDOWPOS_UNDEFINED};
   }
+#endif // MARIANI
 
 }
 

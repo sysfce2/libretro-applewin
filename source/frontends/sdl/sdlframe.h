@@ -5,7 +5,9 @@
 #include "frontends/common2/commonframe.h"
 #include "frontends/common2/speed.h"
 #include "frontends/common2/programoptions.h"
+#ifndef MARIANI
 #include <SDL.h>
+#endif
 
 namespace common2
 {
@@ -39,7 +41,9 @@ namespace sa2
     virtual void ResetSpeed();
     void LoadSnapshot() override;
 
+#ifndef MARIANI
     const std::shared_ptr<SDL_Window> & GetWindow() const;
+#endif
 
     void getDragDropSlotAndDrive(size_t & slot, size_t & drive) const;
     void setDragDropSlotAndDrive(const size_t slot, const size_t drive);
@@ -68,7 +72,9 @@ namespace sa2
     void SetFullSpeed(const bool value);
     bool CanDoFullSpeed();
 
+#ifndef MARIANI
     common2::Geometry getGeometryOrDefault(const std::optional<common2::Geometry> & geometry) const;
+#endif
 
     static double GetRelativePosition(const int value, const int width);
 
@@ -84,7 +90,9 @@ namespace sa2
 
     common2::Speed mySpeed;
 
+#ifndef MARIANI
     std::shared_ptr<SDL_Window> myWindow;
+#endif
 
     CConfigNeedingRestart myHardwareConfig;
   };
