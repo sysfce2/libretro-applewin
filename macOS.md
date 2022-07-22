@@ -25,12 +25,11 @@ Specifically, the following AppleWin features are not yet supported:
 
 - [Debugger and Memory viewer](https://github.com/sh95014/AppleWin/issues/12)
 - [Load/Save State](https://github.com/sh95014/AppleWin/issues/13)
-- [Cassette support](https://github.com/sh95014/AppleWin/issues/16)
 - [Numeric keypad joystick emulation](https://github.com/sh95014/AppleWin/issues/10)
 
 ### Roadmap
 
-I plan to spend some time building (graphical) printer support, but I don't expect to spend a lot of time with the remaining known issues. I think the most generally useful ones in the list are the joystick emulation and maybe cassette support.
+I plan to spend some time building (graphical) printer support, but I don't expect to spend a lot of time with the remaining known issues. The most generally useful one in the list is probably the joystick emulation.
 
 ## Build Mariani
 

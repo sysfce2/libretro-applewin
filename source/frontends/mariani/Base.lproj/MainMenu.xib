@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -97,6 +97,12 @@
                             <menuItem title="Insert Disk Image" id="l7t-Fp-Pd9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" id="aVZ-wx-6ML"/>
+                            </menuItem>
+                            <menuItem title="Load Tape…" id="b8E-ED-PjA">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="loadTapeAction:" target="Voe-Tx-rLC" id="ncL-0a-4Zz"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="081-d1-Gfw"/>
                             <menuItem title="Close Window" keyEquivalent="w" id="4wN-Ie-K1K">
@@ -277,7 +283,7 @@
                                 </textFieldCell>
                             </textField>
                             <button toolTip="Record screen" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DSR-xi-Jep">
-                                <rect key="frame" x="758" y="1" width="32.5" height="32.5"/>
+                                <rect key="frame" x="758" y="1.5" width="33" height="32.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="record.circle" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="SSU-IM-3QB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
