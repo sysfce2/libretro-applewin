@@ -398,8 +398,12 @@ OSStatus DirectSoundRenderProc(void * inRefCon,
     {
       memcpy(data + dwAudioBytes1, lpvAudioPtr2, dwAudioBytes2);
     }
-    // fill the rest with 0
-    memset(data + dwAudioBytes1 + dwAudioBytes2, 0, size - (dwAudioBytes1 + dwAudioBytes2));
+    // doesn't seem ever necessary, but fill the rest of the requested buffer with silence
+    // if DirectSoundGenerator doesn't have enough
+    if (size > dwAudioBytes1 + dwAudioBytes2)
+    {
+      memset(data + dwAudioBytes1 + dwAudioBytes2, 0, size - (dwAudioBytes1 + dwAudioBytes2));
+    }
     
     dsg->setVolumeIfNecessary();
     
