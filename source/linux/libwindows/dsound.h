@@ -100,7 +100,11 @@ class IDirectSoundBuffer : public IUnknown
 
   // Read is NOT part of Windows API
   HRESULT Read( DWORD dwReadBytes, LPVOID * lplpvAudioPtr1, DWORD * lpdwAudioBytes1, LPVOID * lplpvAudioPtr2, DWORD * lpdwAudioBytes2);
+#ifndef MARIANI
   DWORD GetBytesInBuffer() const;
+#else
+  DWORD GetBytesInBuffer();
+#endif // MARIANI
 
   HRESULT Lock( DWORD dwWriteCursor, DWORD dwWriteBytes, LPVOID * lplpvAudioPtr1, DWORD * lpdwAudioBytes1, LPVOID * lplpvAudioPtr2, DWORD * lpdwAudioBytes2, DWORD dwFlags );
   HRESULT Unlock( LPVOID lpvAudioPtr1, DWORD dwAudioBytes1, LPVOID lpvAudioPtr2, DWORD dwAudioBytes2 );
@@ -117,6 +121,7 @@ class IDirectSoundBuffer : public IUnknown
   HRESULT Restore();
 
 #ifdef MARIANI
+  pthread_rwlock_t bufferLock;
   int audioOutput;
 #endif
 };

@@ -21,10 +21,17 @@ IDirectSoundBuffer::IDirectSoundBuffer(const size_t aBufferSize, const size_t aC
   , bitsPerSample(aBitsPerSample)
   , flags(aFlags)
 {
+#ifdef MARIANI
+  pthread_rwlock_init(&bufferLock, NULL);
+#endif
 }
 
 HRESULT IDirectSoundBuffer::Release()
 {
+#ifdef MARIANI
+  pthread_rwlock_destroy(&bufferLock);
+#endif
+
   // unregister *before* the destructor is called (in Release below)
   // makes things a little bit more linear
   unregisterSoundBuffer(this);
@@ -46,13 +53,19 @@ HRESULT IDirectSoundBuffer::QueryInterface(int riid, void **ppvObject)
 
 HRESULT IDirectSoundBuffer::Unlock( LPVOID lpvAudioPtr1, DWORD dwAudioBytes1, LPVOID lpvAudioPtr2, DWORD dwAudioBytes2 )
 {
+#ifdef MARIANI
+  pthread_rwlock_wrlock(&bufferLock);
+#endif
   const size_t totalWrittenBytes = dwAudioBytes1 + dwAudioBytes2;
   this->myWritePosition = (this->myWritePosition + totalWrittenBytes) % this->mySoundBuffer.size();
+  
 #ifdef MARIANI
+  // send audio to be optionally recorded
   if (totalWrittenBytes)
   {
     SubmitAudio(this->audioOutput, lpvAudioPtr1, dwAudioBytes1, lpvAudioPtr2, dwAudioBytes2);
   }
+  pthread_rwlock_unlock(&bufferLock);
 #endif // MARIANI
   return DS_OK;
 }
@@ -136,6 +149,9 @@ HRESULT IDirectSoundBuffer::Lock( DWORD dwWriteCursor, DWORD dwWriteBytes, LPVOI
 
 HRESULT IDirectSoundBuffer::Read( DWORD dwReadBytes, LPVOID * lplpvAudioPtr1, DWORD * lpdwAudioBytes1, LPVOID * lplpvAudioPtr2, DWORD * lpdwAudioBytes2)
 {
+#ifdef MARIANI
+  pthread_rwlock_wrlock(&bufferLock);
+#endif
   // Read up to dwReadBytes, never going past the write cursor
   // Positions are updated immediately
   const DWORD available = (this->myWritePosition - this->myPlayPosition) % this->bufferSize;
@@ -160,19 +176,38 @@ HRESULT IDirectSoundBuffer::Read( DWORD dwReadBytes, LPVOID * lplpvAudioPtr1, DW
     }
   }
   this->myPlayPosition = (this->myPlayPosition + dwReadBytes) % this->mySoundBuffer.size();
+#ifdef MARIANI
+  pthread_rwlock_unlock(&bufferLock);
+#endif
   return DS_OK;
 }
 
+#ifndef MARIANI
 DWORD IDirectSoundBuffer::GetBytesInBuffer() const
+#else
+DWORD IDirectSoundBuffer::GetBytesInBuffer()
+#endif // MARIANI
 {
+#ifdef MARIANI
+  pthread_rwlock_rdlock(&bufferLock);
+#endif
   const DWORD available = (this->myWritePosition - this->myPlayPosition) % this->bufferSize;
+#ifdef MARIANI
+  pthread_rwlock_unlock(&bufferLock);
+#endif
   return available;
 }
 
 HRESULT IDirectSoundBuffer::GetCurrentPosition( LPDWORD lpdwCurrentPlayCursor, LPDWORD lpdwCurrentWriteCursor )
 {
+#ifdef MARIANI
+  pthread_rwlock_rdlock(&bufferLock);
+#endif
   *lpdwCurrentPlayCursor = this->myPlayPosition;
   *lpdwCurrentWriteCursor = this->myWritePosition;
+#ifdef MARIANI
+  pthread_rwlock_unlock(&bufferLock);
+#endif
   return DS_OK;
 }
 
