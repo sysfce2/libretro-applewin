@@ -10,6 +10,7 @@
 
 #include "linux/version.h"
 
+#include "Utilities.h"
 #include "Log.h"
 #include "Core.h"
 #include "Interface.h"
@@ -656,6 +657,7 @@ namespace binarymonitor
 
     if (error == eIMAGE_ERROR_NONE)
     {
+      ResetMachineState();
       BinaryBuffer buffer;
       sendReply(buffer, e_MON_RESPONSE_AUTOSTART, myCommand.request, e_MON_ERR_OK);
 
