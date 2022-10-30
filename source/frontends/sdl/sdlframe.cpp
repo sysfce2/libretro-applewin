@@ -718,6 +718,26 @@ namespace sa2
     }
   }
 
+  common2::Geometry SDLFrame::getGeometryOrDefault(const std::optional<common2::Geometry> & geometry) const
+  {
+    if (geometry)
+    {
+      return *geometry;
+    }
+
+    Video & video = GetVideo();
+    const int sw = video.GetFrameBufferBorderlessWidth();
+    const int sh = video.GetFrameBufferBorderlessHeight();
+
+    // initialise with defaults
+    common2::Geometry actual = {.width = sw * 2, .height = sh * 2, .x = SDL_WINDOWPOS_UNDEFINED, .y = SDL_WINDOWPOS_UNDEFINED};
+
+    // add registry information
+    loadGeometryFromRegistry("sa2", actual);
+
+    return actual;
+  }
+
 }
 
 void SingleStep(bool /* bReinit */)

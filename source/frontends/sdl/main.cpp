@@ -44,7 +44,7 @@ namespace
       throw std::runtime_error(sa2::decorateSDLError("SDL_GetCurrentDisplayMode"));
     }
 
-    return current.refresh_rate;
+    return current.refresh_rate ? current.refresh_rate : 60;
   }
 
   struct Data
@@ -62,15 +62,6 @@ void run_sdl(int argc, const char * argv [])
 
   common2::EmulatorOptions options;
 
-  Video & video = GetVideo();
-  const int sw = video.GetFrameBufferBorderlessWidth();
-  const int sh = video.GetFrameBufferBorderlessHeight();
-
-  options.geometry.empty = true;
-  options.geometry.width = sw * 2;
-  options.geometry.height = sh * 2;
-  options.geometry.x = SDL_WINDOWPOS_UNDEFINED;
-  options.geometry.y = SDL_WINDOWPOS_UNDEFINED;
   const bool run = getEmulatorOptions(argc, argv, "SDL2", options);
 
   if (!run)
@@ -78,8 +69,6 @@ void run_sdl(int argc, const char * argv [])
 
   const LoggerContext logger(options.log);
   const RegistryContext registryContext(CreateFileRegistry(options));
-
-  common2::loadGeometryFromRegistry("sa2", options.geometry);
 
   std::shared_ptr<sa2::SDLFrame> frame;
   if (options.imgui)
@@ -118,6 +107,7 @@ void run_sdl(int argc, const char * argv [])
                           frame->VideoPresentScreen();
                         };
 
+    Video & video = GetVideo();
     const auto refresh = [redraw, &video]{
                            NTSC_SetVideoMode( video.GetVideoMode() );
                            NTSC_VideoRedrawWholeScreen();

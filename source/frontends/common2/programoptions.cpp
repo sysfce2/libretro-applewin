@@ -20,7 +20,7 @@ namespace po = boost::program_options;
 namespace
 {
 
-  void parseGeometry(const std::string & s, common2::Geometry & geometry)
+  void parseGeometry(const std::string & s, std::optional<common2::Geometry> & geometry)
   {
     std::smatch m;
     if (std::regex_match(s, m, std::regex("^(\\d+)x(\\d+)(\\+(\\d+)\\+(\\d+))?$")))
@@ -28,12 +28,13 @@ namespace
       const size_t groups = m.size();
       if (groups == 6)
       {
-        geometry.width = std::stoi(m.str(1));
-        geometry.height = std::stoi(m.str(2));
+        geometry = common2::Geometry();
+        geometry->width = std::stoi(m.str(1));
+        geometry->height = std::stoi(m.str(2));
         if (!m.str(3).empty())
         {
-          geometry.x = std::stoi(m.str(4));
-          geometry.y = std::stoi(m.str(5));
+          geometry->x = std::stoi(m.str(4));
+          geometry->y = std::stoi(m.str(5));
         }
         return;
       }
@@ -80,6 +81,8 @@ namespace common2
     diskDesc.add_options()
       ("d1,1", po::value<std::string>(), "Disk in 1st drive")
       ("d2,2", po::value<std::string>(), "Disk in 2nd drive")
+      ("h1", po::value<std::string>(), "Hard Disk in 1st drive")
+      ("h2", po::value<std::string>(), "Hard Disk in 2nd drive")
       ;
     desc.add(diskDesc);
 
@@ -162,6 +165,16 @@ namespace common2
         options.disk2 = vm["d2"].as<std::string>();
       }
 
+      if (vm.count("h1"))
+      {
+        options.hardDisk1 = vm["h1"].as<std::string>();
+      }
+
+      if (vm.count("h2"))
+      {
+        options.hardDisk2 = vm["h2"].as<std::string>();
+      }
+
       if (vm.count("load-state"))
       {
         options.snapshotFilename = vm["load-state"].as<std::string>();
@@ -202,7 +215,6 @@ namespace common2
 
       if (vm.count("geometry"))
       {
-        options.geometry.empty = false;
         parseGeometry(vm["geometry"].as<std::string>(), options.geometry);
       }
 
@@ -230,6 +242,8 @@ namespace common2
   {
     g_nMemoryClearType = options.memclear;
 
+    bool bBoot;
+
     LPCSTR szImageName_drive[NUM_DRIVES] = {nullptr, nullptr};
 	  bool driveConnected[NUM_DRIVES] = {true, true};
 
@@ -243,8 +257,21 @@ namespace common2
       szImageName_drive[DRIVE_2] = options.disk2.c_str();
     }
 
-    bool bBoot;
     InsertFloppyDisks(SLOT6, szImageName_drive, driveConnected, bBoot);
+
+    LPCSTR szImageName_harddisk[NUM_HARDDISKS] = {nullptr, nullptr};
+
+    if (!options.hardDisk1.empty())
+    {
+      szImageName_harddisk[DRIVE_1] = options.hardDisk1.c_str();
+    }
+
+    if (!options.hardDisk2.empty())
+    {
+      szImageName_harddisk[DRIVE_2] = options.hardDisk2.c_str();
+    }
+
+    InsertHardDisks(szImageName_harddisk, bBoot);
 
     if (!options.customRom.empty())
     {

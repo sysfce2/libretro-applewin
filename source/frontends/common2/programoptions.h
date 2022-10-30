@@ -2,13 +2,13 @@
 
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace common2
 {
 
   struct Geometry
   {
-    bool empty = true;
     int width;
     int height;
     int x;
@@ -22,6 +22,9 @@ namespace common2
 
     std::string disk1;
     std::string disk2;
+
+    std::string hardDisk1;
+    std::string hardDisk2;
 
     std::string snapshotFilename;
     bool loadSnapshot = false;
@@ -48,7 +51,7 @@ namespace common2
 
     int sdlDriver = -1; // default = -1 to let SDL choose
     bool imgui = true; // use imgui renderer
-    Geometry geometry; // must be initialised with defaults
+    std::optional<Geometry> geometry; // must be initialised with defaults
     int glSwapInterval = 1; // SDL_GL_SetSwapInterval
 
     std::string customRomF8;

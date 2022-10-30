@@ -68,8 +68,20 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	int  g_nDebugBreakOnInvalid  = 0; // Bit Flags of Invalid Opcode to break on: // iOpcodeType = AM_IMPLIED (BRK), AM_1, AM_2, AM_3
 	int  g_iDebugBreakOnOpcode   = 0;
 	bool g_bDebugBreakOnInterrupt = false;
-	static int g_iDebugBreakOnDmaToOrFromIoMemory = 0;
-	static WORD g_uDebugBreakOnDmaIoMemoryAddr = 0;
+
+	struct DebugBreakOnDMA
+	{
+		DebugBreakOnDMA() : isToOrFromMemory(0), memoryAddr(0), memoryAddrEnd(0), BPid(0) {}
+
+		int isToOrFromMemory;
+		WORD memoryAddr;
+		WORD memoryAddrEnd;
+		int BPid;
+	};
+
+	static const uint32_t NUM_BREAK_ON_DMA = 3;	// A 512-byte block misaligned touching 3 pages
+	static DebugBreakOnDMA g_DebugBreakOnDMA[NUM_BREAK_ON_DMA];
+	static DebugBreakOnDMA g_DebugBreakOnDMAIO;
 
 	int  g_bDebugBreakpointHit = 0;	// See: BreakpointHit_t
 
@@ -102,6 +114,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		"M", // Mem RW
 		"M", // Mem READ_ONLY
 		"M", // Mem WRITE_ONLY
+		"V", // Video Scanner
 		// TODO: M0 ram bank 0, M1 aux ram ?
 	};
 
@@ -341,6 +354,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	static bool      g_bIgnoreNextKey = false;
 
 	static WORD g_LBR = 0x0000;	// Last Branch Record
+
+	static bool g_bScriptReadOk = false;
 
 // Private ________________________________________________________________________________________
 
@@ -1118,7 +1133,7 @@ bool _CheckBreakpointValue( Breakpoint_t *pBP, int nVal )
 			 if ((nVal >= pBP->nAddress) && ((UINT)nVal < (pBP->nAddress + pBP->nLength)))
 			 	bStatus = true;
 			break;
-		case BP_OP_NOT_EQUAL    : // Rnage is: (,] (not-inclusive, inclusive)
+		case BP_OP_NOT_EQUAL    : // Range is: (,] (not-inclusive, inclusive)
 			 if ((nVal < pBP->nAddress) || ((UINT)nVal >= (pBP->nAddress + pBP->nLength)))
 			 	bStatus = true;
 			break;
@@ -1137,6 +1152,53 @@ bool _CheckBreakpointValue( Breakpoint_t *pBP, int nVal )
 	return bStatus;
 }
 
+//===========================================================================
+bool _CheckBreakpointRange(Breakpoint_t* pBP, int nVal, int nSize)
+{
+	bool bStatus = false;
+
+	int iCmp = pBP->eOperator;
+	switch (iCmp)
+	{
+	case BP_OP_EQUAL: // Range is like C++ STL: [,)  (inclusive,not-inclusive)
+		if ( ((nVal >= pBP->nAddress) && ((UINT)nVal < (pBP->nAddress + pBP->nLength))) ||
+			 ((pBP->nAddress >= nVal) && (pBP->nAddress < ((UINT)nVal + nSize))) )
+			bStatus = true;
+		break;
+	default:
+		_ASSERT(0);
+		break;
+	}
+
+	return bStatus;
+}
+
+//===========================================================================
+
+static void DebuggerBreakOnDma(WORD nAddress, WORD nSize, bool isDmaToMemory, int iBreakpoint);
+
+bool DebuggerCheckMemBreakpoints(WORD nAddress, WORD nSize, bool isDmaToMemory)
+{
+	// NB. Caller handles when (addr+size) wraps on 64K
+
+	for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
+	{
+		Breakpoint_t* pBP = &g_aBreakpoints[iBreakpoint];
+		if (_BreakpointValid(pBP))
+		{
+			if (pBP->eSource == BP_SRC_MEM_RW || (pBP->eSource == BP_SRC_MEM_READ_ONLY && !isDmaToMemory) || (pBP->eSource == BP_SRC_MEM_WRITE_ONLY && isDmaToMemory))
+			{
+				if (_CheckBreakpointRange(pBP, nAddress, nSize))
+				{
+					DebuggerBreakOnDma(nAddress, nSize, isDmaToMemory, iBreakpoint);
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
 
 //===========================================================================
 int CheckBreakpointsIO ()
@@ -1279,18 +1341,81 @@ void ClearTempBreakpoints ()
 	}
 }
 
+// Returns true if a video breakpoint is triggered
 //===========================================================================
-static int CheckBreakpointsDmaToOrFromIoMemory(void)
+int CheckBreakpointsVideo()
 {
-	int res = g_iDebugBreakOnDmaToOrFromIoMemory;
-	g_iDebugBreakOnDmaToOrFromIoMemory = 0;
+	int bBreakpointHit = 0;
+
+	for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
+	{
+		Breakpoint_t* pBP = &g_aBreakpoints[iBreakpoint];
+
+		if (!_BreakpointValid(pBP))
+			continue;
+
+		if (pBP->eSource != BP_SRC_VIDEO_SCANNER)
+			continue;
+
+		if (_CheckBreakpointValue(pBP, g_nVideoClockVert))
+		{
+			bBreakpointHit = BP_HIT_VIDEO_POS;
+			pBP->bEnabled = false;	// Disable, otherwise it'll trigger many times on this scan-line
+			break;
+		}
+	}
+
+	return bBreakpointHit;
+}
+
+//===========================================================================
+static int CheckBreakpointsDmaToOrFromIOMemory(void)
+{
+	int res = g_DebugBreakOnDMAIO.isToOrFromMemory;
+	g_DebugBreakOnDMAIO.isToOrFromMemory = 0;
 	return res;
 }
 
-void DebuggerBreakOnDmaToOrFromIoMemory(WORD addr, bool isDmaToMemory)
+void DebuggerBreakOnDmaToOrFromIoMemory(WORD nAddress, bool isDmaToMemory)
 {
-	g_iDebugBreakOnDmaToOrFromIoMemory = isDmaToMemory ? BP_DMA_TO_IO_MEM : BP_DMA_FROM_IO_MEM;
-	g_uDebugBreakOnDmaIoMemoryAddr = addr;
+	g_DebugBreakOnDMAIO.isToOrFromMemory = isDmaToMemory ? BP_DMA_TO_IO_MEM : BP_DMA_FROM_IO_MEM;
+	g_DebugBreakOnDMAIO.memoryAddr = nAddress;
+}
+
+static int CheckBreakpointsDmaToOrFromMemory(int idx)
+{
+	if (idx == -1)
+	{
+		int res = 0;
+		for (int i = 0; i < NUM_BREAK_ON_DMA; i++)
+			res |= g_DebugBreakOnDMA[i].isToOrFromMemory;
+		return res;
+	}
+
+	_ASSERT(idx < NUM_BREAK_ON_DMA);
+	if (idx >= NUM_BREAK_ON_DMA)
+		return 0;
+
+	int res = g_DebugBreakOnDMA[idx].isToOrFromMemory;
+	g_DebugBreakOnDMA[idx].isToOrFromMemory = 0;
+	return res;
+}
+
+static void DebuggerBreakOnDma(WORD nAddress, WORD nSize, bool isDmaToMemory, int iBreakpoint)
+{
+	for (int i = 0; i < NUM_BREAK_ON_DMA; i++)
+	{
+		if (g_DebugBreakOnDMA[i].isToOrFromMemory != 0)
+			continue;
+
+		g_DebugBreakOnDMA[i].isToOrFromMemory = isDmaToMemory ? BP_DMA_TO_MEM : BP_DMA_FROM_MEM;
+		g_DebugBreakOnDMA[i].memoryAddr = nAddress;
+		g_DebugBreakOnDMA[i].memoryAddrEnd = nAddress + nSize - 1;
+		g_DebugBreakOnDMA[i].BPid = iBreakpoint;
+		return;
+	}
+
+	_ASSERT(0);
 }
 
 //===========================================================================
@@ -1409,6 +1534,15 @@ bool _CmdBreakpointAddReg( Breakpoint_t *pBP, BreakpointSource_t iSrc, Breakpoin
 	{
 		_ASSERT(nLen <= _6502_MEM_LEN);
 		if (nLen > (int) _6502_MEM_LEN) nLen = (int) _6502_MEM_LEN;
+
+		if (iSrc == BP_SRC_VIDEO_SCANNER)
+		{
+			if (nAddress >= NTSC_GetVideoLines())
+				nAddress = NTSC_GetVideoLines() - 1;
+
+			if ((nAddress + (UINT)nLen) >= NTSC_GetVideoLines())
+				nLen = NTSC_GetVideoLines() - nAddress;
+		}
 
 		pBP->eSource   = iSrc;
 		pBP->eOperator = iCmp;
@@ -1561,7 +1695,7 @@ Update_t CmdBreakpointAddMemW(int nArgs)
 	return CmdBreakpointAddMem(nArgs, BP_SRC_MEM_WRITE_ONLY);
 }
 //===========================================================================
-Update_t CmdBreakpointAddMem  (int nArgs, BreakpointSource_t bpSrc /*= BP_SRC_MEM_RW*/)
+Update_t CmdBreakpointAddMem(int nArgs, BreakpointSource_t bpSrc /*= BP_SRC_MEM_RW*/)
 {
 	BreakpointSource_t   iSrc = bpSrc;
 	BreakpointOperator_t iCmp = BP_OP_EQUAL;
@@ -1588,6 +1722,33 @@ Update_t CmdBreakpointAddMem  (int nArgs, BreakpointSource_t bpSrc /*= BP_SRC_ME
 	return UPDATE_BREAKPOINTS | UPDATE_CONSOLE_DISPLAY;
 }
 
+//===========================================================================
+Update_t CmdBreakpointAddVideo(int nArgs)
+{
+	BreakpointSource_t   iSrc = BP_SRC_VIDEO_SCANNER;
+	BreakpointOperator_t iCmp = BP_OP_EQUAL;
+
+	int iArg = 0;
+
+	while (iArg++ < nArgs)
+	{
+		if (g_aArgs[iArg].bType & TYPE_OPERATOR)
+		{
+			return Help_Arg_1(CMD_BREAKPOINT_ADD_VIDEO);
+		}
+		else
+		{
+			int dArg = _CmdBreakpointAddCommonArg(iArg, nArgs, iSrc, iCmp);
+			if (!dArg)
+			{
+				return Help_Arg_1(CMD_BREAKPOINT_ADD_VIDEO);
+			}
+			iArg += dArg;
+		}
+	}
+
+	return UPDATE_BREAKPOINTS | UPDATE_CONSOLE_DISPLAY;
+}
 
 //===========================================================================
 void _BWZ_Clear( Breakpoint_t * aBreakWatchZero, int iSlot )
@@ -3349,13 +3510,12 @@ Update_t CmdDisk ( int nArgs)
 		if (nArgs > 2)
 			return HelpLastCommand();
 
-		ConsoleBufferPushFormat("FW%2d: D%d at T$%s, phase $%s, offset $%X, mask $%02X, extraCycles %.2f, %s",
+		ConsoleBufferPushFormat("FW%2d: D%d at T$%s, phase $%s, bitOffset $%04X, extraCycles %.2f, %s",
 			diskCard.GetCurrentFirmware(),
 			diskCard.GetCurrentDrive() + 1,
 			diskCard.GetCurrentTrackString().c_str(),
 			diskCard.GetCurrentPhaseString().c_str(),
-			diskCard.GetCurrentOffset(),
-			diskCard.GetCurrentLSSBitMask(),
+			diskCard.GetCurrentBitOffset(),
 			diskCard.GetCurrentExtraCycles(),
 			diskCard.GetCurrentState()
 		);
@@ -5328,12 +5488,12 @@ int _SearchMemoryFind(
 	g_vMemorySearchResults.clear();
 	g_vMemorySearchResults.push_back( NO_6502_TARGET );
 
-	WORD nAddress;
-	for ( nAddress = nAddressStart; nAddress < nAddressEnd; nAddress++ )
+	uint32_t nAddress;	// NB. can't be uint16_t, since need to count up to 0x10000 if nAddressEnd is 0xFFFF
+	for ( nAddress = nAddressStart; nAddress <= nAddressEnd; nAddress++ )
 	{
 		bool bMatchAll = true;
 
-		WORD nAddress2 = nAddress;
+		uint32_t nAddress2 = nAddress;
 
 		int nMemBlocks = vMemorySearchValues.size();
 		for ( int iBlock = 0; iBlock < nMemBlocks; iBlock++, nAddress2++ )
@@ -5376,8 +5536,7 @@ int _SearchMemoryFind(
 				if ((iBlock + 1) == nMemBlocks) // there is no next block, hence we match
 					continue;
 
-				WORD nAddress3 = nAddress2;
-				for (nAddress3 = nAddress2; nAddress3 < nAddressEnd; nAddress3++ )
+				for (uint32_t nAddress3 = nAddress2; nAddress3 < nAddressEnd; nAddress3++ )
 				{
 					if ((ms.m_iType == MEM_SEARCH_BYTE_EXACT    ) || 
 						(ms.m_iType == MEM_SEARCH_NIB_HIGH_EXACT) ||
@@ -5992,6 +6151,8 @@ _Help:
 //===========================================================================
 Update_t CmdOutputRun (int nArgs)
 {
+	g_bScriptReadOk = false;
+
 	if (! nArgs)
 		return Help_Arg_1( CMD_OUTPUT_RUN );
 
@@ -6029,6 +6190,8 @@ Update_t CmdOutputRun (int nArgs)
 
 	if (script.Read( sFileName ))
 	{
+		g_bScriptReadOk = true;
+
 		int nLine = script.GetNumLines();
 
 		Update_t bUpdateDisplay = UPDATE_NOTHING;	
@@ -6566,7 +6729,7 @@ Update_t CmdWatch (int nArgs)
 //===========================================================================
 Update_t CmdWatchAdd (int nArgs)
 {
-	// WA [adddress]
+	// WA [address]
 	// WA # address
 	if (! nArgs)
 	{
@@ -6584,6 +6747,18 @@ Update_t CmdWatchAdd (int nArgs)
 	bool bAdded = false;
 	for (; iArg <= nArgs; iArg++ )
 	{
+		if (g_aArgs[iArg].eToken == TOKEN_ALPHANUMERIC && g_aArgs[iArg].sArg[0] == 'v')	// 'video' ?
+		{
+			g_aWatches[iWatch].bSet = true;
+			g_aWatches[iWatch].bEnabled = true;
+			g_aWatches[iWatch].eSource = BP_SRC_VIDEO_SCANNER;
+			g_aWatches[iWatch].nAddress = 0xDEAD;
+			bAdded = true;
+			g_nWatches++;
+			iWatch++;
+			continue;
+		}
+
 		WORD nAddress = g_aArgs[iArg].nValue;
 
 		// Make sure address isn't an IO address
@@ -6609,6 +6784,7 @@ Update_t CmdWatchAdd (int nArgs)
 		{
 			g_aWatches[iWatch].bSet = true;
 			g_aWatches[iWatch].bEnabled = true;
+			g_aWatches[iWatch].eSource = BP_SRC_MEM_RW;
 			g_aWatches[iWatch].nAddress = (WORD) nAddress;
 			bAdded = true;
 			g_nWatches++;
@@ -7696,15 +7872,16 @@ void OutputTraceLine ()
 
 	if (g_bTraceFileWithVideoScanner)
 	{
-		uint16_t addr = NTSC_VideoGetScannerAddressForDebugger();
-		BYTE data = mem[addr];
+		uint32_t data;
+		int dataSize;
+		uint16_t addr = NTSC_GetScannerAddressAndData(data, dataSize);
 
 		fprintf( g_hTraceFile,
 			"%04X %04X %04X   %02X %02X %02X %02X %04X %s  %s\n",
 			g_nVideoClockVert,
 			g_nVideoClockHorz,
 			addr,
-			data,
+			(uint8_t)data,	// truncated
 			(unsigned)regs.a,
 			(unsigned)regs.x,
 			(unsigned)regs.y,
@@ -8289,12 +8466,13 @@ void DebugContinueStepping(const bool bCallerWillUpdateDisplay/*=false*/)
 					g_bDebugBreakpointHit |= BP_HIT_INTERRUPT;
 			}
 
-			g_bDebugBreakpointHit |= CheckBreakpointsIO() | CheckBreakpointsReg() | CheckBreakpointsDmaToOrFromIoMemory();
+			g_bDebugBreakpointHit |= CheckBreakpointsIO() | CheckBreakpointsReg() | CheckBreakpointsVideo() | CheckBreakpointsDmaToOrFromIOMemory() | CheckBreakpointsDmaToOrFromMemory(-1);
 		}
 
 		if (regs.pc == g_nDebugStepUntil || g_bDebugBreakpointHit)
 		{
 			std::string stopReason = "Unknown!";
+			bool skipStopReason = false;
 
 			if (regs.pc == g_nDebugStepUntil)
 				stopReason = "PC matches 'Go until' address";
@@ -8314,12 +8492,31 @@ void DebugContinueStepping(const bool bCallerWillUpdateDisplay/*=false*/)
 				stopReason = "PC reads from floating bus or I/O memory";
 			else if (g_bDebugBreakpointHit & BP_HIT_INTERRUPT)
 				stopReason = StrFormat("Interrupt occurred at $%04X", g_LBR);
+			else if (g_bDebugBreakpointHit & BP_HIT_VIDEO_POS)
+				stopReason = StrFormat("Video scanner position matches at vpos=$%04X", g_nVideoClockVert);
 			else if (g_bDebugBreakpointHit & BP_DMA_TO_IO_MEM)
-				stopReason = StrFormat("HDD DMA to I/O memory or ROM $%04X", g_uDebugBreakOnDmaIoMemoryAddr);
+				stopReason = StrFormat("HDD DMA to I/O memory or ROM at $%04X", g_DebugBreakOnDMAIO.memoryAddr);
 			else if (g_bDebugBreakpointHit & BP_DMA_FROM_IO_MEM)
-				stopReason = StrFormat("HDD DMA from I/O memory $%04X", g_uDebugBreakOnDmaIoMemoryAddr);
+				stopReason = StrFormat("HDD DMA from I/O memory at $%04X ", g_DebugBreakOnDMAIO.memoryAddr);
+			else if (g_bDebugBreakpointHit & (BP_DMA_FROM_MEM | BP_DMA_TO_MEM))
+				skipStopReason = true;
 
-			ConsoleBufferPushFormat( "Stop reason: %s", stopReason.c_str() );
+			if (!skipStopReason)
+				ConsoleBufferPushFormat( "Stop reason: %s", stopReason.c_str() );
+
+			for (int i = 0; i < NUM_BREAK_ON_DMA; i++)
+			{
+				int nDebugBreakpointHit = CheckBreakpointsDmaToOrFromMemory(i);
+				if (nDebugBreakpointHit)
+				{
+					if (nDebugBreakpointHit & BP_DMA_TO_MEM)
+						stopReason = StrFormat("HDD DMA to memory $%04X-%04X (BP#%d)", g_DebugBreakOnDMA[i].memoryAddr, g_DebugBreakOnDMA[i].memoryAddrEnd, g_DebugBreakOnDMA[i].BPid);
+					else if (nDebugBreakpointHit & BP_DMA_FROM_MEM)
+						stopReason = StrFormat("HDD DMA from memory $%04X-%04X (BP#%d)", g_DebugBreakOnDMA[i].memoryAddr, g_DebugBreakOnDMA[i].memoryAddrEnd, g_DebugBreakOnDMA[i].BPid);
+					ConsoleBufferPushFormat("Stop reason: %s", stopReason.c_str());
+				}
+			}
+
 			ConsoleUpdate();
 
 			g_nDebugSteps = 0;
@@ -8562,9 +8759,21 @@ void DebugInitialize ()
 	if (!doneAutoRun)	// Don't re-run on a VM restart
 	{
 		doneAutoRun = true;
-		std::string pathname = g_sProgramDir + "DebuggerAutoRun.txt";
+
+		const std::string debuggerAutoRunName = "DebuggerAutoRun.txt";
+
+		// Look in g_sCurrentDir, otherwise try g_sProgramDir
+
+		std::string pathname = g_sCurrentDir + debuggerAutoRunName;
 		strncpy_s(g_aArgs[1].sArg, MAX_ARG_LEN, pathname.c_str(), _TRUNCATE);
 		CmdOutputRun(1);
+
+		if (!g_bScriptReadOk)
+		{
+			pathname = g_sProgramDir + debuggerAutoRunName;
+			strncpy_s(g_aArgs[1].sArg, MAX_ARG_LEN, pathname.c_str(), _TRUNCATE);
+			CmdOutputRun(1);
+		}
 	}
 
 	CmdMOTD(0);

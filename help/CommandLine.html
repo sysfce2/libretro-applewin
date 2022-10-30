@@ -24,9 +24,9 @@
 		Start with a floppy disk in slot 6 drive-2.<br>
 		NB. -s6d2 has the meaning same as -d2.<br><br>
 		-s5d1 &lt;pathname&gt;<br>
-		Start with a floppy disk in slot 5 drive-1 (must be used with '-s5 diskii').<br><br>
+		Start with a floppy disk in slot 5 drive-1 (must be used with '-s5 diskii' or '-s5 diskii13').<br><br>
 		-s5d2 &lt;pathname&gt;<br>
-		Start with a floppy disk in slot 5 drive-2 (must be used with '-s5 diskii').<br><br>
+		Start with a floppy disk in slot 5 drive-2 (must be used with '-s5 diskii' or '-s5 diskii13').<br><br>
 		-h1 &lt;pathname&gt;<br>
 		Start with hard disk 1 plugged-in (and auto power-on the Apple II). NB. Hard disk controller card gets enabled.<br><br>
 		-h2 &lt;pathname&gt;<br>
@@ -48,12 +48,18 @@
 		Insert a parallel printer card into slot 1.<br><br>
 		-s2 empty<br>
 		Remove the SSC card from slot 2.<br><br>
+		-s2 ssc<br>
+		Insert a SSC into slot 2.<br><br>
 		-s3 empty<br>
-		Remove the Uthernet card from slot 3.<br><br>
+		Remove any card from slot 3.<br><br>
 		-s3 vidhd<br>
 		Insert a VidHD card into slot 3.<br><br>
 		-s5 diskii<br>
-		Insert a 2nd Disk II controller card into slot 5.<br><br>
+		-s6 diskii<br>
+		Insert a Disk II controller card into slot 5 or 6.<br><br>
+		-s5 diskii13<br>
+		-s6 diskii13<br>
+		Insert a Disk II controller card (with 13-sector firmware) into slot 5 or 6.<br><br>
 		-s6 empty<br>
 		Remove the Disk II controller card from slot 6.<br><br>
 		-s7 empty<br>
@@ -80,6 +86,9 @@
 			<li>best: picks the highest resolution where the height is an integer multiple of (192*2)</li>
 			<li>nnnn: select a specific resolution with height=nnnn pixels</li>
 		</ul>
+		-fs-width=&lt;nnnn&gt;<br>
+		Use in conjunction with -fs-height to select a better aspect ratio for full-screen mode.<br>
+		EG. for 4:3 aspect ratio on monitors that support it: -no-full-screen -fs-width=1600 -fs-height=1200<br><br>
 		NB. Combine with <em>-no-full-screen</em> to start in Windowed mode. Without this it'll just default to full-screen.<br>
 		NB. When switching to Windowed mode the default desktop resolution will be restored, and when switching back to full-screen mode this better resolution will again be used.<br><br>
 		-rom &lt;file&gt;<br>
