@@ -104,7 +104,7 @@ namespace binarymonitor
         {1, {"X",  sizeof(regs.x),  &regs.x}},
         {2, {"Y",  sizeof(regs.y),  &regs.y}},
         {3, {"PC", sizeof(regs.pc), &regs.pc}},
-        {4, {"SP", sizeof(regs.sp), &regs.sp}},
+        {4, {"SP", sizeof(BYTE), &regs.sp}}, // this qorks on Little Endian CPUs.
         {5, {"PS", sizeof(regs.ps), &regs.ps}},
       })
     , myBankNames(getBankNames())
