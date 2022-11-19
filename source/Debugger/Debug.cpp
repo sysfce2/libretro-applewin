@@ -1245,6 +1245,7 @@ int CheckBreakpointsIO ()
 								{
 									bBreakpointHit = BP_HIT_MEM;
 									pBP->bHit = true;
+									++pBP->bHitCount;
 								}
 								else if (pBP->eSource == BP_SRC_MEM_READ_ONLY)
 								{
@@ -1252,6 +1253,7 @@ int CheckBreakpointsIO ()
 									{
 										bBreakpointHit = BP_HIT_MEMR;
 										pBP->bHit = true;
+										++pBP->bHitCount;
 									}
 								}
 								else if (pBP->eSource == BP_SRC_MEM_WRITE_ONLY)
@@ -1260,6 +1262,7 @@ int CheckBreakpointsIO ()
 									{
 										bBreakpointHit = BP_HIT_MEMW;
 										pBP->bHit = true;
+										++pBP->bHitCount;
 									}
 								}
 								else
@@ -1318,6 +1321,7 @@ int CheckBreakpointsReg ()
 		if (bBreakpointHit)
 		{
 			pBP->bHit = true;
+			++pBP->bHitCount;
 			bAllBreakpointHit = BP_HIT_REG;
 			if (pBP->bTemp)
 				_BWZ_Clear(pBP, iBreakpoint);
@@ -1552,6 +1556,7 @@ bool _CmdBreakpointAddReg( Breakpoint_t *pBP, BreakpointSource_t iSrc, Breakpoin
 		pBP->bEnabled  = true;
 		pBP->bTemp     = bIsTempBreakpoint;
 		pBP->bHit      = false;
+		pBP->bHitCount = 0;
 		pBP->bStop     = true;
 		bStatus = true;
 	}

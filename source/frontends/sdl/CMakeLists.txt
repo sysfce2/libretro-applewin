@@ -41,6 +41,7 @@ set(SOURCE_FILES
   monitor/binarybuffer.cpp
   monitor/payloadbuffer.cpp
   monitor/breakpoints.cpp
+  monitor/commands.cpp
   monitor/exception.cpp
   )
 

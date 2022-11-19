@@ -72,6 +72,8 @@ namespace binarymonitor
     bp.nLength = checkpointSet.endAddress - checkpointSet.startAddress + 1;
     bp.eSource = source;
     bp.bSet = true;
+    bp.bHit = false;
+    bp.bHitCount = 0;
     bp.eOperator = BP_OP_EQUAL;
     bp.bEnabled = checkpointSet.enabled && checkpointSet.stop;
     bp.bStop = checkpointSet.stop;
@@ -107,6 +109,9 @@ namespace binarymonitor
     }
     bp.bEnabled = false;
     bp.bSet = false;
+    bp.bHit = false;
+    bp.bTemp = false;
+    bp.bHitCount = 0;
     bp.nLength = 0;
   }
 

@@ -216,6 +216,7 @@
 		bool                 bEnabled;
 		bool                 bTemp;    // If true then remove BP when hit or stepping cancelled (eg. G xxxx)
 		bool                 bHit;
+		WORD								 bHitCount;
 		bool                 bStop;
 	};
 

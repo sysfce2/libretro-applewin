@@ -98,7 +98,8 @@ namespace binarymonitor
     e_MON_RESPONSE_AUTOSTART = 0xdd,
   };
 
-  enum t_mon_error {
+  enum t_mon_error
+  {
     e_MON_ERR_OK = 0x00,
     e_MON_ERR_OBJECT_MISSING = 0x01,
     e_MON_ERR_INVALID_MEMSPACE = 0x02,
@@ -109,10 +110,14 @@ namespace binarymonitor
     e_MON_ERR_CMD_FAILURE = 0x8f,
   };
 
-  enum t_mon_resource_type {
+  enum t_mon_resource_type
+  {
     e_MON_RESOURCE_TYPE_STRING = 0x00,
     e_MON_RESOURCE_TYPE_INT = 0x01,
   };
+
+  const char * getCommandStr(const uint8_t cmd);
+  const char * getResponseStr(const uint8_t cmd);
 
   #pragma pack(push)
   #pragma pack(1)

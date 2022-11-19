@@ -33,7 +33,7 @@
 
 #define MON_EVENT_ID 0xffffffff
 
-// #define LOG_COMMANDS
+#define LOG_COMMANDS
 
 namespace
 {
@@ -213,7 +213,10 @@ namespace binarymonitor
 
   #ifdef LOG_COMMANDS
     const bool ok = sent1 == (sizeof(Response) + data.size());
-    LogOutput("RESPONSE [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x, ERR: 0x%02x, OK: %d\n", mySocket, response.type, response.length, response.request, response.error, ok);
+    const char * cmd = binarymonitor::getResponseStr(response.type);
+    LogOutput("RESPONSE [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x, ERR: 0x%02x, OK: %d [%s]\n", mySocket, response.type, response.length, response.request, response.error, ok, cmd);
+  #endif
+  #ifdef LOG_PAYLOAD
     LogOutput("PAYLOAD:");
     for (size_t i = 0; i < std::min(30UL, data.size()); ++i)
     {
@@ -230,13 +233,12 @@ namespace binarymonitor
 
   void BinaryClient::sendBreakpointIfHit()
   {
-    LogOutput("\nDebugger stopped: %d\n", g_bDebugBreakpointHit);
     for (int i = 0; i < MAX_BREAKPOINTS; ++i)
     {
       const Breakpoint_t & bp = g_aBreakpoints[i];
-      if (bp.bHit)
+      if (bp.bSet && bp.bHit)
       {
-        LogOutput("Hit: %d\n", i);
+        LogOutput(">>> Hit: %d\n", i);
         sendBreakpoint(MON_EVENT_ID, i);
       }
     }
@@ -262,7 +264,7 @@ namespace binarymonitor
     buffer.writeInt8(bp.bEnabled);                      // enabled
     buffer.writeInt8(operation);                        // operation
     buffer.writeInt8(bp.bTemp);                         // temporary
-    buffer.writeInt32(0);                               // hit count
+    buffer.writeInt32(bp.bHitCount);                    // hit count
     buffer.writeInt32(0);                               // ignore count
     buffer.writeInt8(0);                                // condition?
     buffer.writeInt8(0);                                // memspace
@@ -531,7 +533,7 @@ namespace binarymonitor
   {
     if (!myStopped)
     {
-      LogOutput("\nStopping... @ %04x\n", regs.pc);
+      LogOutput(">>> Stopping... @ %04x\n", regs.pc);
       BinaryBuffer buffer;
       buffer.writeInt16(regs.pc);
       sendReply(buffer, e_MON_RESPONSE_STOPPED, MON_EVENT_ID, e_MON_ERR_OK);
@@ -699,14 +701,13 @@ namespace binarymonitor
     sendReply(buffer, type, myCommand.request, error);
 
     LogOutput("ERROR [%d]: CMD: 0x%02x, REQ: %8x, ERR: 0x%02x\n", mySocket, type, myCommand.request, error);
-    LogOutput("\n");
   }
 
   void BinaryClient::sendResume(const uint32_t request)
   {
     if (myStopped)
     {
-      LogOutput("\nResuming...\n");
+      LogOutput(">>> Resuming...\n");
       BinaryBuffer buffer;
       buffer.writeInt16(regs.pc);
       sendReply(buffer, e_MON_RESPONSE_RESUMED, request, e_MON_ERR_OK);
@@ -771,7 +772,8 @@ namespace binarymonitor
   void BinaryClient::processCommand()
   {
   #ifdef LOG_COMMANDS
-    LogOutput("COMMAND  [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x\n", mySocket, myCommand.type, myCommand.length, myCommand.request);
+    const char * cmd = binarymonitor::getCommandStr(myCommand.type);
+    LogOutput("COMMAND  [%d]: CMD: 0x%02x, LEN: %7d, REQ: %8x                   [%s]\n", mySocket, myCommand.type, myCommand.length, myCommand.request, cmd);
   #endif
 
     enterMonitorState(MODE_DEBUG);
