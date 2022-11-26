@@ -52,6 +52,8 @@ namespace mariani
     const CGImageRef image = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
     const CFDataRef rawData = CGDataProviderCopyData(CGImageGetDataProvider(image));
     
+    assert(rawData != NULL);
+    
     const UInt8 * source = CFDataGetBytePtr(rawData);
     const size_t size = CGImageGetHeight(image) * CGImageGetWidth(image) / 8;
     const size_t requested = cb;

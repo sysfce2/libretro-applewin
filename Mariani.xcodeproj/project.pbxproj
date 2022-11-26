@@ -198,8 +198,6 @@
 		B00ECBBC279EEB600041E16C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049E8AE277C9A8000FC14A3 /* MetalKit.framework */; };
 		B00ECBC0279EEB600041E16C /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
 		B00ECBC2279EEB600041E16C /* PRAVETS82.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6A2782984E006E36F9 /* PRAVETS82.ROM */; };
-		B00ECBC3279EEB600041E16C /* CHARSET8M.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */; };
-		B00ECBC4279EEB600041E16C /* CHARSET4.BMP in Resources */ = {isa = PBXBuildFile; fileRef = B045FE882782B9B3006E36F9 /* CHARSET4.BMP */; };
 		B00ECBC5279EEB600041E16C /* PRAVETS8M.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE612782984E006E36F9 /* PRAVETS8M.ROM */; };
 		B00ECBC6279EEB600041E16C /* TKClock.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE632782984E006E36F9 /* TKClock.rom */; };
 		B00ECBC7279EEB600041E16C /* PRAVETS8C.ROM in Resources */ = {isa = PBXBuildFile; fileRef = B045FE692782984E006E36F9 /* PRAVETS8C.ROM */; };
@@ -210,7 +208,6 @@
 		B00ECBCC279EEB600041E16C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B032DE27277A0C24006DC0F7 /* Assets.xcassets */; };
 		B00ECBCD279EEB600041E16C /* Base64A_German_Video.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE642782984E006E36F9 /* Base64A_German_Video.rom */; };
 		B00ECBCE279EEB600041E16C /* Hddrvr.bin in Resources */ = {isa = PBXBuildFile; fileRef = B045FE602782984E006E36F9 /* Hddrvr.bin */; };
-		B00ECBCF279EEB600041E16C /* CHARSET8C.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */; };
 		B00ECBD0279EEB600041E16C /* DISK2-13sector.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE5E2782984E006E36F9 /* DISK2-13sector.rom */; };
 		B00ECBD1279EEB600041E16C /* DISK2.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE652782984E006E36F9 /* DISK2.rom */; };
 		B00ECBD2279EEB600041E16C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B032DE29277A0C24006DC0F7 /* MainMenu.xib */; };
@@ -227,7 +224,6 @@
 		B00ECBDD279EEB600041E16C /* Parallel.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6D2782984E006E36F9 /* Parallel.rom */; };
 		B00ECBDE279EEB600041E16C /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE702782984E006E36F9 /* Apple2e_Enhanced.rom */; };
 		B00ECBDF279EEB600041E16C /* Apple2_JPlus.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE672782984E006E36F9 /* Apple2_JPlus.rom */; };
-		B00ECBE0279EEB600041E16C /* CHARSET82.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */; };
 		B00ECBE6279EEBAB0041E16C /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B00ECBE5279EEBAB0041E16C /* libboost_program_options.a */; };
 		B00ECBEA279EEBDC0041E16C /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B00ECBE7279EEBD30041E16C /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B020F8A62785D30E0071D3C7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B020F8A32785D30E0071D3C7 /* stdafx.cpp */; };
@@ -269,10 +265,6 @@
 		B045FE852782984F006E36F9 /* Apple2.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE6F2782984E006E36F9 /* Apple2.rom */; };
 		B045FE862782984F006E36F9 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE702782984E006E36F9 /* Apple2e_Enhanced.rom */; };
 		B045FE872782984F006E36F9 /* Mockingboard-D.rom in Resources */ = {isa = PBXBuildFile; fileRef = B045FE712782984F006E36F9 /* Mockingboard-D.rom */; };
-		B045FE8C2782B9B3006E36F9 /* CHARSET4.BMP in Resources */ = {isa = PBXBuildFile; fileRef = B045FE882782B9B3006E36F9 /* CHARSET4.BMP */; };
-		B045FE8D2782B9B3006E36F9 /* CHARSET8C.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */; };
-		B045FE8E2782B9B3006E36F9 /* CHARSET82.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */; };
-		B045FE8F2782B9B3006E36F9 /* CHARSET8M.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */; };
 		B049E800277A36CE00FC14A3 /* PropertySheetHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E7EA277A36CE00FC14A3 /* PropertySheetHelper.cpp */; };
 		B049E820277B512500FC14A3 /* sdirectsound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E81E277B512500FC14A3 /* sdirectsound.cpp */; };
 		B049E826277B52B200FC14A3 /* sdlframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E824277B52B200FC14A3 /* sdlframe.cpp */; };
@@ -459,6 +451,14 @@
 		B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
 		B0A8D66627B1119D00D4314F /* 6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D66427B1119D00D4314F /* 6522.cpp */; };
 		B0A8D66727B1119D00D4314F /* 6522.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D66527B1119D00D4314F /* 6522.h */; };
+		B0DC19DD2932D47100E590BC /* CHARSET4.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19D22932D47100E590BC /* CHARSET4.png */; };
+		B0DC19DE2932D47100E590BC /* CHARSET4.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19D22932D47100E590BC /* CHARSET4.png */; };
+		B0DC19DF2932D47100E590BC /* CHARSET8M.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DA2932D47100E590BC /* CHARSET8M.png */; };
+		B0DC19E02932D47100E590BC /* CHARSET8M.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DA2932D47100E590BC /* CHARSET8M.png */; };
+		B0DC19E12932D47100E590BC /* CHARSET8C.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DB2932D47100E590BC /* CHARSET8C.png */; };
+		B0DC19E22932D47100E590BC /* CHARSET8C.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DB2932D47100E590BC /* CHARSET8C.png */; };
+		B0DC19E32932D47100E590BC /* CHARSET82.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DC2932D47100E590BC /* CHARSET82.png */; };
+		B0DC19E42932D47100E590BC /* CHARSET82.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DC2932D47100E590BC /* CHARSET82.png */; };
 		B0E55A6127B7848B003173F2 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E55A5427B7844D003173F2 /* libyaml.a */; };
 		B0E55A6227B7849F003173F2 /* loader.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB692277A15D90002A6C3 /* loader.c */; };
 		B0E55A6327B7849F003173F2 /* dumper.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB697277A15D90002A6C3 /* dumper.c */; };
@@ -701,10 +701,6 @@
 		B045FE6F2782984E006E36F9 /* Apple2.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2.rom; path = resource/Apple2.rom; sourceTree = SOURCE_ROOT; };
 		B045FE702782984E006E36F9 /* Apple2e_Enhanced.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e_Enhanced.rom; path = resource/Apple2e_Enhanced.rom; sourceTree = SOURCE_ROOT; };
 		B045FE712782984F006E36F9 /* Mockingboard-D.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mockingboard-D.rom"; path = "resource/Mockingboard-D.rom"; sourceTree = SOURCE_ROOT; };
-		B045FE882782B9B3006E36F9 /* CHARSET4.BMP */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET4.BMP; path = resource/CHARSET4.BMP; sourceTree = SOURCE_ROOT; };
-		B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8C.bmp; path = resource/CHARSET8C.bmp; sourceTree = SOURCE_ROOT; };
-		B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET82.bmp; path = resource/CHARSET82.bmp; sourceTree = SOURCE_ROOT; };
-		B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8M.bmp; path = resource/CHARSET8M.bmp; sourceTree = SOURCE_ROOT; };
 		B045FE9027848272006E36F9 /* gnuframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gnuframe.h; path = source/frontends/common2/gnuframe.h; sourceTree = "<group>"; };
 		B045FE9127848272006E36F9 /* gnuframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gnuframe.cpp; path = source/frontends/common2/gnuframe.cpp; sourceTree = "<group>"; };
 		B049E7CA277A339600FC14A3 /* z80mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = z80mem.h; path = source/Z80VICE/z80mem.h; sourceTree = "<group>"; };
@@ -1148,6 +1144,10 @@
 		B0D1C3C627B45E5600C0BF71 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/version.c; sourceTree = "<group>"; };
 		B0D1C3C727B45E5600C0BF71 /* block.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = block.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/block.c; sourceTree = "<group>"; };
 		B0D1C3C827B45E5600C0BF71 /* data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = data.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/data.c; sourceTree = "<group>"; };
+		B0DC19D22932D47100E590BC /* CHARSET4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET4.png; path = Resources/CHARSET4.png; sourceTree = "<group>"; };
+		B0DC19DA2932D47100E590BC /* CHARSET8M.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET8M.png; path = Resources/CHARSET8M.png; sourceTree = "<group>"; };
+		B0DC19DB2932D47100E590BC /* CHARSET8C.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET8C.png; path = Resources/CHARSET8C.png; sourceTree = "<group>"; };
+		B0DC19DC2932D47100E590BC /* CHARSET82.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET82.png; path = Resources/CHARSET82.png; sourceTree = "<group>"; };
 		B0E55A5427B7844D003173F2 /* libyaml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libyaml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0ED3FCC27859566006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B0ED3FCE2785973C006E4784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1389,10 +1389,10 @@
 				B045FE6E2782984E006E36F9 /* ThunderClockPlus.rom */,
 				B045FE622782984E006E36F9 /* TK3000e.rom */,
 				B045FE632782984E006E36F9 /* TKClock.rom */,
-				B045FE882782B9B3006E36F9 /* CHARSET4.BMP */,
-				B045FE892782B9B3006E36F9 /* CHARSET8C.bmp */,
-				B045FE8B2782B9B3006E36F9 /* CHARSET8M.bmp */,
-				B045FE8A2782B9B3006E36F9 /* CHARSET82.bmp */,
+				B0DC19D22932D47100E590BC /* CHARSET4.png */,
+				B0DC19DB2932D47100E590BC /* CHARSET8C.png */,
+				B0DC19DA2932D47100E590BC /* CHARSET8M.png */,
+				B0DC19DC2932D47100E590BC /* CHARSET82.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2433,11 +2433,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B00ECBC2279EEB600041E16C /* PRAVETS82.ROM in Resources */,
-				B00ECBC3279EEB600041E16C /* CHARSET8M.bmp in Resources */,
-				B00ECBC4279EEB600041E16C /* CHARSET4.BMP in Resources */,
 				B00ECBC5279EEB600041E16C /* PRAVETS8M.ROM in Resources */,
 				B089EF2F27BADA5200BDC415 /* Mariani.help in Resources */,
 				B00ECBC6279EEB600041E16C /* TKClock.rom in Resources */,
+				B0DC19E22932D47100E590BC /* CHARSET8C.png in Resources */,
 				B00ECBC7279EEB600041E16C /* PRAVETS8C.ROM in Resources */,
 				B00ECBC8279EEB600041E16C /* ThunderClockPlus.rom in Resources */,
 				B00ECBC9279EEB600041E16C /* MouseInterface.rom in Resources */,
@@ -2446,10 +2445,11 @@
 				B00ECBCC279EEB600041E16C /* Assets.xcassets in Resources */,
 				B00ECBCD279EEB600041E16C /* Base64A_German_Video.rom in Resources */,
 				B00ECBCE279EEB600041E16C /* Hddrvr.bin in Resources */,
-				B00ECBCF279EEB600041E16C /* CHARSET8C.bmp in Resources */,
+				B0DC19DE2932D47100E590BC /* CHARSET4.png in Resources */,
 				B00ECBD0279EEB600041E16C /* DISK2-13sector.rom in Resources */,
 				B00ECBD1279EEB600041E16C /* DISK2.rom in Resources */,
 				B00ECBD2279EEB600041E16C /* MainMenu.xib in Resources */,
+				B0DC19E42932D47100E590BC /* CHARSET82.png in Resources */,
 				B00ECBD3279EEB600041E16C /* About.xib in Resources */,
 				B00ECBD4279EEB600041E16C /* Apple2_JPlus_Video.rom in Resources */,
 				B00ECBD5279EEB600041E16C /* Preferences.storyboard in Resources */,
@@ -2463,7 +2463,7 @@
 				B00ECBDD279EEB600041E16C /* Parallel.rom in Resources */,
 				B00ECBDE279EEB600041E16C /* Apple2e_Enhanced.rom in Resources */,
 				B00ECBDF279EEB600041E16C /* Apple2_JPlus.rom in Resources */,
-				B00ECBE0279EEB600041E16C /* CHARSET82.bmp in Resources */,
+				B0DC19E02932D47100E590BC /* CHARSET8M.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2472,11 +2472,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B045FE802782984F006E36F9 /* PRAVETS82.ROM in Resources */,
-				B045FE8F2782B9B3006E36F9 /* CHARSET8M.bmp in Resources */,
-				B045FE8C2782B9B3006E36F9 /* CHARSET4.BMP in Resources */,
 				B045FE772782984F006E36F9 /* PRAVETS8M.ROM in Resources */,
 				B089EF2E27BADA5200BDC415 /* Mariani.help in Resources */,
 				B045FE792782984F006E36F9 /* TKClock.rom in Resources */,
+				B0DC19E12932D47100E590BC /* CHARSET8C.png in Resources */,
 				B045FE7F2782984F006E36F9 /* PRAVETS8C.ROM in Resources */,
 				B045FE842782984F006E36F9 /* ThunderClockPlus.rom in Resources */,
 				B045FE752782984F006E36F9 /* MouseInterface.rom in Resources */,
@@ -2485,10 +2484,11 @@
 				B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */,
 				B045FE7A2782984F006E36F9 /* Base64A_German_Video.rom in Resources */,
 				B045FE762782984F006E36F9 /* Hddrvr.bin in Resources */,
-				B045FE8D2782B9B3006E36F9 /* CHARSET8C.bmp in Resources */,
+				B0DC19DD2932D47100E590BC /* CHARSET4.png in Resources */,
 				B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */,
 				B045FE7B2782984F006E36F9 /* DISK2.rom in Resources */,
 				B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */,
+				B0DC19E32932D47100E590BC /* CHARSET82.png in Resources */,
 				B07612302789E4BE009E79BE /* About.xib in Resources */,
 				B045FE822782984F006E36F9 /* Apple2_JPlus_Video.rom in Resources */,
 				B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */,
@@ -2502,7 +2502,7 @@
 				B045FE832782984F006E36F9 /* Parallel.rom in Resources */,
 				B045FE862782984F006E36F9 /* Apple2e_Enhanced.rom in Resources */,
 				B045FE7D2782984F006E36F9 /* Apple2_JPlus.rom in Resources */,
-				B045FE8E2782B9B3006E36F9 /* CHARSET82.bmp in Resources */,
+				B0DC19DF2932D47100E590BC /* CHARSET8M.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
