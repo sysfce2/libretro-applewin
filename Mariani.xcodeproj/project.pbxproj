@@ -451,14 +451,6 @@
 		B0A6BB77277A31F7008813DE /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A6BB76277A31F7008813DE /* libpcap.tbd */; };
 		B0A8D66627B1119D00D4314F /* 6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D66427B1119D00D4314F /* 6522.cpp */; };
 		B0A8D66727B1119D00D4314F /* 6522.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A8D66527B1119D00D4314F /* 6522.h */; };
-		B0DC19DD2932D47100E590BC /* CHARSET4.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19D22932D47100E590BC /* CHARSET4.png */; };
-		B0DC19DE2932D47100E590BC /* CHARSET4.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19D22932D47100E590BC /* CHARSET4.png */; };
-		B0DC19DF2932D47100E590BC /* CHARSET8M.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DA2932D47100E590BC /* CHARSET8M.png */; };
-		B0DC19E02932D47100E590BC /* CHARSET8M.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DA2932D47100E590BC /* CHARSET8M.png */; };
-		B0DC19E12932D47100E590BC /* CHARSET8C.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DB2932D47100E590BC /* CHARSET8C.png */; };
-		B0DC19E22932D47100E590BC /* CHARSET8C.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DB2932D47100E590BC /* CHARSET8C.png */; };
-		B0DC19E32932D47100E590BC /* CHARSET82.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DC2932D47100E590BC /* CHARSET82.png */; };
-		B0DC19E42932D47100E590BC /* CHARSET82.png in Resources */ = {isa = PBXBuildFile; fileRef = B0DC19DC2932D47100E590BC /* CHARSET82.png */; };
 		B0E55A6127B7848B003173F2 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E55A5427B7844D003173F2 /* libyaml.a */; };
 		B0E55A6227B7849F003173F2 /* loader.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB692277A15D90002A6C3 /* loader.c */; };
 		B0E55A6327B7849F003173F2 /* dumper.c in Sources */ = {isa = PBXBuildFile; fileRef = B09AB697277A15D90002A6C3 /* dumper.c */; };
@@ -477,6 +469,14 @@
 		B0F43FCF295E48DA00E79AD7 /* CopyProtectionDongles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F43FC6295E48DA00E79AD7 /* CopyProtectionDongles.cpp */; };
 		B0F43FD0295E48DA00E79AD7 /* CopyProtectionDongles.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F43FCE295E48DA00E79AD7 /* CopyProtectionDongles.h */; };
 		B0F43FD2295E49FD00E79AD7 /* joystickapi.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F43FD1295E49FD00E79AD7 /* joystickapi.h */; };
+		B0F43FD7295E4BAD00E79AD7 /* CHARSET8C.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD3295E4BAD00E79AD7 /* CHARSET8C.bmp */; };
+		B0F43FD8295E4BAD00E79AD7 /* CHARSET8C.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD3295E4BAD00E79AD7 /* CHARSET8C.bmp */; };
+		B0F43FD9295E4BAD00E79AD7 /* CHARSET8M.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD4295E4BAD00E79AD7 /* CHARSET8M.bmp */; };
+		B0F43FDA295E4BAD00E79AD7 /* CHARSET8M.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD4295E4BAD00E79AD7 /* CHARSET8M.bmp */; };
+		B0F43FDB295E4BAD00E79AD7 /* CHARSET4.BMP in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD5295E4BAD00E79AD7 /* CHARSET4.BMP */; };
+		B0F43FDC295E4BAD00E79AD7 /* CHARSET4.BMP in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD5295E4BAD00E79AD7 /* CHARSET4.BMP */; };
+		B0F43FDD295E4BAD00E79AD7 /* CHARSET82.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD6295E4BAD00E79AD7 /* CHARSET82.bmp */; };
+		B0F43FDE295E4BAD00E79AD7 /* CHARSET82.bmp in Resources */ = {isa = PBXBuildFile; fileRef = B0F43FD6295E4BAD00E79AD7 /* CHARSET82.bmp */; };
 		B0F84FF927D1B3F30015F642 /* Uthernet2.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FF427D1B3F30015F642 /* Uthernet2.h */; };
 		B0F84FFA27D1B3F30015F642 /* Uthernet1.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FF527D1B3F30015F642 /* Uthernet1.h */; };
 		B0F84FFB27D1B3F30015F642 /* Uthernet1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F84FF627D1B3F30015F642 /* Uthernet1.cpp */; };
@@ -1147,10 +1147,6 @@
 		B0D1C3C627B45E5600C0BF71 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/version.c; sourceTree = "<group>"; };
 		B0D1C3C727B45E5600C0BF71 /* block.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = block.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/block.c; sourceTree = "<group>"; };
 		B0D1C3C827B45E5600C0BF71 /* data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = data.c; path = source/frontends/mariani/CiderPress/diskimg/libhfs/data.c; sourceTree = "<group>"; };
-		B0DC19D22932D47100E590BC /* CHARSET4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET4.png; path = Resources/CHARSET4.png; sourceTree = "<group>"; };
-		B0DC19DA2932D47100E590BC /* CHARSET8M.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET8M.png; path = Resources/CHARSET8M.png; sourceTree = "<group>"; };
-		B0DC19DB2932D47100E590BC /* CHARSET8C.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET8C.png; path = Resources/CHARSET8C.png; sourceTree = "<group>"; };
-		B0DC19DC2932D47100E590BC /* CHARSET82.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CHARSET82.png; path = Resources/CHARSET82.png; sourceTree = "<group>"; };
 		B0E55A5427B7844D003173F2 /* libyaml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libyaml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0ED3FCC27859566006E4784 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B0ED3FCE2785973C006E4784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1162,6 +1158,10 @@
 		B0F43FC6295E48DA00E79AD7 /* CopyProtectionDongles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopyProtectionDongles.cpp; path = source/CopyProtectionDongles.cpp; sourceTree = "<group>"; };
 		B0F43FCE295E48DA00E79AD7 /* CopyProtectionDongles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopyProtectionDongles.h; path = source/CopyProtectionDongles.h; sourceTree = "<group>"; };
 		B0F43FD1295E49FD00E79AD7 /* joystickapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = joystickapi.h; path = source/linux/libwindows/joystickapi.h; sourceTree = "<group>"; };
+		B0F43FD3295E4BAD00E79AD7 /* CHARSET8C.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8C.bmp; path = resource/CHARSET8C.bmp; sourceTree = SOURCE_ROOT; };
+		B0F43FD4295E4BAD00E79AD7 /* CHARSET8M.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET8M.bmp; path = resource/CHARSET8M.bmp; sourceTree = SOURCE_ROOT; };
+		B0F43FD5295E4BAD00E79AD7 /* CHARSET4.BMP */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET4.BMP; path = resource/CHARSET4.BMP; sourceTree = SOURCE_ROOT; };
+		B0F43FD6295E4BAD00E79AD7 /* CHARSET82.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = CHARSET82.bmp; path = resource/CHARSET82.bmp; sourceTree = SOURCE_ROOT; };
 		B0F84FF427D1B3F30015F642 /* Uthernet2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uthernet2.h; path = source/Uthernet2.h; sourceTree = "<group>"; };
 		B0F84FF527D1B3F30015F642 /* Uthernet1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uthernet1.h; path = source/Uthernet1.h; sourceTree = "<group>"; };
 		B0F84FF627D1B3F30015F642 /* Uthernet1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Uthernet1.cpp; path = source/Uthernet1.cpp; sourceTree = "<group>"; };
@@ -1395,10 +1395,10 @@
 				B045FE6E2782984E006E36F9 /* ThunderClockPlus.rom */,
 				B045FE622782984E006E36F9 /* TK3000e.rom */,
 				B045FE632782984E006E36F9 /* TKClock.rom */,
-				B0DC19D22932D47100E590BC /* CHARSET4.png */,
-				B0DC19DB2932D47100E590BC /* CHARSET8C.png */,
-				B0DC19DA2932D47100E590BC /* CHARSET8M.png */,
-				B0DC19DC2932D47100E590BC /* CHARSET82.png */,
+				B0F43FD5295E4BAD00E79AD7 /* CHARSET4.BMP */,
+				B0F43FD3295E4BAD00E79AD7 /* CHARSET8C.bmp */,
+				B0F43FD4295E4BAD00E79AD7 /* CHARSET8M.bmp */,
+				B0F43FD6295E4BAD00E79AD7 /* CHARSET82.bmp */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2447,21 +2447,21 @@
 				B00ECBC5279EEB600041E16C /* PRAVETS8M.ROM in Resources */,
 				B089EF2F27BADA5200BDC415 /* Mariani.help in Resources */,
 				B00ECBC6279EEB600041E16C /* TKClock.rom in Resources */,
-				B0DC19E22932D47100E590BC /* CHARSET8C.png in Resources */,
 				B00ECBC7279EEB600041E16C /* PRAVETS8C.ROM in Resources */,
 				B00ECBC8279EEB600041E16C /* ThunderClockPlus.rom in Resources */,
 				B00ECBC9279EEB600041E16C /* MouseInterface.rom in Resources */,
 				B00ECBCA279EEB600041E16C /* Apple2e.rom in Resources */,
 				B00ECBCB279EEB600041E16C /* DiskImageBrowser.xib in Resources */,
+				B0F43FD8295E4BAD00E79AD7 /* CHARSET8C.bmp in Resources */,
 				B00ECBCC279EEB600041E16C /* Assets.xcassets in Resources */,
 				B00ECBCD279EEB600041E16C /* Base64A_German_Video.rom in Resources */,
 				B00ECBCE279EEB600041E16C /* Hddrvr.bin in Resources */,
-				B0DC19DE2932D47100E590BC /* CHARSET4.png in Resources */,
 				B00ECBD0279EEB600041E16C /* DISK2-13sector.rom in Resources */,
+				B0F43FDE295E4BAD00E79AD7 /* CHARSET82.bmp in Resources */,
 				B00ECBD1279EEB600041E16C /* DISK2.rom in Resources */,
 				B00ECBD2279EEB600041E16C /* MainMenu.xib in Resources */,
-				B0DC19E42932D47100E590BC /* CHARSET82.png in Resources */,
 				B00ECBD3279EEB600041E16C /* About.xib in Resources */,
+				B0F43FDC295E4BAD00E79AD7 /* CHARSET4.BMP in Resources */,
 				B00ECBD4279EEB600041E16C /* Apple2_JPlus_Video.rom in Resources */,
 				B00ECBD5279EEB600041E16C /* Preferences.storyboard in Resources */,
 				B00ECBD6279EEB600041E16C /* TK3000e.rom in Resources */,
@@ -2474,7 +2474,7 @@
 				B00ECBDD279EEB600041E16C /* Parallel.rom in Resources */,
 				B00ECBDE279EEB600041E16C /* Apple2e_Enhanced.rom in Resources */,
 				B00ECBDF279EEB600041E16C /* Apple2_JPlus.rom in Resources */,
-				B0DC19E02932D47100E590BC /* CHARSET8M.png in Resources */,
+				B0F43FDA295E4BAD00E79AD7 /* CHARSET8M.bmp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2486,21 +2486,21 @@
 				B045FE772782984F006E36F9 /* PRAVETS8M.ROM in Resources */,
 				B089EF2E27BADA5200BDC415 /* Mariani.help in Resources */,
 				B045FE792782984F006E36F9 /* TKClock.rom in Resources */,
-				B0DC19E12932D47100E590BC /* CHARSET8C.png in Resources */,
 				B045FE7F2782984F006E36F9 /* PRAVETS8C.ROM in Resources */,
 				B045FE842782984F006E36F9 /* ThunderClockPlus.rom in Resources */,
 				B045FE752782984F006E36F9 /* MouseInterface.rom in Resources */,
 				B045FE722782984F006E36F9 /* Apple2e.rom in Resources */,
 				B0F25BCD2789B2DB0080523F /* DiskImageBrowser.xib in Resources */,
+				B0F43FD7295E4BAD00E79AD7 /* CHARSET8C.bmp in Resources */,
 				B032DE28277A0C24006DC0F7 /* Assets.xcassets in Resources */,
 				B045FE7A2782984F006E36F9 /* Base64A_German_Video.rom in Resources */,
 				B045FE762782984F006E36F9 /* Hddrvr.bin in Resources */,
-				B0DC19DD2932D47100E590BC /* CHARSET4.png in Resources */,
 				B045FE742782984F006E36F9 /* DISK2-13sector.rom in Resources */,
+				B0F43FDD295E4BAD00E79AD7 /* CHARSET82.bmp in Resources */,
 				B045FE7B2782984F006E36F9 /* DISK2.rom in Resources */,
 				B032DE2B277A0C24006DC0F7 /* MainMenu.xib in Resources */,
-				B0DC19E32932D47100E590BC /* CHARSET82.png in Resources */,
 				B07612302789E4BE009E79BE /* About.xib in Resources */,
+				B0F43FDB295E4BAD00E79AD7 /* CHARSET4.BMP in Resources */,
 				B045FE822782984F006E36F9 /* Apple2_JPlus_Video.rom in Resources */,
 				B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */,
 				B045FE782782984F006E36F9 /* TK3000e.rom in Resources */,
@@ -2513,7 +2513,7 @@
 				B045FE832782984F006E36F9 /* Parallel.rom in Resources */,
 				B045FE862782984F006E36F9 /* Apple2e_Enhanced.rom in Resources */,
 				B045FE7D2782984F006E36F9 /* Apple2_JPlus.rom in Resources */,
-				B0DC19DF2932D47100E590BC /* CHARSET8M.png in Resources */,
+				B0F43FD9295E4BAD00E79AD7 /* CHARSET8M.bmp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

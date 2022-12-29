@@ -53,17 +53,10 @@ namespace common2
 
   std::string CommonFrame::getBitmapFilename(const std::string & resource)
   {
-#ifndef MARIANI
     if (resource == "CHARSET40") return "CHARSET4.BMP";
     if (resource == "CHARSET82") return "CHARSET82.bmp";
     if (resource == "CHARSET8M") return "CHARSET8M.bmp";
     if (resource == "CHARSET8C") return "CHARSET8C.bmp";
-#else
-    if (resource == "CHARSET40") return "CHARSET4.png";
-    if (resource == "CHARSET82") return "CHARSET82.png";
-    if (resource == "CHARSET8M") return "CHARSET8M.png";
-    if (resource == "CHARSET8C") return "CHARSET8C.png";
-#endif // MARIANI
 
     return resource;
   }
