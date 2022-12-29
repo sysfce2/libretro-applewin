@@ -474,6 +474,9 @@
 		B0ED3FCF2785973C006E4784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0ED3FCD2785973C006E4784 /* Localizable.strings */; };
 		B0F0138C2785A211002936B4 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0F0138E2785A211002936B4 /* Preferences.storyboard */; };
 		B0F25BCD2789B2DB0080523F /* DiskImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F25BCF2789B2DB0080523F /* DiskImageBrowser.xib */; };
+		B0F43FCF295E48DA00E79AD7 /* CopyProtectionDongles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F43FC6295E48DA00E79AD7 /* CopyProtectionDongles.cpp */; };
+		B0F43FD0295E48DA00E79AD7 /* CopyProtectionDongles.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F43FCE295E48DA00E79AD7 /* CopyProtectionDongles.h */; };
+		B0F43FD2295E49FD00E79AD7 /* joystickapi.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F43FD1295E49FD00E79AD7 /* joystickapi.h */; };
 		B0F84FF927D1B3F30015F642 /* Uthernet2.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FF427D1B3F30015F642 /* Uthernet2.h */; };
 		B0F84FFA27D1B3F30015F642 /* Uthernet1.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F84FF527D1B3F30015F642 /* Uthernet1.h */; };
 		B0F84FFB27D1B3F30015F642 /* Uthernet1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F84FF627D1B3F30015F642 /* Uthernet1.cpp */; };
@@ -1156,6 +1159,9 @@
 		B0F013902785A218002936B4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Preferences.strings"; sourceTree = "<group>"; };
 		B0F25BCE2789B2DB0080523F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DiskImageBrowser.xib; sourceTree = "<group>"; };
 		B0F25BD12789B2E10080523F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/DiskImageBrowser.strings"; sourceTree = "<group>"; };
+		B0F43FC6295E48DA00E79AD7 /* CopyProtectionDongles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopyProtectionDongles.cpp; path = source/CopyProtectionDongles.cpp; sourceTree = "<group>"; };
+		B0F43FCE295E48DA00E79AD7 /* CopyProtectionDongles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopyProtectionDongles.h; path = source/CopyProtectionDongles.h; sourceTree = "<group>"; };
+		B0F43FD1295E49FD00E79AD7 /* joystickapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = joystickapi.h; path = source/linux/libwindows/joystickapi.h; sourceTree = "<group>"; };
 		B0F84FF427D1B3F30015F642 /* Uthernet2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uthernet2.h; path = source/Uthernet2.h; sourceTree = "<group>"; };
 		B0F84FF527D1B3F30015F642 /* Uthernet1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Uthernet1.h; path = source/Uthernet1.h; sourceTree = "<group>"; };
 		B0F84FF627D1B3F30015F642 /* Uthernet1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Uthernet1.cpp; path = source/Uthernet1.cpp; sourceTree = "<group>"; };
@@ -1514,6 +1520,8 @@
 				B09AB61B277A14DB0002A6C3 /* Common.h */,
 				B09AB629277A14DB0002A6C3 /* CommonVICE */,
 				B049E7E6277A36BD00FC14A3 /* Configuration */,
+				B0F43FC6295E48DA00E79AD7 /* CopyProtectionDongles.cpp */,
+				B0F43FCE295E48DA00E79AD7 /* CopyProtectionDongles.h */,
 				B09AB5E7277A14DA0002A6C3 /* Core.cpp */,
 				B09AB652277A14DB0002A6C3 /* Core.h */,
 				B09AB634277A14DB0002A6C3 /* CPU */,
@@ -1754,6 +1762,7 @@
 				B09AB7FB277A21410002A6C3 /* gdi.h */,
 				B09AB7ED277A21400002A6C3 /* guiddef.cpp */,
 				B09AB7E6277A21400002A6C3 /* guiddef.h */,
+				B0F43FD1295E49FD00E79AD7 /* joystickapi.h */,
 				B09AB7EF277A21400002A6C3 /* misc.cpp */,
 				B09AB7EC277A21400002A6C3 /* misc.h */,
 				B09AB7DF277A21400002A6C3 /* mmreg.h */,
@@ -2014,6 +2023,8 @@
 				B0098CCD277E171100F38E0C /* ParallelPrinter.h in Headers */,
 				B0098CBB277E171100F38E0C /* DiskLog.h in Headers */,
 				B089EF3327BB051900BDC415 /* StrFormat.h in Headers */,
+				B0F43FD2295E49FD00E79AD7 /* joystickapi.h in Headers */,
+				B0F43FD0295E48DA00E79AD7 /* CopyProtectionDongles.h in Headers */,
 				B0098CBD277E171100F38E0C /* LanguageCard.h in Headers */,
 				B0098CCB277E171100F38E0C /* 6821.h in Headers */,
 				B0098CB7277E171100F38E0C /* SSI263Phonemes.h in Headers */,
@@ -2591,6 +2602,7 @@
 				B0098D04277E1D4F00F38E0C /* mztools.c in Sources */,
 				B0098C8C277E140100F38E0C /* MouseInterface.cpp in Sources */,
 				B0098C85277E140100F38E0C /* Card.cpp in Sources */,
+				B0F43FCF295E48DA00E79AD7 /* CopyProtectionDongles.cpp in Sources */,
 				B0098C7D277E140100F38E0C /* SaveState.cpp in Sources */,
 				B0098D07277E1D4F00F38E0C /* ioapi.c in Sources */,
 				B0098C81277E140100F38E0C /* Disk.cpp in Sources */,

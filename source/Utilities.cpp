@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Mockingboard.h"
 #include "Interface.h"
 #include "SoundCore.h"
+#include "CopyProtectionDongles.h"
 
 #include "Configuration/IPropertySheet.h"
 #include "Tfe/PCapBackend.h"
@@ -167,6 +168,13 @@ void LoadConfiguration(bool loadImages)
 	else
 		LoadConfigOldJoystick_v1(JN_JOYSTICK1);
 
+
+	DWORD copyProtectionDongleType;
+	if (REGLOAD(TEXT(REGVALUE_COPYPROTECTIONDONGLE_TYPE), &copyProtectionDongleType))
+		SetCopyProtectionDongleType(copyProtectionDongleType);
+	else
+		SetCopyProtectionDongleType(0);					// None
+
 	DWORD dwSoundType;
 	REGLOAD_DEFAULT(TEXT(REGVALUE_SOUND_EMULATION), &dwSoundType, REG_SOUNDTYPE_WAVE);
 	switch (dwSoundType)
@@ -192,6 +200,9 @@ void LoadConfiguration(bool loadImages)
 
 	if(REGLOAD(TEXT(REGVALUE_FS_SHOW_SUBUNIT_STATUS), &dwTmp))
 		GetFrame().SetFullScreenShowSubunitStatus(dwTmp ? true : false);
+
+	if (REGLOAD(TEXT(REGVALUE_SHOW_DISKII_STATUS), &dwTmp))
+		GetFrame().SetWindowedModeShowDiskiiStatus(dwTmp ? true : false);
 
 	if(REGLOAD(TEXT(REGVALUE_THE_FREEZES_F8_ROM), &dwTmp))
 		GetPropertySheet().SetTheFreezesF8Rom(dwTmp);

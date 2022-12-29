@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FrameBase.h"
+#include <memory>
 #include <vector>
 
 class LinuxFrame : public FrameBase
@@ -18,6 +19,7 @@ public:
   void ResizeWindow() override;
 
   void SetFullScreenShowSubunitStatus(bool bShow) override;
+  void SetWindowedModeShowDiskiiStatus(bool bShow) override;
   bool GetBestDisplayResolutionForFullScreen(UINT& bestWidth, UINT& bestHeight, UINT userSpecifiedWidth = 0, UINT userSpecifiedHeight = 0) override;
   int SetViewportScale(int nNewScale, bool bForce = false) override;
   void SetAltEnterToggleFullScreen(bool mode) override;
