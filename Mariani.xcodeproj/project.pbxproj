@@ -138,26 +138,19 @@
 		B00ECB7A279EEB600041E16C /* guiddef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7ED277A21400002A6C3 /* guiddef.cpp */; };
 		B00ECB7B279EEB600041E16C /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B0689D162781984F0029EB7D /* UserDefaults.m */; };
 		B00ECB7C279EEB600041E16C /* sdirectsound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E81E277B512500FC14A3 /* sdirectsound.cpp */; };
-		B00ECB7D279EEB600041E16C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C8277A21180002A6C3 /* Joystick.cpp */; };
 		B00ECB7E279EEB600041E16C /* MarianiFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0689D082780B9B60029EB7D /* MarianiFrame.cpp */; };
 		B00ECB7F279EEB600041E16C /* Util_MemoryTextFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB710277A1BA30002A6C3 /* Util_MemoryTextFile.cpp */; };
 		B00ECB80279EEB600041E16C /* fileregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E850277B6FFE00FC14A3 /* fileregistry.cpp */; };
 		B00ECB81279EEB600041E16C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B032DE2C277A0C24006DC0F7 /* main.m */; };
 		B00ECB82279EEB600041E16C /* programoptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E84B277B6DE300FC14A3 /* programoptions.cpp */; };
-		B00ECB83279EEB600041E16C /* FourPlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CF277A21180002A6C3 /* FourPlay.cpp */; };
-		B00ECB84279EEB600041E16C /* Debugger_Win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C9277A21180002A6C3 /* Debugger_Win32.cpp */; };
-		B00ECB85279EEB600041E16C /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D0277A21180002A6C3 /* Keyboard.cpp */; };
 		B00ECB86279EEB600041E16C /* Debugger_Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB721277A1BA40002A6C3 /* Debugger_Color.cpp */; };
-		B00ECB87279EEB600041E16C /* SNESMAX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D1277A21180002A6C3 /* SNESMAX.cpp */; };
 		B00ECB88279EEB600041E16C /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A6277C4F6D00FC14A3 /* Shaders.metal */; };
-		B00ECB89279EEB600041E16C /* SerialComms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CD277A21180002A6C3 /* SerialComms.cpp */; };
 		B00ECB8A279EEB600041E16C /* DiskImageWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE4827889D44002B841D /* DiskImageWrapper.mm */; };
 		B00ECB8B279EEB600041E16C /* Debugger_Commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB714277A1BA40002A6C3 /* Debugger_Commands.cpp */; };
 		B00ECB8C279EEB600041E16C /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B049E83D277B61AC00FC14A3 /* utils.cpp */; };
 		B00ECB8D279EEB600041E16C /* winnls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7FA277A21410002A6C3 /* winnls.cpp */; };
 		B00ECB8E279EEB600041E16C /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7EF277A21400002A6C3 /* misc.cpp */; };
 		B00ECB90279EEB600041E16C /* DiskImageBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE54278949F2002B841D /* DiskImageBrowserWindowController.mm */; };
-		B00ECB91279EEB600041E16C /* PropertySheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CE277A21180002A6C3 /* PropertySheet.cpp */; };
 		B00ECB92279EEB600041E16C /* Speech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB626277A14DB0002A6C3 /* Speech.cpp */; };
 		B00ECB93279EEB600041E16C /* EmulatorRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = B049E8A1277C44B100FC14A3 /* EmulatorRenderer.m */; };
 		B00ECB94279EEB600041E16C /* Debugger_Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB71D277A1BA40002A6C3 /* Debugger_Assembler.cpp */; };
@@ -189,8 +182,6 @@
 		B00ECBAE279EEB600041E16C /* PreferencesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0927415277D9399003FFB79 /* PreferencesViewController.mm */; };
 		B00ECBAF279EEB600041E16C /* StdAfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB63A277A14DB0002A6C3 /* StdAfx.cpp */; };
 		B00ECBB0279EEB600041E16C /* EmulatorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B049E89D277C43BF00FC14A3 /* EmulatorViewController.mm */; };
-		B00ECBB1279EEB600041E16C /* Registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CC277A21180002A6C3 /* Registry.cpp */; };
-		B00ECBB2279EEB600041E16C /* Debugger_Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CB277A21180002A6C3 /* Debugger_Display.cpp */; };
 		B00ECBB3279EEB600041E16C /* winbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7F0277A21400002A6C3 /* winbase.cpp */; };
 		B00ECBB9279EEB600041E16C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8AA2785F3920071D3C7 /* CoreMedia.framework */; };
 		B00ECBBA279EEB600041E16C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B020F8A82785EA440071D3C7 /* AVFoundation.framework */; };
@@ -427,15 +418,6 @@
 		B09AB73B277A1BA40002A6C3 /* Debugger_Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB71D277A1BA40002A6C3 /* Debugger_Assembler.cpp */; };
 		B09AB73C277A1BA40002A6C3 /* Debugger_Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB71E277A1BA40002A6C3 /* Debugger_Console.cpp */; };
 		B09AB73F277A1BA40002A6C3 /* Debugger_Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB721277A1BA40002A6C3 /* Debugger_Color.cpp */; };
-		B09AB7D2277A21180002A6C3 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C8277A21180002A6C3 /* Joystick.cpp */; };
-		B09AB7D3277A21180002A6C3 /* Debugger_Win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7C9277A21180002A6C3 /* Debugger_Win32.cpp */; };
-		B09AB7D5277A21180002A6C3 /* Debugger_Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CB277A21180002A6C3 /* Debugger_Display.cpp */; };
-		B09AB7D6277A21180002A6C3 /* Registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CC277A21180002A6C3 /* Registry.cpp */; };
-		B09AB7D7277A21180002A6C3 /* SerialComms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CD277A21180002A6C3 /* SerialComms.cpp */; };
-		B09AB7D8277A21180002A6C3 /* PropertySheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CE277A21180002A6C3 /* PropertySheet.cpp */; };
-		B09AB7D9277A21180002A6C3 /* FourPlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7CF277A21180002A6C3 /* FourPlay.cpp */; };
-		B09AB7DA277A21180002A6C3 /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D0277A21180002A6C3 /* Keyboard.cpp */; };
-		B09AB7DB277A21180002A6C3 /* SNESMAX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7D1277A21180002A6C3 /* SNESMAX.cpp */; };
 		B09AB801277A21410002A6C3 /* dmusicc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E1277A21400002A6C3 /* dmusicc.cpp */; };
 		B09AB803277A21410002A6C3 /* winuser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E3277A21400002A6C3 /* winuser.cpp */; };
 		B09AB804277A21410002A6C3 /* timeapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09AB7E4277A21400002A6C3 /* timeapi.cpp */; };
@@ -2624,27 +2606,20 @@
 				B00ECB7A279EEB600041E16C /* guiddef.cpp in Sources */,
 				B00ECB7B279EEB600041E16C /* UserDefaults.m in Sources */,
 				B00ECB7C279EEB600041E16C /* sdirectsound.cpp in Sources */,
-				B00ECB7D279EEB600041E16C /* Joystick.cpp in Sources */,
 				B00ECB7E279EEB600041E16C /* MarianiFrame.cpp in Sources */,
 				B00ECB7F279EEB600041E16C /* Util_MemoryTextFile.cpp in Sources */,
 				B00ECB80279EEB600041E16C /* fileregistry.cpp in Sources */,
 				B00ECB81279EEB600041E16C /* main.m in Sources */,
 				B00ECB82279EEB600041E16C /* programoptions.cpp in Sources */,
-				B00ECB83279EEB600041E16C /* FourPlay.cpp in Sources */,
-				B00ECB84279EEB600041E16C /* Debugger_Win32.cpp in Sources */,
-				B00ECB85279EEB600041E16C /* Keyboard.cpp in Sources */,
 				B043659827B8769E00329469 /* NSMutableString+RTF.m in Sources */,
 				B00ECB86279EEB600041E16C /* Debugger_Color.cpp in Sources */,
-				B00ECB87279EEB600041E16C /* SNESMAX.cpp in Sources */,
 				B00ECB88279EEB600041E16C /* Shaders.metal in Sources */,
-				B00ECB89279EEB600041E16C /* SerialComms.cpp in Sources */,
 				B00ECB8A279EEB600041E16C /* DiskImageWrapper.mm in Sources */,
 				B00ECB8B279EEB600041E16C /* Debugger_Commands.cpp in Sources */,
 				B00ECB8C279EEB600041E16C /* utils.cpp in Sources */,
 				B00ECB8D279EEB600041E16C /* winnls.cpp in Sources */,
 				B00ECB8E279EEB600041E16C /* misc.cpp in Sources */,
 				B00ECB90279EEB600041E16C /* DiskImageBrowserWindowController.mm in Sources */,
-				B00ECB91279EEB600041E16C /* PropertySheet.cpp in Sources */,
 				B00ECB92279EEB600041E16C /* Speech.cpp in Sources */,
 				B00ECB93279EEB600041E16C /* EmulatorRenderer.m in Sources */,
 				B00ECB94279EEB600041E16C /* Debugger_Assembler.cpp in Sources */,
@@ -2678,8 +2653,6 @@
 				B090CF2427B5A2A900C6C23D /* MarianiJoystick.mm in Sources */,
 				B00ECBAF279EEB600041E16C /* StdAfx.cpp in Sources */,
 				B00ECBB0279EEB600041E16C /* EmulatorViewController.mm in Sources */,
-				B00ECBB1279EEB600041E16C /* Registry.cpp in Sources */,
-				B00ECBB2279EEB600041E16C /* Debugger_Display.cpp in Sources */,
 				B00ECBB3279EEB600041E16C /* winbase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2691,27 +2664,20 @@
 				B09AB80D277A21410002A6C3 /* guiddef.cpp in Sources */,
 				B0689D182781984F0029EB7D /* UserDefaults.m in Sources */,
 				B049E820277B512500FC14A3 /* sdirectsound.cpp in Sources */,
-				B09AB7D2277A21180002A6C3 /* Joystick.cpp in Sources */,
 				B0689D0A2780B9B60029EB7D /* MarianiFrame.cpp in Sources */,
 				B09AB72E277A1BA40002A6C3 /* Util_MemoryTextFile.cpp in Sources */,
 				B049E852277B6FFE00FC14A3 /* fileregistry.cpp in Sources */,
 				B032DE2D277A0C24006DC0F7 /* main.m in Sources */,
 				B0689D0D2780C85F0029EB7D /* programoptions.cpp in Sources */,
-				B09AB7D9277A21180002A6C3 /* FourPlay.cpp in Sources */,
-				B09AB7D3277A21180002A6C3 /* Debugger_Win32.cpp in Sources */,
-				B09AB7DA277A21180002A6C3 /* Keyboard.cpp in Sources */,
 				B043659727B8769E00329469 /* NSMutableString+RTF.m in Sources */,
 				B09AB73F277A1BA40002A6C3 /* Debugger_Color.cpp in Sources */,
-				B09AB7DB277A21180002A6C3 /* SNESMAX.cpp in Sources */,
 				B049E8A7277C4F6D00FC14A3 /* Shaders.metal in Sources */,
-				B09AB7D7277A21180002A6C3 /* SerialComms.cpp in Sources */,
 				B08CFE4A27889D44002B841D /* DiskImageWrapper.mm in Sources */,
 				B09AB732277A1BA40002A6C3 /* Debugger_Commands.cpp in Sources */,
 				B049E83F277B61AC00FC14A3 /* utils.cpp in Sources */,
 				B09AB81A277A21410002A6C3 /* winnls.cpp in Sources */,
 				B09AB80F277A21410002A6C3 /* misc.cpp in Sources */,
 				B08CFE56278949F2002B841D /* DiskImageBrowserWindowController.mm in Sources */,
-				B09AB7D8277A21180002A6C3 /* PropertySheet.cpp in Sources */,
 				B09AB674277A14DB0002A6C3 /* Speech.cpp in Sources */,
 				B049E8A3277C44B100FC14A3 /* EmulatorRenderer.m in Sources */,
 				B09AB73B277A1BA40002A6C3 /* Debugger_Assembler.cpp in Sources */,
@@ -2744,8 +2710,6 @@
 				B090CF2227B5A2A900C6C23D /* MarianiJoystick.mm in Sources */,
 				B09AB680277A14DB0002A6C3 /* StdAfx.cpp in Sources */,
 				B049E89F277C43BF00FC14A3 /* EmulatorViewController.mm in Sources */,
-				B09AB7D6277A21180002A6C3 /* Registry.cpp in Sources */,
-				B09AB7D5277A21180002A6C3 /* Debugger_Display.cpp in Sources */,
 				B09AB810277A21410002A6C3 /* winbase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
