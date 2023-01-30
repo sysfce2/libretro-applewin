@@ -3538,8 +3538,6 @@
 					"$(inherited)",
 					/usr/local/lib,
 					/usr/local/lib/slirp,
-					/usr/local/Cellar/glib/2.74.5/lib,
-					/usr/local/Cellar/gettext/0.21.1/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3557,8 +3555,6 @@
 					"$(inherited)",
 					/usr/local/lib,
 					/usr/local/lib/slirp,
-					/usr/local/Cellar/glib/2.74.5/lib,
-					/usr/local/Cellar/gettext/0.21.1/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
