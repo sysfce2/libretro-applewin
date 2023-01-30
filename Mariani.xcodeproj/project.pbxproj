@@ -2974,6 +2974,7 @@
 					libyaml/win32,
 					/opt/homebrew/opt/boost/include,
 					/opt/homebrew/opt/libslirp/include/slirp,
+					/usr/local/include/slirp,
 					source/frontends/mariani,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2999,6 +3000,7 @@
 					libyaml/win32,
 					/opt/homebrew/opt/boost/include,
 					/opt/homebrew/opt/libslirp/include/slirp,
+					/usr/local/include/slirp,
 					source/frontends/mariani,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3219,9 +3221,7 @@
 				HEADER_SEARCH_PATHS = (
 					source,
 					/opt/homebrew/include,
-					/opt/homebrew/include/SDL2,
 					/usr/local/include,
-					/usr/local/include/SDL2,
 				);
 				INFOPLIST_FILE = "Mariani-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
@@ -3260,9 +3260,7 @@
 				HEADER_SEARCH_PATHS = (
 					source,
 					/opt/homebrew/include,
-					/opt/homebrew/include/SDL2,
 					/usr/local/include,
-					/usr/local/include/SDL2,
 				);
 				INFOPLIST_FILE = "Mariani-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
