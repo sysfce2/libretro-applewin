@@ -3061,8 +3061,8 @@
 					source/linux/libwindows,
 					libyaml/include,
 					libyaml/win32,
-					/opt/homebrew/opt/boost/include,
-					/opt/homebrew/opt/libslirp/include/slirp,
+					/opt/homebrew/include/boost,
+					/opt/homebrew/include/slirp,
 					/usr/local/include/slirp,
 					source/frontends/mariani,
 				);
@@ -3087,8 +3087,8 @@
 					source/linux/libwindows,
 					libyaml/include,
 					libyaml/win32,
-					/opt/homebrew/opt/boost/include,
-					/opt/homebrew/opt/libslirp/include/slirp,
+					/opt/homebrew/include/boost,
+					/opt/homebrew/include/slirp,
 					/usr/local/include/slirp,
 					source/frontends/mariani,
 				);
@@ -3324,7 +3324,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
 					/usr/local/lib,
-					/opt/homebrew/Cellar/libslirp/4.6.1/lib,
 				);
 				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
@@ -3363,7 +3362,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
 					/usr/local/lib,
-					/opt/homebrew/Cellar/libslirp/4.6.1/lib,
 				);
 				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applewin.marianipro;
