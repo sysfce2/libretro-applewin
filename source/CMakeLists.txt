@@ -51,6 +51,7 @@ set(SOURCE_FILES
   Debugger/Debugger_Commands.cpp
   Debugger/Util_MemoryTextFile.cpp
 
+  CopyProtectionDongles.cpp
   Uthernet1.cpp
   Uthernet2.cpp
   StrFormat.cpp
@@ -61,6 +62,7 @@ set(SOURCE_FILES
   SoundCore.cpp
   AY8910.cpp
   Mockingboard.cpp
+  MockingboardCardManager.cpp
   Pravets.cpp
   YamlHelper.cpp
   Log.cpp
@@ -130,6 +132,7 @@ set(HEADER_FILES
   Tfe/IPRaw.h
   Tfe/DNS.h
 
+  CopyProtectionDongles.h
   Uthernet1.h
   Uthernet2.h
   W5100.h
@@ -141,6 +144,7 @@ set(HEADER_FILES
   SoundCore.h
   AY8910.h
   Mockingboard.h
+  MockingboardCardManager.h
   Pravets.h
   Tape.h
   YamlHelper.h

@@ -51,7 +51,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define ALLOW_INPUT_LOWERCASE 1
 
 	// See /docs/Debugger_Changelog.txt for full details
-	const int DEBUGGER_VERSION = MAKE_VERSION(2,9,1,13);
+	const int DEBUGGER_VERSION = MAKE_VERSION(2,9,1,14);
 
 
 // Public _________________________________________________________________________________________
@@ -353,7 +353,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	static bool      g_bIgnoreNextKey = false;
 
-	static WORD g_LBR = 0x0000;	// Last Branch Record
+	const UINT LBR_UNDEFINED = -1;
+	static UINT g_LBR = LBR_UNDEFINED;	// Last Branch Record
 
 	static bool g_bScriptReadOk = false;
 
@@ -1361,7 +1362,8 @@ int CheckBreakpointsVideo()
 		if (pBP->eSource != BP_SRC_VIDEO_SCANNER)
 			continue;
 
-		if (_CheckBreakpointValue(pBP, g_nVideoClockVert))
+		uint16_t vert = NTSC_GetVideoVertForDebugger();	// update video scanner's vert/horz position - needed for when in fullspeed (GH#1164)
+		if (_CheckBreakpointValue(pBP, vert))
 		{
 			bBreakpointHit = BP_HIT_VIDEO_POS;
 			pBP->bEnabled = false;	// Disable, otherwise it'll trigger many times on this scan-line
@@ -2425,7 +2427,10 @@ Update_t CmdOut (int nArgs)
 //===========================================================================
 Update_t CmdLBR(int nArgs)
 {
-	ConsolePrintFormat(" LBR = $%04X", g_LBR);
+	if (g_LBR == LBR_UNDEFINED)
+		ConsolePrintFormat(" LBR not set yet. Hint: Run from the debugger via 'g' command.");
+	else
+		ConsolePrintFormat(" LBR = $%04X", g_LBR);
 	return ConsoleUpdate();
 }
 
@@ -3486,8 +3491,9 @@ Update_t CmdFlag (int nArgs)
 // Disk ___________________________________________________________________________________________
 
 // Usage:
+//     DISK SLOT [#]                                 // Show [or set] the current slot of the Disk II I/F card (for all other cmds to act on)
+//     DISK INFO                                     // Info for current drive
 //     DISK # EJECT                                  // Unmount disk
-//     DISK INFO
 //     DISK # PROTECT #                              // Write-protect disk on/off
 //     DISK # "<filename>"                           // Mount filename as floppy disk
 // TODO:
@@ -3495,20 +3501,40 @@ Update_t CmdFlag (int nArgs)
 //     DISK # READ  <Track> <Sector> Addr:Addr           // Read Track/Sector(s)
 //     DISK # WRITE <Track> <Sector> Addr:Addr           // Write Track/Sector(s)
 // Examples:
-//     DISK 2 INFO
-Update_t CmdDisk ( int nArgs)
+//     DISK INFO
+Update_t CmdDisk (int nArgs)
 {
+	static UINT currentSlot = SLOT6;
+
 	if (! nArgs)
 		return HelpLastCommand();
 
-	if (GetCardMgr().QuerySlot(SLOT6) != CT_Disk2)
-		return ConsoleDisplayError("No DiskII card in slot-6");
-
-	Disk2InterfaceCard& diskCard = dynamic_cast<Disk2InterfaceCard&>(GetCardMgr().GetRef(SLOT6));
-
-	// check for info command
+	// check for info or slot command
 	int iParam = 0;
-	FindParam( g_aArgs[ 1 ].sArg, MATCH_EXACT, iParam, _PARAM_DISK_BEGIN, _PARAM_DISK_END );
+	FindParam(g_aArgs[1].sArg, MATCH_EXACT, iParam, _PARAM_DISK_BEGIN, _PARAM_DISK_END);
+
+	if (iParam == PARAM_DISK_SET_SLOT)
+	{
+		if (nArgs > 2)
+			return HelpLastCommand();
+
+		if (nArgs > 1)
+		{
+			UINT slot = g_aArgs[2].nValue;
+			if (slot < SLOT1 || slot > SLOT7)
+				return HelpLastCommand();
+
+			currentSlot = slot;
+		}
+
+		ConsoleBufferPushFormat("Current Disk II slot = %d", currentSlot);
+		return ConsoleUpdate();
+	}
+
+	if (GetCardMgr().QuerySlot(currentSlot) != CT_Disk2)
+		return ConsoleDisplayErrorFormat("No Disk II card in slot-%d", currentSlot);
+
+	Disk2InterfaceCard& diskCard = dynamic_cast<Disk2InterfaceCard&>(GetCardMgr().GetRef(currentSlot));
 
 	if (iParam == PARAM_DISK_INFO)
 	{
@@ -6725,27 +6751,26 @@ Update_t _ViewOutput( ViewVideoPage_t iPage, int bVideoModeFlags )
 
 
 //===========================================================================
-Update_t CmdWatch (int nArgs)
-{
-	return CmdWatchAdd( nArgs );
-}
-
-
-//===========================================================================
 Update_t CmdWatchAdd (int nArgs)
 {
 	// WA [address]
 	// WA # address
-	if (! nArgs)
+	if (!nArgs)
 	{
-		return CmdWatchList( 0 );
+		return CmdWatchList(0);
 	}
 
 	int iArg = 1;
 	int iWatch = NO_6502_TARGET;
 	if (nArgs > 1)
 	{
-		iWatch = g_aArgs[ 1 ].nValue;
+		iWatch = g_aArgs[1].nValue;
+		if (iWatch >= MAX_WATCHES)
+		{
+			ConsoleDisplayPushFormat("Watch index too big.  (Max: %d)", MAX_WATCHES - 1);
+			return ConsoleUpdate();
+		}
+
 		iArg++;
 	}
 
@@ -6768,7 +6793,7 @@ Update_t CmdWatchAdd (int nArgs)
 
 		// Make sure address isn't an IO address
 		if ((nAddress >= _6502_IO_BEGIN) && (nAddress <= _6502_IO_END))
-			return ConsoleDisplayError("You may not watch an I/O location.");
+			return ConsoleDisplayError("You cannot watch an I/O location.");
 
 		if (iWatch == NO_6502_TARGET)
 		{
@@ -6781,7 +6806,7 @@ Update_t CmdWatchAdd (int nArgs)
 
 		if ((iWatch >= MAX_WATCHES) && !bAdded)
 		{
-			ConsoleDisplayPushFormat( "All watches are currently in use.  (Max: %d)", MAX_WATCHES );
+			ConsoleDisplayPushFormat("All watches are currently in use.  (Max: %d)", MAX_WATCHES);
 			return ConsoleUpdate();
 		}
 
@@ -7260,21 +7285,13 @@ Update_t CmdWindowLast (int nArgs)
 
 
 //===========================================================================
-Update_t CmdZeroPage (int nArgs)
-{
-	// ZP [address]
-	// ZP # address
-	return CmdZeroPageAdd( nArgs );
-}
-
-//===========================================================================
-Update_t CmdZeroPageAdd     (int nArgs)
+Update_t CmdZeroPageAdd (int nArgs)
 {
 	// ZP [address]
 	// ZP # address [address...]
-	if (! nArgs)
+	if (!nArgs)
 	{
-		return CmdZeroPageList( 0 );
+		return CmdZeroPageList(0);
 	}
 
 	int iArg = 1;
@@ -7282,7 +7299,13 @@ Update_t CmdZeroPageAdd     (int nArgs)
 
 	if (nArgs > 1)
 	{
-		iZP = g_aArgs[ 1 ].nValue;
+		iZP = g_aArgs[1].nValue;
+		if (iZP >= MAX_ZEROPAGE_POINTERS)
+		{
+			ConsoleDisplayPushFormat("Zero page pointer index too big.  (Max: %d)", MAX_ZEROPAGE_POINTERS - 1);
+			return ConsoleUpdate();
+		}
+
 		iArg++;
 	}
 	
@@ -7290,6 +7313,13 @@ Update_t CmdZeroPageAdd     (int nArgs)
 	for (; iArg <= nArgs; iArg++ )
 	{
 		WORD nAddress = g_aArgs[iArg].nValue;
+
+		// Make sure address is a ZP address
+		if (nAddress > _6502_ZEROPAGE_END)
+		{
+			ConsoleDisplayPushFormat("Zero page pointer must be in the range: [00..%02X].", _6502_ZEROPAGE_END);
+			return ConsoleUpdate();
+		}
 
 		if (iZP == NO_6502_TARGET)
 		{
@@ -7302,7 +7332,7 @@ Update_t CmdZeroPageAdd     (int nArgs)
 
 		if ((iZP >= MAX_ZEROPAGE_POINTERS) && !bAdded)
 		{
-			ConsoleDisplayPushFormat( "All zero page pointers are currently in use.  (Max: %d)", MAX_ZEROPAGE_POINTERS );
+			ConsoleDisplayPushFormat("All zero page pointers are currently in use.  (Max: %d)", MAX_ZEROPAGE_POINTERS);
 			return ConsoleUpdate();
 		}
 		
@@ -7335,9 +7365,9 @@ Update_t _ZeroPage_Error()
 }
 
 //===========================================================================
-Update_t CmdZeroPageClear   (int nArgs)
+Update_t CmdZeroPageClear (int nArgs)
 {
-	if (!g_nBreakpoints)
+	if (!g_nZeroPagePointers)
 		return _ZeroPage_Error();
 
 	// CHECK FOR ERRORS
@@ -7346,7 +7376,7 @@ Update_t CmdZeroPageClear   (int nArgs)
 
 	_BWZ_ClearViaArgs( nArgs, g_aZeroPagePointers, MAX_ZEROPAGE_POINTERS, g_nZeroPagePointers );
 
-	if (! g_nZeroPagePointers)
+	if (!g_nZeroPagePointers)
 	{
 		UpdateDisplay( UPDATE_BACKGROUND );
 		return UPDATE_CONSOLE_DISPLAY;
@@ -7369,7 +7399,7 @@ Update_t CmdZeroPageDisable (int nArgs)
 }
 
 //===========================================================================
-Update_t CmdZeroPageEnable  (int nArgs)
+Update_t CmdZeroPageEnable (int nArgs)
 {
 	if (! g_nZeroPagePointers)
 		return _ZeroPage_Error();
@@ -7383,7 +7413,7 @@ Update_t CmdZeroPageEnable  (int nArgs)
 }
 
 //===========================================================================
-Update_t CmdZeroPageList    (int nArgs)
+Update_t CmdZeroPageList (int nArgs)
 {
 	if (! g_nZeroPagePointers)
 	{
@@ -7877,14 +7907,17 @@ void OutputTraceLine ()
 
 	if (g_bTraceFileWithVideoScanner)
 	{
+		uint16_t vert, horz;
+		NTSC_GetVideoVertHorzForDebugger(vert, horz);		// update video scanner's vert/horz position - needed for when in fullspeed (GH#1164)
+
 		uint32_t data;
 		int dataSize;
 		uint16_t addr = NTSC_GetScannerAddressAndData(data, dataSize);
 
 		fprintf( g_hTraceFile,
 			"%04X %04X %04X   %02X %02X %02X %02X %04X %s  %s\n",
-			g_nVideoClockVert,
-			g_nVideoClockHorz,
+			vert,
+			horz,
 			addr,
 			(uint8_t)data,	// truncated
 			(unsigned)regs.a,
@@ -8275,6 +8308,8 @@ void DebugBegin ()
 	DebugVideoMode::Instance().Reset();
 	UpdateDisplay( UPDATE_ALL );
 
+	g_LBR = LBR_UNDEFINED;	// reset LBR, so LBR isn't stale from a previous debugging session
+
 #if DEBUG_APPLE_FONT
 	int iFG = 7;
 	int iBG = 4;
@@ -8496,9 +8531,10 @@ void DebugContinueStepping(const bool bCallerWillUpdateDisplay/*=false*/)
 			else if (g_bDebugBreakpointHit & BP_HIT_PC_READ_FLOATING_BUS_OR_IO_MEM)
 				stopReason = "PC reads from floating bus or I/O memory";
 			else if (g_bDebugBreakpointHit & BP_HIT_INTERRUPT)
-				stopReason = StrFormat("Interrupt occurred at $%04X", g_LBR);
+				stopReason = (g_LBR == LBR_UNDEFINED)	? StrFormat("Interrupt occurred (LBR unknown)")
+														: StrFormat("Interrupt occurred at $%04X", g_LBR);
 			else if (g_bDebugBreakpointHit & BP_HIT_VIDEO_POS)
-				stopReason = StrFormat("Video scanner position matches at vpos=$%04X", g_nVideoClockVert);
+				stopReason = StrFormat("Video scanner position matches at vpos=$%04X", NTSC_GetVideoVertForDebugger());
 			else if (g_bDebugBreakpointHit & BP_DMA_TO_IO_MEM)
 				stopReason = StrFormat("HDD DMA to I/O memory or ROM at $%04X", g_DebugBreakOnDMAIO.memoryAddr);
 			else if (g_bDebugBreakpointHit & BP_DMA_FROM_IO_MEM)
@@ -8788,7 +8824,7 @@ void DebugInitialize ()
 void DebugReset(void)
 {
 	g_videoScannerDisplayInfo.Reset();
-	g_LBR = 0x0000;
+	g_LBR = LBR_UNDEFINED;
 }
 
 // Add character to the input line

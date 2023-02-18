@@ -19,12 +19,8 @@
 #include "frontends/sdl/renderer/sdlrendererframe.h"
 #include "frontends/sdl/imgui/sdlimguiframe.h"
 
-#include "CardManager.h"
 #include "Core.h"
-#include "Log.h"
-#include "CPU.h"
 #include "NTSC.h"
-#include "SaveState.h"
 #include "Interface.h"
 
 // comment out to test / debug init / shutdown only
@@ -171,10 +167,6 @@ void run_sdl(int argc, const char * argv [])
     std::cerr << "Events:  " << eventTimer << std::endl;
     std::cerr << "CPU:     " << cpuTimer << std::endl;
 
-    const double timeInSeconds = global.getTimeInSeconds();
-    const double actualClock = g_nCumulativeCycles / timeInSeconds;
-    std::cerr << "Expected clock: " << g_fCurrentCLK6502 << " Hz, " << g_nCumulativeCycles / g_fCurrentCLK6502 << " s" << std::endl;
-    std::cerr << "Actual clock:   " << actualClock << " Hz, " << timeInSeconds << " s" << std::endl;
     sa2::stopAudio();
   }
   frame->End();

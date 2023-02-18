@@ -33,20 +33,17 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "CPU.h"
 #include "Joystick.h"
 #include "Log.h"
-#include "Mockingboard.h"
-#include "MouseInterface.h"
 #include "ParallelPrinter.h"
 #include "Registry.h"
 #include "Riff.h"
 #include "SaveState.h"
-#include "SerialComms.h"
 #include "Speaker.h"
 #include "Memory.h"
 #include "Pravets.h"
 #include "Keyboard.h"
-#include "Mockingboard.h"
 #include "Interface.h"
 #include "SoundCore.h"
+#include "CopyProtectionDongles.h"
 
 #include "Configuration/IPropertySheet.h"
 #include "Tfe/PCapBackend.h"
@@ -167,6 +164,13 @@ void LoadConfiguration(bool loadImages)
 	else
 		LoadConfigOldJoystick_v1(JN_JOYSTICK1);
 
+	DWORD copyProtectionDongleType;
+	std::string regSection = RegGetConfigSlotSection(GAME_IO_CONNECTOR);
+	if (RegLoadValue(regSection.c_str(), REGVALUE_GAME_IO_TYPE, TRUE, &copyProtectionDongleType))
+		SetCopyProtectionDongleType((DONGLETYPE)copyProtectionDongleType);
+	else
+		SetCopyProtectionDongleType(DT_EMPTY);
+
 	DWORD dwSoundType;
 	REGLOAD_DEFAULT(TEXT(REGVALUE_SOUND_EMULATION), &dwSoundType, REG_SOUNDTYPE_WAVE);
 	switch (dwSoundType)
@@ -193,6 +197,9 @@ void LoadConfiguration(bool loadImages)
 	if(REGLOAD(TEXT(REGVALUE_FS_SHOW_SUBUNIT_STATUS), &dwTmp))
 		GetFrame().SetFullScreenShowSubunitStatus(dwTmp ? true : false);
 
+	if (REGLOAD(TEXT(REGVALUE_SHOW_DISKII_STATUS), &dwTmp))
+		GetFrame().SetWindowedModeShowDiskiiStatus(dwTmp ? true : false);
+
 	if(REGLOAD(TEXT(REGVALUE_THE_FREEZES_F8_ROM), &dwTmp))
 		GetPropertySheet().SetTheFreezesF8Rom(dwTmp);
 
@@ -202,7 +209,7 @@ void LoadConfiguration(bool loadImages)
 
 	dwTmp = 70;
 	REGLOAD(TEXT(REGVALUE_MB_VOLUME), &dwTmp);
-	MB_SetVolume(dwTmp, GetPropertySheet().GetVolumeMax());
+	GetCardMgr().GetMockingboardCardMgr().SetVolume(dwTmp, GetPropertySheet().GetVolumeMax());
 
 	if(REGLOAD(TEXT(REGVALUE_SAVE_STATE_ON_EXIT), &dwTmp))
 		g_bSaveStateOnExit = dwTmp ? true : false;
@@ -519,7 +526,6 @@ void ResetMachineState()
 	GetVideo().VideoResetState();
 	KeybReset();
 	JoyReset();
-	MB_Reset(true);
 	SpkrReset();
 	SetActiveCpu(GetMainCpu());
 #ifdef USE_SPEECH_API
@@ -559,7 +565,6 @@ void CtrlReset()
 	GetPravets().Reset();
 	GetCardMgr().Reset(false);
 	KeybReset();
-	MB_Reset(false);
 #ifdef USE_SPEECH_API
 	g_Speech.Reset();
 #endif

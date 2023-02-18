@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 
 #include "linux/context.h"
-#include "linux/linuxframe.h"
 #include "linux/registry.h"
 #include "linux/paddle.h"
 #include "linux/duplicates/PropertySheet.h"
@@ -18,10 +17,6 @@
 #include "SaveState.h"
 #include "Memory.h"
 #include "Speaker.h"
-#include "MouseInterface.h"
-#include "Mockingboard.h"
-#include "Uthernet1.h"
-#include "Uthernet2.h"
 
 
 namespace
@@ -117,7 +112,6 @@ void InitialiseEmulator()
   GetFrame().FrameRefreshStatus(DRAW_LEDS | DRAW_BUTTON_DRIVES | DRAW_DISK_STATUS);
 
   DSInit();
-  MB_Initialize();
   SpkrInitialize();
 
   MemInitialize();
@@ -138,7 +132,6 @@ void DestroyEmulator()
   Snapshot_Shutdown();
   MemDestroy();
   SpkrDestroy();
-  MB_Destroy();
   DSUninit();
   CpuDestroy();
   DebugDestroy();

@@ -15,17 +15,16 @@
 #include "Disk.h"
 #include "Harddisk.h"
 #include "Speaker.h"
-#include "Mockingboard.h"
 #include "Registry.h"
 #include "Utilities.h"
 #include "Memory.h"
 #include "ParallelPrinter.h"
 #include "SaveState.h"
 #include "Uthernet2.h"
+#include "CopyProtectionDongles.h"
 
 #include "Debugger/Debugger_Types.h"
 
-#include "Tfe/tfesupp.h"
 #include "Tfe/PCapBackend.h"
 
 namespace
@@ -403,6 +402,12 @@ namespace sa2
             Uthernet2::SetRegistryVirtualDNS(uthernetSlot, virtualDNS);
           }
 
+          bool speedStar = GetCopyProtectionDongleType() != 0;
+          if (ImGui::Checkbox("Speed Star Copy Protection", &speedStar))
+          {
+            RegSetConfigGameIOConnectorNewDongleType(GAME_IO_CONNECTOR, GetCopyProtectionDongleType());
+          }
+
           ImGui::EndTabItem();
         }
 
@@ -592,11 +597,11 @@ namespace sa2
             REGSAVE(TEXT(REGVALUE_SPKR_VOLUME), SpkrGetVolume());
           }
 
-          myMockingboardVolume = volumeMax - MB_GetVolume();
+          myMockingboardVolume = volumeMax - cardManager.GetMockingboardCardMgr().GetVolume();
           if (ImGui::SliderInt("Mockingboard volume", &myMockingboardVolume, 0, volumeMax))
           {
-            MB_SetVolume(volumeMax - myMockingboardVolume, volumeMax);
-            REGSAVE(TEXT(REGVALUE_MB_VOLUME), MB_GetVolume());
+            cardManager.GetMockingboardCardMgr().SetVolume(volumeMax - myMockingboardVolume, volumeMax);
+            REGSAVE(TEXT(REGVALUE_MB_VOLUME), cardManager.GetMockingboardCardMgr().GetVolume());
           }
 
           ImGui::Separator();
