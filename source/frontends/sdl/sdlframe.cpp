@@ -609,7 +609,7 @@ namespace sa2
 
   void SDLFrame::ExecuteInDebugMode(const size_t msNextFrame)
   {
-    binarymonitor::clearAllBreakpointHits();
+    ClearTempBreakpoints();
 
     // In AppleWin this is called without a timer for just one iteration
     // because we run a "frame" at a time, we need a bit of ingenuity
@@ -690,7 +690,7 @@ namespace sa2
 
   void SDLFrame::SingleStep()
   {
-    binarymonitor::clearAllBreakpointHits();
+    ClearTempBreakpoints();
     SetFullSpeed(CanDoFullSpeed());
     Execute(0);
   }

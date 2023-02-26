@@ -73,7 +73,7 @@ namespace binarymonitor
     bp.eSource = source;
     bp.bSet = true;
     bp.bHit = false;
-    bp.bHitCount = 0;
+    bp.nHitCount = 0;
     bp.eOperator = BP_OP_EQUAL;
     bp.bEnabled = checkpointSet.enabled && checkpointSet.stop;
     bp.bStop = checkpointSet.stop;
@@ -111,24 +111,8 @@ namespace binarymonitor
     bp.bSet = false;
     bp.bHit = false;
     bp.bTemp = false;
-    bp.bHitCount = 0;
+    bp.nHitCount = 0;
     bp.nLength = 0;
-  }
-
-  void clearAllBreakpointHits()
-  {
-    for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
-    {
-      Breakpoint_t &pBP = g_aBreakpoints[iBreakpoint];
-      if (pBP.bSet && pBP.bHit && pBP.bTemp)
-      {
-        deleteBreakpoint(pBP);
-      }
-      else
-      {
-        pBP.bHit = false;
-      }
-    }
   }
 
 }

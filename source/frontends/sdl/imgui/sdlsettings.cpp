@@ -1156,7 +1156,7 @@ namespace sa2
           ImGui::Checkbox("##Hit", &bp.bHit);
           ImGui::EndDisabled();
           ImGui::TableNextColumn();
-          ImGui::Text("%2d", bp.bHitCount);
+          ImGui::Text("%2d", bp.nHitCount);
           ImGui::TableNextColumn();
           if (ImGui::Button("Delete"))
           {

@@ -1122,7 +1122,7 @@ bool _BreakpointValid( Breakpoint_t *pBP ) //, BreakpointSource_t iSrc )
 }
 
 // Stepping
-static void ClearTempBreakpoints()
+void ClearTempBreakpoints()
 {
 	for (int iBreakpoint = 0; iBreakpoint < MAX_BREAKPOINTS; iBreakpoint++)
 	{

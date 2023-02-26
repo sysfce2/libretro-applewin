@@ -264,7 +264,7 @@ namespace binarymonitor
     buffer.writeInt8(bp.bEnabled);                      // enabled
     buffer.writeInt8(operation);                        // operation
     buffer.writeInt8(bp.bTemp);                         // temporary
-    buffer.writeInt32(bp.bHitCount);                    // hit count
+    buffer.writeInt32(bp.nHitCount);                    // hit count
     buffer.writeInt32(0);                               // ignore count
     buffer.writeInt8(0);                                // condition?
     buffer.writeInt8(0);                                // memspace
