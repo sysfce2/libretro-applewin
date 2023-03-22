@@ -104,7 +104,7 @@ namespace binarymonitor
         {1, {"X",  sizeof(regs.x),  &regs.x}},
         {2, {"Y",  sizeof(regs.y),  &regs.y}},
         {3, {"PC", sizeof(regs.pc), &regs.pc}},
-        {4, {"SP", sizeof(BYTE), &regs.sp}}, // this qorks on Little Endian CPUs.
+        {4, {"SP", sizeof(BYTE), &regs.sp}}, // this works on Little Endian CPUs.
         {5, {"PS", sizeof(regs.ps), &regs.ps}},
       })
     , myBankNames(getBankNames())
@@ -260,7 +260,7 @@ namespace binarymonitor
     buffer.writeInt8(bp.bHit);                          // hit
     buffer.writeInt16(bp.nAddress);                     // start
     buffer.writeInt16(bp.nAddress + bp.nLength - 1);    // end
-    buffer.writeInt8(true);                             // stop?
+    buffer.writeInt8(bp.bStop);                         // stop?
     buffer.writeInt8(bp.bEnabled);                      // enabled
     buffer.writeInt8(operation);                        // operation
     buffer.writeInt8(bp.bTemp);                         // temporary
@@ -576,7 +576,7 @@ namespace binarymonitor
     }
 
     Breakpoint_t & bp = g_aBreakpoints[checkpointToggle.id];
-    bp.bEnabled = bp.bStop && checkpointToggle.enabled;
+    bp.bEnabled = checkpointToggle.enabled;
 
     // LogOutput("Toggle %d\n", int(checkpointToggle.id));
     // logBreakpoint(bp);

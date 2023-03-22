@@ -50,6 +50,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //	#define DEBUG_ASM_HASH 1
 #define ALLOW_INPUT_LOWERCASE 1
 
+#define MAKE_VERSION(a,b,c,d) ((a<<24) | (b<<16) | (c<<8) | (d))
+
 	// See /docs/Debugger_Changelog.txt for full details
 	const int DEBUGGER_VERSION = MAKE_VERSION(2,9,1,14);
 
@@ -1094,7 +1096,7 @@ bool GetBreakpointInfo ( WORD nOffset, bool & bBreakpointActive_, bool & bBreakp
 	return false;
 }
 
-// returns the hit type if the breakpoints stops
+// returns the hit type if the breakpoint stops
 static BreakpointHit_t hitBreakpoint(Breakpoint_t * pBP, BreakpointHit_t eHitType)
 {
 	pBP->bHit = true;
@@ -1244,7 +1246,7 @@ int CheckBreakpointsIO ()
 		NO_6502_TARGET
 	};
 	int  nBytes;
-	int  iBreakpointHit = 0;
+	int  bBreakpointHit = 0;
 
 	int  iTarget;
 	int  nAddress;
@@ -1275,20 +1277,20 @@ int CheckBreakpointsIO ()
 
 								if (pBP->eSource == BP_SRC_MEM_RW)
 								{
-									iBreakpointHit |= hitBreakpoint(pBP, BP_HIT_MEM);
+									bBreakpointHit |= hitBreakpoint(pBP, BP_HIT_MEM);
 								}
 								else if (pBP->eSource == BP_SRC_MEM_READ_ONLY)
 								{
 									if (g_aOpcodes[opcode].nMemoryAccess & (MEM_RI|MEM_R))
 									{
-										iBreakpointHit |= hitBreakpoint(pBP, BP_HIT_MEMR);
+										bBreakpointHit |= hitBreakpoint(pBP, BP_HIT_MEMR);
 									}
 								}
 								else if (pBP->eSource == BP_SRC_MEM_WRITE_ONLY)
 								{
 									if (g_aOpcodes[opcode].nMemoryAccess & (MEM_WI|MEM_W))
 									{
-										iBreakpointHit |= hitBreakpoint(pBP, BP_HIT_MEMW);
+										bBreakpointHit |= hitBreakpoint(pBP, BP_HIT_MEMW);
 									}
 								}
 								else
@@ -1302,7 +1304,7 @@ int CheckBreakpointsIO ()
 			}
 		}
 	}
-	return iBreakpointHit;
+	return bBreakpointHit;
 }
 
 // Returns true if a register breakpoint is triggered
@@ -1764,18 +1766,13 @@ Update_t CmdBreakpointAddVideo(int nArgs)
 }
 
 //===========================================================================
-void _BWZ_Clear( Breakpoint_t * aBreakWatchZero, int iSlot )
-{
-	aBreakWatchZero[ iSlot ].bSet     = false;
-	aBreakWatchZero[ iSlot ].bEnabled = false;
-	aBreakWatchZero[ iSlot ].nLength  = 0;
-}
-
 void _BWZ_RemoveOne( Breakpoint_t *aBreakWatchZero, const int iSlot, int & nTotal )
 {
 	if (aBreakWatchZero[iSlot].bSet)
 	{
-		_BWZ_Clear( aBreakWatchZero, iSlot );
+		aBreakWatchZero[ iSlot ].bSet     = false;
+		aBreakWatchZero[ iSlot ].bEnabled = false;
+		aBreakWatchZero[ iSlot ].nLength  = 0;
 		nTotal--;
 	}
 }
@@ -1914,24 +1911,24 @@ Update_t CmdBreakpointChange (int nArgs) {
 		{
 			switch (sArg[i])
 			{
-			case 'E':
-				bp.bEnabled = true;
-				break;
-			case 'e':
-				bp.bEnabled = false;
-				break;
-			case 'T':
-				bp.bTemp = true;
-				break;
-			case 't':
-				bp.bTemp = false;
-				break;
-			case 'S':
-				bp.bStop = true;
-				break;
-			case 's':
-				bp.bStop = false;
-				break;
+				case 'E':
+					bp.bEnabled = true;
+					break;
+				case 'e':
+					bp.bEnabled = false;
+					break;
+				case 'T':
+					bp.bTemp = true;
+					break;
+				case 't':
+					bp.bTemp = false;
+					break;
+				case 'S':
+					bp.bStop = true;
+					break;
+				case 's':
+					bp.bStop = false;
+					break;
 			}
 		}
 	}
@@ -1942,9 +1939,9 @@ Update_t CmdBreakpointChange (int nArgs) {
 void _BWZ_List( const Breakpoint_t * aBreakWatchZero, const int iBWZ ) //, bool bZeroBased )
 {
 	static const char sEnabledFlags[] = "-E";
-	static const char sStopFlags[] = "-S";
-	static const char sTempFlags[] = "-T";
-	static const char sHitFlags[] = " *";
+	static const char sStopFlags[]    = "-S";
+	static const char sTempFlags[]    = "-T";
+	static const char sHitFlags[]     = " *";
 
 	std::string sAddressBuf;
 	std::string const& sSymbol = GetSymbol(aBreakWatchZero[iBWZ].nAddress, 2, sAddressBuf);
@@ -1957,11 +1954,11 @@ void _BWZ_List( const Breakpoint_t * aBreakWatchZero, const int iBWZ ) //, bool 
 //		(bZeroBased ? iBWZ + 1 : iBWZ),
 		iBWZ,
 		sEnabledFlags[ aBreakWatchZero[ iBWZ ].bEnabled ? 1 : 0 ],
-		sStopFlags[ aBreakWatchZero[ iBWZ ].bStop ? 1 : 0 ],
-		sTempFlags[ aBreakWatchZero[ iBWZ ].bTemp ? 1 : 0 ],
-		sHitFlags[ aBreakWatchZero[ iBWZ ].bHit ? 1 : 0 ],
-		aBreakWatchZero[ iBWZ ].nHitCount,
-		aBreakWatchZero[ iBWZ ].nAddress,
+		sStopFlags   [ aBreakWatchZero[ iBWZ ].bStop    ? 1 : 0 ],
+		sTempFlags   [ aBreakWatchZero[ iBWZ ].bTemp    ? 1 : 0 ],
+		sHitFlags    [ aBreakWatchZero[ iBWZ ].bHit     ? 1 : 0 ],
+		               aBreakWatchZero[ iBWZ ].nHitCount,
+		               aBreakWatchZero[ iBWZ ].nAddress,
 		cBPM,
 		sSymbol.c_str()
 	);
@@ -2314,7 +2311,6 @@ Update_t CmdTrace (int nArgs)
 	g_nDebugStepUntil = -1;
 
 	DebugEnterStepping();
-	GetFrame().FrameRefreshStatus(DRAW_TITLE | DRAW_DISK_STATUS);
 	DebugContinueStepping(true);
 
 	return UPDATE_ALL; // TODO: Verify // 0
@@ -2372,7 +2368,6 @@ Update_t CmdTraceLine (int nArgs)
 	g_nDebugStepUntil = -1;
 
 	DebugEnterStepping();
-	GetFrame().FrameRefreshStatus(DRAW_TITLE | DRAW_DISK_STATUS);
 	DebugContinueStepping(true);
 
 	return UPDATE_ALL; // TODO: Verify // 0
@@ -3682,17 +3677,35 @@ bool MemoryDumpCheck (int nArgs, WORD * pAddress_ )
 
 	pArg->eDevice = DEV_MEMORY;						// Default
 
-	if (strncmp(g_aArgs[1].sArg, "SY", 2) == 0)			// SY6522
+	if (strncmp(g_aArgs[1].sArg, "MB", 2) == 0)		// Mockingboard sub-unit (6522+AY8913): "MBs" or "MBsn"
 	{
-		nAddress = (g_aArgs[1].sArg[2] - '0') & 3;
-		pArg->eDevice = DEV_SY6522;
-		bUpdate = true;
+		UINT slot = (UINT)-1;
+		UINT subUnit = 0;							// Default to 6522-A
+		if (strlen(g_aArgs[1].sArg) >= 3)			// "MBs" where s = slot#
+			slot = g_aArgs[1].sArg[2] - '0';
+		if (strlen(g_aArgs[1].sArg) == 4)			// "MBsn" where s = slot#, n = SY6522 A or B eg. AY4A
+			subUnit = g_aArgs[1].sArg[3] - 'A';
+		if (slot <= 7 && subUnit <= 1)
+		{
+			nAddress = (slot << 4) | subUnit;		// slot=[0..7] | subUnit=[0..1]
+			pArg->eDevice = DEV_MB_SUBUNIT;
+			bUpdate = true;
+		}
 	}
-	else if (strncmp(g_aArgs[1].sArg, "AY", 2) == 0)		// AY8910
+	else if (strncmp(g_aArgs[1].sArg, "AY", 2) == 0)	// AY8913: "AYs" or "AYsn"
 	{
-		nAddress  = (g_aArgs[1].sArg[2] - '0') & 3;
-		pArg->eDevice = DEV_AY8910;
-		bUpdate = true;
+		UINT slot = (UINT)-1;
+		UINT subUnit = 0;							// Default to 6522-A
+		if (strlen(g_aArgs[1].sArg) >= 3)			// "AYs" where s = slot#
+			slot = g_aArgs[1].sArg[2] - '0';
+		if (strlen(g_aArgs[1].sArg) == 4)			// "AYsn" where s = slot#, n = SY6522 A or B eg. AY4A
+			subUnit = g_aArgs[1].sArg[3] - 'A';
+		if (slot <= 7 && subUnit <= 1)
+		{
+			nAddress = (slot << 4) | subUnit;		// slot=[0..7] | subUnit=[0..1]
+			pArg->eDevice = DEV_AY8913_PAIR;		// for Phasor
+			bUpdate = true;
+		}
 	}
 #ifdef SUPPORT_Z80_EMU
 	else if (strcmp(g_aArgs[1].sArg, "*AF") == 0)
@@ -8394,8 +8407,7 @@ void DebugBegin ()
 //===========================================================================
 void DebugExitDebugger ()
 {
-	ClearTempBreakpoints();  // make sure we remove dead breakpoints before checking
-	// should this check if breakpoints are enabled?
+	ClearTempBreakpoints();  // make sure we remove temp breakpoints before checking
 	if (g_nBreakpoints == 0 && g_hTraceFile == NULL)
 	{
 		DebugEnd();
@@ -8744,8 +8756,11 @@ void DebugInitialize ()
 
 	// CLEAR THE BREAKPOINT AND WATCH TABLES
 	memset( g_aBreakpoints     , 0, MAX_BREAKPOINTS       * sizeof(Breakpoint_t));
+	g_nBreakpoints = 0;
 	memset( g_aWatches         , 0, MAX_WATCHES           * sizeof(Watches_t) );
+	g_nWatches = 0;
 	memset( g_aZeroPagePointers, 0, MAX_ZEROPAGE_POINTERS * sizeof(ZeroPagePointers_t));
+	g_nZeroPagePointers = 0;
 
 	// Load Main, Applesoft, and User Symbols
 	g_bSymbolsDisplayMissingFile = false;

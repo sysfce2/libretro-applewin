@@ -92,6 +92,7 @@ MockingboardCard::MockingboardCard(UINT slot, SS_CARDTYPE type) : Card(type, slo
 	for (UINT i = 0; i < NUM_SUBUNITS_PER_MB; i++)
 	{
 		m_MBSubUnit[i].nAY8910Number = i;
+		m_MBSubUnit[i].Reset(QueryType());
 		const UINT id0 = i * SY6522::kNumTimersPer6522 + 0;	// TIMER1
 		const UINT id1 = i * SY6522::kNumTimersPer6522 + 1;	// TIMER2
 		m_MBSubUnit[i].sy6522.InitSyncEvents(m_syncEvent[id0], m_syncEvent[id1]);
@@ -177,6 +178,30 @@ void MockingboardCard::Get6522IrqDescription(std::string& desc)
 
 //-----------------------------------------------------------------------------
 
+// Notes on Phasor's AY-3-8913 chip-select & r/w: (GH#1192)
+// ----------------------------------------------
+//
+// Where: AY1 is the primary AY-3-8913 connected to 6522, and AY2 is the 2nd-ary.
+//
+// AFAICT, inputs to the Phasor GAL are:
+// . ORB.b4:3 = Chip Select (CS) for AY1 & AY2 (active low)
+// . ORB.b2:0 = PSG Function (RESET, INACTIVE, READ, WRITE, LATCH) [Or since LATCH=%111, then maybe a 3-input AND: b2.b1.b0 -> GAL?]
+// . Phasor mode (Mockingboard, Echo+, Phasor-native)
+// . Slot inputs (address, reset, etc)
+// And outputs from the GAL are:
+// . GAL CS' for AY1 & AY2 (not just passed-through, but dependent on PSG Function)
+// (Not PSG Function - probably just passed-through from 6522 to the chip-selected AY-3-8913's)
+//
+// In Phasor-native mode, GAL logic:
+// . AY2 LATCH func selects AY2 and AY1; sets latch addr for AY2 and AY1
+// . AY1 LATCH func selects AY1; deselects AY2; sets latch addr for AY1
+// . AY2 & AY1 LATCH func selects AY2 and AY1; sets latch addr for AY2 and AY1
+// . AY2 WRITE(READ) func writes(reads) AY2 if it's selected
+// . AY1 WRITE(READ) func writes(reads) AY1; writes(reads) AY2 if it's selected. NB. If both chips, then the READ is the OR-sum.
+//
+// EG, to do a "AY1 LATCH", then write 6522 ORB with b4:3=%01, b2:0=%111
+//
+
 void MockingboardCard::WriteToORB(BYTE subunit)
 {
 	BYTE value = m_MBSubUnit[subunit].sy6522.Read(SY6522::rORB);
@@ -196,22 +221,27 @@ void MockingboardCard::WriteToORB(BYTE subunit)
 #else
 	if (m_phasorEnable)
 	{
-		const int kAY0 = 2;		// Phasor mode: bit4=0 (active low)  selects the 1st AY8913, ie. the only AY8913 in Mockingboard mode (confirmed on real Phasor h/w)
+		const int kAY1 = 2;		// Phasor mode: bit4=0 (active low)  selects the 1st AY8913, ie. the only AY8913 in Mockingboard mode (confirmed on real Phasor h/w)
 								// Echo+  mode: bit3=1 (active high) selects the 1st AY8913
-		const int kAY1 = 1;		// Phasor mode: bit3=0 (active low)  selects the 2nd AY8913 attached to this 6522 (unavailable in Mockingboard mode)
+		const int kAY2 = 1;		// Phasor mode: bit3=0 (active low)  selects the 2nd AY8913 attached to this 6522 (unavailable in Mockingboard mode)
 								// Echo+  mode: bit4=1 (active high) selects the 2nd AY8913
 		const int nAY_CS =	(m_phasorMode == PH_EchoPlus) ? ((value >> 4) & 1) | ((value >> 2) & 2)	// swap bits 4 & 3
 							: (m_phasorMode == PH_Phasor) ? (~(value >> 3) & 3)
-							: kAY0; // Anything else is Mockingboard
+							: kAY1; // Anything else is Mockingboard
 
 		if (m_phasorMode == PH_EchoPlus)
 			subunit = SY6522_DEVICE_B;
 
-		if (nAY_CS & kAY0)
+		// NB. For PH_Phasor, when selecting *both* AYs, then order matters: first do AY8913_DEVICE_A then AY8913_DEVICE_B
+		// Reason: from GAL logic: 'AY1 LATCH func' deselects AY2, then 'AY2 LATCH func' selects AY2 and AY1. (And we want both selected)
+		if (nAY_CS & kAY1)
 			AY8910_Write(subunit, AY8913_DEVICE_A, value);
 
-		if (nAY_CS & kAY1)
+		if (nAY_CS & kAY2)
 			AY8910_Write(subunit, AY8913_DEVICE_B, value);
+
+		if (nAY_CS == 0)
+			m_MBSubUnit[subunit].sy6522.UpdatePortAForHiZ();
 	}
 	else
 	{
@@ -226,12 +256,13 @@ void MockingboardCard::AY8910_Write(BYTE subunit, BYTE ay, BYTE value)
 {
 	m_regAccessedFlag = true;
 	MB_SUBUNIT* pMB = &m_MBSubUnit[subunit];
-	SY6522& r6522 = (m_phasorEnable && m_phasorMode == PH_EchoPlus) ? m_MBSubUnit[SY6522_DEVICE_B].sy6522 : pMB->sy6522;
+	SY6522& r6522 = pMB->sy6522;
 
 	if ((value & 4) == 0)
 	{
 		// RESET: Reset AY8910 only
 		AY8910_reset(subunit, ay);
+		pMB->Reset(QueryType());
 	}
 	else
 	{
@@ -241,7 +272,7 @@ void MockingboardCard::AY8910_Write(BYTE subunit, BYTE ay, BYTE value)
 		int nBC1 = value & 1;
 
 		MockingboardUnitState_e nAYFunc = (MockingboardUnitState_e) ((nBDIR<<2) | (nBC2<<1) | nBC1);
-		MockingboardUnitState_e& state = (ay == AY8913_DEVICE_A) ? pMB->state : pMB->stateB;	// GH#659
+		MockingboardUnitState_e& state = pMB->state[ay];	// GH#659
 
 #if _DEBUG
 		if (!m_phasorEnable || m_phasorMode == PH_Mockingboard)
@@ -258,11 +289,34 @@ void MockingboardCard::AY8910_Write(BYTE subunit, BYTE ay, BYTE value)
 					break;
 
 				case AY_READ:		// 5: READ FROM PSG (need to set DDRA to input)
-					r6522.SetRegORA( AYReadReg(subunit, ay, pMB->nAYCurrentRegister) & (r6522.GetReg(SY6522::rDDRA) ^ 0xff) );
+					if (pMB->isChipSelected[ay] && pMB->isAYLatchedAddressValid[ay])
+						r6522.SetRegORA(AYReadReg(subunit, ay, pMB->nAYCurrentRegister[ay]) & (r6522.GetReg(SY6522::rDDRA) ^ 0xff));
+					else
+						r6522.UpdatePortAForHiZ();
+
+					if (m_phasorEnable && m_phasorMode == PH_Phasor)	// GH#1192
+					{
+						if (ay == AY8913_DEVICE_A)
+						{
+							if (pMB->isChipSelected[AY8913_DEVICE_B] && pMB->isAYLatchedAddressValid[AY8913_DEVICE_B])
+								r6522.SetRegORA(r6522.GetReg(SY6522::rORA) | (AYReadReg(subunit, AY8913_DEVICE_B, pMB->nAYCurrentRegister[AY8913_DEVICE_B]) & (r6522.GetReg(SY6522::rDDRA) ^ 0xff)));
+						}
+					}
 					break;
 
 				case AY_WRITE:		// 6: WRITE TO PSG
-					_AYWriteReg(subunit, ay, pMB->nAYCurrentRegister, r6522.GetReg(SY6522::rORA));
+					if (pMB->isChipSelected[ay] && pMB->isAYLatchedAddressValid[ay])
+						_AYWriteReg(subunit, ay, pMB->nAYCurrentRegister[ay], r6522.GetReg(SY6522::rORA));
+					// else if invalid then just ignore
+
+					if (m_phasorEnable && m_phasorMode == PH_Phasor)	// GH#1192
+					{
+						if (ay == AY8913_DEVICE_A)
+						{
+							if (pMB->isChipSelected[AY8913_DEVICE_B] && pMB->isAYLatchedAddressValid[AY8913_DEVICE_B])
+								_AYWriteReg(subunit, AY8913_DEVICE_B, pMB->nAYCurrentRegister[AY8913_DEVICE_B], r6522.GetReg(SY6522::rORA));
+						}
+					}
 					break;
 
 				case AY_LATCH:		// 7: LATCH ADDRESS
@@ -271,13 +325,34 @@ void MockingboardCard::AY8910_Write(BYTE subunit, BYTE ay, BYTE value)
 					// any values written to the data/address bus are ignored, but can be read back
 					// within a few tens of thousands of cycles before they decay to zero.
 					if (r6522.GetReg(SY6522::rORA) <= 0x0F)
-						pMB->nAYCurrentRegister = r6522.GetReg(SY6522::rORA) & 0x0F;
+					{
+						pMB->nAYCurrentRegister[ay] = r6522.GetReg(SY6522::rORA) & 0x0F;
+						pMB->isChipSelected[ay] = true;
+						pMB->isAYLatchedAddressValid[ay] = true;
+
+						if (m_phasorEnable && m_phasorMode == PH_Phasor)	// GH#1192
+						{
+							if (ay == AY8913_DEVICE_A)
+							{
+								pMB->isChipSelected[AY8913_DEVICE_B] = false;
+							}
+							else // AY8913_DEVICE_B
+							{
+								pMB->isChipSelected[AY8913_DEVICE_A] = true;
+								pMB->nAYCurrentRegister[AY8913_DEVICE_A] = pMB->nAYCurrentRegister[AY8913_DEVICE_B];
+								pMB->isAYLatchedAddressValid[AY8913_DEVICE_A] = true;
+							}
+						}
+					}
 					// else Pro-Mockingboard (clone from HK)
 					break;
 			}
 		}
 
 		state = nAYFunc;
+
+		if (state == AY_INACTIVE && m_phasorEnable)		// Phasor(even in MB mode) will read PortA inputs as high.
+			r6522.UpdatePortAForHiZ();	// Float high any PortA input bits (GH#1193)
 	}
 }
 
@@ -469,10 +544,7 @@ void MockingboardCard::Reset(const bool powerCycle)	// CTRL+RESET or power-cycle
 		for (BYTE ay = 0; ay < NUM_AY8913_PER_SUBUNIT; ay++)
 			AY8910_reset(subunit, ay);
 
-		m_MBSubUnit[subunit].nAYCurrentRegister = 0;
-		m_MBSubUnit[subunit].state = AY_INACTIVE;
-		m_MBSubUnit[subunit].stateB = AY_INACTIVE;
-
+		m_MBSubUnit[subunit].Reset(QueryType());
 		m_MBSubUnit[subunit].ssi263.SetCardMode(PH_Mockingboard);	// Revert to PH_Mockingboard mode
 		m_MBSubUnit[subunit].ssi263.Reset();
 	}
@@ -726,6 +798,12 @@ BYTE MockingboardCard::PhasorIOInternal(WORD PC, WORD nAddr, BYTE bWrite, BYTE n
 	else if (m_phasorMode == PH_Phasor)
 		m_phasorClockScaleFactor = 2;
 
+	if (m_phasorMode == PH_Mockingboard)
+	{
+		for (BYTE subunit = 0; subunit < NUM_SUBUNITS_PER_MB; subunit++)
+			m_MBSubUnit[subunit].isChipSelected[0] = true;
+	}
+
 	AY8910_InitClock((int)(Get6502BaseClock() * m_phasorClockScaleFactor));
 
 	for (UINT i = 0; i < NUM_SSI263; i++)
@@ -895,38 +973,38 @@ void MockingboardCard::SetVolume(DWORD volume, DWORD volumeMax)
 
 //===========================================================================
 
-#include "SaveState_Structs_v1.h"
-
-// Called by debugger - Debugger_Display.cpp
-void MockingboardCard::GetSnapshot_v1(SS_CARD_MOCKINGBOARD_v1* const pSS)
+void MockingboardCard::GetSnapshotForDebugger(DEBUGGER_MB_CARD* const pMBForDebugger)
 {
-	pSS->Hdr.UnitHdr.hdr.v2.Length = sizeof(SS_CARD_MOCKINGBOARD_v1);
-	pSS->Hdr.UnitHdr.hdr.v2.Type = UT_Card;
-	pSS->Hdr.UnitHdr.hdr.v2.Version = 1;
+	pMBForDebugger->type = QueryType();
 
-	pSS->Hdr.Slot = m_slot;
-	pSS->Hdr.Type = CT_MockingboardC;
-
-	MB_SUBUNIT* pMB = &m_MBSubUnit[0];
-
-	for (UINT i=0; i<MB_UNITS_PER_CARD_v1; i++)
+	for (UINT i = 0; i < NUM_SUBUNITS_PER_MB; i++)
 	{
-		// 6522
-		pMB->sy6522.GetRegs((BYTE*)&pSS->Unit[i].RegsSY6522);	// continuous 16-byte array
+		MB_SUBUNIT* pMB = &m_MBSubUnit[i];
 
-		// AY8913
-		for (UINT j=0; j<16; j++)
+		pMB->sy6522.GetRegs(pMBForDebugger->subUnit[i].regsSY6522);	// continuous 16-byte array
+		pMBForDebugger->subUnit[i].timer1Active = pMB->sy6522.IsTimer1Active();
+		pMBForDebugger->subUnit[i].timer2Active = pMB->sy6522.IsTimer2Active();
+
+		for (UINT j = 0; j < NUM_AY8913_PER_SUBUNIT; j++)
 		{
-			pSS->Unit[i].RegsAY8910[j] = AYReadReg(i, 0, j);	// FIXME: also support Phasor's 2nd AY8913
+			for (UINT k = 0; k < 16; k++)
+				pMBForDebugger->subUnit[i].regsAY8913[j][k] = AYReadReg(i, j, k);
+
+			pMBForDebugger->subUnit[i].nAYCurrentRegister[j] = pMB->nAYCurrentRegister[j];
+			pMBForDebugger->subUnit[i].isAYLatchedAddressValid[j] = pMB->isAYLatchedAddressValid[j];
+
+			switch (pMB->state[j])
+			{
+			case AY_READ:
+				strcpy((char*)&pMBForDebugger->subUnit[i].szState[j], "RD"); break;
+			case AY_WRITE:
+				strcpy((char*)&pMBForDebugger->subUnit[i].szState[j], "WR"); break;
+			case AY_LATCH:
+				strcpy((char*)&pMBForDebugger->subUnit[i].szState[j], "LA"); break;
+			default: //AY_INACTIVE
+				strcpy((char*)&pMBForDebugger->subUnit[i].szState[j], "--"); break;
+			}
 		}
-
-		memset(&pSS->Unit[i].RegsSSI263, 0, sizeof(SSI263A));	// Not used by debugger
-		pSS->Unit[i].nAYCurrentRegister = pMB->nAYCurrentRegister;
-		pSS->Unit[i].bTimer1Active = pMB->sy6522.IsTimer1Active();
-		pSS->Unit[i].bTimer2Active = pMB->sy6522.IsTimer2Active();
-		pSS->Unit[i].bSpeechIrqPending = false;
-
-		pMB++;
 	}
 }
 
@@ -1029,11 +1107,19 @@ UINT MockingboardCard::AY8910_LoadSnapshot(YamlLoadHelper& yamlLoadHelper, BYTE 
 // 9: Phasor AY's are swapped (means that AppleWin 1.30.10 and 1.30.11 are wrong)
 //    Changed at AppleWin 1.30.12
 //10: Phasor AY's are ordered correctly
+//    "AY Current Register B"
+//    "Chip Select A" + "Chip Select B"
+//    "Reg Address Latch Valid A" + "Reg Address Latch Valid B"
 //    Changed at AppleWin 1.30.14
 const UINT kUNIT_VERSION = 10;
 
 #define SS_YAML_KEY_MB_UNIT "Unit"
 #define SS_YAML_KEY_AY_CURR_REG "AY Current Register"
+#define SS_YAML_KEY_AY_CURR_REG_B "AY Current Register B"	// Phasor only
+#define SS_YAML_KEY_CS_A "Chip Select A"
+#define SS_YAML_KEY_CS_B "Chip Select B"			// Phasor only
+#define SS_YAML_KEY_LATCH_ADDR_VALID_A "Reg Address Latch Valid A"
+#define SS_YAML_KEY_LATCH_ADDR_VALID_B "Reg Address Latch Valid B"	// Phasor only
 #define SS_YAML_KEY_MB_UNIT_STATE "Unit State"
 #define SS_YAML_KEY_MB_UNIT_STATE_B "Unit State-B"	// Phasor only
 #define SS_YAML_KEY_TIMER1_IRQ "Timer1 IRQ Pending"	// v8: deprecated
@@ -1083,8 +1169,10 @@ void MockingboardCard::SaveSnapshot(YamlSaveHelper& yamlSaveHelper)
 		AY8910_SaveSnapshot(yamlSaveHelper, subunit, AY8913_DEVICE_A, std::string(""));
 		pMB->ssi263.SaveSnapshot(yamlSaveHelper);
 
-		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_MB_UNIT_STATE, pMB->state);
-		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_AY_CURR_REG, pMB->nAYCurrentRegister);
+		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_MB_UNIT_STATE, pMB->state[0]);
+		yamlSaveHelper.SaveHexUint8(SS_YAML_KEY_AY_CURR_REG, pMB->nAYCurrentRegister[0]);	// save all 8 bits (even though top 4 bits should be 0)
+		yamlSaveHelper.SaveBool(SS_YAML_KEY_CS_A, pMB->isChipSelected[0]);
+		yamlSaveHelper.SaveBool(SS_YAML_KEY_LATCH_ADDR_VALID_A, pMB->isAYLatchedAddressValid[0]);
 	}
 }
 
@@ -1120,7 +1208,7 @@ bool MockingboardCard::LoadSnapshot(YamlLoadHelper& yamlLoadHelper, UINT version
 		AY8910_LoadSnapshot(yamlLoadHelper, subunit, AY8913_DEVICE_A, std::string(""));
 		pMB->ssi263.LoadSnapshot(yamlLoadHelper, PH_Mockingboard, version);	// Pre: SetVotraxPhoneme()
 
-		pMB->nAYCurrentRegister = yamlLoadHelper.LoadUint(SS_YAML_KEY_AY_CURR_REG);
+		pMB->nAYCurrentRegister[0] = yamlLoadHelper.LoadUint(SS_YAML_KEY_AY_CURR_REG);
 
 		if (version == 1)
 		{
@@ -1140,10 +1228,16 @@ bool MockingboardCard::LoadSnapshot(YamlLoadHelper& yamlLoadHelper, UINT version
 			yamlLoadHelper.LoadBool(SS_YAML_KEY_SPEECH_IRQ);	// Consume redundant data
 		}
 
-		pMB->state = AY_INACTIVE;
-		pMB->stateB = AY_INACTIVE;
+		pMB->state[0] = AY_INACTIVE;
+		pMB->state[1] = AY_INACTIVE;
 		if (version >= 3)
-			pMB->state = (MockingboardUnitState_e) (yamlLoadHelper.LoadUint(SS_YAML_KEY_MB_UNIT_STATE) & 7);
+			pMB->state[0] = (MockingboardUnitState_e) (yamlLoadHelper.LoadUint(SS_YAML_KEY_MB_UNIT_STATE) & 7);
+
+		if (version >= 10)
+		{
+			pMB->isChipSelected[0] = yamlLoadHelper.LoadBool(SS_YAML_KEY_CS_A);
+			pMB->isAYLatchedAddressValid[0] = yamlLoadHelper.LoadBool(SS_YAML_KEY_LATCH_ADDR_VALID_A);
+		}
 
 		yamlLoadHelper.PopMap();
 	}
@@ -1175,9 +1269,15 @@ void MockingboardCard::Phasor_SaveSnapshot(YamlSaveHelper& yamlSaveHelper)
 		AY8910_SaveSnapshot(yamlSaveHelper, subunit, AY8913_DEVICE_B, std::string("-B"));
 		pMB->ssi263.SaveSnapshot(yamlSaveHelper);
 
-		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_MB_UNIT_STATE, pMB->state);
-		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_MB_UNIT_STATE_B, pMB->stateB);
-		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_AY_CURR_REG, pMB->nAYCurrentRegister);
+		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_MB_UNIT_STATE, pMB->state[0]);
+		yamlSaveHelper.SaveHexUint4(SS_YAML_KEY_MB_UNIT_STATE_B, pMB->state[1]);
+		yamlSaveHelper.SaveHexUint8(SS_YAML_KEY_AY_CURR_REG, pMB->nAYCurrentRegister[0]);	// save all 8 bits (even though top 4 bits should be 0)
+		yamlSaveHelper.SaveHexUint8(SS_YAML_KEY_AY_CURR_REG_B, pMB->nAYCurrentRegister[1]);	// save all 8 bits (even though top 4 bits should be 0)
+
+		yamlSaveHelper.SaveBool(SS_YAML_KEY_CS_A, pMB->isChipSelected[0]);
+		yamlSaveHelper.SaveBool(SS_YAML_KEY_CS_B, pMB->isChipSelected[1]);
+		yamlSaveHelper.SaveBool(SS_YAML_KEY_LATCH_ADDR_VALID_A, pMB->isAYLatchedAddressValid[0]);
+		yamlSaveHelper.SaveBool(SS_YAML_KEY_LATCH_ADDR_VALID_B, pMB->isAYLatchedAddressValid[1]);
 	}
 }
 
@@ -1235,7 +1335,9 @@ bool MockingboardCard::Phasor_LoadSnapshot(YamlLoadHelper& yamlLoadHelper, UINT 
 		}
 		pMB->ssi263.LoadSnapshot(yamlLoadHelper, m_phasorMode, version);	// Pre: SetVotraxPhoneme()
 
-		pMB->nAYCurrentRegister = yamlLoadHelper.LoadUint(SS_YAML_KEY_AY_CURR_REG);
+		pMB->nAYCurrentRegister[0] = yamlLoadHelper.LoadUint(SS_YAML_KEY_AY_CURR_REG);
+		if (version >= 10)
+			pMB->nAYCurrentRegister[1] = yamlLoadHelper.LoadUint(SS_YAML_KEY_AY_CURR_REG_B);
 
 		if (version == 1)
 		{
@@ -1255,12 +1357,20 @@ bool MockingboardCard::Phasor_LoadSnapshot(YamlLoadHelper& yamlLoadHelper, UINT 
 			yamlLoadHelper.LoadBool(SS_YAML_KEY_SPEECH_IRQ);	// Consume redundant data
 		}
 
-		pMB->state = AY_INACTIVE;
-		pMB->stateB = AY_INACTIVE;
+		pMB->state[0] = AY_INACTIVE;
+		pMB->state[1] = AY_INACTIVE;
 		if (version >= 3)
-			pMB->state = (MockingboardUnitState_e) (yamlLoadHelper.LoadUint(SS_YAML_KEY_MB_UNIT_STATE) & 7);
+			pMB->state[0] = (MockingboardUnitState_e) (yamlLoadHelper.LoadUint(SS_YAML_KEY_MB_UNIT_STATE) & 7);
 		if (version >= 5)
-			pMB->stateB = (MockingboardUnitState_e) (yamlLoadHelper.LoadUint(SS_YAML_KEY_MB_UNIT_STATE_B) & 7);
+			pMB->state[1] = (MockingboardUnitState_e) (yamlLoadHelper.LoadUint(SS_YAML_KEY_MB_UNIT_STATE_B) & 7);
+
+		if (version >= 10)
+		{
+			pMB->isChipSelected[0] = yamlLoadHelper.LoadBool(SS_YAML_KEY_CS_A);
+			pMB->isChipSelected[1] = yamlLoadHelper.LoadBool(SS_YAML_KEY_CS_B);
+			pMB->isAYLatchedAddressValid[0] = yamlLoadHelper.LoadBool(SS_YAML_KEY_LATCH_ADDR_VALID_A);
+			pMB->isAYLatchedAddressValid[1] = yamlLoadHelper.LoadBool(SS_YAML_KEY_LATCH_ADDR_VALID_B);
+		}
 
 		yamlLoadHelper.PopMap();
 	}

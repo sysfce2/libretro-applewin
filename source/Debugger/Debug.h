@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../SaveState_Structs_v1.h"	// For SS_CARD_MOCKINGBOARD
 #include "../Common.h"
 
 #include "Debugger_Types.h"
@@ -45,6 +44,8 @@
 		, BP_DMA_FROM_MEM = (1 << 11)
 		, BP_HIT_VIDEO_POS = (1 << 12)
 	};
+
+	extern int          g_bDebugBreakpointHit;
 
 	extern int          g_nBreakpoints;
 	extern Breakpoint_t g_aBreakpoints[ MAX_BREAKPOINTS ];

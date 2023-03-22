@@ -65,20 +65,20 @@ void run_sdl(int argc, const char * argv [])
 
   const LoggerContext logger(options.log);
   const RegistryContext registryContext(CreateFileRegistry(options));
+  const std::shared_ptr<Paddle> paddle = sa2::Gamepad::create(options.gameControllerIndex, options.gameControllerMappingFile);
 
   std::shared_ptr<sa2::SDLFrame> frame;
   if (options.imgui)
   {
-    frame.reset(new sa2::SDLImGuiFrame(options));
+    frame = std::make_shared<sa2::SDLImGuiFrame>(options);
   }
   else
   {
-    frame.reset(new sa2::SDLRendererFrame(options));
+    frame = std::make_shared<sa2::SDLRendererFrame>(options);
   }
 
   std::cerr << "Default GL swap interval: " << SDL_GL_GetSwapInterval() << std::endl;
 
-  std::shared_ptr<Paddle> paddle(new sa2::Gamepad(0));
   const Initialisation init(frame, paddle);
   common2::applyOptions(options);
   frame->Begin();
@@ -176,7 +176,7 @@ void run_sdl(int argc, const char * argv [])
 int main(int argc, const char * argv [])
 {
   //First we need to start up SDL, and make sure it went ok
-  const Uint32 flags = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO | SDL_INIT_TIMER;
+  const Uint32 flags = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS;
   if (SDL_Init(flags) != 0)
   {
     std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;

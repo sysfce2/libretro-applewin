@@ -103,16 +103,7 @@ namespace common2
       saveOnExit = true;
     }
 
-    std::shared_ptr<common2::PTreeRegistry> config;
-    if (filename.empty())
-    {
-      config = std::make_shared<common2::PTreeRegistry>();
-    }
-    else
-    {
-      config = std::make_shared<Configuration>(filename, saveOnExit);
-    }
-
+    std::shared_ptr<Configuration> config = std::make_shared<Configuration>(filename, saveOnExit);
     config->addExtraOptions(options.registryOptions);
 
     return config;

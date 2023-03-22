@@ -49,7 +49,22 @@ public:
 	BYTE GetPCR(BYTE nDevice);
 	bool IsAnyTimer1Active(void);
 
-	void GetSnapshot_v1(struct SS_CARD_MOCKINGBOARD_v1* const pSS);
+	struct DEBUGGER_MB_SUBUNIT
+	{
+		BYTE regsSY6522[SY6522::SIZE_6522_REGS];
+		bool timer1Active;
+		bool timer2Active;
+		BYTE regsAY8913[NUM_AY8913_PER_SUBUNIT][16];
+		BYTE nAYCurrentRegister[NUM_AY8913_PER_SUBUNIT];
+		char szState[NUM_AY8913_PER_SUBUNIT][3];	// "--"(INACTIVE), "RD", "WR", "LA"
+		bool isAYLatchedAddressValid[NUM_AY8913_PER_SUBUNIT];
+	};
+	struct DEBUGGER_MB_CARD
+	{
+		SS_CARDTYPE type;
+		DEBUGGER_MB_SUBUNIT subUnit[NUM_SUBUNITS_PER_MB];
+	};
+	void GetSnapshotForDebugger(DEBUGGER_MB_CARD* const pMBForDebugger);
 
 	static std::string GetSnapshotCardName(void);
 	static std::string GetSnapshotCardNamePhasor(void);
@@ -60,20 +75,28 @@ private:
 	struct MB_SUBUNIT
 	{
 		SY6522 sy6522;
-		AY8913 ay8913[2];				// Phasor has 2x AY per 6522
+		AY8913 ay8913[NUM_AY8913_PER_SUBUNIT];					// Phasor has 2x AY per 6522
 		SSI263 ssi263;
 		BYTE nAY8910Number;
-		BYTE nAYCurrentRegister;
-		MockingboardUnitState_e state;	// Where a unit is a 6522+AY8910 pair
-		MockingboardUnitState_e stateB;	// Phasor: 6522 & 2nd AY8910
+		BYTE nAYCurrentRegister[NUM_AY8913_PER_SUBUNIT];
+		MockingboardUnitState_e state[NUM_AY8913_PER_SUBUNIT];	// AY's PSG function
+		bool isAYLatchedAddressValid[NUM_AY8913_PER_SUBUNIT];
+		bool isChipSelected[NUM_AY8913_PER_SUBUNIT];
 
 		MB_SUBUNIT(UINT slot) : sy6522(slot), ssi263(slot)
 		{
 			nAY8910Number = 0;
-			nAYCurrentRegister = 0;
-			state = AY_NOP0;
-			stateB = AY_NOP0;
 			// sy6522 & ssi263 have already been default constructed
+			// Reset() called from MockingboardCard ctor
+		}
+
+		void Reset(SS_CARDTYPE type)
+		{
+			nAYCurrentRegister[0] = nAYCurrentRegister[1] = 0;	// not valid
+			state[0] = state[1] = AY_INACTIVE;
+			isAYLatchedAddressValid[0] = isAYLatchedAddressValid[1] = false;	// after AY reset
+			isChipSelected[0] = type == CT_MockingboardC ? true : false;
+			isChipSelected[1] = false;
 		}
 	};
 

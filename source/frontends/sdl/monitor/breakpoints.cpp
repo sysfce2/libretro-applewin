@@ -5,7 +5,6 @@
 #include "frontends/sdl/monitor/commands.h"
 
 #include "Debugger/Debug.h"
-#include "CPU.h"
 #include "Log.h"
 
 
@@ -75,7 +74,7 @@ namespace binarymonitor
     bp.bHit = false;
     bp.nHitCount = 0;
     bp.eOperator = BP_OP_EQUAL;
-    bp.bEnabled = checkpointSet.enabled && checkpointSet.stop;
+    bp.bEnabled = checkpointSet.enabled;
     bp.bStop = checkpointSet.stop;
     bp.bTemp = checkpointSet.temporary;
     ++g_nBreakpoints;
@@ -113,6 +112,7 @@ namespace binarymonitor
     bp.bTemp = false;
     bp.nHitCount = 0;
     bp.nLength = 0;
+    bp.bStop = false;
   }
 
 }

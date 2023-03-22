@@ -222,6 +222,8 @@ namespace sa2
           ImGui::Checkbox("Apple Video windowed", &windowed);
           ImGui::SameLine(); HelpMarker("Show Apple video in a separate window.");
 
+          ImGui::Checkbox("Preserve aspect ratio", &frame->getPreserveAspectRatio());
+
           ImGui::Checkbox("Memory", &myShowMemory);
           ImGui::SameLine(); HelpMarker("Show Apple memory.");
 
@@ -441,7 +443,8 @@ namespace sa2
             ImGui::TableSetupColumn("Filename", ImGuiTableColumnFlags_WidthStretch);
             ImGui::TableHeadersRow();
 
-            for (int slot = SLOT5; slot < SLOT7; ++slot)
+            // only scan disk slots.
+            for (int slot = SLOT5; slot < NUM_SLOTS; ++slot)
             {
               ImGui::PushID(slot);
               if (cardManager.QuerySlot(slot) == CT_Disk2)
@@ -501,50 +504,47 @@ namespace sa2
                   ImGui::PopID();
                 }
               }
-              ImGui::PopID();
-            }
-
-            HarddiskInterfaceCard* pHarddiskCard = dynamic_cast<HarddiskInterfaceCard*>(cardManager.GetObj(SLOT7));
-            if (pHarddiskCard)
-            {
-              ImGui::PushID(7);
-              Disk_Status_e disk1Status_;
-              pHarddiskCard->GetLightStatus(&disk1Status_);
-              for (size_t drive = HARDDISK_1; drive < NUM_HARDDISKS; ++drive)
+              else if (cardManager.QuerySlot(slot) == CT_GenericHDD)
               {
-                ImGui::PushID(drive);
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("%d", SLOT7);
-                ImGui::TableNextColumn();
-                ImGui::Text("%zu", drive + 1);
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("HD");
-                ImGui::TableNextColumn();
-                ImGui::TableNextColumn();
-                ImGui::TableNextColumn();
-                ImGui::TableNextColumn();
+                HarddiskInterfaceCard* pHarddiskCard = dynamic_cast<HarddiskInterfaceCard*>(cardManager.GetObj(slot));
+                Disk_Status_e disk1Status_;
+                pHarddiskCard->GetLightStatus(&disk1Status_);
+                for (size_t drive = HARDDISK_1; drive < NUM_HARDDISKS; ++drive)
+                {
+                  ImGui::PushID(drive);
+                  ImGui::TableNextRow();
+                  ImGui::TableNextColumn();
+                  ImGui::Text("%d", slot);
+                  ImGui::TableNextColumn();
+                  ImGui::Text("%zu", drive + 1);
+                  ImGui::TableNextColumn();
+                  ImGui::TextUnformatted("HD");
+                  ImGui::TableNextColumn();
+                  ImGui::TableNextColumn();
+                  ImGui::TableNextColumn();
+                  ImGui::TableNextColumn();
 
-                ImGui::TextUnformatted(getDiskStatusName(disk1Status_).c_str());
-                ImGui::TableNextColumn();
-                if (ImGui::SmallButton("Eject"))
-                {
-                  pHarddiskCard->Unplug(drive);
-                }
-                ImGui::TableNextColumn();
-                if (ImGui::SmallButton("Swap"))
-                {
-                  pHarddiskCard->ImageSwap();
-                }
-                ImGui::TableNextColumn();
-                if (ImGui::RadioButton("##Sel", (dragAndDropSlot == SLOT7) && (dragAndDropDrive == drive)))
-                {
-                  frame->setDragDropSlotAndDrive(SLOT7, drive);
-                }
+                  ImGui::TextUnformatted(getDiskStatusName(disk1Status_).c_str());
+                  ImGui::TableNextColumn();
+                  if (ImGui::SmallButton("Eject"))
+                  {
+                    pHarddiskCard->Unplug(drive);
+                  }
+                  ImGui::TableNextColumn();
+                  if (ImGui::SmallButton("Swap"))
+                  {
+                    pHarddiskCard->ImageSwap();
+                  }
+                  ImGui::TableNextColumn();
+                  if (ImGui::RadioButton("##Sel", (dragAndDropSlot == slot) && (dragAndDropDrive == drive)))
+                  {
+                    frame->setDragDropSlotAndDrive(slot, drive);
+                  }
 
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted(pHarddiskCard->GetFullName(drive).c_str());
-                ImGui::PopID();
+                  ImGui::TableNextColumn();
+                  ImGui::TextUnformatted(pHarddiskCard->GetFullName(drive).c_str());
+                  ImGui::PopID();
+                }
               }
               ImGui::PopID();
             }
@@ -1110,9 +1110,6 @@ namespace sa2
 
   void ImGuiSettings::drawBreakpoints(SDLFrame * frame)
   {
-    ImGui::LabelText("Mode", "%s", getAppModeName(g_nAppMode).c_str());
-    drawDebuggerCommands(frame);
-    ImGui::Separator();
     if (ImGui::BeginTable("Breakpoints", 11, ImGuiTableFlags_RowBg))
     {
       ImGui::TableSetupColumn("ID");
@@ -1123,8 +1120,8 @@ namespace sa2
       ImGui::TableSetupColumn("Enabled");
       ImGui::TableSetupColumn("Stop");
       ImGui::TableSetupColumn("Temporary");
+      ImGui::TableSetupColumn("Counter");
       ImGui::TableSetupColumn("Hit");
-      ImGui::TableSetupColumn("Hit Count");
       ImGui::TableSetupColumn("Delete");
       ImGui::TableHeadersRow();
 
@@ -1152,11 +1149,11 @@ namespace sa2
           ImGui::TableNextColumn();
           ImGui::Checkbox("##Temp", &bp.bTemp);
           ImGui::TableNextColumn();
+          ImGui::Text("%08X", bp.nHitCount);
+          ImGui::TableNextColumn();
           ImGui::BeginDisabled();
           ImGui::Checkbox("##Hit", &bp.bHit);
           ImGui::EndDisabled();
-          ImGui::TableNextColumn();
-          ImGui::Text("%2d", bp.nHitCount);
           ImGui::TableNextColumn();
           if (ImGui::Button("Delete"))
           {
