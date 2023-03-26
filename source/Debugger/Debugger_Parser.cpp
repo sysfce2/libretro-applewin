@@ -35,95 +35,96 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 // Args ___________________________________________________________________________________________
 
-	int   g_nArgRaw;
-	Arg_t g_aArgRaw[ MAX_ARGS ]; // pre-processing
-	Arg_t g_aArgs  [ MAX_ARGS ]; // post-processing (cooked)
+int   g_nArgRaw;
+Arg_t g_aArgRaw[ MAX_ARGS ];  // pre-processing
+Arg_t g_aArgs[ MAX_ARGS ];    // post-processing (cooked)
 
-	const TCHAR TCHAR_LF     = TEXT('\x0D');
-	const TCHAR TCHAR_CR     = TEXT('\x0A');
-	const TCHAR TCHAR_SPACE  = TEXT(' ');
-	const TCHAR TCHAR_TAB    = TEXT('\t');
+const TCHAR TCHAR_LF    = TEXT('\x0D');
+const TCHAR TCHAR_CR    = TEXT('\x0A');
+const TCHAR TCHAR_SPACE = TEXT(' ');
+const TCHAR TCHAR_TAB   = TEXT('\t');
 //	const TCHAR TCHAR_QUOTED = TEXT('"');
-	const TCHAR TCHAR_QUOTE_DOUBLE = TEXT('"');
-	const TCHAR TCHAR_QUOTE_SINGLE = TEXT('\'');
-	const TCHAR TCHAR_ESCAPE = TEXT('\x1B');
+const TCHAR TCHAR_QUOTE_DOUBLE = TEXT('"');
+const TCHAR TCHAR_QUOTE_SINGLE = TEXT('\'');
+const TCHAR TCHAR_ESCAPE       = TEXT('\x1B');
 
 
-	// NOTE: ArgToken_e and g_aTokens must match!
-	const TokenTable_t g_aTokens[ NUM_TOKENS ] =
-	{ // Input
-		{ TOKEN_ALPHANUMERIC, TYPE_STRING  , 0    }, // Default, if doen't match anything else
-		{ TOKEN_AMPERSAND   , TYPE_OPERATOR, "&"  }, // bit-and
-		{ TOKEN_AT          , TYPE_OPERATOR, "@"  }, // reference results 
-		{ TOKEN_BRACE_L     , TYPE_STRING  , "{"  },
-		{ TOKEN_BRACE_R     , TYPE_STRING  , "}"  },
-		{ TOKEN_BRACKET_L   , TYPE_STRING  , "["  },
-		{ TOKEN_BRACKET_R   , TYPE_STRING  , "]"  },
-		{ TOKEN_BSLASH      , TYPE_OPERATOR, "\\" },
-		{ TOKEN_CARET       , TYPE_OPERATOR, "^"  }, // bit-eor, C/C++: xor, Math: POWER
-		{ TOKEN_COLON       , TYPE_OPERATOR, ":"  }, 
-		{ TOKEN_COMMA       , TYPE_OPERATOR, ","  },
-		{ TOKEN_DOLLAR      , TYPE_STRING  , "$"  },
-		{ TOKEN_EQUAL       , TYPE_OPERATOR, "="  },
-		{ TOKEN_EXCLAMATION , TYPE_OPERATOR, "!"  }, // NOT
-		{ TOKEN_FSLASH      , TYPE_OPERATOR, "/"  }, // div
-		{ TOKEN_GREATER_THAN, TYPE_OPERATOR, ">"  }, // TODO/FIXME: Parser will break up '>=' (needed for uber breakpoints)
-		{ TOKEN_HASH        , TYPE_OPERATOR, "#"  },
-		{ TOKEN_LESS_THAN   , TYPE_OPERATOR, "<"  },
-		{ TOKEN_MINUS       , TYPE_OPERATOR, "-"  }, // sub
-		{ TOKEN_PAREN_L     , TYPE_OPERATOR, "("  },
-		{ TOKEN_PAREN_R     , TYPE_OPERATOR, ")"  },
-		{ TOKEN_PERCENT     , TYPE_OPERATOR, "%"  }, // mod
-		{ TOKEN_PIPE        , TYPE_OPERATOR, "|"  }, // bit-or
-		{ TOKEN_PLUS        , TYPE_OPERATOR, "+"  }, // add
-//		{ TOKEN_QUESTION    , TYPE_OPERATOR, TEXT('?')  }, // Not a token 1) wildcard needs to stay together with other chars
-		{ TOKEN_QUOTE_SINGLE, TYPE_QUOTED_1, "\'" },
-		{ TOKEN_QUOTE_DOUBLE, TYPE_QUOTED_2, "\"" }, // for strings
-		{ TOKEN_SEMI        , TYPE_STRING  , ";"  },
-		{ TOKEN_SPACE       , TYPE_STRING  , " "  }, // space is also a delimiter between tokens/args
-		{ TOKEN_STAR        , TYPE_OPERATOR, "*"  }, // Not a token 1) wildcard needs to stay together with other chars
-//		{ TOKEN_TAB         , TYPE_STRING  , TEXT('\t') }
-		{ TOKEN_TILDE       , TYPE_OPERATOR, "~"  }, // C/C++: Not.  Used for console.
+// NOTE: ArgToken_e and g_aTokens must match!
+const TokenTable_t g_aTokens[ NUM_TOKENS ] =
+    {
+  // Input
+        {TOKEN_ALPHANUMERIC,  TYPE_STRING,   0   }, // Default, if doen't match anything else
+        {TOKEN_AMPERSAND,     TYPE_OPERATOR, "&" }, // bit-and
+        {TOKEN_AT,            TYPE_OPERATOR, "@" }, // reference results
+        {TOKEN_BRACE_L,       TYPE_STRING,   "{" },
+        {TOKEN_BRACE_R,       TYPE_STRING,   "}" },
+        {TOKEN_BRACKET_L,     TYPE_STRING,   "[" },
+        {TOKEN_BRACKET_R,     TYPE_STRING,   "]" },
+        {TOKEN_BSLASH,        TYPE_OPERATOR, "\\"},
+        {TOKEN_CARET,         TYPE_OPERATOR, "^" }, // bit-eor, C/C++: xor, Math: POWER
+        {TOKEN_COLON,         TYPE_OPERATOR, ":" },
+        {TOKEN_COMMA,         TYPE_OPERATOR, "," },
+        {TOKEN_DOLLAR,        TYPE_STRING,   "$" },
+        {TOKEN_EQUAL,         TYPE_OPERATOR, "=" },
+        {TOKEN_EXCLAMATION,   TYPE_OPERATOR, "!" }, // NOT
+        {TOKEN_FSLASH,        TYPE_OPERATOR, "/" }, // div
+        {TOKEN_GREATER_THAN,  TYPE_OPERATOR, ">" }, // TODO/FIXME: Parser will break up '>=' (needed for uber breakpoints)
+        {TOKEN_HASH,          TYPE_OPERATOR, "#" },
+        {TOKEN_LESS_THAN,     TYPE_OPERATOR, "<" },
+        {TOKEN_MINUS,         TYPE_OPERATOR, "-" }, // sub
+        {TOKEN_PAREN_L,       TYPE_OPERATOR, "(" },
+        {TOKEN_PAREN_R,       TYPE_OPERATOR, ")" },
+        {TOKEN_PERCENT,       TYPE_OPERATOR, "%" }, // mod
+        {TOKEN_PIPE,          TYPE_OPERATOR, "|" }, // bit-or
+        {TOKEN_PLUS,          TYPE_OPERATOR, "+" }, // add
+  //		{ TOKEN_QUESTION    , TYPE_OPERATOR, TEXT('?')  }, // Not a token 1) wildcard needs to stay together with other chars
+        {TOKEN_QUOTE_SINGLE,  TYPE_QUOTED_1, "\'"},
+        {TOKEN_QUOTE_DOUBLE,  TYPE_QUOTED_2, "\""}, // for strings
+        {TOKEN_SEMI,          TYPE_STRING,   ";" },
+        {TOKEN_SPACE,         TYPE_STRING,   " " }, // space is also a delimiter between tokens/args
+        {TOKEN_STAR,          TYPE_OPERATOR, "*" }, // Not a token 1) wildcard needs to stay together with other chars
+  //		{ TOKEN_TAB         , TYPE_STRING  , TEXT('\t') }
+        {TOKEN_TILDE,         TYPE_OPERATOR, "~" }, // C/C++: Not.  Used for console.
 
-		{ TOKEN_COMMENT_EOL , TYPE_STRING  , "//" },
-		{ TOKEN_GREATER_EQUAL,TYPE_OPERATOR, ">=" },
-		{ TOKEN_LESS_EQUAL  , TYPE_OPERATOR, "<=" },
-		{ TOKEN_NOT_EQUAL  , TYPE_OPERATOR , "!=" }
-	};
+        {TOKEN_COMMENT_EOL,   TYPE_STRING,   "//"},
+        {TOKEN_GREATER_EQUAL, TYPE_OPERATOR, ">="},
+        {TOKEN_LESS_EQUAL,    TYPE_OPERATOR, "<="},
+        {TOKEN_NOT_EQUAL,     TYPE_OPERATOR, "!="}
+};
 
 // Arg ____________________________________________________________________________________________
 
 
 //===========================================================================
-int _Arg_1( int nValue )
+int _Arg_1 (int nValue)
 {
-	g_aArgs[1].nValue = nValue;
+	g_aArgs[ 1 ].nValue = nValue;
 	return 1;
 }
-	
+
 //===========================================================================
-int _Arg_1( LPTSTR pName )
+int _Arg_1 (LPTSTR pName)
 {
-	int nLen = _tcslen( g_aArgs[1].sArg );
+	int nLen = _tcslen(g_aArgs[ 1 ].sArg);
 	if (nLen < MAX_ARG_LEN)
 	{
-		_tcscpy( g_aArgs[1].sArg, pName );
+		_tcscpy(g_aArgs[ 1 ].sArg, pName);
 	}
 	else
 	{
-		_tcsncpy( g_aArgs[1].sArg, pName, MAX_ARG_LEN );
+		_tcsncpy(g_aArgs[ 1 ].sArg, pName, MAX_ARG_LEN);
 	}
 	return 1;
 }
 
 /**
-	@description Copies Args[iSrc .. iEnd] to Args[0]
-	@param iSrc First argument to copy
-	@param iEnd Last argument to end
-	@return nArgs Number of new args
-	Usually called as: nArgs = _Arg_Shift( iArg, nArgs );
+    @description Copies Args[iSrc .. iEnd] to Args[0]
+    @param iSrc First argument to copy
+    @param iEnd Last argument to end
+    @return nArgs Number of new args
+    Usually called as: nArgs = _Arg_Shift( iArg, nArgs );
 //=========================================================================== */
-int _Arg_Shift( int iSrc, int iEnd, int iDst )
+int _Arg_Shift (int iSrc, int iEnd, int iDst)
 {
 	if (iDst < 0)
 		return ARG_SYNTAX_ERROR;
@@ -131,14 +132,14 @@ int _Arg_Shift( int iSrc, int iEnd, int iDst )
 		return ARG_SYNTAX_ERROR;
 
 	int nArgs = (iEnd - iSrc);
-	int nLen = nArgs + 1;
+	int nLen  = nArgs + 1;
 
 	if ((iDst + nLen) > MAX_ARGS)
 		return ARG_SYNTAX_ERROR;
 
 	while (nLen--)
 	{
-		g_aArgs[iDst] = g_aArgs[iSrc];
+		g_aArgs[ iDst ] = g_aArgs[ iSrc ];
 		iSrc++;
 		iDst++;
 	}
@@ -146,7 +147,7 @@ int _Arg_Shift( int iSrc, int iEnd, int iDst )
 }
 
 //===========================================================================
-int _Args_Insert( int iSrc, int iEnd, int nLen )
+int _Args_Insert (int iSrc, int iEnd, int nLen)
 {
 	iSrc += nLen;
 	int iDst = iEnd + nLen;
@@ -156,10 +157,10 @@ int _Args_Insert( int iSrc, int iEnd, int nLen )
 
 	if (iSrc >= MAX_ARGS)
 		return ARG_SYNTAX_ERROR;
-	
+
 	while (nLen--)
 	{
-		g_aArgs[iDst] = g_aArgs[iSrc];
+		g_aArgs[ iDst ] = g_aArgs[ iSrc ];
 		iSrc--;
 		iDst--;
 	}
@@ -167,31 +168,30 @@ int _Args_Insert( int iSrc, int iEnd, int nLen )
 	return 0;
 }
 
-
-static void ClearArg( Arg_t *pArg )
+static void ClearArg (Arg_t *pArg)
 {
-	pArg->sArg[0] = 0;
-	pArg->nArgLen = 0;
-	pArg->bSymbol = false;
-	pArg->eDevice = NUM_DEVICES; // none
-	pArg->eToken  = NO_TOKEN   ; // none
-	pArg->bType   = TYPE_STRING;
-	pArg->nValue  = 0;
+	pArg->sArg[ 0 ] = 0;
+	pArg->nArgLen   = 0;
+	pArg->bSymbol   = false;
+	pArg->eDevice   = NUM_DEVICES;  // none
+	pArg->eToken    = NO_TOKEN;     // none
+	pArg->bType     = TYPE_STRING;
+	pArg->nValue    = 0;
 #if DEBUG_VAL_2
-	pArg->nVal2   = 0;
+	pArg->nVal2 = 0;
 #endif
 }
 
 //===========================================================================
 void ArgsClear ()
 {
-	Arg_t *pArg = &g_aArgs[0];
-	Arg_t *pRaw = &g_aArgRaw[0];
+	Arg_t *pArg = &g_aArgs[ 0 ];
+	Arg_t *pRaw = &g_aArgRaw[ 0 ];
 
-	for (int iArg = 0; iArg < MAX_ARGS; iArg++ )
+	for (int iArg = 0; iArg < MAX_ARGS; iArg++)
 	{
-		ClearArg( pArg );
-		ClearArg( pRaw );
+		ClearArg(pArg);
+		ClearArg(pRaw);
 
 		pArg++;
 		pRaw++;
@@ -199,18 +199,18 @@ void ArgsClear ()
 }
 
 //===========================================================================
-bool ArgsGetValue ( Arg_t *pArg, WORD * pAddressValue_, const int nBase )
+bool ArgsGetValue (Arg_t *pArg, WORD *pAddressValue_, const int nBase)
 {
 	_ASSERT(pArg);
 	if (pArg == NULL)
 		return false;
 
-	TCHAR *pSrc = & (pArg->sArg[ 0 ]);
+	TCHAR *pSrc = &(pArg->sArg[ 0 ]);
 	TCHAR *pEnd = NULL;
 
 	if (pAddressValue_)
 	{
-		*pAddressValue_ = (WORD)(_tcstoul( pSrc, &pEnd, nBase) & _6502_MEM_END);
+		*pAddressValue_ = (WORD)(_tcstoul(pSrc, &pEnd, nBase) & _6502_MEM_END);
 		return true;
 	}
 
@@ -218,14 +218,14 @@ bool ArgsGetValue ( Arg_t *pArg, WORD * pAddressValue_, const int nBase )
 }
 
 //===========================================================================
-bool ArgsGetImmediateValue ( Arg_t *pArg, WORD * pAddressValue_ )
+bool ArgsGetImmediateValue (Arg_t *pArg, WORD *pAddressValue_)
 {
 	if (pArg && pAddressValue_)
 	{
 		if (pArg->eToken == TOKEN_HASH)
 		{
 			pArg++;
-			return ArgsGetValue( pArg, pAddressValue_ );
+			return ArgsGetValue(pArg, pAddressValue_);
 		}
 	}
 
@@ -234,7 +234,7 @@ bool ArgsGetImmediateValue ( Arg_t *pArg, WORD * pAddressValue_ )
 
 // Read console input, process the raw args, turning them into tokens and types.
 //===========================================================================
-int	ArgsGet ( TCHAR * pInput )
+int ArgsGet (TCHAR *pInput)
 {
 	LPCTSTR pSrc = pInput;
 	LPCTSTR pEnd = NULL;
@@ -243,14 +243,14 @@ int	ArgsGet ( TCHAR * pInput )
 	ArgToken_e iTokenSrc = NO_TOKEN;
 	ArgToken_e iTokenEnd = NO_TOKEN;
 	ArgType_e  iType     = TYPE_STRING;
-	int     nLen;
+	int        nLen;
 
-	int     iArg = 0;
-	int     nArg = 0;
-	Arg_t  *pArg = &g_aArgRaw[0]; // &g_aArgs[0];
+	int    iArg = 0;
+	int    nArg = 0;
+	Arg_t *pArg = &g_aArgRaw[ 0 ];  // &g_aArgs[0];
 
 	g_pConsoleFirstArg = NULL;
-					
+
 	// BP FAC8:FACA // Range=3
 	// BP FAC8,2    // Length=2
 	// ^ ^^   ^^
@@ -264,19 +264,19 @@ int	ArgsGet ( TCHAR * pInput )
 		// Technically, there shouldn't be any leading spaces,
 		// since pressing the spacebar is an alias for TRACE.
 		// However, there is spaces between arguments
-		pSrc = const_cast<char*>( SkipWhiteSpace( pSrc ));
+		pSrc = const_cast<char *>(SkipWhiteSpace(pSrc));
 
 		if (pSrc)
 		{
-			pEnd = FindTokenOrAlphaNumeric( pSrc, g_aTokens, NUM_TOKENS, &iTokenSrc );
+			pEnd = FindTokenOrAlphaNumeric(pSrc, g_aTokens, NUM_TOKENS, &iTokenSrc);
 			if ((iTokenSrc == NO_TOKEN) || (iTokenSrc == TOKEN_ALPHANUMERIC))
 			{
-				pEnd = SkipUntilToken( pSrc+1, g_aTokens, NUM_TOKENS, &iTokenEnd );
+				pEnd = SkipUntilToken(pSrc + 1, g_aTokens, NUM_TOKENS, &iTokenEnd);
 			}
 
 			if (iTokenSrc == TOKEN_COMMENT_EOL)
-				break; //pArg->eToken = iTokenSrc;
-			
+				break;  // pArg->eToken = iTokenSrc;
+
 			if (iTokenSrc == NO_TOKEN)
 			{
 				iTokenSrc = TOKEN_ALPHANUMERIC;
@@ -291,14 +291,13 @@ int	ArgsGet ( TCHAR * pInput )
 
 			if (iTokenSrc == TOKEN_QUOTE_DOUBLE)
 			{
-				pSrc++; // Don't store start of quote
-				pEnd = SkipUntilChar( pSrc, CHAR_QUOTE_DOUBLE );
+				pSrc++;  // Don't store start of quote
+				pEnd = SkipUntilChar(pSrc, CHAR_QUOTE_DOUBLE);
 			}
-			else
-			if (iTokenSrc == TOKEN_QUOTE_SINGLE)
+			else if (iTokenSrc == TOKEN_QUOTE_SINGLE)
 			{
-				pSrc++; // Don't store start of quote
-				pEnd = SkipUntilChar( pSrc, CHAR_QUOTE_SINGLE );
+				pSrc++;  // Don't store start of quote
+				pEnd = SkipUntilChar(pSrc, CHAR_QUOTE_SINGLE);
 			}
 
 			if (pEnd)
@@ -310,10 +309,10 @@ int	ArgsGet ( TCHAR * pInput )
 			{
 				// Does anyone actually "need" > 132 character output???
 				// Technically, we are capped via ParseInput(), g_aArgs[ iArg ] = g_aArgRaw[ iArg ];
-				//if (iTokenSrc == TOKEN_QUOTE_DOUBLE)
+				// if (iTokenSrc == TOKEN_QUOTE_DOUBLE)
 				//	nLen = nBuf;
-				nLen = MIN( nBuf, MAX_ARG_LEN ); // NOTE: see Arg_t.sArg[] // GH#481
-				_tcsncpy( pArg->sArg, pSrc, nLen );
+				nLen = MIN(nBuf, MAX_ARG_LEN);  // NOTE: see Arg_t.sArg[] // GH#481
+				_tcsncpy(pArg->sArg, pSrc, nLen);
 				pArg->sArg[ nLen ] = 0;
 				pArg->nArgLen      = nLen;
 				pArg->eToken       = iTokenSrc;
@@ -321,10 +320,9 @@ int	ArgsGet ( TCHAR * pInput )
 
 				if (iTokenSrc == TOKEN_QUOTE_DOUBLE)
 				{
-					pEnd++; 
+					pEnd++;
 				}
-				else
-				if (iTokenSrc == TOKEN_QUOTE_SINGLE)
+				else if (iTokenSrc == TOKEN_QUOTE_SINGLE)
 				{
 					if (nLen > 1)
 					{
@@ -332,7 +330,7 @@ int	ArgsGet ( TCHAR * pInput )
 						// But we've extended the syntax to allow the user
 						// to input High-Bit Apple Text
 					}
-					pEnd++; 
+					pEnd++;
 				}
 
 				pSrc = pEnd;
@@ -349,7 +347,7 @@ int	ArgsGet ( TCHAR * pInput )
 
 	if (iArg)
 	{
-		nArg = iArg - 1; // first arg is command
+		nArg = iArg - 1;  // first arg is command
 	}
 
 	g_nArgRaw = iArg;
@@ -357,16 +355,15 @@ int	ArgsGet ( TCHAR * pInput )
 	return nArg;
 }
 
-
 //===========================================================================
-bool ArgsGetRegisterValue ( Arg_t *pArg, WORD * pAddressValue_ )
+bool ArgsGetRegisterValue (Arg_t *pArg, WORD *pAddressValue_)
 {
 	bool bStatus = false;
 
 	if (pArg && pAddressValue_)
 	{
 		// Check if we refer to reg A X Y P S
-		for ( int iReg = 0; iReg < (NUM_BREAKPOINT_SOURCES-1); iReg++ )
+		for (int iReg = 0; iReg < (NUM_BREAKPOINT_SOURCES - 1); iReg++)
 		{
 			// Skip Opcode/Instruction/Mnemonic
 			if (iReg == BP_SRC_OPCODE)
@@ -377,25 +374,41 @@ bool ArgsGetRegisterValue ( Arg_t *pArg, WORD * pAddressValue_ )
 				continue;
 
 			// Handle one char names
-			if ((pArg->nArgLen == 1) && (pArg->sArg[0] == g_aBreakpointSource[ iReg ][0]))
+			if ((pArg->nArgLen == 1) && (pArg->sArg[ 0 ] == g_aBreakpointSource[ iReg ][ 0 ]))
 			{
-				switch ( iReg )
+				switch (iReg)
 				{
-					case BP_SRC_REG_A : *pAddressValue_ = regs.a  & 0xFF; bStatus = true; break;
-					case BP_SRC_REG_P : *pAddressValue_ = regs.ps & 0xFF; bStatus = true; break;
-					case BP_SRC_REG_X : *pAddressValue_ = regs.x  & 0xFF; bStatus = true; break;
-					case BP_SRC_REG_Y : *pAddressValue_ = regs.y  & 0xFF; bStatus = true; break;
-					case BP_SRC_REG_S : *pAddressValue_ = regs.sp       ; bStatus = true; break;
+					case BP_SRC_REG_A:
+						*pAddressValue_ = regs.a & 0xFF;
+						bStatus         = true;
+						break;
+					case BP_SRC_REG_P:
+						*pAddressValue_ = regs.ps & 0xFF;
+						bStatus         = true;
+						break;
+					case BP_SRC_REG_X:
+						*pAddressValue_ = regs.x & 0xFF;
+						bStatus         = true;
+						break;
+					case BP_SRC_REG_Y:
+						*pAddressValue_ = regs.y & 0xFF;
+						bStatus         = true;
+						break;
+					case BP_SRC_REG_S:
+						*pAddressValue_ = regs.sp;
+						bStatus         = true;
+						break;
 					default:
 						break;
 				}
 			}
-			else
-			if (iReg == BP_SRC_REG_PC)
+			else if (iReg == BP_SRC_REG_PC)
 			{
-				if ((pArg->nArgLen == 2) && (_tcscmp( pArg->sArg, g_aBreakpointSource[ iReg ] ) == 0))
+				if ((pArg->nArgLen == 2) && (_tcscmp(pArg->sArg, g_aBreakpointSource[ iReg ]) == 0))
 				{
-					*pAddressValue_ = regs.pc       ; bStatus = true; break;
+					*pAddressValue_ = regs.pc;
+					bStatus         = true;
+					break;
 				}
 			}
 		}
@@ -403,33 +416,32 @@ bool ArgsGetRegisterValue ( Arg_t *pArg, WORD * pAddressValue_ )
 	return bStatus;
 }
 
-
 //===========================================================================
-void ArgsRawParse ( void )
+void ArgsRawParse (void)
 {
-	const int BASE = 16; // hex
-	TCHAR *pSrc  = NULL;
-	TCHAR *pEnd  = NULL;
+	const int BASE = 16;  // hex
+	TCHAR    *pSrc = NULL;
+	TCHAR    *pEnd = NULL;
 
 	int    iArg = 1;
-	Arg_t *pArg = & g_aArgRaw[ iArg ];
+	Arg_t *pArg = &g_aArgRaw[ iArg ];
 	int    nArg = g_nArgRaw;
 
-	WORD   nAddressArg;
-	WORD   nAddressSymbol;
-	WORD   nAddressValue;
+	WORD nAddressArg;
+	WORD nAddressSymbol;
+	WORD nAddressValue;
 
 	while (iArg <= nArg)
 	{
-		pSrc  = & (pArg->sArg[ 0 ]);
+		pSrc = &(pArg->sArg[ 0 ]);
 
-		nAddressArg = (WORD)(_tcstoul( pSrc, &pEnd, BASE) & _6502_MEM_END);
+		nAddressArg   = (WORD)(_tcstoul(pSrc, &pEnd, BASE) & _6502_MEM_END);
 		nAddressValue = nAddressArg;
 
 		bool bFound = false;
 		if (! (pArg->bType & TYPE_NO_SYM))
 		{
-			bFound = FindAddressFromSymbol( pSrc, & nAddressSymbol );
+			bFound = FindAddressFromSymbol(pSrc, &nAddressSymbol);
 			if (bFound)
 			{
 				nAddressValue = nAddressSymbol;
@@ -437,7 +449,7 @@ void ArgsRawParse ( void )
 			}
 		}
 
-		if (! (pArg->bType & TYPE_VALUE)) // already up to date?
+		if (! (pArg->bType & TYPE_VALUE))  // already up to date?
 			pArg->nValue = nAddressValue;
 
 		pArg->bType |= TYPE_ADDRESS;
@@ -447,47 +459,46 @@ void ArgsRawParse ( void )
 	}
 }
 
-
 /**
-	@param nArgs         Number of raw args.
+    @param nArgs         Number of raw args.
 
-	Note: The number of args can be changed via:
+    Note: The number of args can be changed via:
 
-		address1,length    Length
-		address1:address2  Range
-		address1+delta     Delta
-		address1-delta     Delta
+        address1,length    Length
+        address1:address2  Range
+        address1+delta     Delta
+        address1-delta     Delta
 //=========================================================================== */
-int ArgsCook ( const int nArgs )
+int ArgsCook (const int nArgs)
 {
-	const int BASE = 16; // hex
-	TCHAR *pSrc  = NULL;
-	TCHAR *pEnd2 = NULL;
+	const int BASE  = 16;  // hex
+	TCHAR    *pSrc  = NULL;
+	TCHAR    *pEnd2 = NULL;
 
-	int    nArg = nArgs;
-	int    iArg = 1;
-	Arg_t *pArg = NULL; 
+	int    nArg  = nArgs;
+	int    iArg  = 1;
+	Arg_t *pArg  = NULL;
 	Arg_t *pPrev = NULL;
 	Arg_t *pNext = NULL;
 
-	WORD   nAddressArg;
-	WORD   nAddressRHS;
-	WORD   nAddressSym;
-	WORD   nAddressVal;
-	int    nParamLen = 0;
-	int    nArgsLeft = 0;
+	WORD nAddressArg;
+	WORD nAddressRHS;
+	WORD nAddressSym;
+	WORD nAddressVal;
+	int  nParamLen = 0;
+	int  nArgsLeft = 0;
 
 	int nParenL = 0;
 	int nParenR = 0;
 
 	while (iArg <= nArg)
 	{
-		pArg  = & (g_aArgs[ iArg ]);
-		pSrc  = & (pArg->sArg[ 0 ]);
+		pArg = &(g_aArgs[ iArg ]);
+		pSrc = &(pArg->sArg[ 0 ]);
 
-		if (pArg->eToken == TOKEN_DOLLAR) // address
+		if (pArg->eToken == TOKEN_DOLLAR)  // address
 		{
-// TODO: Need to flag was a DOLLAR token for assembler
+			// TODO: Need to flag was a DOLLAR token for assembler
 			pNext = NULL;
 
 			nArgsLeft = (nArg - iArg);
@@ -495,9 +506,9 @@ int ArgsCook ( const int nArgs )
 			{
 				pNext = pArg + 1;
 
-				_Arg_Shift( iArg + 1, nArgs, iArg );
+				_Arg_Shift(iArg + 1, nArgs, iArg);
 				nArg--;
-				iArg--; // inc for start of next loop
+				iArg--;  // inc for start of next loop
 
 				// Don't do register lookup
 				pArg->bType |= TYPE_NO_REG;
@@ -506,13 +517,13 @@ int ArgsCook ( const int nArgs )
 				return ARG_SYNTAX_ERROR;
 		}
 
-		if (pArg->bType & TYPE_OPERATOR) // prev op type == address?
+		if (pArg->bType & TYPE_OPERATOR)  // prev op type == address?
 		{
-			pPrev = NULL; // pLHS
-			pNext = NULL; // pRHS
+			pPrev     = NULL;  // pLHS
+			pNext     = NULL;  // pRHS
 			nParamLen = 0;
 
-			if (pArg->eToken == TOKEN_HASH) // HASH    # immediate
+			if (pArg->eToken == TOKEN_HASH)  // HASH    # immediate
 				nParamLen = 1;
 
 			nArgsLeft = (nArg - iArg);
@@ -526,194 +537,193 @@ int ArgsCook ( const int nArgs )
 			// Pass wildstar '*' to commands if only arg
 			if ((pArg->eToken == TOKEN_STAR) && (nArg == 1))
 				;
-			else			
-			if (nArgsLeft > 0) // These ops take at least 1 argument
+			else if (nArgsLeft > 0)  // These ops take at least 1 argument
 			{
 				pNext = pArg + 1;
-				pSrc = &pNext->sArg[0];
+				pSrc  = &pNext->sArg[ 0 ];
 
 				nAddressVal = 0;
-				if (ArgsGetValue( pNext, & nAddressRHS ))
+				if (ArgsGetValue(pNext, &nAddressRHS))
 					nAddressVal = nAddressRHS;
 
-				bool bFound = FindAddressFromSymbol( pSrc, & nAddressSym );
+				bool bFound = FindAddressFromSymbol(pSrc, &nAddressSym);
 				if (bFound)
 				{
-					nAddressVal = nAddressSym;
+					nAddressVal   = nAddressSym;
 					pArg->bSymbol = true;
 				}
 
 				// Comma and Colon are range operators, but they are not parsed here,
 				// since args no longer have a 1st and 2nd value
-/*
-					pPrev->eToken = TOKEN_COLON;
-					pPrev->bType |= TYPE_ADDRESS;
-					pPrev->bType |= TYPE_RANGE;
-*/
+				/*
+				                    pPrev->eToken = TOKEN_COLON;
+				                    pPrev->bType |= TYPE_ADDRESS;
+				                    pPrev->bType |= TYPE_RANGE;
+				*/
 
-				if (pArg->eToken == TOKEN_AMPERSAND) // AND   & delta
+				if (pArg->eToken == TOKEN_AMPERSAND)  // AND   & delta
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						  ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					pPrev->nValue &= nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
-				}								
+				}
 
-				if (pArg->eToken == TOKEN_PIPE) // OR   | delta
+				if (pArg->eToken == TOKEN_PIPE)  // OR   | delta
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						  ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					pPrev->nValue |= nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
-				}								
+				}
 
-				if (pArg->eToken == TOKEN_CARET) // XOR   ^ delta
+				if (pArg->eToken == TOKEN_CARET)  // XOR   ^ delta
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					pPrev->nValue ^= nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
 				}
 
-				if (pArg->eToken == TOKEN_PLUS) // PLUS   + delta
+				if (pArg->eToken == TOKEN_PLUS)  // PLUS   + delta
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					pPrev->nValue += nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
 				}
 
-				if (pArg->eToken == TOKEN_MINUS) // MINUS  - delta
+				if (pArg->eToken == TOKEN_MINUS)  // MINUS  - delta
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					pPrev->nValue -= nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
 				}
 
-				if (pArg->eToken == TOKEN_PERCENT) // PERCENT % delta
+				if (pArg->eToken == TOKEN_PERCENT)  // PERCENT % delta
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					pPrev->nValue %= nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
 				}
 
-				if (pArg->eToken == TOKEN_STAR) // STAR   * delta
+				if (pArg->eToken == TOKEN_STAR)  // STAR   * delta
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						  ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					pPrev->nValue *= nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
 				}
 
-				if (pArg->eToken == TOKEN_FSLASH) // FORWARD SLASH / delta
+				if (pArg->eToken == TOKEN_FSLASH)  // FORWARD SLASH / delta
 				{
-					if (pNext->eToken == TOKEN_FSLASH) // Comment
-					{					
+					if (pNext->eToken == TOKEN_FSLASH)  // Comment
+					{
 						nArg = iArg - 1;
 						return nArg;
 					}
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						ArgsGetRegisterValue( pNext, & nAddressRHS );
+						ArgsGetRegisterValue(pNext, &nAddressRHS);
 					}
 					if (! nAddressRHS)
-						nAddressRHS = 1; // divide by zero bug
+						nAddressRHS = 1;  // divide by zero bug
 					pPrev->nValue /= nAddressRHS;
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
 					nParamLen = 2;
 				}
 
-				if (pArg->eToken == TOKEN_EQUAL) // EQUAL  = assign
+				if (pArg->eToken == TOKEN_EQUAL)  // EQUAL  = assign
 				{
-					pPrev->nValue = nAddressRHS; 
-					pPrev->bType |= TYPE_VALUE; // signal already up to date
-					nParamLen = 0; // need token for Smart BreakPoints
-				}					
+					pPrev->nValue = nAddressRHS;
+					pPrev->bType |= TYPE_VALUE;  // signal already up to date
+					nParamLen = 0;               // need token for Smart BreakPoints
+				}
 
-				if (pArg->eToken == TOKEN_AT) // AT @ pointer de-reference
+				if (pArg->eToken == TOKEN_AT)  // AT @ pointer de-reference
 				{
 					nParamLen = 1;
-					_Arg_Shift( iArg + nParamLen, nArgs, iArg );
+					_Arg_Shift(iArg + nParamLen, nArgs, iArg);
 					nArg--;
 
-					pArg->nValue   = 0; // nAddressRHS;
+					pArg->nValue  = 0;  // nAddressRHS;
 					pArg->bSymbol = false;
 
 					int nPointers = g_vMemorySearchResults.size();
 					if ((nPointers) &&
-						(nAddressRHS < nPointers))
+					    (nAddressRHS < nPointers))
 					{
-						pArg->nValue   = g_vMemorySearchResults.at( nAddressRHS );
-						pArg->bType   = TYPE_VALUE | TYPE_ADDRESS | TYPE_NO_REG | TYPE_NO_SYM;
+						pArg->nValue = g_vMemorySearchResults.at(nAddressRHS);
+						pArg->bType  = TYPE_VALUE | TYPE_ADDRESS | TYPE_NO_REG | TYPE_NO_SYM;
 					}
 					nParamLen = 0;
 				}
-				
-				if (pArg->eToken == TOKEN_HASH) // HASH    # immediate
+
+				if (pArg->eToken == TOKEN_HASH)  // HASH    # immediate
 				{
-					pArg->nValue   = nAddressRHS;
+					pArg->nValue  = nAddressRHS;
 					pArg->bSymbol = false;
 					pArg->bType   = TYPE_VALUE | TYPE_ADDRESS | TYPE_NO_REG | TYPE_NO_SYM;
-					nParamLen = 0;
+					nParamLen     = 0;
 				}
 
-				if (pArg->eToken == TOKEN_LESS_THAN) // <
+				if (pArg->eToken == TOKEN_LESS_THAN)  // <
 				{
 					nParamLen = 0;
 				}
 
-				if (pArg->eToken == TOKEN_GREATER_THAN) // >
+				if (pArg->eToken == TOKEN_GREATER_THAN)  // >
 				{
 					nParamLen = 0;
 				}
 
-				if (pArg->eToken == TOKEN_EXCLAMATION) // NOT !
+				if (pArg->eToken == TOKEN_EXCLAMATION)  // NOT !
 				{
-					if (! ArgsGetImmediateValue( pNext, & nAddressRHS ))
+					if (! ArgsGetImmediateValue(pNext, &nAddressRHS))
 					{
-						if (! ArgsGetRegisterValue( pNext, & nAddressRHS ))
+						if (! ArgsGetRegisterValue(pNext, &nAddressRHS))
 						{
 							nAddressRHS = nAddressVal;
 						}
 					}
 					pArg->nValue = ~nAddressRHS;
-					pArg->bType |= TYPE_VALUE; // signal already up to date
-					// Don't remove, since "SYM ! symbol" needs token to remove symbol
+					pArg->bType |= TYPE_VALUE;  // signal already up to date
+					                            // Don't remove, since "SYM ! symbol" needs token to remove symbol
 				}
-				
+
 				if (pArg->eToken == TOKEN_PAREN_L)
 				{
 					nParenL++;
 
 					if (nArgsLeft >= 2)
 					{
-						nParamLen = 1; // eat '('
-						_Arg_Shift( iArg + nParamLen, nArgs, iArg );
+						nParamLen = 1;  // eat '('
+						_Arg_Shift(iArg + nParamLen, nArgs, iArg);
 
-						pNext = & (g_aArgs[ iArg + 1 ]);
+						pNext = &(g_aArgs[ iArg + 1 ]);
 						if (pNext->eToken == TOKEN_PAREN_R)
 						{
 							nParenR++;
@@ -725,18 +735,18 @@ int ArgsCook ( const int nArgs )
 							//	TODO: TYPE_INDIRECT
 							// pArg->bType |= TYPE_INDIRECT;
 							// pArg->nValue  =  nAddressVal;
-							//nAddressVal = pNext->nValue;
-							pArg->nValue  =  * (WORD*) (mem + nAddressVal);
-							pArg->bType   = TYPE_VALUE | TYPE_ADDRESS | TYPE_NO_REG;
+							// nAddressVal = pNext->nValue;
+							pArg->nValue = *(WORD *)(mem + nAddressVal);
+							pArg->bType  = TYPE_VALUE | TYPE_ADDRESS | TYPE_NO_REG;
 
-							iArg++; // eat ')'
+							iArg++;  // eat ')'
 							nArg -= 2;
 							nParamLen = 0;
 						}
 						else
-							return ARG_SYNTAX_ERROR; // ERROR: unbalanced/unmatched ( )
+							return ARG_SYNTAX_ERROR;  // ERROR: unbalanced/unmatched ( )
 					}
-				}							
+				}
 
 				if (pArg->eToken == TOKEN_PAREN_R)
 				{
@@ -751,21 +761,21 @@ int ArgsCook ( const int nArgs )
 
 				if (nParamLen)
 				{
-					_Arg_Shift( iArg + nParamLen, nArgs, iArg );
+					_Arg_Shift(iArg + nParamLen, nArgs, iArg);
 					nArg -= nParamLen;
-					iArg = 0; // reset args, to handle multiple operators
+					iArg = 0;  // reset args, to handle multiple operators
 				}
 			}
 			else
 				return ARG_SYNTAX_ERROR;
 		}
-		else // not an operator, try (1) address, (2) symbol lookup
+		else  // not an operator, try (1) address, (2) symbol lookup
 		{
-			nAddressArg = (WORD)(_tcstoul( pSrc, &pEnd2, BASE) & _6502_MEM_END);
+			nAddressArg = (WORD)(_tcstoul(pSrc, &pEnd2, BASE) & _6502_MEM_END);
 
 			if (! (pArg->bType & TYPE_NO_REG))
 			{
-				ArgsGetRegisterValue( pArg, & nAddressArg );
+				ArgsGetRegisterValue(pArg, &nAddressArg);
 			}
 
 			nAddressVal = nAddressArg;
@@ -773,15 +783,15 @@ int ArgsCook ( const int nArgs )
 			bool bFound = false;
 			if (! (pArg->bType & TYPE_NO_SYM))
 			{
-				bFound = FindAddressFromSymbol( pSrc, & nAddressSym );
+				bFound = FindAddressFromSymbol(pSrc, &nAddressSym);
 				if (bFound)
 				{
-					nAddressVal = nAddressSym;
+					nAddressVal   = nAddressSym;
 					pArg->bSymbol = true;
 				}
 			}
 
-			if (! (pArg->bType & TYPE_VALUE)) // already up to date?
+			if (! (pArg->bType & TYPE_VALUE))  // already up to date?
 				pArg->nValue = nAddressVal;
 
 			pArg->bType |= TYPE_ADDRESS;
@@ -793,27 +803,25 @@ int ArgsCook ( const int nArgs )
 	return nArg;
 }
 
-
 // Text Util ______________________________________________________________________________________
 
 
-
 //===========================================================================
-const char * ParserFindToken( const char *pSrc, const TokenTable_t *aTokens, const int nTokens, ArgToken_e * pToken_ )
+const char *ParserFindToken (const char *pSrc, const TokenTable_t *aTokens, const int nTokens, ArgToken_e *pToken_)
 {
 	if (! pSrc)
 		return NULL;
 
-	const TCHAR        *pName  = NULL;
-	int   iToken;
+	const TCHAR *pName = NULL;
+	int          iToken;
 
 	// Look-ahead for <=
 	// Look-ahead for >=
-	for (iToken = _TOKEN_FLAG_MULTI; iToken < NUM_TOKENS; iToken++ )
+	for (iToken = _TOKEN_FLAG_MULTI; iToken < NUM_TOKENS; iToken++)
 	{
-		pName = & (g_aTokens[ iToken ].sToken[0]);
-		if ((pSrc[0] == pName[ 0 ]) &&
-			(pSrc[1] == pName[ 1 ]))
+		pName = &(g_aTokens[ iToken ].sToken[ 0 ]);
+		if ((pSrc[ 0 ] == pName[ 0 ]) &&
+		    (pSrc[ 1 ] == pName[ 1 ]))
 		{
 			*pToken_ = g_aTokens[ iToken ].eToken;
 			return pSrc + 2;
@@ -822,14 +830,14 @@ const char * ParserFindToken( const char *pSrc, const TokenTable_t *aTokens, con
 
 	const TokenTable_t *pToken = aTokens;
 
-	for (iToken = 0; iToken < _TOKEN_FLAG_MULTI; iToken++ )
+	for (iToken = 0; iToken < _TOKEN_FLAG_MULTI; iToken++)
 	{
-		pName = & (pToken->sToken[0]);
+		pName = &(pToken->sToken[ 0 ]);
 		if (*pSrc == *pName)
 		{
-			if ( pToken_ )
+			if (pToken_)
 			{
-				*pToken_ = (ArgToken_e) iToken;
+				*pToken_ = (ArgToken_e)iToken;
 			}
 			return pSrc + 1;
 		}
@@ -838,25 +846,24 @@ const char * ParserFindToken( const char *pSrc, const TokenTable_t *aTokens, con
 	return NULL;
 }
 
-
 //===========================================================================
-const TCHAR * FindTokenOrAlphaNumeric ( const TCHAR *pSrc, const TokenTable_t *aTokens, const int nTokens, ArgToken_e * pToken_ )
+const TCHAR *FindTokenOrAlphaNumeric (const TCHAR *pSrc, const TokenTable_t *aTokens, const int nTokens, ArgToken_e *pToken_)
 {
-	if ( pToken_ )
+	if (pToken_)
 		*pToken_ = NO_TOKEN;
 
 	const TCHAR *pEnd = pSrc;
 
 	if (pSrc && (*pSrc))
 	{
-		if (isalnum( *pSrc ))
+		if (isalnum(*pSrc))
 		{
 			if (pToken_)
 				*pToken_ = TOKEN_ALPHANUMERIC;
-		}			
+		}
 		else
 		{
-			pEnd = ParserFindToken( pSrc, aTokens, nTokens, pToken_ );
+			pEnd = ParserFindToken(pSrc, aTokens, nTokens, pToken_);
 			if (! pEnd)
 				pEnd = pSrc;
 		}
@@ -864,11 +871,10 @@ const TCHAR * FindTokenOrAlphaNumeric ( const TCHAR *pSrc, const TokenTable_t *a
 	return pEnd;
 }
 
-
 //===========================================================================
-void TextConvertTabsToSpaces( TCHAR *pDeTabified_, LPCTSTR pText, const int nDstSize, int nTabStop )
+void TextConvertTabsToSpaces (TCHAR *pDeTabified_, LPCTSTR pText, const int nDstSize, int nTabStop)
 {
-	int TAB_SPACING = 8;
+	int TAB_SPACING   = 8;
 	int TAB_SPACING_1 = 16;
 	int TAB_SPACING_2 = 21;
 
@@ -878,9 +884,9 @@ void TextConvertTabsToSpaces( TCHAR *pDeTabified_, LPCTSTR pText, const int nDst
 	LPCTSTR pSrc = pText;
 	LPTSTR  pDst = pDeTabified_;
 
-	int nTab = 0; // gap left to next tab
-	int nGap = 0; // actual gap
-	int nCur = 0; // current cursor position
+	int nTab = 0;  // gap left to next tab
+	int nGap = 0;  // actual gap
+	int nCur = 0;  // current cursor position
 	while (pSrc && *pSrc && (nCur < nDstSize))
 	{
 		if (*pSrc == CHAR_TAB)
@@ -896,8 +902,7 @@ void TextConvertTabsToSpaces( TCHAR *pDeTabified_, LPCTSTR pText, const int nDst
 				{
 					nGap = (TAB_SPACING_1 - nCur);
 				}
-				else
-				if (nCur <= TAB_SPACING_2)
+				else if (nCur <= TAB_SPACING_2)
 				{
 					nGap = (TAB_SPACING_2 - nCur);
 				}
@@ -907,21 +912,20 @@ void TextConvertTabsToSpaces( TCHAR *pDeTabified_, LPCTSTR pText, const int nDst
 					nGap = (TAB_SPACING - nTab);
 				}
 			}
-			
+
 
 			if ((nCur + nGap) >= nDstSize)
 				break;
 
-			for ( int iSpc = 0; iSpc < nGap; iSpc++ )
+			for (int iSpc = 0; iSpc < nGap; iSpc++)
 			{
 				*pDst++ = CHAR_SPACE;
 			}
 			nCur += nGap;
 		}
-		else
-		if ((*pSrc == CHAR_LF) || (*pSrc == CHAR_CR))
+		else if ((*pSrc == CHAR_LF) || (*pSrc == CHAR_CR))
 		{
-			*pDst++ = 0; // *pSrc;
+			*pDst++ = 0;  // *pSrc;
 			nCur++;
 		}
 		else
@@ -930,16 +934,15 @@ void TextConvertTabsToSpaces( TCHAR *pDeTabified_, LPCTSTR pText, const int nDst
 			nCur++;
 		}
 		pSrc++;
-	}	
+	}
 	*pDst = 0;
 }
 
-
 // @return Length of new string
 //===========================================================================
-int RemoveWhiteSpaceReverse ( TCHAR *pSrc )
+int RemoveWhiteSpaceReverse (TCHAR *pSrc)
 {
-	int   nLen = _tcslen( pSrc );
+	int   nLen = _tcslen(pSrc);
 	char *pDst = pSrc + nLen;
 	while (nLen--)
 	{

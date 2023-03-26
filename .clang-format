@@ -1,0 +1,33 @@
+AccessModifierOffset: -4
+AlignArrayOfStructures: Left
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros: Consecutive
+BreakBeforeBraces: Allman
+BreakConstructorInitializers: AfterColon
+ColumnLimit: 0
+EmptyLineBeforeAccessModifier: Always
+IndentAccessModifiers: false
+IndentCaseLabels: true
+IndentWidth: 4
+# InsertNewlineAtEOF: true
+KeepEmptyLinesAtTheStartOfBlocks: false
+Language: Cpp
+MaxEmptyLinesToKeep: 2
+PointerAlignment: Right
+SeparateDefinitionBlocks: Always
+SortIncludes: Never
+SpaceAfterLogicalNot: true
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements : true
+  AfterFunctionDeclarationName: true
+  AfterFunctionDefinitionName: true
+SpacesBeforeTrailingComments: 2
+SpacesInParentheses: false
+SpacesInSquareBrackets: true
+TabWidth: 4
+UseTab: ForIndentation
+
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: WithoutElse

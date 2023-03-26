@@ -32,22 +32,22 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 const int EOL_NULL = 0;
 
 //===========================================================================
-bool MemoryTextFile_t::Read( const std::string & pFileName )
+bool MemoryTextFile_t::Read(const std::string &pFileName)
 {
-	bool bStatus = false;
-	FILE *hFile = fopen( pFileName.c_str(), "rb" );
+	bool  bStatus = false;
+	FILE *hFile   = fopen(pFileName.c_str(), "rb");
 
 	if (hFile)
 	{
-		fseek( hFile, 0, SEEK_END );
-		long nSize = ftell( hFile );
-		fseek( hFile, 0, SEEK_SET );
+		fseek(hFile, 0, SEEK_END);
+		long nSize = ftell(hFile);
+		fseek(hFile, 0, SEEK_SET);
 
-		m_vBuffer.reserve( nSize + 1 );
-		m_vBuffer.insert( m_vBuffer.begin(), nSize+1, 0 ); // NOTE: Can NOT m_vBuffer.clear(); MUST insert() _before_ using at()
+		m_vBuffer.reserve(nSize + 1);
+		m_vBuffer.insert(m_vBuffer.begin(), nSize + 1, 0);  // NOTE: Can NOT m_vBuffer.clear(); MUST insert() _before_ using at()
 
-		char *pBuffer = & m_vBuffer.at(0);
-		fread( (void*)pBuffer, nSize, 1, hFile );
+		char *pBuffer = &m_vBuffer.at(0);
+		fread((void *)pBuffer, nSize, 1, hFile);
 		fclose(hFile);
 
 		m_bDirty = true;
@@ -59,19 +59,17 @@ bool MemoryTextFile_t::Read( const std::string & pFileName )
 	return bStatus;
 }
 
-
 //===========================================================================
-void MemoryTextFile_t::GetLine( const int iLine, char *pLine, const int nMaxLineChars )
+void MemoryTextFile_t::GetLine(const int iLine, char *pLine, const int nMaxLineChars)
 {
 	if (m_bDirty)
 	{
 		GetLinePointers();
-	}		
+	}
 
-	memset( pLine, 0, nMaxLineChars );
-	strncpy( pLine, m_vLines[ iLine ], nMaxLineChars-1 );
+	memset(pLine, 0, nMaxLineChars);
+	strncpy(pLine, m_vLines[ iLine ], nMaxLineChars - 1);
 }
-
 
 // cr/new lines are converted into null, string terminators
 //===========================================================================
@@ -81,18 +79,18 @@ void MemoryTextFile_t::GetLinePointers()
 		return;
 
 	m_vLines.clear();
-	char *pBegin = & m_vBuffer[ 0 ];
-	char *pLast  = & m_vBuffer[ m_vBuffer.size()-1 ];
+	char *pBegin = &m_vBuffer[ 0 ];
+	char *pLast  = &m_vBuffer[ m_vBuffer.size() - 1 ];
 
 	char *pEnd = NULL;
 	char *pStartNextLine;
 
 	while (pBegin <= pLast)
 	{
-		if ( *pBegin )	// Only keep non-empty lines
-			m_vLines.push_back( pBegin );
+		if (*pBegin)  // Only keep non-empty lines
+			m_vLines.push_back(pBegin);
 
-		pEnd = const_cast<char*>( SkipUntilEOL( pBegin ));
+		pEnd = const_cast<char *>(SkipUntilEOL(pBegin));
 
 		if (*pEnd == EOL_NULL)
 		{
@@ -101,7 +99,7 @@ void MemoryTextFile_t::GetLinePointers()
 		}
 		else
 		{
-			pStartNextLine = const_cast<char*>( EatEOL( pEnd ));
+			pStartNextLine = const_cast<char *>(EatEOL(pEnd));
 
 			// DOS/Win "Text" mode converts LF CR (0D 0A) to CR (0D)
 			// but just in case, the file is read in binary.
@@ -115,34 +113,32 @@ void MemoryTextFile_t::GetLinePointers()
 			*pEnd = EOL_NULL;
 		}
 		pBegin = pStartNextLine;
-	}			
+	}
 
 	m_bDirty = false;
 }
 
-
 //===========================================================================
-void MemoryTextFile_t::PushLine( const char *pLine )
+void MemoryTextFile_t::PushLine(const char *pLine)
 {
 	const char *pSrc = pLine;
 	while (pSrc && *pSrc)
 	{
 		if (*pSrc == CHAR_CR)
-			m_vBuffer.push_back( EOL_NULL );
+			m_vBuffer.push_back(EOL_NULL);
+		else if (*pSrc == CHAR_LF)
+			m_vBuffer.push_back(EOL_NULL);
 		else
-		if (*pSrc == CHAR_LF)			
-			m_vBuffer.push_back( EOL_NULL );
-		else
-			m_vBuffer.push_back( *pSrc );
+			m_vBuffer.push_back(*pSrc);
 
-		pSrc++;		
+		pSrc++;
 	}
-	m_vBuffer.push_back( EOL_NULL );
+	m_vBuffer.push_back(EOL_NULL);
 
 	m_bDirty = true;
 }
 
-void MemoryTextFile_t::PushLineFormat( const char *pFormat, ... )
+void MemoryTextFile_t::PushLineFormat(const char *pFormat, ...)
 {
 	va_list va;
 	va_start(va, pFormat);

@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * Author: Copyright (C) 2006-2010 Michael Pohoreski
  */
 
- // disable warning C4786: symbol greater than 255 character:
- //#pragma warning(disable: 4786)
+// disable warning C4786: symbol greater than 255 character:
+// #pragma warning(disable: 4786)
 
 #include "StdAfx.h"
 
@@ -44,19 +44,19 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Font
 
 //===========================================================================
-static Update_t CmdConfigFontLoad(int nArgs)
+static Update_t CmdConfigFontLoad (int nArgs)
 {
 	return UPDATE_CONSOLE_DISPLAY;
 }
 
 //===========================================================================
-static Update_t CmdConfigFontSave(int nArgs)
+static Update_t CmdConfigFontSave (int nArgs)
 {
 	return UPDATE_CONSOLE_DISPLAY;
 }
 
 // Only for FONT_DISASM_DEFAULT !
-static void _UpdateWindowFontHeights(int nFontHeight)
+static void _UpdateWindowFontHeights (int nFontHeight)
 {
 	if (nFontHeight)
 	{
@@ -66,23 +66,21 @@ static void _UpdateWindowFontHeights(int nFontHeight)
 
 		if (g_iFontSpacing == FONT_SPACING_CLASSIC)
 		{
-			nHeight = nFontHeight + 1;
+			nHeight               = nFontHeight + 1;
 			g_nDisasmDisplayLines = nConsoleTopY / nHeight;
 		}
-		else
-			if (g_iFontSpacing == FONT_SPACING_CLEAN)
-			{
-				nHeight = nFontHeight;
-				g_nDisasmDisplayLines = nConsoleTopY / nHeight;
-			}
-			else
-				if (g_iFontSpacing == FONT_SPACING_COMPRESSED)
-				{
-					nHeight = nFontHeight - 1;
-					g_nDisasmDisplayLines = (nConsoleTopY + nHeight) / nHeight; // Ceil()
-				}
+		else if (g_iFontSpacing == FONT_SPACING_CLEAN)
+		{
+			nHeight               = nFontHeight;
+			g_nDisasmDisplayLines = nConsoleTopY / nHeight;
+		}
+		else if (g_iFontSpacing == FONT_SPACING_COMPRESSED)
+		{
+			nHeight               = nFontHeight - 1;
+			g_nDisasmDisplayLines = (nConsoleTopY + nHeight) / nHeight;  // Ceil()
+		}
 
-		g_aFontConfig[FONT_DISASM_DEFAULT]._nLineHeight = nHeight;
+		g_aFontConfig[ FONT_DISASM_DEFAULT ]._nLineHeight = nHeight;
 
 		//		int nHeightOptimal = (nHeight0 + nHeight1) / 2;
 		//		int nLinesOptimal = nConsoleTopY / nHeightOptimal;
@@ -93,31 +91,31 @@ static void _UpdateWindowFontHeights(int nFontHeight)
 }
 
 //===========================================================================
-static Update_t CmdConfigFontMode(int nArgs)
+static Update_t CmdConfigFontMode (int nArgs)
 {
 	if (nArgs != 2)
 		return Help_Arg_1(CMD_CONFIG_FONT);
 
-	int nMode = g_aArgs[2].nValue;
+	int nMode = g_aArgs[ 2 ].nValue;
 
 	if ((nMode < 0) || (nMode >= NUM_FONT_SPACING))
 		return Help_Arg_1(CMD_CONFIG_FONT);
 
 	g_iFontSpacing = nMode;
-	_UpdateWindowFontHeights(g_aFontConfig[FONT_DISASM_DEFAULT]._nFontHeight);
+	_UpdateWindowFontHeights(g_aFontConfig[ FONT_DISASM_DEFAULT ]._nFontHeight);
 
 	return UPDATE_CONSOLE_DISPLAY | UPDATE_DISASM;
 }
 
 //===========================================================================
-bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeight)
+bool _CmdConfigFont (int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeight)
 {
-	bool bStatus = false;
-	HFONT         hFont = (HFONT)0;
-	FontConfig_t* pFont = NULL;
+	bool          bStatus = false;
+	HFONT         hFont   = (HFONT)0;
+	FontConfig_t *pFont   = NULL;
 
 	if (iFont < NUM_FONTS)
-		pFont = &g_aFontConfig[iFont];
+		pFont = &g_aFontConfig[ iFont ];
 	else
 		return bStatus;
 
@@ -129,20 +127,27 @@ bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeig
 
 		// Try allow new font
 		hFont = CreateFont(
-			nFontHeight
-			, 0 // Width
-			, 0 // Escapement
-			, 0 // Orientatin
-			, FW_MEDIUM // Weight
-			, 0 // Italic
-			, 0 // Underline
-			, 0 // Strike Out
-			, DEFAULT_CHARSET // OEM_CHARSET
-			, OUT_DEFAULT_PRECIS
-			, CLIP_DEFAULT_PRECIS
-			, bAntiAlias // ANTIALIASED_QUALITY // DEFAULT_QUALITY
-			, iPitchFamily // HACK: MAGIC #: 4
-			, pFontName);
+		    nFontHeight, 0  // Width
+		    ,
+		    0  // Escapement
+		    ,
+		    0  // Orientatin
+		    ,
+		    FW_MEDIUM  // Weight
+		    ,
+		    0  // Italic
+		    ,
+		    0  // Underline
+		    ,
+		    0  // Strike Out
+		    ,
+		    DEFAULT_CHARSET  // OEM_CHARSET
+		    ,
+		    OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, bAntiAlias  // ANTIALIASED_QUALITY // DEFAULT_QUALITY
+		    ,
+		    iPitchFamily  // HACK: MAGIC #: 4
+		    ,
+		    pFontName);
 
 		if (hFont)
 		{
@@ -150,9 +155,9 @@ bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeig
 				_UpdateWindowFontHeights(nFontHeight);
 
 			_tcsncpy(pFont->_sFontName, pFontName, MAX_FONT_NAME - 1);
-			pFont->_sFontName[MAX_FONT_NAME - 1] = 0;
+			pFont->_sFontName[ MAX_FONT_NAME - 1 ] = 0;
 
-			Win32Frame& win32Frame = Win32Frame::GetWin32Frame();
+			Win32Frame &win32Frame = Win32Frame::GetWin32Frame();
 
 			HDC hDC = win32Frame.FrameGetDC();
 
@@ -161,7 +166,7 @@ bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeig
 
 			SIZE  size;
 			TCHAR sText[] = "W";
-			int   nLen = 1;
+			int   nLen    = 1;
 
 			int nFontWidthAvg;
 			int nFontWidthMax;
@@ -171,7 +176,7 @@ bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeig
 			//				bool bStop = true;
 			//			}
 
-						// GetCharWidth32() doesn't work with TrueType Fonts
+			// GetCharWidth32() doesn't work with TrueType Fonts
 			if (GetTextExtentPoint32(hDC, sText, nLen, &size))
 			{
 				nFontWidthAvg = tm.tmAveCharWidth;
@@ -187,7 +192,7 @@ bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeig
 				nFontWidthMax = tm.tmMaxCharWidth;
 			}
 
-			if (!nFontWidthAvg)
+			if (! nFontWidthAvg)
 			{
 				nFontWidthAvg = 7;
 				nFontWidthMax = 7;
@@ -201,7 +206,7 @@ bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeig
 
 			pFont->_nFontWidthAvg = nFontWidthAvg;
 			pFont->_nFontWidthMax = nFontWidthMax;
-			pFont->_nFontHeight = nFontHeight;
+			pFont->_nFontHeight   = nFontHeight;
 
 			bStatus = true;
 		}
@@ -209,9 +214,9 @@ bool _CmdConfigFont(int iFont, LPCSTR pFontName, int iPitchFamily, int nFontHeig
 	return bStatus;
 }
 
-void FontsInitialize()
+void FontsInitialize ()
 {
-	for (int iFont = 0; iFont < NUM_FONTS; iFont++ )
+	for (int iFont = 0; iFont < NUM_FONTS; iFont++)
 	{
 		g_aFontConfig[ iFont ]._hFont = NULL;
 #if USE_APPLE_FONT
@@ -223,34 +228,34 @@ void FontsInitialize()
 	}
 
 #if OLD_FONT
-	_CmdConfigFont( FONT_INFO          , g_sFontNameInfo   , FIXED_PITCH | FF_MODERN      , g_nFontHeight ); // DEFAULT_CHARSET
-	_CmdConfigFont( FONT_CONSOLE       , g_sFontNameConsole, FIXED_PITCH | FF_MODERN      , g_nFontHeight ); // DEFAULT_CHARSET
-	_CmdConfigFont( FONT_DISASM_DEFAULT, g_sFontNameDisasm , FIXED_PITCH | FF_MODERN      , g_nFontHeight ); // OEM_CHARSET
-	_CmdConfigFont( FONT_DISASM_BRANCH , g_sFontNameBranch , DEFAULT_PITCH | FF_DECORATIVE, g_nFontHeight+3); // DEFAULT_CHARSET
+	_CmdConfigFont(FONT_INFO, g_sFontNameInfo, FIXED_PITCH | FF_MODERN, g_nFontHeight);                       // DEFAULT_CHARSET
+	_CmdConfigFont(FONT_CONSOLE, g_sFontNameConsole, FIXED_PITCH | FF_MODERN, g_nFontHeight);                 // DEFAULT_CHARSET
+	_CmdConfigFont(FONT_DISASM_DEFAULT, g_sFontNameDisasm, FIXED_PITCH | FF_MODERN, g_nFontHeight);           // OEM_CHARSET
+	_CmdConfigFont(FONT_DISASM_BRANCH, g_sFontNameBranch, DEFAULT_PITCH | FF_DECORATIVE, g_nFontHeight + 3);  // DEFAULT_CHARSET
 #endif
-	_UpdateWindowFontHeights( g_aFontConfig[ FONT_DISASM_DEFAULT ]._nFontHeight );
+	_UpdateWindowFontHeights(g_aFontConfig[ FONT_DISASM_DEFAULT ]._nFontHeight);
 }
 
-void FontsDestroy()
+void FontsDestroy ()
 {
 	for (int iFont = 0; iFont < NUM_FONTS; iFont++)
 	{
-		DeleteObject(g_aFontConfig[iFont]._hFont);
-		g_aFontConfig[iFont]._hFont = NULL;
+		DeleteObject(g_aFontConfig[ iFont ]._hFont);
+		g_aFontConfig[ iFont ]._hFont = NULL;
 	}
 }
 
 //===========================================================================
-Update_t CmdConfigGetFont(int nArgs)
+Update_t CmdConfigGetFont (int nArgs)
 {
-	if (!nArgs)
+	if (! nArgs)
 	{
 		for (int iFont = 0; iFont < NUM_FONTS; iFont++)
 		{
 			ConsoleBufferPushFormat("  Font: %-20s  A:%2d  M:%2d",
-				g_aFontConfig[iFont]._sFontName,
-				g_aFontConfig[iFont]._nFontWidthAvg,
-				g_aFontConfig[iFont]._nFontWidthMax);
+			                        g_aFontConfig[ iFont ]._sFontName,
+			                        g_aFontConfig[ iFont ]._nFontWidthAvg,
+			                        g_aFontConfig[ iFont ]._nFontWidthMax);
 		}
 		return ConsoleUpdate();
 	}
@@ -259,37 +264,33 @@ Update_t CmdConfigGetFont(int nArgs)
 }
 
 //===========================================================================
-Update_t CmdConfigFont(int nArgs)
+Update_t CmdConfigFont (int nArgs)
 {
 	int iArg;
 
-	if (!nArgs)
+	if (! nArgs)
 		return CmdConfigGetFont(nArgs);
-	else
-		if (nArgs <= 2) // nArgs
+	else if (nArgs <= 2)  // nArgs
+	{
+		iArg = 1;
+
+		// FONT * is undocumented, like VERSION *
+		if ((! _tcscmp(g_aArgs[ iArg ].sArg, g_aParameters[ PARAM_WILDSTAR ].m_sName)) ||
+		    (! _tcscmp(g_aArgs[ iArg ].sArg, g_aParameters[ PARAM_MEM_SEARCH_WILD ].m_sName)))
 		{
-			iArg = 1;
+			ConsoleBufferPushFormat("Lines: %d  Font Px: %d  Line Px: %d", g_nDisasmDisplayLines, g_aFontConfig[ FONT_DISASM_DEFAULT ]._nFontHeight, g_aFontConfig[ FONT_DISASM_DEFAULT ]._nLineHeight);
+			ConsoleBufferToDisplay();
+			return UPDATE_CONSOLE_DISPLAY;
+		}
 
-			// FONT * is undocumented, like VERSION *
-			if ((!_tcscmp(g_aArgs[iArg].sArg, g_aParameters[PARAM_WILDSTAR].m_sName)) ||
-				(!_tcscmp(g_aArgs[iArg].sArg, g_aParameters[PARAM_MEM_SEARCH_WILD].m_sName)))
+		int iFound;
+		int nFound;
+
+		nFound = FindParam(g_aArgs[ iArg ].sArg, MATCH_EXACT, iFound, _PARAM_GENERAL_BEGIN, _PARAM_GENERAL_END);
+		if (nFound)
+		{
+			switch (iFound)
 			{
-				ConsoleBufferPushFormat("Lines: %d  Font Px: %d  Line Px: %d"
-					, g_nDisasmDisplayLines
-					, g_aFontConfig[FONT_DISASM_DEFAULT]._nFontHeight
-					, g_aFontConfig[FONT_DISASM_DEFAULT]._nLineHeight);
-				ConsoleBufferToDisplay();
-				return UPDATE_CONSOLE_DISPLAY;
-			}
-
-			int iFound;
-			int nFound;
-
-			nFound = FindParam(g_aArgs[iArg].sArg, MATCH_EXACT, iFound, _PARAM_GENERAL_BEGIN, _PARAM_GENERAL_END);
-			if (nFound)
-			{
-				switch (iFound)
-				{
 				case PARAM_LOAD:
 					return CmdConfigFontLoad(nArgs);
 					break;
@@ -300,24 +301,24 @@ Update_t CmdConfigFont(int nArgs)
 					// TODO: AA {ON|OFF}
 				default:
 					break;
-				}
 			}
-
-			nFound = FindParam(g_aArgs[iArg].sArg, MATCH_EXACT, iFound, _PARAM_FONT_BEGIN, _PARAM_FONT_END);
-			if (nFound)
-			{
-				if (iFound == PARAM_FONT_MODE)
-					return CmdConfigFontMode(nArgs);
-			}
-
-			return CmdConfigSetFont(nArgs);
 		}
+
+		nFound = FindParam(g_aArgs[ iArg ].sArg, MATCH_EXACT, iFound, _PARAM_FONT_BEGIN, _PARAM_FONT_END);
+		if (nFound)
+		{
+			if (iFound == PARAM_FONT_MODE)
+				return CmdConfigFontMode(nArgs);
+		}
+
+		return CmdConfigSetFont(nArgs);
+	}
 
 	return Help_Arg_1(CMD_CONFIG_FONT);
 }
 
 //===========================================================================
-void DebuggerMouseClick(int x, int y)
+void DebuggerMouseClick (int x, int y)
 {
 	if (g_nAppMode != MODE_DEBUG)
 		return;
@@ -332,10 +333,10 @@ void DebuggerMouseClick(int x, int y)
 	if (iAltCtrlShift != g_bConfigDisasmClick)
 		return;
 
-	Win32Frame& win32Frame = Win32Frame::GetWin32Frame();
+	Win32Frame &win32Frame = Win32Frame::GetWin32Frame();
 
-	int nFontWidth = g_aFontConfig[FONT_DISASM_DEFAULT]._nFontWidthAvg * win32Frame.GetViewportScale();
-	int nFontHeight = g_aFontConfig[FONT_DISASM_DEFAULT]._nLineHeight * win32Frame.GetViewportScale();
+	int nFontWidth  = g_aFontConfig[ FONT_DISASM_DEFAULT ]._nFontWidthAvg * win32Frame.GetViewportScale();
+	int nFontHeight = g_aFontConfig[ FONT_DISASM_DEFAULT ]._nLineHeight * win32Frame.GetViewportScale();
 
 	// do picking
 
@@ -364,28 +365,26 @@ void DebuggerMouseClick(int x, int y)
 		if (g_bConfigDisasmAddressView)
 		{
 			// HACK: hard-coded from DrawDisassemblyLine::aTabs[] !!!
-			if (cx < 4) // ####
+			if (cx < 4)  // ####
 			{
 				g_bConfigDisasmAddressView ^= true;
 				DebugDisplay();
 			}
-			else
-				if (cx == 4) //    :
+			else if (cx == 4)  //    :
+			{
+				g_bConfigDisasmAddressColon ^= true;
+				DebugDisplay();
+			}
+			else  //      AD 00 00
+				if ((cx > 4) && (cx <= 13))
 				{
-					g_bConfigDisasmAddressColon ^= true;
+					g_bConfigDisasmOpcodesView ^= true;
 					DebugDisplay();
 				}
-				else         //      AD 00 00
-					if ((cx > 4) && (cx <= 13))
-					{
-						g_bConfigDisasmOpcodesView ^= true;
-						DebugDisplay();
-					}
-
 		}
 		else
 		{
-			if (cx == 0) //   :
+			if (cx == 0)  //   :
 			{
 				// Three-way state
 				//   "addr:"
@@ -398,12 +397,11 @@ void DebuggerMouseClick(int x, int y)
 				}
 				DebugDisplay();
 			}
-			else
-				if ((cx > 0) & (cx <= 13))
-				{
-					g_bConfigDisasmOpcodesView ^= true;
-					DebugDisplay();
-				}
+			else if ((cx > 0) & (cx <= 13))
+			{
+				g_bConfigDisasmOpcodesView ^= true;
+				DebugDisplay();
+			}
 		}
 		// Click on PC inside reg window?
 		if ((cx >= 51) && (cx <= 60))
@@ -413,105 +411,114 @@ void DebuggerMouseClick(int x, int y)
 				CmdCursorJumpPC(CURSOR_ALIGN_CENTER);
 				DebugDisplay();
 			}
-			else
-				if (cy == 4 || cy == 5)
+			else if (cy == 4 || cy == 5)
+			{
+				int iFlag = -1;
+				int nFlag = _6502_NUM_FLAGS;
+
+				while (nFlag-- > 0)
 				{
-					int iFlag = -1;
-					int nFlag = _6502_NUM_FLAGS;
-
-					while (nFlag-- > 0)
+					// TODO: magic number instead of DrawFlags() DISPLAY_FLAG_COLUMN, rect.left += ((2 + _6502_NUM_FLAGS) * nSpacerWidth);
+					// BP_SRC_FLAG_C is 6,  cx 60 --> 0
+					// ...
+					// BP_SRC_FLAG_N is 13, cx 53 --> 7
+					if (cx == (53 + nFlag))
 					{
-						// TODO: magic number instead of DrawFlags() DISPLAY_FLAG_COLUMN, rect.left += ((2 + _6502_NUM_FLAGS) * nSpacerWidth);
-						// BP_SRC_FLAG_C is 6,  cx 60 --> 0
-						// ...
-						// BP_SRC_FLAG_N is 13, cx 53 --> 7
-						if (cx == (53 + nFlag))
-						{
-							iFlag = 7 - nFlag;
-							break;
-						}
-					}
-
-					if (iFlag >= 0)
-					{
-						regs.ps ^= (1 << iFlag);
-						DebugDisplay();
+						iFlag = 7 - nFlag;
+						break;
 					}
 				}
-				else // Click on stack
-					if (cy > 3)
-					{
-					}
+
+				if (iFlag >= 0)
+				{
+					regs.ps ^= (1 << iFlag);
+					DebugDisplay();
+				}
+			}
+			else  // Click on stack
+				if (cy > 3)
+				{
+				}
 		}
 	}
 }
 
 //===========================================================================
-Update_t CmdConfigSetFont(int nArgs)
+Update_t CmdConfigSetFont (int nArgs)
 {
 #if OLD_FONT
-	HFONT  hFont = (HFONT)0;
-	TCHAR* pFontName = NULL;
-	int    nHeight = g_nFontHeight;
+	HFONT  hFont       = (HFONT)0;
+	TCHAR *pFontName   = NULL;
+	int    nHeight     = g_nFontHeight;
 	int    iFontTarget = FONT_DISASM_DEFAULT;
-	int    iFontPitch = FIXED_PITCH | FF_MODERN;
+	int    iFontPitch  = FIXED_PITCH | FF_MODERN;
 	//	int    iFontMode   =
-	bool   bHaveTarget = false;
-	bool   bHaveFont = false;
+	bool bHaveTarget = false;
+	bool bHaveFont   = false;
 
-	if (!nArgs)
-	{ // reset to defaut font
+	if (! nArgs)
+	{  // reset to defaut font
 		pFontName = g_sFontNameDefault;
 	}
-	else
-		if (nArgs <= 3)
+	else if (nArgs <= 3)
+	{
+		int iArg  = 1;
+		pFontName = g_aArgs[ 1 ].sArg;
+
+		// [DISASM|INFO|CONSOLE] "FontName" [#]
+		// "FontName" can be either arg 1 or 2
+
+		int iFound;
+		int nFound = FindParam(g_aArgs[ iArg ].sArg, MATCH_EXACT, iFound, _PARAM_WINDOW_BEGIN, _PARAM_WINDOW_END);
+		if (nFound)
 		{
-			int iArg = 1;
-			pFontName = g_aArgs[1].sArg;
-
-			// [DISASM|INFO|CONSOLE] "FontName" [#]
-			// "FontName" can be either arg 1 or 2
-
-			int iFound;
-			int nFound = FindParam(g_aArgs[iArg].sArg, MATCH_EXACT, iFound, _PARAM_WINDOW_BEGIN, _PARAM_WINDOW_END);
-			if (nFound)
+			switch (iFound)
 			{
-				switch (iFound)
-				{
-				case PARAM_DISASM: iFontTarget = FONT_DISASM_DEFAULT; iFontPitch = FIXED_PITCH | FF_MODERN; bHaveTarget = true; break;
-				case PARAM_INFO: iFontTarget = FONT_INFO; iFontPitch = FIXED_PITCH | FF_MODERN; bHaveTarget = true; break;
-				case PARAM_CONSOLE: iFontTarget = FONT_CONSOLE; iFontPitch = DEFAULT_PITCH | FF_DECORATIVE; bHaveTarget = true; break;
+				case PARAM_DISASM:
+					iFontTarget = FONT_DISASM_DEFAULT;
+					iFontPitch  = FIXED_PITCH | FF_MODERN;
+					bHaveTarget = true;
+					break;
+				case PARAM_INFO:
+					iFontTarget = FONT_INFO;
+					iFontPitch  = FIXED_PITCH | FF_MODERN;
+					bHaveTarget = true;
+					break;
+				case PARAM_CONSOLE:
+					iFontTarget = FONT_CONSOLE;
+					iFontPitch  = DEFAULT_PITCH | FF_DECORATIVE;
+					bHaveTarget = true;
+					break;
 				default:
-					if (g_aArgs[2].bType != TOKEN_QUOTE_DOUBLE)
+					if (g_aArgs[ 2 ].bType != TOKEN_QUOTE_DOUBLE)
 						return Help_Arg_1(CMD_CONFIG_FONT);
 					break;
-				}
-				if (bHaveTarget)
-				{
-					pFontName = g_aArgs[2].sArg;
-				}
 			}
-			else
-				if (nArgs == 2)
-				{
-					nHeight = atoi(g_aArgs[2].sArg);
-					if ((nHeight < 6) || (nHeight > 36))
-						nHeight = g_nFontHeight;
-				}
+			if (bHaveTarget)
+			{
+				pFontName = g_aArgs[ 2 ].sArg;
+			}
 		}
-		else
+		else if (nArgs == 2)
 		{
-			return Help_Arg_1(CMD_CONFIG_FONT);
+			nHeight = atoi(g_aArgs[ 2 ].sArg);
+			if ((nHeight < 6) || (nHeight > 36))
+				nHeight = g_nFontHeight;
 		}
+	}
+	else
+	{
+		return Help_Arg_1(CMD_CONFIG_FONT);
+	}
 
-	if (!_CmdConfigFont(iFontTarget, pFontName, iFontPitch, nHeight))
+	if (! _CmdConfigFont(iFontTarget, pFontName, iFontPitch, nHeight))
 	{
 	}
 #endif
 	return UPDATE_ALL;
 }
 
-void Util_CopyTextToClipboard(const size_t nSize, const char* pText)
+void Util_CopyTextToClipboard (const size_t nSize, const char *pText)
 {
 	HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, nSize + 1);
 	memcpy(GlobalLock(hMem), pText, nSize + 1);
@@ -525,13 +532,13 @@ void Util_CopyTextToClipboard(const size_t nSize, const char* pText)
 	// GlobalFree() ??
 }
 
-void ProcessClipboardCommands()
+void ProcessClipboardCommands ()
 {
 	// Support Clipboard (paste)
-	if (!IsClipboardFormatAvailable(CF_TEXT))
+	if (! IsClipboardFormatAvailable(CF_TEXT))
 		return;
 
-	if (!OpenClipboard(GetFrame().g_hFrameWindow))
+	if (! OpenClipboard(GetFrame().g_hFrameWindow))
 		return;
 
 	HGLOBAL hClipboard;
@@ -540,35 +547,34 @@ void ProcessClipboardCommands()
 	hClipboard = GetClipboardData(CF_TEXT);
 	if (hClipboard != NULL)
 	{
-		pData = (char*)GlobalLock(hClipboard);
+		pData = (char *)GlobalLock(hClipboard);
 		if (pData != NULL)
 		{
 			LPTSTR pSrc = pData;
-			char c;
+			char   c;
 
 			while (true)
 			{
 				c = *pSrc++;
 
-				if (!c)
+				if (! c)
 					break;
 
 				if (c == CHAR_CR)
 				{
 					// Eat char
 				}
+				else if (c == CHAR_LF)
+				{
+					DebuggerProcessCommand(true);
+				}
 				else
-					if (c == CHAR_LF)
-					{
-						DebuggerProcessCommand(true);
-					}
-					else
-					{
-						// If we didn't want verbatim, we could do:
-						// DebuggerInputConsoleChar( c );
-						if ((c >= CHAR_SPACE) && (c <= 126)) // HACK MAGIC # 32 -> ' ', # 126
-							ConsoleInputChar(c);
-					}
+				{
+					// If we didn't want verbatim, we could do:
+					// DebuggerInputConsoleChar( c );
+					if ((c >= CHAR_SPACE) && (c <= 126))  // HACK MAGIC # 32 -> ' ', # 126
+						ConsoleInputChar(c);
+				}
 			}
 			GlobalUnlock(hClipboard);
 		}
