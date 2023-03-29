@@ -174,6 +174,10 @@ namespace common2
       setOption(vm, "registry", options.registryOptions);
       options.useQtIni = vm.count("qt-ini");
 
+      // Binary Monitor
+      options.binaryMonitor = vm.count("binary-monitor");
+      setOption(vm, "binary-monitor-address", options.binaryMonitorAddress);
+
       // Disk
       setOption(vm, "d1", options.disk1);
       setOption(vm, "d2", options.disk2);
