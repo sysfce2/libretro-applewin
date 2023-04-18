@@ -718,11 +718,11 @@ namespace sa2
     ResetHardware();
   }
 
-  void SDLFrame::Update()
+  void SDLFrame::Update(bool &quit)
   {
     if (myBinaryMonitor)
     {
-      myBinaryMonitor->process();
+      myBinaryMonitor->process(quit);
     }
   }
 

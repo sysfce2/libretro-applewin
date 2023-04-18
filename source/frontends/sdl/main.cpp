@@ -126,7 +126,7 @@ void run_sdl(int argc, const char * argv [])
 
       eventTimer.tic();
       sa2::writeAudio();
-      frame->Update();
+      frame->Update(quit);
       frame->ProcessEvents(quit);
       eventTimer.toc();
 

@@ -273,7 +273,7 @@ namespace binarymonitor
     sendReply(buffer, e_MON_RESPONSE_CHECKPOINT_INFO, myCommand.request, e_MON_ERR_OK);
   }
 
-  bool BinaryClient::process()
+  bool BinaryClient::process(bool &quit)
   {
     const bool newStopped = isStopped(g_nAppMode);
     if (newStopped != myStopped)
@@ -294,7 +294,7 @@ namespace binarymonitor
 
       if (readPayload())
       {
-        processCommand();
+        processCommand(quit);
         reset();
         return true;
       }
@@ -722,13 +722,15 @@ namespace binarymonitor
     enterMonitorState(MODE_RUNNING);
   }
 
-  void BinaryClient::cmdQuit()
+  void BinaryClient::cmdQuit(bool &quit)
   {
     BinaryBuffer buffer;
     sendReply(buffer, e_MON_RESPONSE_QUIT, myCommand.request, e_MON_ERR_OK);
 
     removeAllBReakpoints();
     enterMonitorState(MODE_RUNNING);
+
+    quit = true;
 
     throw std::runtime_error("quit");
   }
@@ -769,7 +771,7 @@ namespace binarymonitor
     }
   }
 
-  void BinaryClient::processCommand()
+  void BinaryClient::processCommand(bool &quit)
   {
   #ifdef LOG_COMMANDS
     const char * cmd = binarymonitor::getCommandStr(myCommand.type);
@@ -837,7 +839,7 @@ namespace binarymonitor
           cmdReset();
           break;
         case e_MON_CMD_QUIT:
-          cmdQuit();
+          cmdQuit(quit);
           break;
         default:
           throwBinaryException(myCommand.type, e_MON_ERR_CMD_INVALID_TYPE);
@@ -888,7 +890,7 @@ namespace binarymonitor
     close(mySocket);
   }
 
-  void BinaryMonitor::process()
+  void BinaryMonitor::process(bool &quit)
   {
     sockaddr_in client;
     socklen_t len = sizeof(client);
@@ -913,7 +915,7 @@ namespace binarymonitor
       {
         for (size_t i = 0; i < 4; ++i)
         {
-          if (!(*iter)->process())
+          if (!(*iter)->process(quit))
           {
             break;
           }

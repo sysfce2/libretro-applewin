@@ -22,7 +22,7 @@ namespace binarymonitor
     BinaryClient(const int socket, common2::CommonFrame * frame);
     ~BinaryClient();
 
-    bool process();
+    bool process(bool &quit);
 
   private:
 
@@ -72,7 +72,7 @@ namespace binarymonitor
     void reset();
     bool readCommand();
     bool readPayload();
-    void processCommand();
+    void processCommand(bool &quit);
 
     void throwIfError(const ssize_t result);
 
@@ -102,7 +102,7 @@ namespace binarymonitor
     void cmdExit();
     void cmdReset();
     void cmdAutostart();
-    void cmdQuit();
+    void cmdQuit(bool &quit);
     void cmdPing();
 
     void sendRegisters(const uint32_t request);
@@ -120,7 +120,7 @@ namespace binarymonitor
     BinaryMonitor(const int socket, common2::CommonFrame * frame);
     ~BinaryMonitor();
 
-    void process();
+    void process(bool &quit);
 
   private:
     const int mySocket;

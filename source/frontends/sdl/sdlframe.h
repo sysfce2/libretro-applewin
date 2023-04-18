@@ -41,7 +41,7 @@ namespace sa2
     bool HardwareChanged() const;
     void LoadSnapshot() override;
 
-    void Update();
+    void Update(bool &quit);
 
     const std::shared_ptr<SDL_Window> & GetWindow() const;
 
