@@ -12,9 +12,10 @@ namespace common2
   {
   public:
     BYTE* GetResource(WORD id, LPCSTR lpType, DWORD expectedSize) override;
-    virtual void LoadSnapshot();
 
+    virtual void LoadSnapshot() override;
     virtual void ResetSpeed();
+
     bool ChangeMode(const AppMode_e mode);
 
   protected:

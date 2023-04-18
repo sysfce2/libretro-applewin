@@ -7,7 +7,6 @@
 #include <unistd.h>
 
 #include "Log.h"
-#include "SaveState.h"
 #include "SoundCore.h"
 #include "Core.h"
 #include "Debugger/Debug.h"
@@ -17,7 +16,7 @@ namespace common2
 
   void CommonFrame::LoadSnapshot()
   {
-    Snapshot_LoadState();
+    LinuxFrame::LoadSnapshot();
     ResetSpeed();
   }
 
