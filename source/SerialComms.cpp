@@ -379,8 +379,9 @@ void CSuperSerialCard::CommTcpSerialAccept()
 
 // Called when there's a TCP event via the message pump
 // . Because it's via the message pump, then this call is synchronous to CommReceive(), so there's no need for a critical section
-void CSuperSerialCard::CommTcpSerialReceive()
+bool CSuperSerialCard::CommTcpSerialReceive()
 {
+	bool ok = true;
 	if (m_hCommAcceptSocket != INVALID_SOCKET)
 	{
 		char Data[0x80];
@@ -393,12 +394,18 @@ void CSuperSerialCard::CommTcpSerialReceive()
 			}
 		}
 
+		if (nReceived < 0)
+		{
+			ok = !IsSocketError();
+		}
+
 		if (m_bRxIrqEnabled && !m_qTcpSerialBuffer.empty())
 		{
 			CpuIrqAssert(IS_SSC);
 			m_vbRxIrqPending = true;
 		}
 	}
+	return ok;
 }
 
 //===========================================================================
@@ -755,9 +762,13 @@ BYTE __stdcall CSuperSerialCard::CommTransmit(WORD, WORD, BYTE, BYTE value, ULON
 		{
 			data &= ~(1 << m_uByteSize);
 		}
-		int sent = send(m_hCommAcceptSocket, (const char*)&data, 1, 0);
-		_ASSERT(sent == 1);
-		if (sent == 1)
+		int sent = send(m_hCommAcceptSocket, (const char*)&data, 1, MSG_NOSIGNAL);
+
+		if (sent < 0 && IsSocketError())
+		{
+			CommTcpSerialClose();
+		}
+		else if (sent == 1)
 		{
 			m_vbTxEmpty = false;
 			// Assume that send() completes immediately
@@ -1388,10 +1399,19 @@ void CSuperSerialCard::SetRegistrySerialPortName(void)
 	RegSaveString(regSection.c_str(), REGVALUE_SERIAL_PORT_NAME, TRUE, GetSerialPortName());
 }
 
+bool CSuperSerialCard::IsSocketError()
+{
+	const int err = errno;
+	return (err != EINPROGRESS) && (err != EWOULDBLOCK);
+}
+
 void CSuperSerialCard::Update(const ULONG nExecutedCycles)
 {
 	CommTcpSerialAccept();
-	CommTcpSerialReceive();
+	if (!CommTcpSerialReceive())
+	{
+		CommTcpSerialClose();
+	}
 }
 
 //===========================================================================

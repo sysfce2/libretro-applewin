@@ -266,6 +266,7 @@ namespace sa2
                 const bool isSelected = name == current;
                 if (ImGui::Selectable(name.c_str(), isSelected))
                 {
+                  pSSC->CommTcpSerialCleanup();
                   pSSC->CommSetSerialPort(i);
                 }
                 if (isSelected)
