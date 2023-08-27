@@ -51,6 +51,7 @@ set(SOURCE_FILES
   Debugger/Debugger_Commands.cpp
   Debugger/Util_MemoryTextFile.cpp
 
+  SerialComms.cpp
   CopyProtectionDongles.cpp
   Uthernet1.cpp
   Uthernet2.cpp
@@ -112,7 +113,6 @@ set(SOURCE_FILES
   linux/duplicates/Debugger_Display.cpp
   linux/duplicates/Debugger_Win32.cpp
   linux/duplicates/Joystick.cpp
-  linux/duplicates/SerialComms.cpp
   linux/duplicates/PropertySheet.cpp
   linux/duplicates/Registry.cpp
   linux/duplicates/FourPlay.cpp

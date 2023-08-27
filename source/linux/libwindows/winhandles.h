@@ -19,13 +19,7 @@ typedef LONG_PTR LPARAM;
 typedef UINT_PTR WPARAM;
 typedef void * CRITICAL_SECTION;
 typedef void * LPDIRECTDRAW;
-typedef void * LPOVERLAPPED;
-typedef void * OVERLAPPED;
 typedef void * LPSECURITY_ATTRIBUTES;
 typedef void * HSEMAPHORE;
-
-#ifndef SOCKET
-  #define SOCKET int
-#endif
 
 BOOL CloseHandle(HANDLE hObject);

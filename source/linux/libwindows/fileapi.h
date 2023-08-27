@@ -1,5 +1,6 @@
 #pragma once
 
+#include "winbase.h"
 #include "wincompat.h"
 #include "winhandles.h"
 

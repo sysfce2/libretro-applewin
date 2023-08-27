@@ -107,3 +107,38 @@ HANDLE CreateSemaphore(
 {
   return INVALID_HANDLE_VALUE;
 }
+
+BOOL        WINAPI WaitCommEvent(HANDLE,LPDWORD,LPOVERLAPPED)
+{
+  return FALSE;
+}
+
+BOOL        WINAPI GetCommState(HANDLE,LPDCB)
+{
+  return FALSE;
+}
+
+BOOL        WINAPI SetCommState(HANDLE,LPDCB)
+{
+  return FALSE;
+}
+
+BOOL        WINAPI GetCommModemStatus(HANDLE,LPDWORD)
+{
+  return FALSE;
+}
+
+BOOL        WINAPI SetCommTimeouts(HANDLE,LPCOMMTIMEOUTS)
+{
+  return FALSE;
+}
+
+BOOL        WINAPI ClearCommError(HANDLE,LPDWORD,LPCOMSTAT)
+{
+  return FALSE;
+}
+
+BOOL        WINAPI SetCommMask(HANDLE,DWORD)
+{
+  return FALSE;
+}

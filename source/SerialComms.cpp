@@ -45,6 +45,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "../resource/resource.h"
 
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
+
 #define TCP_SERIAL_PORT 1977
 
 const UINT CSuperSerialCard::SERIALPORTITEM_INVALID_COM_PORT = 0;

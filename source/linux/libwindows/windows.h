@@ -11,6 +11,8 @@
 #include "winstrings.h"
 #include "gdi.h"
 #include "winbase.h"
+#include "winsock.h"
+#include "winnt.h"
 #include "winuser.h"
 #include "dsound.h"
 #include "winerror.h"

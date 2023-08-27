@@ -10,6 +10,7 @@ set(SOURCE_FILES
   timeapi.cpp
   winbase.cpp
   winnls.cpp
+  winsock.cpp
   winuser.cpp
   )
 
@@ -32,6 +33,8 @@ set(HEADER_FILES
   windows.h
   winerror.h
   winnls.h
+  winnt.h
+  winsock.h
   winuser.h
   joystickapi.h
   )
