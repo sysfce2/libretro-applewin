@@ -233,7 +233,7 @@ bool CSuperSerialCard::CheckComm()
 			}
 
 			// initialized, so try to create a socket
-			m_hCommListenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+			m_hCommListenSocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
 			if (m_hCommListenSocket == INVALID_SOCKET)
 			{
 				WSACleanup();
@@ -371,7 +371,7 @@ void CSuperSerialCard::CommTcpSerialAccept()
 	if ((m_hCommListenSocket != INVALID_SOCKET) && (m_hCommAcceptSocket == INVALID_SOCKET))
 	{
 		// Y: accept the connection
-		m_hCommAcceptSocket = accept(m_hCommListenSocket, NULL, NULL);
+		m_hCommAcceptSocket = accept4(m_hCommListenSocket, NULL, NULL, SOCK_NONBLOCK);
 	}
 }
 
@@ -1386,6 +1386,12 @@ void CSuperSerialCard::SetRegistrySerialPortName(void)
 {
 	std::string regSection = RegGetConfigSlotSection(m_slot);
 	RegSaveString(regSection.c_str(), REGVALUE_SERIAL_PORT_NAME, TRUE, GetSerialPortName());
+}
+
+void CSuperSerialCard::Update(const ULONG nExecutedCycles)
+{
+	CommTcpSerialAccept();
+	CommTcpSerialReceive();
 }
 
 //===========================================================================
