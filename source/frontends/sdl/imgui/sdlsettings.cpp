@@ -19,8 +19,11 @@
 #include "SaveState.h"
 #include "Uthernet2.h"
 #include "CopyProtectionDongles.h"
+#include "SerialComms.h"
 
 #include "Tfe/PCapBackend.h"
+
+#include <sstream>
 
 namespace
 {
@@ -52,6 +55,18 @@ namespace
     SetCurrentCLK6502();
     REGSAVE(TEXT(REGVALUE_EMULATION_SPEED), g_dwSpeed);
     frame->ResetSpeed();
+  }
+
+  std::vector<std::string> split(const std::string& s, char delimiter)
+  {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delimiter))
+    {
+        tokens.push_back(token);
+    }
+    return tokens;
   }
 
 }
@@ -236,6 +251,30 @@ namespace sa2
               }
             }
             ImGui::EndCombo();
+          }
+
+          if (cardManager.IsSSCInstalled())
+          {
+            CSuperSerialCard* pSSC = cardManager.GetSSC();
+            const std::string& current = pSSC->GetSerialPortName();
+            if (ImGui::BeginCombo("serial", current.c_str()))
+            {
+              const std::vector<std::string> choices = split(pSSC->GetSerialPortChoices(), '\0');
+              for (size_t i = 0; i < choices.size(); ++i)
+              {
+                const std::string & name = choices[i];
+                const bool isSelected = name == current;
+                if (ImGui::Selectable(name.c_str(), isSelected))
+                {
+                  pSSC->CommSetSerialPort(i);
+                }
+                if (isSelected)
+                {
+                  ImGui::SetItemDefaultFocus();
+                }
+              }
+              ImGui::EndCombo();
+            }
           }
 
           bool virtualDNS = Uthernet2::GetRegistryVirtualDNS(uthernetSlot);
