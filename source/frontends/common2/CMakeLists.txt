@@ -59,3 +59,8 @@ configure_file(config.h.in config.h)
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/resource
   DESTINATION ${CMAKE_INSTALL_DATADIR}/applewin)
+
+install(FILES
+  ${CMAKE_SOURCE_DIR}/bin/A2_BASIC.SYM
+  ${CMAKE_SOURCE_DIR}/bin/APPLE2E.SYM
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/applewin/bin)
