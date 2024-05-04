@@ -5,9 +5,6 @@ summary: AppleWin Apple II emulator # 79 char long summary
 description: |
   Apple II emulator for Linux
 
-# grade: devel # must be 'stable' to release into candidate/stable channels
-# confinement: devmode # use 'strict' once you have the right plugs and slots
-
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 
@@ -46,15 +43,8 @@ parts:
       - libsdl2-image-2.0-0
       - libboost-program-options1.74.0
       - libminizip1
-      - libpcap0.8
       - libslirp0
       - libgles2
-
-plugs:
-  etc-xattr:
-    interface: system-files
-    read:
-      - /etc/xattr.conf
 
 apps:
   applewin:
@@ -68,6 +58,6 @@ apps:
       - joystick
       - home
       - removable-media
-      # - hardware-observe  # what is this for? it complains about /run/udev/data/c241:5
       - screen-inhibit-control
-      - etc-xattr
+      # - hardware-observe  # it complains about /run/udev/data/c241:5, something network / pcap related???
+      # - etc-xattr  # complains about /etc/xattr.conf, is it important?
