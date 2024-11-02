@@ -24,7 +24,7 @@ namespace sa2
     int getGLSwapInterval()
     {
       int interval = 0;
-      if (SDL_GL_GetSwapInterval(&interval))
+      if (!SDL_GL_GetSwapInterval(&interval))
       {
         throw std::runtime_error(decorateSDLError("SDL_GL_GetSwapInterval"));
       }

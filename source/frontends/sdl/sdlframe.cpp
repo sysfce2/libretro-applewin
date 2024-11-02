@@ -182,8 +182,8 @@ namespace sa2
 
   bool SDLFrame::setGLSwapInterval(const int interval)
   {
-    const int res = SDL_GL_SetSwapInterval(interval);
-    return res == 0;
+    const bool res = SDL_GL_SetSwapInterval(interval);
+    return res;
   }
 
 
@@ -362,7 +362,7 @@ namespace sa2
       case SDL_BUTTON_LEFT:
       case SDL_BUTTON_RIGHT:
         {
-          const eBUTTONSTATE state = (event.state == SDL_PRESSED) ? BUTTON_DOWN : BUTTON_UP;
+          const eBUTTONSTATE state = event.down ? BUTTON_DOWN : BUTTON_UP;
           const eBUTTON button = (event.button == SDL_BUTTON_LEFT) ? BUTTON0 : BUTTON1;
           cardManager.GetMouseCard()->SetButton(button, state);
           break;

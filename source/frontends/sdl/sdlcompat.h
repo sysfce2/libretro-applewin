@@ -16,7 +16,7 @@
 
   #define SA2_CONTROLLER_BUTTON(e) e.gbutton.button
   #define SA2_DROP_FILE(d) d.data
-  #define SA2_RENDERER_LOGICAL_SIZE(r, w, h) SDL_RenderSetLogicalSize(r, w, h, SDL_LOGICAL_PRESENTATION_STRETCH, SDL_SCALEMODE_NEAREST)
+  #define SA2_RENDERER_LOGICAL_SIZE(r, w, h) SDL_RenderSetLogicalSize(r, w, h, SDL_LOGICAL_PRESENTATION_STRETCH)
   #define SA2_IMAGE_BITS(s) SDL_GetPixelFormatDetails(s->format)->bits_per_pixel
   #define SA2_KEY_CODE(e) e.key
   #define SA2_KEY_MOD(e) e.mod
