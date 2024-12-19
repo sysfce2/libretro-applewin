@@ -57,3 +57,8 @@ std::map<std::string, std::map<std::string, std::string>> Configuration::getAllV
 {
     throw std::runtime_error("Configuration::getAllValues not implemented.");
 }
+
+void Configuration::saveToINIFile(const std::string & filename) const
+{
+    throw std::runtime_error("Configuration::saveToINIFile not implemented.");
+}

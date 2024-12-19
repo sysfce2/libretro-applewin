@@ -1,6 +1,6 @@
 #include "StdAfx.h"
+#include "linux/registryclass.h"
 #include "frontends/libretro/retroregistry.h"
-#include "frontends/common2/ptreeregistry.h"
 #include "frontends/libretro/environment.h"
 
 #include "Common.h"
@@ -11,6 +11,7 @@
 
 #include <list>
 #include <sstream>
+#include <fstream>
 
 namespace
 {
@@ -169,6 +170,67 @@ namespace
     return ss.str();
   }
 
+  class RetroRegistry : public Registry
+  {
+  public:
+    std::string getString(const std::string& section, const std::string& key) const override
+    {
+      const auto iterSection = myValues.find(section);
+      if (iterSection == myValues.end())
+        throw std::runtime_error("Section '" + section + "' not found");
+
+      const auto iterKey = iterSection->second.find(key);
+      if (iterKey == iterSection->second.end())
+        throw std::runtime_error("Key '" + section + '/' + key + "' not found");
+
+      return iterKey->second;
+    }
+
+    DWORD getDWord(const std::string& section, const std::string& key) const override
+    {
+      const std::string value = getString(section, key);
+      return std::stoul(value);
+    }
+
+    bool getBool(const std::string& section, const std::string& key) const override
+    {
+      const DWORD value = getDWord(section, key);
+      return value != 0;
+    }
+
+    void putString(const std::string& section, const std::string& key, const std::string& value) override
+    {
+      myValues[section][key] = value;
+    }
+
+    void putDWord(const std::string& section, const std::string& key, const DWORD value) override
+    {
+      putString(section, key, std::to_string(value));
+    }
+
+    std::map<std::string, std::map<std::string, std::string>> getAllValues() const override
+    {
+      return myValues;
+    }
+
+    void saveToINIFile(const std::string & filename) const override
+    {
+      std::ofstream f(filename);
+      for (const auto & section : myValues)
+      {
+        f << '[' << section.first << ']' << std::endl;
+        for (const auto & key : section.second)
+        {
+          f << key.first << " = " << key.second << std::endl;
+        }
+        f << std::endl;
+      }
+    }
+
+  private:
+    std::map<std::string, std::map<std::string, std::string>> myValues;
+  };
+
 }
 
 namespace ra2
@@ -223,9 +285,9 @@ namespace ra2
     }
   }
 
-  std::shared_ptr<common2::PTreeRegistry> CreateRetroRegistry()
+  std::shared_ptr<Registry> CreateRetroRegistry()
   {
-    const auto registry = std::make_shared<common2::PTreeRegistry>();
+    const auto registry = std::make_shared<RetroRegistry>();
     PopulateRegistry(registry);
     return registry;
   }

@@ -4,7 +4,6 @@
 #include "frontends/libretro/retroframe.h"
 #include "frontends/libretro/rkeyboard.h"
 #include "frontends/common2/utils.h"
-#include "frontends/common2/ptreeregistry.h"
 #include "frontends/common2/programoptions.h"
 
 #include "Common.h"
@@ -13,6 +12,7 @@
 #include "linux/keyboardbuffer.h"
 #include "linux/paddle.h"
 #include "linux/context.h"
+#include "linux/registryclass.h"
 
 #include "libretro.h"
 
@@ -21,7 +21,7 @@
 namespace
 {
 
-  void saveRegistryToINI(const std::shared_ptr<common2::PTreeRegistry> & registry)
+  void saveRegistryToINI(const std::shared_ptr<Registry> & registry)
   {
     try
     {

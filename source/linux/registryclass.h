@@ -21,7 +21,7 @@ public:
   virtual void putDWord(const std::string & section, const std::string & key, const DWORD value) = 0;
 
   virtual std::map<std::string, std::map<std::string, std::string>> getAllValues() const = 0;
-
+  virtual void saveToINIFile(const std::string & filename) const = 0;
 };
 
 BOOL RegLoadString (LPCTSTR section, LPCTSTR key, BOOL peruser, LPTSTR buffer, DWORD chars);

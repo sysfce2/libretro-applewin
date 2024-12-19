@@ -15,7 +15,9 @@ public:
     void putString(const std::string & section, const std::string & key, const std::string & value) override;
     void putDWord(const std::string & section, const std::string & key, const DWORD value) override;
 
+    // not implemented
     std::map<std::string, std::map<std::string, std::string>> getAllValues() const override;
+    void saveToINIFile(const std::string & filename) const override;
 
 private:
     QSettings mySettings;
