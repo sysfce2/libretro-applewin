@@ -201,7 +201,7 @@ void HarddiskInterfaceCard::Reset(const bool powerCycle)
 
 void HarddiskInterfaceCard::InitializeIO(LPBYTE pCxRomPeripheral)
 {
-	const DWORD HARDDISK_FW_SIZE = APPLE_SLOT_SIZE;
+	const uint32_t HARDDISK_FW_SIZE = APPLE_SLOT_SIZE;
 	WORD id = IDR_HDC_SMARTPORT_FW;	// If not enhanced //e, then modify the firmware later
 
 	// Use any cmd line override
@@ -409,7 +409,7 @@ bool HarddiskInterfaceCard::Insert(const int iDrive, const std::string& pathname
 	if (m_hardDiskDrive[iDrive].m_imageloaded)
 		Unplug(iDrive);
 
-	const DWORD dwAttributes = GetFileAttributes(pathname.c_str());
+	const uint32_t dwAttributes = GetFileAttributes(pathname.c_str());
 	if (dwAttributes == INVALID_FILE_ATTRIBUTES)
 		m_hardDiskDrive[iDrive].m_bWriteProtected = false;	// File doesn't exist - so ImageOpen() below will fail
 	else
@@ -1322,7 +1322,7 @@ bool HarddiskInterfaceCard::LoadSnapshotHDDUnit(YamlLoadHelper& yamlLoadHelper, 
 	std::string filename = simpleFilename;
 	if (!filename.empty())
 	{
-		DWORD dwAttributes = GetFileAttributes(filename.c_str());
+		uint32_t dwAttributes = GetFileAttributes(filename.c_str());
 		if (dwAttributes == INVALID_FILE_ATTRIBUTES && !absolutePath.empty())
 		{
 			// try the absolute path if present
