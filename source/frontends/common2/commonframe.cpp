@@ -17,6 +17,8 @@
 #include "NTSC.h"
 #include "Speaker.h"
 
+#include "roms_resources.h"
+
 namespace common2
 {
 
@@ -40,33 +42,43 @@ namespace common2
   {
     myResource.clear();
 
-    const std::string & filename = getResourceName(id);
-    const std::string path = getResourcePath(filename);
+    // const std::string & filename = getResourceName(id);
 
-    const int fd = open(path.c_str(), O_RDONLY);
-
-    if (fd != -1)
+    const auto it = roms::resources.find(id);
+    if (it == roms::resources.end())
     {
-      struct stat stdbuf;
-      if ((fstat(fd, &stdbuf) == 0) && S_ISREG(stdbuf.st_mode))
-      {
-        const off_t size = stdbuf.st_size;
-        std::vector<BYTE> data(size);
-        const ssize_t rd = read(fd, data.data(), size);
-        if (rd == expectedSize)
-        {
-          std::swap(myResource, data);
-        }
-      }
-      close(fd);
+      throw std::runtime_error("Cannot locate resource: " + std::to_string(id));
     }
 
-    if (myResource.empty())
-    {
-      LogFileOutput("FindResource: could not load resource %s\n", filename.c_str());
-    }
+    auto tmp = const_cast<unsigned char *>(it->second.first);
+    return reinterpret_cast<BYTE*>(tmp);
 
-    return myResource.data();
+    // const std::string path = getResourcePath(filename);
+
+    // const int fd = open(path.c_str(), O_RDONLY);
+
+    // if (fd != -1)
+    // {
+    //   struct stat stdbuf;
+    //   if ((fstat(fd, &stdbuf) == 0) && S_ISREG(stdbuf.st_mode))
+    //   {
+    //     const off_t size = stdbuf.st_size;
+    //     std::vector<BYTE> data(size);
+    //     const ssize_t rd = read(fd, data.data(), size);
+    //     if (rd == expectedSize)
+    //     {
+    //       std::swap(myResource, data);
+    //     }
+    //   }
+    //   close(fd);
+    // }
+
+    // if (myResource.empty())
+    // {
+    //   LogFileOutput("FindResource: could not load resource %s\n", filename.c_str());
+    // }
+
+    // return myResource.data();
   }
 
   std::string CommonFrame::getBitmapFilename(const std::string & resource)
