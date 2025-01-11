@@ -75,6 +75,7 @@ namespace common2
 
   enum class OptionsType { none, applen, sa2 };
   bool getEmulatorOptions(int argc, const char * argv [], OptionsType type, const std::string & edition, EmulatorOptions & options);
+  bool getEmulatorOptions2(int argc, char *const argv[], OptionsType type, const std::string & edition, EmulatorOptions & options);
 
   void applyOptions(const EmulatorOptions & options);
 

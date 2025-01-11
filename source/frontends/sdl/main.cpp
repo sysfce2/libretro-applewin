@@ -52,7 +52,7 @@ namespace
 
 }
 
-void run_sdl(int argc, const char * argv [])
+void run_sdl(int argc, char *const argv[])
 {
   std::cerr << std::fixed << std::setprecision(2);
 
@@ -61,7 +61,7 @@ void run_sdl(int argc, const char * argv [])
 
   common2::EmulatorOptions options;
 
-  const bool run = getEmulatorOptions(argc, argv, common2::OptionsType::sa2, "SDL2", options);
+  const bool run = getEmulatorOptions2(argc, argv, common2::OptionsType::sa2, "SDL2", options);
 
   if (!run)
     return;
@@ -165,7 +165,7 @@ void run_sdl(int argc, const char * argv [])
 #endif
 }
 
-int main(int argc, const char * argv [])
+int main(int argc, char *const argv[])
 {
   //First we need to start up SDL, and make sure it went ok
   const Uint32 flags = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS;

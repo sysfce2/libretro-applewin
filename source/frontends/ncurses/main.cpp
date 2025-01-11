@@ -107,10 +107,10 @@ namespace
     } while (!quit && !na2::g_stop);
   }
 
-  int run_ncurses(int argc, const char * argv [])
+  int run_ncurses(int argc, char *const argv[])
   {
     common2::EmulatorOptions options;
-    const bool run = getEmulatorOptions(argc, argv, common2::OptionsType::applen, "ncurses", options);
+    const bool run = getEmulatorOptions2(argc, argv, common2::OptionsType::applen, "ncurses", options);
     options.fixedSpeed = true;  // TODO: remove, some testing required
     options.syncWithTimer = true;
 
@@ -144,7 +144,7 @@ namespace
 
 }
 
-int main(int argc, const char * argv [])
+int main(int argc, char *const argv[])
 {
   try
   {

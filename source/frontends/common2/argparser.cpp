@@ -12,8 +12,6 @@
 namespace
 {
 
-  enum AA { aaa, bbb};
-
   struct OptionData_t
   {
     const char * name;
@@ -29,6 +27,7 @@ namespace
 
   void printHelp(const std::vector<std::pair<std::string, std::vector<OptionData_t>>> & data)
   {
+    std::cout << std::endl;
     for (const auto & categories : data)
     {
       std::cout << categories.first << ":" << std::endl;
@@ -40,12 +39,16 @@ namespace
         {
           value << "[ -" << char(option.val) << " ] ";
         }
+        else
+        {
+          value << "       ";
+        }
         value << "--" << option.name;
-        if (option.has_arg ==         required_argument)
+        if (option.has_arg == required_argument)
         {
           value << " arg";
         }
-        std::cout << std::left << std::setw(25) << value.str() << "\t" << option.description << std::endl;
+        std::cout << std::left << std::setw(30) << value.str() << "\t" << option.description << std::endl;
       }
       std::cout << std::endl;
     }
@@ -105,7 +108,7 @@ namespace
 namespace common2
 {
 
-  bool getEmulatorOptions(int argc, char * argv [], OptionsType type, const std::string & edition, EmulatorOptions & options)
+  bool getEmulatorOptions2(int argc, char *const argv[], OptionsType type, const std::string & edition, EmulatorOptions & options)
   {
     constexpr int PAUSED            = 1001;
     constexpr int FIXED_SPEED       = 1002;
@@ -140,7 +143,7 @@ namespace common2
 
     const std::string name = "Apple Emulator for " + edition + " (based on AppleWin " + getVersion() + ")";
 
-    const std::vector<std::pair<std::string, std::vector<OptionData_t>>> allOptions =
+    std::vector<std::pair<std::string, std::vector<OptionData_t>>> allOptions =
       {
         {
           name.c_str(),
@@ -165,7 +168,7 @@ namespace common2
             {"headless",                no_argument,          HEADLESS,         "Headless: disable video (freewheel)"},
             {"benchmark",               no_argument,          'b',              "Benchmark emulator"},
             {"no-squaring",             no_argument,          NO_SQUARING,      "Gamepad range is (already) a square"},
-            {"nat",                     no_argument,          SLIRP_NAT,        "SLIRP PortFwd"},
+            {"nat",                     no_argument,          SLIRP_NAT,        "SLIRP PortFwd (e.g. 0,tcp,,8080,,http)"},
           }
         },
         {
@@ -195,10 +198,10 @@ namespace common2
         {
           "Audio",
           {
-            {"no-audio",                no_argument,          NO_AUDIO,         "Memory initialization pattern [0..7]"},
+            {"no-audio",                no_argument,          NO_AUDIO,         "Disable audio"},
             {"audio-buffer",            required_argument,    AUDIO_BUFFER,     "Audio buffer (ms)"},
-            {"wav-speaker",             required_argument,    WAV_SPEAKER,      "Speaker wav output"},
-            {"wav-mockingboard",        required_argument,    WAV_MOCKINGBOARD, "Mockingboard wav output"},
+            {"wav-speaker",             required_argument,    WAV_SPEAKER,      "Speaker wav output filename"},
+            {"wav-mockingboard",        required_argument,    WAV_MOCKINGBOARD, "Mockingboard wav output filename"},
           }
         },
       };
@@ -206,7 +209,7 @@ namespace common2
     const std::vector<std::pair<std::string, std::vector<OptionData_t>>> sa2Options =
       {
         {
-          "SDL",
+          "sa2",
           {
             {"sdl-driver",              required_argument,    SDL_DRIVER,       "SDL driver"},
             {"gl-swap",                 required_argument,    GL_SWAP,          "SDL_GL_SwapInterval"},
@@ -227,24 +230,23 @@ namespace common2
           "applen",
           {
             {"no-video-update",         no_argument,          NO_VIDEO_UPDATE,  "Do not execute NTSC code"},
-            {"ev-device-name",          required_argument,    EV_DEVICE_NAME,   "Gamepad ev-device name (for applen)"},
+            {"ev-device-name",          required_argument,    EV_DEVICE_NAME,   "Gamepad ev-device name"},
           }
         },
       };
 
+    if (type == OptionsType::sa2)
+    {
+      allOptions.insert(allOptions.end(), sa2Options.begin(), sa2Options.end());
+    }
+    else if (type == OptionsType::applen)
+    {
+      allOptions.insert(allOptions.end(), applenOptions.begin(), applenOptions.end());
+    }
+
     std::vector<option> longOptions;
     std::string shortOptions;
     extractOptions(allOptions, longOptions, shortOptions);
-
-    if (type == OptionsType::applen)
-    {
-      extractOptions(applenOptions, longOptions, shortOptions);
-    }
-
-    if (type == OptionsType::sa2)
-    {
-      extractOptions(sa2Options, longOptions, shortOptions);
-    }
 
     while (true)
     {
