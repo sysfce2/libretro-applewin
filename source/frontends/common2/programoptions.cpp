@@ -100,6 +100,18 @@ namespace common2
       ;
     desc.add(configDesc);
 
+    po::options_description emulatorDesc("Emulator");
+    emulatorDesc.add_options()
+      ("log", "Log to AppleWin.log")
+      ("paused", "Start paused")
+      ("fixed-speed", "Fixed (non-adaptive) speed")
+      ("headless", "Headless: disable video (freewheel)")
+      ("benchmark,b", "Benchmark emulator")
+      ("no-squaring", "Gamepad range is (already) a square")
+      ("nat", po::value<std::vector<std::string>>(), "SLIRP PortFwd")
+      ;
+    desc.add(emulatorDesc);
+
     po::options_description diskDesc("Disk");
     diskDesc.add_options()
       ("d1,1", po::value<std::string>(), "Disk in 1st drive")
@@ -124,22 +136,10 @@ namespace common2
       ;
     desc.add(memoryDesc);
 
-    po::options_description emulatorDesc("Emulator");
-    emulatorDesc.add_options()
-      ("log", "Log to AppleWin.log")
-      ("paused", "Start paused")
-      ("fixed-speed", "Fixed (non-adaptive) speed")
-      ("headless", "Headless: disable video (freewheel)")
-      ("audio-buffer", po::value<size_t>()->default_value(options.audioBuffer), "Audio buffer (ms)")
-      ("benchmark,b", "Benchmark emulator")
-      ("no-squaring", "Gamepad range is (already) a square")
-      ("nat", po::value<std::vector<std::string>>(), "SLIRP PortFwd")
-      ;
-    desc.add(emulatorDesc);
-
     po::options_description audioDesc("Audio");
     audioDesc.add_options()
       ("no-audio", "Disable audio")
+      ("audio-buffer", po::value<size_t>()->default_value(options.audioBuffer), "Audio buffer (ms)")
       ("wav-speaker", po::value<std::string>(), "Speaker wav output")
       ("wav-mockingboard", po::value<std::string>(), "Mockingboard wav output")
       ;

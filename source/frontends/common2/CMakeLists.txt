@@ -1,6 +1,7 @@
 include(GNUInstallDirs)
 
 set(SOURCE_FILES
+  argparser.cpp
   commonframe.cpp
   commoncontext.cpp
   controllerdoublepress.cpp
@@ -14,6 +15,7 @@ set(SOURCE_FILES
   )
 
 set(HEADER_FILES
+  argparser.h
   commonframe.h
   commoncontext.h
   controllerdoublepress.h
