@@ -42,11 +42,14 @@ target_compile_options(applen PRIVATE
   ${LIBEVDEV_CFLAGS_OTHER}
   )
 
-target_link_libraries(applen PRIVATE
-  ${NCURSES_LIBRARIES}
-  ${LIBEVDEV_LIBRARIES}
+target_link_libraries(applen PUBLIC
+  -Wl,-Bstatic
+  ${NCURSES_STATIC_LIBRARIES}
+  ${LIBEVDEV_STATIC_LIBRARIES}
   appleii
+  -Wl,-Bdynamic
   common2
+  jj
   )
 
 target_link_directories(applen PRIVATE

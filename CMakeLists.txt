@@ -26,6 +26,8 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   add_compile_options(-Werror=format -Wno-error=format-overflow -Wno-error=format-truncation -Wno-psabi)
 endif()
 
+add_compile_options(-static-libgcc -static-libstdc++)
+
 MESSAGE("CMAKE_BUILD_TYPE:                ${CMAKE_BUILD_TYPE}")
 MESSAGE("CMAKE_CXX_FLAGS:                 ${CMAKE_CXX_FLAGS}")
 MESSAGE("CMAKE_CXX_FLAGS_RELEASE:         ${CMAKE_CXX_FLAGS_RELEASE}")

@@ -42,8 +42,8 @@ target_include_directories(common2 PRIVATE
   ${Boost_INCLUDE_DIRS}
   )
 
-target_link_libraries(common2 PRIVATE
-  appleii
+target_link_libraries(common2 PUBLIC
+  # appleii
   apple2roms
 )
 
