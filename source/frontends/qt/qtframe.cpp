@@ -13,10 +13,11 @@
 #include <QMessageBox>
 #include <QStandardPaths>
 
-QtFrame::QtFrame(Emulator *emulator, QMdiSubWindow *window)
+QtFrame::QtFrame(Emulator *emulator, QMdiSubWindow *window, QAudioDevice audioDevice)
     : LinuxFrame(true)
     , myEmulator(emulator)
     , myWindow(window)
+    , myAudioDevice(audioDevice)
     , myForceRepaint(false)
 {
 }
@@ -117,7 +118,7 @@ std::string QtFrame::Video_GetScreenShotFolder() const
 std::shared_ptr<SoundBuffer> QtFrame::CreateSoundBuffer(
     uint32_t dwBufferSize, uint32_t nSampleRate, int nChannels, const char *pszVoiceName)
 {
-    const auto buffer = QDirectSound::iCreateDirectSoundBuffer(dwBufferSize, nSampleRate, nChannels, pszVoiceName);
+    const auto buffer = QDirectSound::iCreateDirectSoundBuffer(dwBufferSize, nSampleRate, nChannels, pszVoiceName, myAudioDevice);
     return buffer;
 }
 

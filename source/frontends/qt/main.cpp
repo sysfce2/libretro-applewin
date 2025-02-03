@@ -4,9 +4,13 @@
 #include <QApplication>
 #include <QTimer>
 #include <QCommandLineParser>
+#include <QMediaDevices>
+#include <QAudioDevice>
 
 #include "linux/version.h"
 #include "applicationname.h"
+
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -28,9 +32,44 @@ int main(int argc, char *argv[])
     const QCommandLineOption logStateOption("load-state", "load state file", "file");
     parser.addOption(logStateOption);
 
+    const QCommandLineOption audioDeviceOption("a", "audio device", "id");
+    parser.addOption(audioDeviceOption);
+
     parser.process(app);
 
-    QApple w;
+    int audioDeviceID = -1;
+    if (parser.isSet(audioDeviceOption))
+    {
+        audioDeviceID = parser.value(audioDeviceOption).toInt();
+    }
+
+    const QList<QAudioDevice> devices = QMediaDevices::audioOutputs();
+    // default
+    QAudioDevice audioDevice = QMediaDevices::defaultAudioOutput();
+
+    std::cout << "Audio devices:" << std::endl;
+    for (size_t i = 0; i < devices.size(); ++i)
+    {
+        const QAudioDevice &dev = devices[i];
+        std::cout << i;
+        if (i == audioDeviceID)
+        {
+            audioDevice = dev;
+            std::cout << " (*): ";
+        }
+        else
+        {
+            std::cout << "    : ";
+        }
+        std::cout << dev.description().toStdString();
+        if (dev.isDefault())
+        {
+            std::cout << " <default>";
+        }
+        std::cout << std::endl;
+    }
+
+    QApple w(audioDevice);
 
     const bool run = parser.isSet(runOption);
     const QString stateFile = parser.value(logStateOption);

@@ -85,8 +85,8 @@ QApple::PauseEmulator::~PauseEmulator()
     }
 }
 
-QApple::QApple(QWidget *parent)
-    : QMainWindow(parent)
+QApple::QApple(QAudioDevice audioDevice)
+    : QMainWindow()
     , myTimerID(0)
     , ui(new Ui::QApple)
 {
@@ -113,7 +113,7 @@ QApple::QApple(QWidget *parent)
     myEmulatorWindow = ui->mdiArea->addSubWindow(
         emulator, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint);
 
-    myFrame = std::make_shared<QtFrame>(emulator, myEmulatorWindow);
+    myFrame = std::make_shared<QtFrame>(emulator, myEmulatorWindow, audioDevice);
     SetFrame(myFrame);
 
     readSettings();

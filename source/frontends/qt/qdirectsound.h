@@ -3,6 +3,7 @@
 
 #include <QtGlobal>
 #include <QAudio>
+#include <QAudioDevice>
 
 #include <vector>
 #include <string>
@@ -28,7 +29,7 @@ namespace QDirectSound
     };
 
     std::shared_ptr<SoundBuffer> iCreateDirectSoundBuffer(
-        uint32_t dwBufferSize, uint32_t nSampleRate, int nChannels, const char *pszVoiceName);
+        uint32_t dwBufferSize, uint32_t nSampleRate, int nChannels, const char *pszVoiceName, QAudioDevice audioDevice);
 
     void setOptions(const qint64 duration); // in ms
     std::vector<SoundInfo> getAudioInfo();

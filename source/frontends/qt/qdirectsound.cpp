@@ -24,7 +24,7 @@ namespace
     class DirectSoundGenerator : public LinuxSoundBuffer, public QIODevice
     {
     public:
-        DirectSoundGenerator(DWORD dwBufferSize, DWORD nSampleRate, int nChannels, LPCSTR pszVoiceName);
+        DirectSoundGenerator(DWORD dwBufferSize, DWORD nSampleRate, int nChannels, LPCSTR pszVoiceName, QAudioDevice audioDevice);
         virtual ~DirectSoundGenerator() override;
 
         virtual HRESULT Stop() override;
@@ -49,7 +49,7 @@ namespace
     std::unordered_set<DirectSoundGenerator *> activeSoundGenerators;
 
     DirectSoundGenerator::DirectSoundGenerator(
-        DWORD dwBufferSize, DWORD nSampleRate, int nChannels, LPCSTR pszVoiceName)
+        DWORD dwBufferSize, DWORD nSampleRate, int nChannels, LPCSTR pszVoiceName, QAudioDevice audioDevice)
         : LinuxSoundBuffer(dwBufferSize, nSampleRate, nChannels, pszVoiceName)
     {
         // only initialise here to skip all the buffers which are not in DSBSTATUS_PLAYING mode
@@ -67,7 +67,7 @@ namespace
         myAudioOutput = std::make_shared<QAudioSink>(audioFormat);
 #else
         audioFormat.setSampleFormat(QAudioFormat::Int16);
-        myAudioOutput = std::make_shared<QAudioSink>(audioFormat);
+        myAudioOutput = std::make_shared<QAudioSink>(audioDevice, audioFormat);
 #endif
     }
 
@@ -196,12 +196,12 @@ namespace QDirectSound
 {
 
     std::shared_ptr<SoundBuffer> iCreateDirectSoundBuffer(
-        uint32_t dwBufferSize, uint32_t nSampleRate, int nChannels, const char *pszVoiceName)
+        uint32_t dwBufferSize, uint32_t nSampleRate, int nChannels, const char *pszVoiceName, QAudioDevice audioDevice)
     {
         try
         {
             std::shared_ptr<DirectSoundGenerator> generator =
-                std::make_shared<DirectSoundGenerator>(dwBufferSize, nSampleRate, nChannels, pszVoiceName);
+                std::make_shared<DirectSoundGenerator>(dwBufferSize, nSampleRate, nChannels, pszVoiceName, audioDevice);
             generator->setOptions(defaultDuration);
             DirectSoundGenerator *ptr = generator.get();
             activeSoundGenerators.insert(ptr);

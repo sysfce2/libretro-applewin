@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QElapsedTimer>
 #include <QAudio>
+#include <QAudioDevice>
 
 #include <memory>
 
@@ -25,7 +26,7 @@ class QApple : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit QApple(QWidget *parent = nullptr);
+    explicit QApple(QAudioDevice audioDevice);
     ~QApple();
 
     void loadStateFile(const QString &stateFile);

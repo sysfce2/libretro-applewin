@@ -5,6 +5,7 @@
 #include <memory>
 #include <QByteArray>
 #include <QString>
+#include <QAudioDevice>
 
 class Emulator;
 class QMdiSubWindow;
@@ -12,7 +13,7 @@ class QMdiSubWindow;
 class QtFrame : public LinuxFrame
 {
 public:
-    QtFrame(Emulator *emulator, QMdiSubWindow *window);
+    QtFrame(Emulator *emulator, QMdiSubWindow *window, QAudioDevice audioDevice);
 
     void VideoPresentScreen() override;
     void FrameRefreshStatus(int drawflags) override;
@@ -33,6 +34,8 @@ public:
 private:
     Emulator *myEmulator;
     QMdiSubWindow *myWindow;
+    QAudioDevice myAudioDevice;
+
     bool myForceRepaint;
 
     std::pair<const unsigned char *, unsigned int> GetResourceData(WORD id) const override;
