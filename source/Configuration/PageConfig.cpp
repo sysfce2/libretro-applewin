@@ -171,7 +171,7 @@ INT_PTR CPageConfig::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPA
 
 #if 0
 		case IDC_RECALIBRATE:
-			RegSaveValue(TEXT(""),"RunningOnOS",0,0);
+			RegSaveValue("","RunningOnOS",0,0);
 			if (MessageBox(hWnd,
 				"The emulator has been set to recalibrate "
 				TEXT("itself the next time it is started.\n\n")

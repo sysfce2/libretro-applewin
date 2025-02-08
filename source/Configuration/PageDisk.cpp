@@ -194,7 +194,7 @@ INT_PTR CPageDisk::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPARA
 			InitComboHDD(hWnd, SLOT7);
 
 			char PathToCiderPress[MAX_PATH];
-			RegLoadString(REG_CONFIG, REGVALUE_CIDERPRESSLOC, 1, PathToCiderPress, MAX_PATH, TEXT(""));
+			RegLoadString(REG_CONFIG, REGVALUE_CIDERPRESSLOC, 1, PathToCiderPress, MAX_PATH, "");
 			SendDlgItemMessage(hWnd, IDC_CIDERPRESS_FILENAME ,WM_SETTEXT, 0, (LPARAM)PathToCiderPress);
 
 			CheckDlgButton(hWnd, IDC_HDD_ENABLE, (GetCardMgr().QuerySlot(SLOT7) == CT_GenericHDD) ? BST_CHECKED : BST_UNCHECKED);
