@@ -890,7 +890,7 @@ void SymbolUpdate ( SymbolTable_Index_e eSymbolTable, const char *pSymbolName, W
 			{
 				if (bRemoveSymbol)
 				{
-					ConsoleBufferPush( TEXT(" Removing symbol." ) );
+					ConsoleBufferPush( " Removing symbol." );
 				}
 
 				g_aSymbols[ eSymbolTable ].erase( nAddressPrev );
@@ -911,7 +911,7 @@ void SymbolUpdate ( SymbolTable_Index_e eSymbolTable, const char *pSymbolName, W
 		{
 			if (bRemoveSymbol)
 			{
-				ConsoleBufferPush( TEXT(" Symbol not in table." ) );
+				ConsoleBufferPush( " Symbol not in table." );
 			}
 		}
 

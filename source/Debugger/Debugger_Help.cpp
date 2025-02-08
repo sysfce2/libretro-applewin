@@ -1216,11 +1216,11 @@ Update_t CmdHelpSpecific (int nArgs)
 			break;
 		case CMD_OUTPUT_ECHO:
 			ConsoleColorizePrint( " Usage: string"    );
-//			ConsoleBufferPush( TEXT(" Examples:"        ) );
+//			ConsoleBufferPush( " Examples:" );
 			Help_Examples();
 			ConsolePrintFormat( "%s   %s Checkpoint", CHC_EXAMPLE, pCommand->m_sName );
 			ConsolePrintFormat( "%s   %s PC"        , CHC_EXAMPLE, pCommand->m_sName );
-//			ConsoleBufferPush( TEXT("  Echo the string to the console" ) );
+//			ConsoleBufferPush( "  Echo the string to the console" );
 			break;
 		case CMD_OUTPUT_PRINT: 
 			ConsoleColorizePrint( " Usage: <string | expression> [, string | expression]*"       );

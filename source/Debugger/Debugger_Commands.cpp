@@ -115,16 +115,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"CD"          , CmdConfigSetDebugDir , CMD_CONFIG_SET_DEBUG_DIR , "Updates the current debugger directory." },
 	// Cursor
 		{"RET"         , CmdCursorJumpRetAddr , CMD_CURSOR_JUMP_RET_ADDR , "Sets the cursor to the sub-routine caller" }, 
-		{TEXT(      "^")     , NULL                 , CMD_CURSOR_LINE_UP       }, // \x2191 = Up Arrow (Unicode)
+		{"^"     , NULL                 , CMD_CURSOR_LINE_UP       }, // \x2191 = Up Arrow (Unicode)
 		{"Shift ^"     , NULL                 , CMD_CURSOR_LINE_UP_1     },
-		{TEXT(      "v")     , NULL                 , CMD_CURSOR_LINE_DOWN     }, // \x2193 = Dn Arrow (Unicode)
+		{"v"     , NULL                 , CMD_CURSOR_LINE_DOWN     }, // \x2193 = Dn Arrow (Unicode)
 		{"Shift v"     , NULL                 , CMD_CURSOR_LINE_DOWN_1   },
-		{TEXT("PAGEUP"   )   , CmdCursorPageUp      , CMD_CURSOR_PAGE_UP       , "Scroll up one screen"   },
+		{"PAGEUP"   , CmdCursorPageUp      , CMD_CURSOR_PAGE_UP       , "Scroll up one screen"   },
 		{"PAGEUP256"   , CmdCursorPageUp256   , CMD_CURSOR_PAGE_UP_256   , "Scroll up 256 bytes"    }, // Shift
-		{TEXT("PAGEUP4K" )   , CmdCursorPageUp4K    , CMD_CURSOR_PAGE_UP_4K    , "Scroll up 4096 bytes"   }, // Ctrl
-		{TEXT("PAGEDN"     ) , CmdCursorPageDown    , CMD_CURSOR_PAGE_DOWN     , "Scroll down one scren"  }, 
+		{"PAGEUP4K"   , CmdCursorPageUp4K    , CMD_CURSOR_PAGE_UP_4K    , "Scroll up 4096 bytes"   }, // Ctrl
+		{"PAGEDN" , CmdCursorPageDown    , CMD_CURSOR_PAGE_DOWN     , "Scroll down one scren"  }, 
 		{"PAGEDOWN256" , CmdCursorPageDown256 , CMD_CURSOR_PAGE_DOWN_256 , "Scroll down 256 bytes"  }, // Shift
-		{TEXT("PAGEDOWN4K" ) , CmdCursorPageDown4K  , CMD_CURSOR_PAGE_DOWN_4K  , "Scroll down 4096 bytes" }, // Ctrl
+		{"PAGEDOWN4K" , CmdCursorPageDown4K  , CMD_CURSOR_PAGE_DOWN_4K  , "Scroll down 4096 bytes" }, // Ctrl
 	// Cycles info
 		{"CYCLES"      , CmdCyclesInfo        , CMD_CYCLES_INFO, "Cycles display configuration" },
 		{"RCC"		 , CmdCyclesReset		, CMD_CYCLES_RESET, "Reset cycles counter" },
@@ -407,11 +407,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	{
 // Breakpoint
 		{"<="         , NULL, PARAM_BP_LESS_EQUAL     },
-		{TEXT("<" )         , NULL, PARAM_BP_LESS_THAN      },
-		{TEXT("=" )         , NULL, PARAM_BP_EQUAL          },
+		{"<"         , NULL, PARAM_BP_LESS_THAN      },
+		{"="         , NULL, PARAM_BP_EQUAL          },
 		{TEXT("!=")         , NULL, PARAM_BP_NOT_EQUAL      },
 		{TEXT("!" )         , NULL, PARAM_BP_NOT_EQUAL_1    },
-		{TEXT(">" )         , NULL, PARAM_BP_GREATER_THAN   },
+		{">"         , NULL, PARAM_BP_GREATER_THAN   },
 		{">="         , NULL, PARAM_BP_GREATER_EQUAL  },
 		{"R"          , NULL, PARAM_BP_READ           },
 		{"?"          , NULL, PARAM_BP_READ           },
