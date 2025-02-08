@@ -1920,16 +1920,16 @@ void MemInitializeROM(void)
 		char sRomFileName[ MAX_PATH ];
 		switch (g_Apple2Type)
 		{
-		case A2TYPE_APPLE2:         strcpy(sRomFileName, TEXT("APPLE2.ROM"          )); break;
-		case A2TYPE_APPLE2PLUS:     strcpy(sRomFileName, TEXT("APPLE2_PLUS.ROM"     )); break;
-		case A2TYPE_APPLE2JPLUS:    strcpy(sRomFileName, TEXT("APPLE2_JPLUS.ROM"    )); break;
-		case A2TYPE_APPLE2E:        strcpy(sRomFileName, TEXT("APPLE2E.ROM"         )); break;
+		case A2TYPE_APPLE2:         strcpy(sRomFileName, "APPLE2.ROM"); break;
+		case A2TYPE_APPLE2PLUS:     strcpy(sRomFileName, "APPLE2_PLUS.ROM"); break;
+		case A2TYPE_APPLE2JPLUS:    strcpy(sRomFileName, "APPLE2_JPLUS.ROM"); break;
+		case A2TYPE_APPLE2E:        strcpy(sRomFileName, "APPLE2E.ROM"); break;
 		case A2TYPE_APPLE2EENHANCED:strcpy(sRomFileName, "APPLE2E_ENHANCED.ROM"); break;
-		case A2TYPE_PRAVETS82:      strcpy(sRomFileName, TEXT("PRAVETS82.ROM"       )); break;
-		case A2TYPE_PRAVETS8M:      strcpy(sRomFileName, TEXT("PRAVETS8M.ROM"       )); break;
-		case A2TYPE_PRAVETS8A:      strcpy(sRomFileName, TEXT("PRAVETS8C.ROM"       )); break;
-		case A2TYPE_TK30002E:       strcpy(sRomFileName, TEXT("TK3000e.ROM"         )); break;
-		case A2TYPE_BASE64A:        strcpy(sRomFileName, TEXT("BASE64A.ROM"         )); break;
+		case A2TYPE_PRAVETS82:      strcpy(sRomFileName, "PRAVETS82.ROM"); break;
+		case A2TYPE_PRAVETS8M:      strcpy(sRomFileName, "PRAVETS8M.ROM"); break;
+		case A2TYPE_PRAVETS8A:      strcpy(sRomFileName, "PRAVETS8C.ROM"); break;
+		case A2TYPE_TK30002E:       strcpy(sRomFileName, "TK3000e.ROM"); break;
+		case A2TYPE_BASE64A:        strcpy(sRomFileName, "BASE64A.ROM"); break;
 		default:
 			{
 				strcpy(sRomFileName, TEXT("Unknown type!"));

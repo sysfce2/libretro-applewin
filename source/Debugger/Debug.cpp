@@ -812,7 +812,7 @@ Update_t CmdProfile (int nArgs)
 		{
 			ProfileReset();
 			g_bProfiling = 1;
-			ConsoleBufferPush( TEXT(" Resetting profile data." ) );
+			ConsoleBufferPush( " Resetting profile data." );
 		}
 		else
 		{
@@ -2645,7 +2645,7 @@ Update_t CmdConfigColorMono (int nArgs)
 		if (iParam == PARAM_RESET)
 		{
 			ConfigColorsReset();
-			ConsoleBufferPush( TEXT(" Resetting colors." ) );
+			ConsoleBufferPush( " Resetting colors." );
 		}
 		else
 		if (iParam == PARAM_SAVE)
@@ -5466,7 +5466,7 @@ Update_t CmdNTSC (int nArgs)
 		if (iParam == PARAM_RESET)
 		{
 			NTSC_VideoInitChroma();
-			ConsoleBufferPush( TEXT(" Resetting NTSC palette." ) );
+			ConsoleBufferPush( " Resetting NTSC palette." );
 		}
 		else
 		if (iParam == PARAM_SAVE)
