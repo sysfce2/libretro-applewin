@@ -295,12 +295,12 @@ void CPageInput::DlgOK(HWND hWnd)
 
 	if (JoySetEmulationType(hWnd, m_nJoy0ChoiceTranlationTbl[uNewJoyType0], JN_JOYSTICK0, bIsSlot4Mouse))
 	{
-		REGSAVE(TEXT(REGVALUE_JOYSTICK0_EMU_TYPE), JoyGetJoyType(0));
+		REGSAVE(REGVALUE_JOYSTICK0_EMU_TYPE, JoyGetJoyType(0));
 	}
 
 	if (JoySetEmulationType(hWnd, m_nJoy1ChoiceTranlationTbl[uNewJoyType1], JN_JOYSTICK1, bIsSlot4Mouse))
 	{
-		REGSAVE(TEXT(REGVALUE_JOYSTICK1_EMU_TYPE), JoyGetJoyType(1));
+		REGSAVE(REGVALUE_JOYSTICK1_EMU_TYPE, JoyGetJoyType(1));
 	}
 
 	JoySetTrim((short)SendDlgItemMessage(hWnd, IDC_SPIN_XTRIM, UDM_GETPOS, 0, 0), true);
@@ -313,15 +313,15 @@ void CPageInput::DlgOK(HWND hWnd)
 	m_uMouseShowCrosshair = IsDlgButtonChecked(hWnd, IDC_MOUSE_CROSSHAIR) ? 1 : 0;
 	m_uMouseRestrictToWindow = IsDlgButtonChecked(hWnd, IDC_MOUSE_RESTRICT_TO_WINDOW) ? 1 : 0;
 
-	REGSAVE(TEXT(REGVALUE_PDL_XTRIM), JoyGetTrim(true));
-	REGSAVE(TEXT(REGVALUE_PDL_YTRIM), JoyGetTrim(false));
-	REGSAVE(TEXT(REGVALUE_SCROLLLOCK_TOGGLE), m_uScrollLockToggle);
-	REGSAVE(TEXT(REGVALUE_CURSOR_CONTROL), m_uCursorControl);
-	REGSAVE(TEXT(REGVALUE_AUTOFIRE), m_bmAutofire);
-	REGSAVE(TEXT(REGVALUE_SWAP_BUTTONS_0_AND_1), m_bSwapButtons0and1);
-	REGSAVE(TEXT(REGVALUE_CENTERING_CONTROL), m_uCenteringControl);
-	REGSAVE(TEXT(REGVALUE_MOUSE_CROSSHAIR), m_uMouseShowCrosshair);
-	REGSAVE(TEXT(REGVALUE_MOUSE_RESTRICT_TO_WINDOW), m_uMouseRestrictToWindow);
+	REGSAVE(REGVALUE_PDL_XTRIM, JoyGetTrim(true));
+	REGSAVE(REGVALUE_PDL_YTRIM, JoyGetTrim(false));
+	REGSAVE(REGVALUE_SCROLLLOCK_TOGGLE, m_uScrollLockToggle);
+	REGSAVE(REGVALUE_CURSOR_CONTROL, m_uCursorControl);
+	REGSAVE(REGVALUE_AUTOFIRE, m_bmAutofire);
+	REGSAVE(REGVALUE_SWAP_BUTTONS_0_AND_1, m_bSwapButtons0and1);
+	REGSAVE(REGVALUE_CENTERING_CONTROL, m_uCenteringControl);
+	REGSAVE(REGVALUE_MOUSE_CROSSHAIR, m_uMouseShowCrosshair);
+	REGSAVE(REGVALUE_MOUSE_RESTRICT_TO_WINDOW, m_uMouseRestrictToWindow);
 
 	m_PropertySheetHelper.PostMsgAfterClose(hWnd, m_Page);
 }

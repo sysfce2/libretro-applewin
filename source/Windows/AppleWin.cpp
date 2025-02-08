@@ -353,7 +353,7 @@ static void GetProgramDirectory(void)
 	int loop = g_sProgramDir.size();
 	while (loop--)
 	{
-		if ((g_sProgramDir[loop] == TEXT(PATH_SEPARATOR)) || (g_sProgramDir[loop] == TEXT(':')))
+		if ((g_sProgramDir[loop] == PATH_SEPARATOR) || (g_sProgramDir[loop] == TEXT(':')))
 		{
 			g_sProgramDir.resize(loop + 1);  // this reduces the size
 			break;

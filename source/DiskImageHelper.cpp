@@ -1581,8 +1581,8 @@ void CImageHelperBase::GetCharLowerExt(char* pszExt, LPCTSTR pszImageFilename, c
 {
 	LPCTSTR pImageFileExt = pszImageFilename;
 
-	if (strrchr(pImageFileExt, TEXT(PATH_SEPARATOR)))
-		pImageFileExt = strrchr(pImageFileExt, TEXT(PATH_SEPARATOR))+1;
+	if (strrchr(pImageFileExt, PATH_SEPARATOR))
+		pImageFileExt = strrchr(pImageFileExt, PATH_SEPARATOR)+1;
 
 	if (strrchr(pImageFileExt, TEXT('.')))
 		pImageFileExt = strrchr(pImageFileExt, TEXT('.'));

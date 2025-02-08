@@ -159,14 +159,14 @@ void CPageSound::DlgOK(HWND hWnd)
 
 	SpkrSetEmulationType(newSoundType);
 	uint32_t dwSoundType = (soundtype == SOUND_NONE) ? REG_SOUNDTYPE_NONE : REG_SOUNDTYPE_WAVE;
-	REGSAVE(TEXT(REGVALUE_SOUND_EMULATION), dwSoundType);
+	REGSAVE(REGVALUE_SOUND_EMULATION, dwSoundType);
 
 	// NB. Volume: 0=Loudest, VOLUME_MAX=Silence
 	SpkrSetVolume(dwSpkrVolume, VOLUME_MAX);
 	GetCardMgr().GetMockingboardCardMgr().SetVolume(dwMBVolume, VOLUME_MAX);
 
-	REGSAVE(TEXT(REGVALUE_SPKR_VOLUME), SpkrGetVolume());
-	REGSAVE(TEXT(REGVALUE_MB_VOLUME), GetCardMgr().GetMockingboardCardMgr().GetVolume());
+	REGSAVE(REGVALUE_SPKR_VOLUME, SpkrGetVolume());
+	REGSAVE(REGVALUE_MB_VOLUME, GetCardMgr().GetMockingboardCardMgr().GetVolume());
 
 	m_PropertySheetHelper.PostMsgAfterClose(hWnd, m_Page);
 }

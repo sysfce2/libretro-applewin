@@ -1031,8 +1031,8 @@ LRESULT Win32Frame::WndProc(
         SetNormalMode();
       if (!IsIconic(window))
         GetWindowRect(window,&framerect);
-      RegSaveValue(TEXT(REG_PREFS), TEXT(REGVALUE_PREF_WINDOW_X_POS), 1, framerect.left);
-      RegSaveValue(TEXT(REG_PREFS), TEXT(REGVALUE_PREF_WINDOW_Y_POS), 1, framerect.top);
+      RegSaveValue(REG_PREFS, REGVALUE_PREF_WINDOW_X_POS, 1, framerect.left);
+      RegSaveValue(REG_PREFS, REGVALUE_PREF_WINDOW_Y_POS, 1, framerect.top);
       FrameReleaseDC();
       SetUsingCursor(FALSE);
       if (helpquit) {
@@ -1329,13 +1329,13 @@ LRESULT Win32Frame::WndProc(
 					{
 						case '0':	// Toggle speed: custom speed / Full-Speed
 							if (g_dwSpeed == SPEED_MAX)
-								REGLOAD_DEFAULT(TEXT(REGVALUE_EMULATION_SPEED), &g_dwSpeed, SPEED_NORMAL);
+								REGLOAD_DEFAULT(REGVALUE_EMULATION_SPEED, &g_dwSpeed, SPEED_NORMAL);
 							else
 								g_dwSpeed = SPEED_MAX;
 							keyHandled = true; break;
 						case '1':	// Speed = 1 MHz
 							g_dwSpeed = SPEED_NORMAL;
-							REGSAVE(TEXT(REGVALUE_EMULATION_SPEED), g_dwSpeed);
+							REGSAVE(REGVALUE_EMULATION_SPEED, g_dwSpeed);
 							keyHandled = true; break;
 						case '3':	// Speed = Full-Speed
 							g_dwSpeed = SPEED_MAX;
@@ -1940,7 +1940,7 @@ void Win32Frame::ScreenWindowResize(const bool bCtrlKey)
 	else if (bCtrlKey)		// if normal screen && CTRL: then toggle scaling
 	{
 		FrameResizeWindow( (g_nViewportScale == 1) ? 2 : 1 );	// Toggle between 1x and 2x
-		REGSAVE(TEXT(REGVALUE_WINDOW_SCALE), g_nViewportScale);
+		REGSAVE(REGVALUE_WINDOW_SCALE, g_nViewportScale);
 	}
 	else
 	{
@@ -2575,7 +2575,7 @@ void Win32Frame::FrameCreateWindow(void)
 	{
 		const int nXScreen = GetSystemMetrics(SM_CXSCREEN) - nWidth;
 
-		if (RegLoadValue(TEXT(REG_PREFS), TEXT(REGVALUE_PREF_WINDOW_X_POS), 1, (uint32_t*)&nXPos))
+		if (RegLoadValue(REG_PREFS, REGVALUE_PREF_WINDOW_X_POS, 1, (uint32_t*)&nXPos))
 		{
 			if ((nXPos > nXScreen) && !g_bMultiMon)
 				nXPos = -1;	// Not fully visible, so default to centre position
@@ -2590,7 +2590,7 @@ void Win32Frame::FrameCreateWindow(void)
 	{
 		const int nYScreen = GetSystemMetrics(SM_CYSCREEN) - nHeight;
 
-		if (RegLoadValue(TEXT(REG_PREFS), TEXT(REGVALUE_PREF_WINDOW_Y_POS), 1, (uint32_t*)&nYPos))
+		if (RegLoadValue(REG_PREFS, REGVALUE_PREF_WINDOW_Y_POS, 1, (uint32_t*)&nYPos))
 		{
 			if ((nYPos > nYScreen) && !g_bMultiMon)
 				nYPos = -1;	// Not fully visible, so default to centre position

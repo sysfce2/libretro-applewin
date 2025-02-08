@@ -466,7 +466,7 @@ bool HarddiskInterfaceCard::SelectImage(const int drive, LPCSTR pszFilename)
 
 	StringCbCopy(filename, MAX_PATH, pszFilename);
 
-	RegLoadString(TEXT(REG_PREFS), TEXT(REGVALUE_PREF_HDV_START_DIR), 1, directory, MAX_PATH, TEXT(""));
+	RegLoadString(REG_PREFS, REGVALUE_PREF_HDV_START_DIR, 1, directory, MAX_PATH, TEXT(""));
 	std::string title = StrFormat("Select HDV Image For HDD %d", drive + 1);
 
 	OPENFILENAME ofn;
@@ -1443,7 +1443,7 @@ bool HarddiskInterfaceCard::LoadSnapshot(YamlLoadHelper& yamlLoadHelper, UINT ve
 		userSelectedImageFolder |= LoadSnapshotHDDUnit(yamlLoadHelper, i, version);
 
 	if (!userSelectedImageFolder)
-		RegSaveString(TEXT(REG_PREFS), TEXT(REGVALUE_PREF_HDV_START_DIR), 1, Snapshot_GetPath());
+		RegSaveString(REG_PREFS, REGVALUE_PREF_HDV_START_DIR, 1, Snapshot_GetPath());
 
 	GetFrame().FrameRefreshStatus(DRAW_LEDS | DRAW_DISK_STATUS);
 

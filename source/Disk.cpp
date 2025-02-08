@@ -1831,7 +1831,7 @@ bool Disk2InterfaceCard::UserSelectNewDiskImage(const int drive, LPCSTR pszFilen
 
 	StringCbCopy(filename, MAX_PATH, pszFilename);
 
-	RegLoadString(TEXT(REG_PREFS), TEXT(REGVALUE_PREF_START_DIR), 1, directory, MAX_PATH, TEXT(""));
+	RegLoadString(REG_PREFS, REGVALUE_PREF_START_DIR, 1, directory, MAX_PATH, TEXT(""));
 	std::string title = StrFormat("Select Disk Image For Drive %d", drive + 1);
 
 	OPENFILENAME ofn;

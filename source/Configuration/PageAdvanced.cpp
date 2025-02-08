@@ -195,7 +195,7 @@ void CPageAdvanced::DlgOK(HWND hWnd)
 	}
 
 	g_bSaveStateOnExit = IsDlgButtonChecked(hWnd, IDC_SAVESTATE_ON_EXIT) ? true : false;
-	REGSAVE(TEXT(REGVALUE_SAVE_STATE_ON_EXIT), g_bSaveStateOnExit ? 1 : 0);
+	REGSAVE(REGVALUE_SAVE_STATE_ON_EXIT, g_bSaveStateOnExit ? 1 : 0);
 
 	// Save the copy protection dongle type
 	RegSetConfigGameIOConnectorNewDongleType(GAME_IO_CONNECTOR, GetCopyProtectionDongleType());
