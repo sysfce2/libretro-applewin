@@ -114,13 +114,13 @@ void CPropertySheetHelper::SaveComputerType(eApple2Type NewApple2Type)
 
 void CPropertySheetHelper::ConfigSaveApple2Type(eApple2Type apple2Type)
 {
-	REGSAVE(TEXT(REGVALUE_APPLE2_TYPE), apple2Type);
+	REGSAVE(REGVALUE_APPLE2_TYPE, apple2Type);
 	LogFileOutput("Config: Apple2 Type changed to %d\n", apple2Type);
 }
 
 void CPropertySheetHelper::SaveCpuType(eCpuType NewCpuType)
 {
-	REGSAVE(TEXT(REGVALUE_CPU_TYPE), NewCpuType);
+	REGSAVE(REGVALUE_CPU_TYPE, NewCpuType);
 }
 
 void CPropertySheetHelper::SetSlot(UINT slot, SS_CARDTYPE newCardType)
@@ -173,7 +173,7 @@ void CPropertySheetHelper::SaveStateUpdate()
 	if (m_bSSNewFilename)
 	{
 		Snapshot_SetFilename(m_szSSNewFilename, m_szSSNewDirectory);
-		RegSaveString(TEXT(REG_CONFIG), TEXT(REGVALUE_SAVESTATE_FILENAME), 1, Snapshot_GetPathname());
+		RegSaveString(REG_CONFIG, REGVALUE_SAVESTATE_FILENAME, 1, Snapshot_GetPathname());
 	}
 }
 
@@ -355,12 +355,12 @@ void CPropertySheetHelper::ApplyNewConfig(const CConfigNeedingRestart& ConfigNew
 
 	if (CONFIG_CHANGED_LOCAL(m_bEnableTheFreezesF8Rom))
 	{
-		REGSAVE(TEXT(REGVALUE_THE_FREEZES_F8_ROM), ConfigNew.m_bEnableTheFreezesF8Rom);
+		REGSAVE(REGVALUE_THE_FREEZES_F8_ROM, ConfigNew.m_bEnableTheFreezesF8Rom);
 	}
 
 	if (CONFIG_CHANGED_LOCAL(m_videoRefreshRate))
 	{
-		REGSAVE(TEXT(REGVALUE_VIDEO_REFRESH_RATE), ConfigNew.m_videoRefreshRate);
+		REGSAVE(REGVALUE_VIDEO_REFRESH_RATE, ConfigNew.m_videoRefreshRate);
 	}
 }
 
@@ -368,8 +368,8 @@ void CPropertySheetHelper::ApplyNewConfigFromSnapshot(const CConfigNeedingRestar
 {
 	SaveComputerType(ConfigNew.m_Apple2Type);
 	SaveCpuType(ConfigNew.m_CpuType);
-	REGSAVE(TEXT(REGVALUE_THE_FREEZES_F8_ROM), ConfigNew.m_bEnableTheFreezesF8Rom);
-	REGSAVE(TEXT(REGVALUE_VIDEO_REFRESH_RATE), ConfigNew.m_videoRefreshRate);
+	REGSAVE(REGVALUE_THE_FREEZES_F8_ROM, ConfigNew.m_bEnableTheFreezesF8Rom);
+	REGSAVE(REGVALUE_VIDEO_REFRESH_RATE, ConfigNew.m_videoRefreshRate);
 }
 
 void CPropertySheetHelper::ApplyNewConfig(void)
@@ -408,7 +408,7 @@ bool CPropertySheetHelper::IsOkToSaveLoadState(HWND hWnd, const bool bConfigChan
 		if (MessageBox(hWnd,
 				TEXT("The hardware configuration has changed. Save/Load state will lose these changes.\n\n")
 				TEXT("Are you sure you want to do this?"),
-				TEXT(REG_CONFIG),
+				REG_CONFIG,
 				MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 			return false;
 	}
@@ -426,7 +426,7 @@ bool CPropertySheetHelper::IsOkToRestart(HWND hWnd)
 			TEXT("of the emulated machine, causing you to lose any ")
 			TEXT("unsaved work.\n\n")
 			TEXT("Are you sure you want to do this?"),
-			TEXT(REG_CONFIG),
+			REG_CONFIG,
 			MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 		return false;
 
@@ -483,7 +483,7 @@ bool CPropertySheetHelper::HardwareConfigChanged(HWND hWnd)
 
 	if (MessageBox(hWnd,
 			strMsg.c_str(),
-			TEXT(REG_CONFIG),
+			REG_CONFIG,
 			MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 		return false;
 

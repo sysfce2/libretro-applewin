@@ -194,7 +194,7 @@ INT_PTR CPageDisk::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPARA
 			InitComboHDD(hWnd, SLOT7);
 
 			char PathToCiderPress[MAX_PATH];
-			RegLoadString(TEXT(REG_CONFIG), REGVALUE_CIDERPRESSLOC, 1, PathToCiderPress, MAX_PATH, TEXT(""));
+			RegLoadString(REG_CONFIG, REGVALUE_CIDERPRESSLOC, 1, PathToCiderPress, MAX_PATH, TEXT(""));
 			SendDlgItemMessage(hWnd, IDC_CIDERPRESS_FILENAME ,WM_SETTEXT, 0, (LPARAM)PathToCiderPress);
 
 			CheckDlgButton(hWnd, IDC_HDD_ENABLE, (GetCardMgr().QuerySlot(SLOT7) == CT_GenericHDD) ? BST_CHECKED : BST_UNCHECKED);
@@ -271,14 +271,14 @@ void CPageDisk::DlgOK(HWND hWnd)
 		nLineLength = nLineLength > sizeof(szFilename)-1 ? sizeof(szFilename)-1 : nLineLength;
 		szFilename[nLineLength] = 0x00;
 
-		RegSaveString(TEXT(REG_CONFIG), REGVALUE_CIDERPRESSLOC, 1, szFilename);
+		RegSaveString(REG_CONFIG, REGVALUE_CIDERPRESSLOC, 1, szFilename);
 	}
 
 	const bool bNewEnhanceDisk = IsDlgButtonChecked(hWnd, IDC_ENHANCE_DISK_ENABLE) ? true : false;
 	if (bNewEnhanceDisk != GetCardMgr().GetDisk2CardMgr().GetEnhanceDisk())
 	{
 		GetCardMgr().GetDisk2CardMgr().SetEnhanceDisk(bNewEnhanceDisk);
-		REGSAVE(TEXT(REGVALUE_ENHANCE_DISK_SPEED), (uint32_t)bNewEnhanceDisk);
+		REGSAVE(REGVALUE_ENHANCE_DISK_SPEED, (uint32_t)bNewEnhanceDisk);
 	}
 
 	Win32Frame& win32Frame = Win32Frame::GetWin32Frame();

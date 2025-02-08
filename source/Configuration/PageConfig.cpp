@@ -176,7 +176,7 @@ INT_PTR CPageConfig::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPA
 				TEXT("The emulator has been set to recalibrate ")
 				TEXT("itself the next time it is started.\n\n")
 				TEXT("Would you like to restart the emulator now?"),
-				TEXT(REG_CONFIG),
+				REG_CONFIG,
 				MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDOK)
 			{
 					PropSheet_PressButton(GetParent(hWnd), PSBTN_OK);
@@ -246,7 +246,7 @@ INT_PTR CPageConfig::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPA
 				if (g_dwSpeed == SPEED_NORMAL)
 				{
 					uint32_t dwCustomSpeed;
-					REGLOAD_DEFAULT(TEXT(REGVALUE_CUSTOM_SPEED), &dwCustomSpeed, 0);
+					REGLOAD_DEFAULT(REGVALUE_CUSTOM_SPEED, &dwCustomSpeed, 0);
 					bCustom = dwCustomSpeed ? TRUE : FALSE;
 				}
 				CheckRadioButton(hWnd, IDC_AUTHENTIC_SPEED, IDC_CUSTOM_SPEED, bCustom ? IDC_CUSTOM_SPEED : IDC_AUTHENTIC_SPEED);
@@ -354,7 +354,7 @@ void CPageConfig::DlgOK(HWND hWnd)
 
 	if (win32Frame.GetFullScreenShowSubunitStatus() != bNewFSSubunitStatus)
 	{
-		REGSAVE(TEXT(REGVALUE_FS_SHOW_SUBUNIT_STATUS), bNewFSSubunitStatus ? 1 : 0);
+		REGSAVE(REGVALUE_FS_SHOW_SUBUNIT_STATUS, bNewFSSubunitStatus ? 1 : 0);
 		win32Frame.SetFullScreenShowSubunitStatus(bNewFSSubunitStatus);
 
 		if (win32Frame.IsFullScreen())
@@ -366,7 +366,7 @@ void CPageConfig::DlgOK(HWND hWnd)
 	const BOOL bNewConfirmReboot = IsDlgButtonChecked(hWnd, IDC_CHECK_CONFIRM_REBOOT) ? 1 : 0;
 	if (win32Frame.g_bConfirmReboot != bNewConfirmReboot)
 	{
-		REGSAVE(TEXT(REGVALUE_CONFIRM_REBOOT), bNewConfirmReboot);
+		REGSAVE(REGVALUE_CONFIRM_REBOOT, bNewConfirmReboot);
 		win32Frame.g_bConfirmReboot = bNewConfirmReboot;
 	}
 
@@ -387,8 +387,8 @@ void CPageConfig::DlgOK(HWND hWnd)
 
 	SetCurrentCLK6502();
 
-	REGSAVE(TEXT(REGVALUE_CUSTOM_SPEED), IsDlgButtonChecked(hWnd, IDC_CUSTOM_SPEED));
-	REGSAVE(TEXT(REGVALUE_EMULATION_SPEED), g_dwSpeed);
+	REGSAVE(REGVALUE_CUSTOM_SPEED, IsDlgButtonChecked(hWnd, IDC_CUSTOM_SPEED));
+	REGSAVE(REGVALUE_EMULATION_SPEED, g_dwSpeed);
 
 	m_PropertySheetHelper.PostMsgAfterClose(hWnd, m_Page);
 }
