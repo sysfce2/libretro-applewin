@@ -488,7 +488,7 @@ bool HarddiskInterfaceCard::SelectImage(const int drive, LPCSTR pszFilename)
 	{
 		std::string openFilename = filename;
 		if ((!ofn.nFileExtension) || !filename[ofn.nFileExtension])
-			openFilename += TEXT(".hdv");
+			openFilename += ".hdv";
 		
 		if (Insert(drive, openFilename))
 		{

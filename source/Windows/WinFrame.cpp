@@ -1982,7 +1982,7 @@ void Win32Frame::ProcessButtonClick(int button, bool bFromButtonUI /*=false*/)
 
     case BTN_HELP:
       {
-        const std::string filename = g_sProgramDir + TEXT("APPLEWIN.CHM");
+        const std::string filename = g_sProgramDir + "APPLEWIN.CHM";
 
 		// (GH#437) For any internet downloaded AppleWin.chm files (stored on an NTFS drive) there may be an Alt Data Stream containing a Zone Identifier
 		// - try to delete it, otherwise the content won't be displayed unless it's unblock (via File Properties)

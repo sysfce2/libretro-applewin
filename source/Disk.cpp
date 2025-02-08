@@ -1854,7 +1854,7 @@ bool Disk2InterfaceCard::UserSelectNewDiskImage(const int drive, LPCSTR pszFilen
 	{
 		std::string openFilename = filename;
 		if ((!ofn.nFileExtension) || !filename[ofn.nFileExtension])
-			openFilename += TEXT(".dsk");
+			openFilename += ".dsk";
 
 		ImageError_e Error = InsertDisk(drive, openFilename, ofn.Flags & OFN_READONLY, IMAGE_CREATE);
 		if (Error == eIMAGE_ERROR_NONE)

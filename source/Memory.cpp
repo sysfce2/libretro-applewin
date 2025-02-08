@@ -1850,7 +1850,7 @@ void MemInitialize()
 	{
 		GetFrame().FrameMessageBox(
 			"The emulator was unable to allocate the memory it "
-			TEXT("requires.  Further execution is not possible."),
+			"requires.  Further execution is not possible.",
 			g_pAppTitle.c_str(),
 			MB_ICONSTOP | MB_SETFOREGROUND);
 		ExitProcess(1);
@@ -1919,7 +1919,7 @@ void MemInitializeROM(void)
 		case A2TYPE_APPLE2PLUS:     strcpy(sRomFileName, TEXT("APPLE2_PLUS.ROM"     )); break;
 		case A2TYPE_APPLE2JPLUS:    strcpy(sRomFileName, TEXT("APPLE2_JPLUS.ROM"    )); break;
 		case A2TYPE_APPLE2E:        strcpy(sRomFileName, TEXT("APPLE2E.ROM"         )); break;
-		case A2TYPE_APPLE2EENHANCED:strcpy(sRomFileName, TEXT("APPLE2E_ENHANCED.ROM")); break;
+		case A2TYPE_APPLE2EENHANCED:strcpy(sRomFileName, "APPLE2E_ENHANCED.ROM"); break;
 		case A2TYPE_PRAVETS82:      strcpy(sRomFileName, TEXT("PRAVETS82.ROM"       )); break;
 		case A2TYPE_PRAVETS8M:      strcpy(sRomFileName, TEXT("PRAVETS8M.ROM"       )); break;
 		case A2TYPE_PRAVETS8A:      strcpy(sRomFileName, TEXT("PRAVETS8C.ROM"       )); break;

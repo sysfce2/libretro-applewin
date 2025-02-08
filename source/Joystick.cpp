@@ -809,10 +809,10 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
     if (nJoyID < 0 || joyGetDevCaps(nJoyID, &caps, sizeof(JOYCAPS)) != JOYERR_NOERROR)
     {
       MessageBox(window,
-                 TEXT("The emulator is unable to read your PC joystick.  ")
+                 "The emulator is unable to read your PC joystick.  "
                  TEXT("Ensure that your game port is configured properly, ")
                  TEXT("that the joystick is firmly plugged in, and that ")
-                 TEXT("you have a joystick driver installed."),
+                 "you have a joystick driver installed.",
                  "Configuration",
                  MB_ICONEXCLAMATION | MB_SETFOREGROUND);
       return 0;
@@ -820,10 +820,10 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
     if ((joyinfo[newtype] == DEVICE_JOYSTICK_THUMBSTICK2) && (caps.wNumAxes < 4))
     {
       MessageBox(window,
-                 TEXT("The emulator is unable to read thumbstick 2.  ")
+                 "The emulator is unable to read thumbstick 2.  "
                  TEXT("Ensure that your game port is configured properly, ")
                  TEXT("that the joystick is firmly plugged in, and that ")
-                 TEXT("you have a joystick driver installed."),
+                 "you have a joystick driver installed.",
                  "Configuration",
                  MB_ICONEXCLAMATION | MB_SETFOREGROUND);
       return 0;
@@ -845,12 +845,12 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
     MessageBox(window,
                TEXT("To begin emulating a joystick with your mouse, move ")
                "the mouse cursor over the emulated screen of a running "
-               TEXT("program and click the left mouse button.  During the ")
+               "program and click the left mouse button.  During the "
                TEXT("time the mouse is emulating a joystick, you will not ")
                TEXT("be able to use it to perform mouse functions, and the ")
-               TEXT("mouse cursor will not be visible.  To end joystick ")
+               "mouse cursor will not be visible.  To end joystick "
                TEXT("emulation and regain the mouse cursor, click the left ")
-               TEXT("mouse button while pressing Ctrl."),
+               "mouse button while pressing Ctrl.",
                "Configuration",
                MB_ICONINFORMATION | MB_SETFOREGROUND);
   }
