@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"A"           , CmdAssemble          , CMD_ASSEMBLE             , "Assemble instructions"      },
 	// CPU (Main)
 		{"."           , CmdCursorJumpPC      , CMD_CURSOR_JUMP_PC       , "Locate the cursor in the disasm window" }, // centered
-		{TEXT("=")           , CmdCursorSetPC       , CMD_CURSOR_SET_PC        , "Sets the PC to the current instruction" },
+		{"="           , CmdCursorSetPC       , CMD_CURSOR_SET_PC        , "Sets the PC to the current instruction" },
 		{"G"           , CmdGoNormalSpeed     , CMD_GO_NORMAL_SPEED      , "Run at normal speed [until PC == address]"   },
 		{"GG"          , CmdGoFullSpeed       , CMD_GO_FULL_SPEED        , "Run at full speed [until PC == address]"   },
 		{"IN"          , CmdIn                , CMD_IN                   , "Input byte from IO $C0xx"   },
@@ -116,7 +116,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	// Cursor
 		{"RET"         , CmdCursorJumpRetAddr , CMD_CURSOR_JUMP_RET_ADDR , "Sets the cursor to the sub-routine caller" }, 
 		{TEXT(      "^")     , NULL                 , CMD_CURSOR_LINE_UP       }, // \x2191 = Up Arrow (Unicode)
-		{TEXT("Shift ^")     , NULL                 , CMD_CURSOR_LINE_UP_1     },
+		{"Shift ^"     , NULL                 , CMD_CURSOR_LINE_UP_1     },
 		{TEXT(      "v")     , NULL                 , CMD_CURSOR_LINE_DOWN     }, // \x2193 = Dn Arrow (Unicode)
 		{"Shift v"     , NULL                 , CMD_CURSOR_LINE_DOWN_1   },
 		{TEXT("PAGEUP"   )   , CmdCursorPageUp      , CMD_CURSOR_PAGE_UP       , "Scroll up one screen"   },
@@ -145,10 +145,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"DF"          , CmdDisasmDataDefFloat       , CMD_DEFINE_DATA_FLOAT, "Define AppleSoft (packed) Float"            },
 //		{"DFX"         , CmdDisasmDataDefFloatUnpack , CMD_DEFINE_DATA_FLOAT2,"Define AppleSoft (unpacked) Float"          },
 		// with symbol lookup
-//		{TEXT("DA<>")        , CmdDisasmDataDefAddress8HL  , CMD_DEFINE_ADDR_8_HL , "Define split array of addresses, high byte section followed by low byte section" },
-//		{TEXT("DA><")        , CmdDisasmDataDefAddress8LH  , CMD_DEFINE_ADDR_8_LH , "Define split array of addresses, low byte section followed by high byte section" },
-//		{TEXT("DA<")         , CmdDisasmDataDefAddress8H   , CMD_DEFINE_ADDR_BYTE_H   , "Define array of high byte addresses"   },
-//		{TEXT("DB>")         , CmdDisasmDataDefAddress8L   , CMD_DEFINE_ADDR_BYTE_L   , "Define array of low byte addresses"    } 
+//		{"DA<>"        , CmdDisasmDataDefAddress8HL  , CMD_DEFINE_ADDR_8_HL , "Define split array of addresses, high byte section followed by low byte section" },
+//		{"DA><"        , CmdDisasmDataDefAddress8LH  , CMD_DEFINE_ADDR_8_LH , "Define split array of addresses, low byte section followed by high byte section" },
+//		{"DA<"         , CmdDisasmDataDefAddress8H   , CMD_DEFINE_ADDR_BYTE_H   , "Define array of high byte addresses"   },
+//		{"DB>"         , CmdDisasmDataDefAddress8L   , CMD_DEFINE_ADDR_BYTE_L   , "Define array of low byte addresses"    } 
 		{"DA"          , CmdDisasmDataDefAddress16   , CMD_DEFINE_ADDR_WORD , "Define array of word addresses"            },
 // TODO: Rename config cmd: DISASM or ID (Interactive Disassembly)
 //		{"UA"          , CmdDisasmDataSmart          , CMD_SMART_DISASSEMBLE, "Analyze opcodes to determine if code or data" },		
@@ -180,7 +180,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"SEV"         , CmdFlagSet           , CMD_FLAG_SET_V , "Set Flag Overflow"              }, // 6
 		{"SEN"         , CmdFlagSet           , CMD_FLAG_SET_N , "Set Flag Negative"              }, // 7
 	// Help
-		{TEXT("?")           , CmdHelpList          , CMD_HELP_LIST            , "List all available commands"           },
+		{"?"           , CmdHelpList          , CMD_HELP_LIST            , "List all available commands"           },
 		{"HELP"        , CmdHelpSpecific      , CMD_HELP_SPECIFIC        , "Help on specific command"              },
 		{"VERSION"     , CmdVersion           , CMD_VERSION              , "Displays version of emulator/debugger" },
 		{"MOTD"        , CmdMOTD              , CMD_MOTD                 },							// MOTD: Message Of The Day
@@ -206,7 +206,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"M"           , CmdMemoryMove        , CMD_MEMORY_MOVE          , "Memory move"                  },
 		{"BSAVE"       , CmdMemorySave        , CMD_MEMORY_SAVE          , "Save a region of memory"      },
 		{"S"           , CmdMemorySearch      , CMD_MEMORY_SEARCH        , "Search memory for text / hex values" },
-		{TEXT("@")           ,_SearchMemoryDisplay  , CMD_MEMORY_FIND_RESULTS  , "Display search memory results" },
+		{"@"           ,_SearchMemoryDisplay  , CMD_MEMORY_FIND_RESULTS  , "Display search memory results" },
 //		{"SA"          , CmdMemorySearchAscii,  CMD_MEMORY_SEARCH_ASCII  , "Search ASCII text"            },
 //		{"ST"          , CmdMemorySearchApple , CMD_MEMORY_SEARCH_APPLE  , "Search Apple text (hi-bit)"   },
 		{"SH"          , CmdMemorySearchHex   , CMD_MEMORY_SEARCH_HEX    , "Search memory for hex values" },
@@ -386,7 +386,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //		{"WATCH"       , CmdWatchAdd          , CMD_WATCH_ADD            },
 		{"WINDOW"      , CmdWindow            , CMD_WINDOW               },
-//		{TEXT("W?")          , CmdWatchAdd          , CMD_WATCH_ADD            },
+//		{"W?"          , CmdWatchAdd          , CMD_WATCH_ADD            },
 		{"ZAP"         , CmdNOP               , CMD_NOP                  },
 
 	// DEPRECATED  -- Probably should be removed in a future version
@@ -406,17 +406,17 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	Command_t g_aParameters[] =
 	{
 // Breakpoint
-		{TEXT("<=")         , NULL, PARAM_BP_LESS_EQUAL     },
+		{"<="         , NULL, PARAM_BP_LESS_EQUAL     },
 		{TEXT("<" )         , NULL, PARAM_BP_LESS_THAN      },
 		{TEXT("=" )         , NULL, PARAM_BP_EQUAL          },
 		{TEXT("!=")         , NULL, PARAM_BP_NOT_EQUAL      },
 		{TEXT("!" )         , NULL, PARAM_BP_NOT_EQUAL_1    },
 		{TEXT(">" )         , NULL, PARAM_BP_GREATER_THAN   },
-		{TEXT(">=")         , NULL, PARAM_BP_GREATER_EQUAL  },
+		{">="         , NULL, PARAM_BP_GREATER_EQUAL  },
 		{"R"          , NULL, PARAM_BP_READ           },
-		{TEXT("?")          , NULL, PARAM_BP_READ           },
+		{"?"          , NULL, PARAM_BP_READ           },
 		{"W"          , NULL, PARAM_BP_WRITE          },
-		{TEXT("@")          , NULL, PARAM_BP_WRITE          },
+		{"@"          , NULL, PARAM_BP_WRITE          },
 		{"*"          , NULL, PARAM_BP_READ_WRITE     },
 // Breakpoint Change, See: CmdBreakpointChange ()
 		{"E"          , NULL, PARAM_BP_CHANGE_ENABLE   },
@@ -492,7 +492,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"WINDOW"      , NULL, PARAM_CAT_WINDOW      },
 		{"ZEROPAGE"    , NULL, PARAM_CAT_ZEROPAGE    },
 // Memory
-		{TEXT("?")          , NULL, PARAM_MEM_SEARCH_WILD },
+		{"?"          , NULL, PARAM_MEM_SEARCH_WILD },
 //		{"*"          , NULL, PARAM_MEM_SEARCH_BYTE },
 // Source level debugging
 		{"MEM"        , NULL, PARAM_SRC_MEMORY      },

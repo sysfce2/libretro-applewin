@@ -178,7 +178,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	int  g_nDisasmWinHeight = 0;
 
-//	char g_aConfigDisasmAddressColon[] = TEXT(" :");
+//	char g_aConfigDisasmAddressColon[] = " :";
 
 	extern const int WINDOW_DATA_BYTES_PER_LINE = 8;
 
