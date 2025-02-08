@@ -173,7 +173,7 @@ INT_PTR CPageConfig::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPA
 		case IDC_RECALIBRATE:
 			RegSaveValue(TEXT(""),"RunningOnOS",0,0);
 			if (MessageBox(hWnd,
-				TEXT("The emulator has been set to recalibrate ")
+				"The emulator has been set to recalibrate "
 				TEXT("itself the next time it is started.\n\n")
 				TEXT("Would you like to restart the emulator now?"),
 				REG_CONFIG,
@@ -451,7 +451,7 @@ bool CPageConfig::IsOkToBenchmark(HWND hWnd, const bool bConfigChanged)
 		return true;
 
 	if (MessageBox(hWnd,
-			TEXT("Running the benchmarks will reset the state of ")
+			"Running the benchmarks will reset the state of "
 			TEXT("the emulated machine, causing you to lose any ")
 			TEXT("unsaved work.\n\n")
 			TEXT("Are you sure you want to do this?"),

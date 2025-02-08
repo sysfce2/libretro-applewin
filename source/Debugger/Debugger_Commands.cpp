@@ -118,7 +118,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{TEXT(      "^")     , NULL                 , CMD_CURSOR_LINE_UP       }, // \x2191 = Up Arrow (Unicode)
 		{TEXT("Shift ^")     , NULL                 , CMD_CURSOR_LINE_UP_1     },
 		{TEXT(      "v")     , NULL                 , CMD_CURSOR_LINE_DOWN     }, // \x2193 = Dn Arrow (Unicode)
-		{TEXT("Shift v")     , NULL                 , CMD_CURSOR_LINE_DOWN_1   },
+		{"Shift v"     , NULL                 , CMD_CURSOR_LINE_DOWN_1   },
 		{TEXT("PAGEUP"   )   , CmdCursorPageUp      , CMD_CURSOR_PAGE_UP       , "Scroll up one screen"   },
 		{"PAGEUP256"   , CmdCursorPageUp256   , CMD_CURSOR_PAGE_UP_256   , "Scroll up 256 bytes"    }, // Shift
 		{TEXT("PAGEUP4K" )   , CmdCursorPageUp4K    , CMD_CURSOR_PAGE_UP_4K    , "Scroll up 4096 bytes"   }, // Ctrl
@@ -516,7 +516,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"SOURCE"     , NULL, PARAM_SOURCE         }, //   x     x                    switch to source window
 		{"SRC"        , NULL, PARAM_SOURCE         }, // alias                        
 //		{"SOURCE_1"   , NULL, PARAM_SOURCE_1       }, //   -     x    code/data       
-		{TEXT("SOURCE2 ")   , NULL, PARAM_SOURCE_2       }, //   -     x                    
+		{"SOURCE2 "   , NULL, PARAM_SOURCE_2       }, //   -     x                    
 		{"SYMBOLS"    , NULL, PARAM_SYMBOLS        }, //   x     x    code/data win   switch to symbols window
 		{"SYM"        , NULL, PARAM_SYMBOLS        }, // alias   x                    SOURCE [SYM] [MEM] filename
 //		{"SYMBOL1"    , NULL, PARAM_SYMBOL_1       }, //   -     x    code/data win   

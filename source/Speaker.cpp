@@ -259,11 +259,11 @@ void SpkrInitialize ()
 		if (!g_bSpkrAvailable)
 		{
 			GetFrame().FrameMessageBox(
-				TEXT("The emulator is unable to initialize a waveform ")
+				"The emulator is unable to initialize a waveform "
 				TEXT("output device.  Make sure you have a sound card ")
-				TEXT("and a driver installed and that Windows is ")
+				"and a driver installed and that Windows is "
 				TEXT("correctly configured to use the driver.  Also ")
-				TEXT("ensure that no other program is currently using ")
+				"ensure that no other program is currently using "
 				TEXT("the device."),
 				"Configuration",
 				MB_ICONEXCLAMATION | MB_SETFOREGROUND);

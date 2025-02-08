@@ -184,10 +184,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #if OLD_FONT
 // Font
-	char     g_sFontNameDefault[ MAX_FONT_NAME ] = TEXT("Courier New");
-	char     g_sFontNameConsole[ MAX_FONT_NAME ] = TEXT("Courier New");
-	char     g_sFontNameDisasm [ MAX_FONT_NAME ] = TEXT("Courier New");
-	char     g_sFontNameInfo   [ MAX_FONT_NAME ] = TEXT("Courier New");
+	char     g_sFontNameDefault[ MAX_FONT_NAME ] = "Courier New";
+	char     g_sFontNameConsole[ MAX_FONT_NAME ] = "Courier New";
+	char     g_sFontNameDisasm [ MAX_FONT_NAME ] = "Courier New";
+	char     g_sFontNameInfo   [ MAX_FONT_NAME ] = "Courier New";
 	char     g_sFontNameBranch [ MAX_FONT_NAME ] = "Webdings";
 	HFONT     g_hFontWebDings  = (HFONT)0;
 #endif
@@ -3085,7 +3085,7 @@ Update_t CmdCursorLineDown (int nArgs)
 
 		if (g_bDisasmCurBad)
 		{
-//	MessageBox( NULL, TEXT("Bad Disassembly of opcodes"), "Debugger", MB_OK );
+//	MessageBox( NULL, "Bad Disassembly of opcodes", "Debugger", MB_OK );
 
 //			g_nDisasmCurAddress = nCur;
 //			g_bDisasmCurBad = false;
