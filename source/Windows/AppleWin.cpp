@@ -605,7 +605,7 @@ static void GetAppleWinVersion(void)
             VS_FIXEDFILEINFO* pFixedFileInfo;
             UINT pFixedFileInfoLen;
 
-            VerQueryValue(pVerInfoBlock, TEXT("\\"), (LPVOID*) &pFixedFileInfo, (PUINT) &pFixedFileInfoLen);
+            VerQueryValue(pVerInfoBlock, "\\", (LPVOID*) &pFixedFileInfo, (PUINT) &pFixedFileInfoLen);
 
             // Construct version string from fixed file info block
 

@@ -38,11 +38,11 @@ CPageAdvanced* CPageAdvanced::ms_this = 0;	// reinit'd in ctor
 
 enum CLONECHOICE {MENUITEM_CLONEMIN, MENUITEM_PRAVETS82=MENUITEM_CLONEMIN, MENUITEM_PRAVETS8M, MENUITEM_PRAVETS8A, MENUITEM_TK30002E, MENUITEM_BASE64A, MENUITEM_CLONEMAX};
 const char CPageAdvanced::m_CloneChoices[] =
-				TEXT("Pravets 82\0")	// Bulgarian
-				TEXT("Pravets 8M\0")	// Bulgarian
-				TEXT("Pravets 8A\0")	// Bulgarian
-				TEXT("TK3000 //e\0")	// Brazilian
-				TEXT("Base 64A\0"); 	// Taiwanese
+				"Pravets 82\0"	// Bulgarian
+				"Pravets 8M\0"	// Bulgarian
+				"Pravets 8A\0"	// Bulgarian
+				"TK3000 //e\0"	// Brazilian
+				"Base 64A\0"; 	// Taiwanese
 
 const char CPageAdvanced::m_gameIOConnectorChoices[] =
 				"Empty\0"

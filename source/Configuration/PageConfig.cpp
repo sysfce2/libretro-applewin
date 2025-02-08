@@ -43,9 +43,9 @@ const char CPageConfig::m_ComputerChoices[] =
 				TEXT("Apple ][ (Original)\0")
 				TEXT("Apple ][+\0")
 				TEXT("Apple ][ J-Plus\0")
-				TEXT("Apple //e\0")
-				TEXT("Enhanced Apple //e\0")
-				TEXT("Clone\0");
+				"Apple //e\0"
+				"Enhanced Apple //e\0"
+				"Clone\0";
 
 INT_PTR CALLBACK CPageConfig::DlgProc(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
