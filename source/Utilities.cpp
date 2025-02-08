@@ -56,7 +56,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 static void LoadConfigOldJoystick_v1(const UINT uJoyNum)
 {
 	uint32_t dwOldJoyType;
-	if (!REGLOAD(TEXT(uJoyNum==0 ? REGVALUE_OLD_JOYSTICK0_EMU_TYPE1 : REGVALUE_OLD_JOYSTICK1_EMU_TYPE1), &dwOldJoyType))
+	if (!REGLOAD(uJoyNum==0 ? REGVALUE_OLD_JOYSTICK0_EMU_TYPE1 : REGVALUE_OLD_JOYSTICK1_EMU_TYPE1, &dwOldJoyType))
 		return;	// EG. Old AppleWin never installed
 
 	UINT uNewJoyType;
