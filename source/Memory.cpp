@@ -1854,7 +1854,7 @@ void MemInitialize()
 	if (!memaux || !memdirty || !memimage || !memmain || !memrom || !pCxRomInternal || !pCxRomPeripheral)
 	{
 		GetFrame().FrameMessageBox(
-			TEXT("The emulator was unable to allocate the memory it ")
+			"The emulator was unable to allocate the memory it "
 			TEXT("requires.  Further execution is not possible."),
 			g_pAppTitle.c_str(),
 			MB_ICONSTOP | MB_SETFOREGROUND);
@@ -1974,7 +1974,7 @@ void MemInitializeCustomF8ROM(void)
 		BYTE* pData = frame.GetResource(IDR_APPLE2_PLUS_ROM, "ROM", Apple2RomSize);
 		if (pData == NULL)
 		{
-			frame.FrameMessageBox("Failed to read F8 (auto-start) ROM for language card in original Apple][", TEXT("AppleWin Error"), MB_OK);
+			frame.FrameMessageBox("Failed to read F8 (auto-start) ROM for language card in original Apple][", "AppleWin Error", MB_OK);
 		}
 		else
 		{
@@ -1999,7 +1999,7 @@ void MemInitializeCustomF8ROM(void)
 
 		if (!bRes)
 		{
-			GetFrame().FrameMessageBox( "Failed to read custom F8 rom", TEXT("AppleWin Error"), MB_OK );
+			GetFrame().FrameMessageBox( "Failed to read custom F8 rom", "AppleWin Error", MB_OK );
 			CloseHandle(g_hCustomRomF8);
 			g_hCustomRomF8 = INVALID_HANDLE_VALUE;
 			// Failed, so use default rom...
@@ -2051,7 +2051,7 @@ void MemInitializeCustomROM(void)
 
 	if (!bRes)
 	{
-		GetFrame().FrameMessageBox( "Failed to read custom rom", TEXT("AppleWin Error"), MB_OK );
+		GetFrame().FrameMessageBox( "Failed to read custom rom", "AppleWin Error", MB_OK );
 		CloseHandle(g_hCustomRom);
 		g_hCustomRom = INVALID_HANDLE_VALUE;
 		// Failed, so use default rom...

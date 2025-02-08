@@ -52,11 +52,11 @@ enum AppMode_e
 #define	TITLE_APPLE_2E			TEXT("Apple //e Emulator")
 #define	TITLE_APPLE_2E_ENHANCED	TEXT("Enhanced Apple //e Emulator")
 #define TITLE_APPLE_2C          TEXT("Apple //e Emulator")
-#define	TITLE_PRAVETS_82        TEXT("Pravets 82 Emulator")
-#define	TITLE_PRAVETS_8M        TEXT("Pravets 8M Emulator")
-#define	TITLE_PRAVETS_8A        TEXT("Pravets 8A Emulator")
+#define	TITLE_PRAVETS_82        "Pravets 82 Emulator"
+#define	TITLE_PRAVETS_8M        "Pravets 8M Emulator"
+#define	TITLE_PRAVETS_8A        "Pravets 8A Emulator"
 #define	TITLE_TK3000_2E         TEXT("TK3000 //e Emulator")
-#define	TITLE_BASE64A           TEXT("Base64A Emulator")
+#define	TITLE_BASE64A           "Base64A Emulator"
 
 #define TITLE_PAUSED       TEXT("* PAUSED *")
 #define TITLE_STEPPING     "Stepping"

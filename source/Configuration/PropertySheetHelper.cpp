@@ -422,7 +422,7 @@ bool CPropertySheetHelper::IsOkToRestart(HWND hWnd)
 		return true;
 
 	if (MessageBox(hWnd,
-			TEXT("Restarting the emulator will reset the state ")
+			"Restarting the emulator will reset the state "
 			TEXT("of the emulated machine, causing you to lose any ")
 			TEXT("unsaved work.\n\n")
 			TEXT("Are you sure you want to do this?"),

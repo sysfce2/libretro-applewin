@@ -844,7 +844,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 
     MessageBox(window,
                TEXT("To begin emulating a joystick with your mouse, move ")
-               TEXT("the mouse cursor over the emulated screen of a running ")
+               "the mouse cursor over the emulated screen of a running "
                TEXT("program and click the left mouse button.  During the ")
                TEXT("time the mouse is emulating a joystick, you will not ")
                TEXT("be able to use it to perform mouse functions, and the ")
@@ -863,7 +863,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 						TEXT("Be aware that 'cursor-up' = CTRL+K, and 'cursor-down' = CTRL+J.\n")
 						TEXT("EG. Lode Runner uses CTRL+K/J to switch between keyboard/joystick modes ")
 						TEXT("(and cursor-left/right to control speed).\n\n")
-						TEXT("Also if cursor keys are blocked from being read from the Apple keyboard ")
+						"Also if cursor keys are blocked from being read from the Apple keyboard "
 						TEXT("then even simple AppleSoft command-line editing (cursor left/right) will not work."),
 						"Configuration",
 						MB_ICONINFORMATION | MB_SETFOREGROUND);
