@@ -5508,7 +5508,7 @@ Update_t CmdNTSC (int nArgs)
 			else
 			{
 					ConsoleFilename::update( "File" );
-					ConsoleBufferPush( TEXT( "Error couldn't open file for writing." ) );
+					ConsoleBufferPush( "Error couldn't open file for writing."  );
 			}
 		}
 		else
