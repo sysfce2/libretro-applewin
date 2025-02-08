@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //		{TEXT("!")           , CmdAssemberMini      , CMD_ASSEMBLER_MINI       , "Mini assembler"             },
 		{"A"           , CmdAssemble          , CMD_ASSEMBLE             , "Assemble instructions"      },
 	// CPU (Main)
-		{TEXT(".")           , CmdCursorJumpPC      , CMD_CURSOR_JUMP_PC       , "Locate the cursor in the disasm window" }, // centered
+		{"."           , CmdCursorJumpPC      , CMD_CURSOR_JUMP_PC       , "Locate the cursor in the disasm window" }, // centered
 		{TEXT("=")           , CmdCursorSetPC       , CMD_CURSOR_SET_PC        , "Sets the PC to the current instruction" },
 		{"G"           , CmdGoNormalSpeed     , CMD_GO_NORMAL_SPEED      , "Run at normal speed [until PC == address]"   },
 		{"GG"          , CmdGoFullSpeed       , CMD_GO_FULL_SPEED        , "Run at full speed [until PC == address]"   },

@@ -243,7 +243,7 @@ void Win32Frame::Benchmark(void)
 	if ((regs.pc < 0x300) || (regs.pc > 0x400))
 		if (FrameMessageBox(
 			"The emulator has detected a problem while running "
-			TEXT("the CPU benchmark.  Would you like to gather more ")
+			"the CPU benchmark.  Would you like to gather more "
 			TEXT("information?"),
 			"Benchmarks",
 			MB_ICONQUESTION | MB_YESNO | MB_SETFOREGROUND) == IDYES) {

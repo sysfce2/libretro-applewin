@@ -246,7 +246,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	ProfileOpmode_t g_aProfileOpmodes[ NUM_OPMODES ];
 	unsigned __int64 g_nProfileBeginCycles = 0; // g_nCumulativeCycles // PROFILE RESET
 
-	const std::string g_FileNameProfile = TEXT("Profile.txt"); // changed from .csv to .txt since Excel doesn't give import options.
+	const std::string g_FileNameProfile = "Profile.txt"; // changed from .csv to .txt since Excel doesn't give import options.
 	int   g_nProfileLine = 0;
 	char  g_aProfileLine[ NUM_PROFILE_LINES ][ CONSOLE_WIDTH ];
 
