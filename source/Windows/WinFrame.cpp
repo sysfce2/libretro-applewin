@@ -178,55 +178,55 @@ void Win32Frame::CreateGdiObjects(void)
 {
 	memset(buttonbitmap, 0, BUTTONS*sizeof(HBITMAP));
 
-	buttonbitmap[BTN_HELP] = (HBITMAP)LOADBUTTONBITMAP(TEXT("HELP_BUTTON"));
+	buttonbitmap[BTN_HELP] = (HBITMAP)LOADBUTTONBITMAP("HELP_BUTTON");
 
 	switch (g_Apple2Type)
 	{
 	case A2TYPE_PRAVETS82:
 	case A2TYPE_PRAVETS8M:
 	case A2TYPE_PRAVETS8A:
-		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP(TEXT("RUNP_BUTTON"));
+		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP("RUNP_BUTTON");
 		break;
 	case A2TYPE_TK30002E:
-		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP(TEXT("RUN3000E_BUTTON"));
+		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP("RUN3000E_BUTTON");
 		break;
 	case A2TYPE_BASE64A:
-		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP(TEXT("RUNBASE64A_BUTTON"));
+		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP("RUNBASE64A_BUTTON");
 		break;
 	default:
-		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP(TEXT("RUN_BUTTON"));
+		buttonbitmap[BTN_RUN] = (HBITMAP)LOADBUTTONBITMAP("RUN_BUTTON");
 		break;
 	}
 
-	buttonbitmap[BTN_DRIVE1   ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DRIVE1_BUTTON"));
-	buttonbitmap[BTN_DRIVE2   ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DRIVE2_BUTTON"));
-	buttonbitmap[BTN_DRIVESWAP] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DRIVESWAP_BUTTON"));
-	buttonbitmap[BTN_FULLSCR  ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("FULLSCR_BUTTON"));
-	buttonbitmap[BTN_DEBUG    ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DEBUG_BUTTON"));
-	buttonbitmap[BTN_SETUP    ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("SETUP_BUTTON"));
+	buttonbitmap[BTN_DRIVE1   ] = (HBITMAP)LOADBUTTONBITMAP("DRIVE1_BUTTON");
+	buttonbitmap[BTN_DRIVE2   ] = (HBITMAP)LOADBUTTONBITMAP("DRIVE2_BUTTON");
+	buttonbitmap[BTN_DRIVESWAP] = (HBITMAP)LOADBUTTONBITMAP("DRIVESWAP_BUTTON");
+	buttonbitmap[BTN_FULLSCR  ] = (HBITMAP)LOADBUTTONBITMAP("FULLSCR_BUTTON");
+	buttonbitmap[BTN_DEBUG    ] = (HBITMAP)LOADBUTTONBITMAP("DEBUG_BUTTON");
+	buttonbitmap[BTN_SETUP    ] = (HBITMAP)LOADBUTTONBITMAP("SETUP_BUTTON");
 
 	//
 
-	g_hCapsLockBitmap[0] = (HBITMAP)LOADBUTTONBITMAP(TEXT("LED_CAPSOFF_BITMAP"));
-	g_hCapsLockBitmap[1] = (HBITMAP)LOADBUTTONBITMAP(TEXT("LED_CAPSON_BITMAP"));
+	g_hCapsLockBitmap[0] = (HBITMAP)LOADBUTTONBITMAP("LED_CAPSOFF_BITMAP");
+	g_hCapsLockBitmap[1] = (HBITMAP)LOADBUTTONBITMAP("LED_CAPSON_BITMAP");
 	//Pravets8 only
-	g_hCapsBitmapP8[0] = (HBITMAP)LOADBUTTONBITMAP(TEXT("LED_CAPSOFF_P8_BITMAP"));
-	g_hCapsBitmapP8[1] = (HBITMAP)LOADBUTTONBITMAP(TEXT("LED_CAPSON_P8_BITMAP"));
-	g_hCapsBitmapLat[0] = (HBITMAP)LOADBUTTONBITMAP(TEXT("LED_LATOFF_BITMAP"));
-	g_hCapsBitmapLat[1] = (HBITMAP)LOADBUTTONBITMAP(TEXT("LED_LATON_BITMAP"));
+	g_hCapsBitmapP8[0] = (HBITMAP)LOADBUTTONBITMAP("LED_CAPSOFF_P8_BITMAP");
+	g_hCapsBitmapP8[1] = (HBITMAP)LOADBUTTONBITMAP("LED_CAPSON_P8_BITMAP");
+	g_hCapsBitmapLat[0] = (HBITMAP)LOADBUTTONBITMAP("LED_LATOFF_BITMAP");
+	g_hCapsBitmapLat[1] = (HBITMAP)LOADBUTTONBITMAP("LED_LATON_BITMAP");
 
-	/*charsetbitmap[0] = (HBITMAP)LOADBUTTONBITMAP(TEXT("CHARSET_APPLE_BITMAP"));
-	charsetbitmap[1] = (HBITMAP)LOADBUTTONBITMAP(TEXT("CHARSET_82_BITMAP"));
-	charsetbitmap[2] = (HBITMAP)LOADBUTTONBITMAP(TEXT("CHARSET_8A_BITMAP"));
-	charsetbitmap[3] = (HBITMAP)LOADBUTTONBITMAP(TEXT("CHARSET_8M_BITMAP"));
+	/*charsetbitmap[0] = (HBITMAP)LOADBUTTONBITMAP("CHARSET_APPLE_BITMAP");
+	charsetbitmap[1] = (HBITMAP)LOADBUTTONBITMAP("CHARSET_82_BITMAP");
+	charsetbitmap[2] = (HBITMAP)LOADBUTTONBITMAP("CHARSET_8A_BITMAP");
+	charsetbitmap[3] = (HBITMAP)LOADBUTTONBITMAP("CHARSET_8M_BITMAP");
 	*/
 	//===========================
-	g_hDiskWindowedLED[ DISK_STATUS_OFF  ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DISKOFF_BITMAP"));
-	g_hDiskWindowedLED[ DISK_STATUS_READ ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DISKREAD_BITMAP"));
-	g_hDiskWindowedLED[ DISK_STATUS_WRITE] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DISKWRITE_BITMAP"));
-	g_hDiskWindowedLED[ DISK_STATUS_PROT ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DISKPROT_BITMAP"));
-	g_hDiskWindowedLED[ DISK_STATUS_EMPTY] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DISKOFF_BITMAP"));
-	g_hDiskWindowedLED[ DISK_STATUS_SPIN ] = (HBITMAP)LOADBUTTONBITMAP(TEXT("DISKREAD_BITMAP"));
+	g_hDiskWindowedLED[ DISK_STATUS_OFF  ] = (HBITMAP)LOADBUTTONBITMAP("DISKOFF_BITMAP");
+	g_hDiskWindowedLED[ DISK_STATUS_READ ] = (HBITMAP)LOADBUTTONBITMAP("DISKREAD_BITMAP");
+	g_hDiskWindowedLED[ DISK_STATUS_WRITE] = (HBITMAP)LOADBUTTONBITMAP("DISKWRITE_BITMAP");
+	g_hDiskWindowedLED[ DISK_STATUS_PROT ] = (HBITMAP)LOADBUTTONBITMAP("DISKPROT_BITMAP");
+	g_hDiskWindowedLED[ DISK_STATUS_EMPTY] = (HBITMAP)LOADBUTTONBITMAP("DISKOFF_BITMAP");
+	g_hDiskWindowedLED[ DISK_STATUS_SPIN ] = (HBITMAP)LOADBUTTONBITMAP("DISKREAD_BITMAP");
 
 	btnfacebrush    = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
 	btnfacepen      = CreatePen(PS_SOLID,1,GetSysColor(COLOR_BTNFACE));
@@ -579,10 +579,10 @@ void Win32Frame::FrameDrawDiskLEDS( HDC passdc )
 		SetTextAlign(dc,TA_LEFT | TA_TOP);
 
 		SetTextColor(dc, g_aDiskFullScreenColorsLED[g_eStatusDrive1]);
-		TextOut(dc,x+ 3,y+2,TEXT("1"),1);
+		TextOut(dc,x+ 3,y+2,"1",1);
 
 		SetTextColor(dc, g_aDiskFullScreenColorsLED[g_eStatusDrive2]);
-		TextOut(dc,x+13,y+2,TEXT("2"),1);
+		TextOut(dc,x+13,y+2,"2",1);
 	}
 	else
 	{
@@ -772,10 +772,10 @@ void Win32Frame::FrameDrawDiskStatus( HDC passdc )
 		TextOut(dc, x, y, text.c_str(), text.length());
 
 		SetTextColor(dc, g_aDiskFullScreenColorsLED[g_eStatusDrive1]);
-		TextOut(dc, x + 3, y + smallfontHeight, TEXT("1"), 1);
+		TextOut(dc, x + 3, y + smallfontHeight, "1", 1);
 
 		SetTextColor(dc, g_aDiskFullScreenColorsLED[g_eStatusDrive2]);
-		TextOut(dc, x + 13, y + smallfontHeight, TEXT("2"), 1);
+		TextOut(dc, x + 13, y + smallfontHeight, "2", 1);
 	}
 	else
 	{
@@ -836,7 +836,7 @@ void Win32Frame::DrawStatusArea(HDC passdc, int drawflags)
 			{
 				SetTextAlign(dc, TA_RIGHT | TA_TOP);
 				SetTextColor(dc, g_aDiskFullScreenColorsLED[eHardDriveStatus]);
-				TextOut(dc, x + 23, y + 2, TEXT("H"), 1);
+				TextOut(dc, x + 23, y + 2, "H", 1);
 			}
 
 			if (!IS_APPLE2)
@@ -846,7 +846,7 @@ void Win32Frame::DrawStatusArea(HDC passdc, int drawflags)
 					? RGB(128,128,128)
 					: RGB(  0,  0,  0) ));
 
-				TextOut(dc,x+BUTTONCX,y+2,TEXT("A"),1); // NB. Caps Lock indicator is already flush right!
+				TextOut(dc,x+BUTTONCX,y+2,"A",1); // NB. Caps Lock indicator is already flush right!
 			}
 
 			//
@@ -895,7 +895,7 @@ void Win32Frame::DrawStatusArea(HDC passdc, int drawflags)
 			TextOut(dc, x + 27, y + yOffsetSlot6LEDNumbers, "2", 1);
 
 			// Add text for Slot7 harddrive: "H"
-			TextOut(dc, x + 7, y + yOffsetCapsLock, TEXT("H"), 1);
+			TextOut(dc, x + 7, y + yOffsetCapsLock, "H", 1);
 
 			if (g_nViewportScale > 1)
 			{
@@ -1091,8 +1091,8 @@ LRESULT Win32Frame::WndProc(
 
     case WM_DDE_INITIATE: {
       LogFileOutput("WM_DDE_INITIATE\n");
-      ATOM application = GlobalAddAtom(TEXT("applewin"));
-      ATOM topic       = GlobalAddAtom(TEXT("system"));
+      ATOM application = GlobalAddAtom("applewin");
+      ATOM topic       = GlobalAddAtom("system");
       if(LOWORD(lparam) == application && HIWORD(lparam) == topic)
         SendMessage((HWND)wparam,WM_DDE_ACK,(WPARAM)window,MAKELPARAM(application,topic));
       GlobalDeleteAtom(application);
@@ -2110,7 +2110,7 @@ void Win32Frame::ProcessDiskPopupMenu(HWND hwnd, POINT pt, const int iDrive)
 	// It shall not be left blank, otherwise  an explorer window will be open.
 	char PathToCiderPress[MAX_PATH];
 	RegLoadString(
-		TEXT("Configuration"),
+		"Configuration",
 		REGVALUE_CIDERPRESSLOC,
 		1,
 		PathToCiderPress,
@@ -2609,7 +2609,7 @@ void Win32Frame::FrameCreateWindow(void)
 
 	// NB. g_hFrameWindow also set by WM_CREATE - NB. CreateWindow() must synchronously send WM_CREATE
 	g_hFrameWindow = CreateWindow(
-		TEXT("APPLE2FRAME"),
+		"APPLE2FRAME",
 		g_pAppTitle.c_str(),
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
 		WS_MINIMIZEBOX | WS_VISIBLE,
@@ -2664,14 +2664,14 @@ void Win32Frame::FrameRegisterClass () {
   wndclass.style         = CS_OWNDC | CS_BYTEALIGNCLIENT;
   wndclass.lpfnWndProc   = FrameWndProc;
   wndclass.hInstance     = g_hInstance;
-  wndclass.hIcon         = LoadIcon(g_hInstance,TEXT("APPLEWIN_ICON"));
+  wndclass.hIcon         = LoadIcon(g_hInstance,"APPLEWIN_ICON");
   wndclass.hCursor       = LoadCursor(0,IDC_ARROW);
   wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 #if ENABLE_MENU
   wndclass.lpszMenuName	 = (LPCSTR)IDR_MENU1;
 #endif
-  wndclass.lpszClassName = TEXT("APPLE2FRAME");
-  wndclass.hIconSm       = (HICON)LoadImage(g_hInstance,TEXT("APPLEWIN_ICON"),
+  wndclass.lpszClassName = "APPLE2FRAME";
+  wndclass.hIconSm       = (HICON)LoadImage(g_hInstance,"APPLEWIN_ICON",
                                             IMAGE_ICON,16,16,LR_DEFAULTCOLOR);
   RegisterClassEx(&wndclass);
 }

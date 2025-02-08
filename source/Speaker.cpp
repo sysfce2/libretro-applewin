@@ -265,7 +265,7 @@ void SpkrInitialize ()
 				TEXT("correctly configured to use the driver.  Also ")
 				TEXT("ensure that no other program is currently using ")
 				TEXT("the device."),
-				TEXT("Configuration"),
+				"Configuration",
 				MB_ICONEXCLAMATION | MB_SETFOREGROUND);
 		}
 	}

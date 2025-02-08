@@ -813,7 +813,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
                  TEXT("Ensure that your game port is configured properly, ")
                  TEXT("that the joystick is firmly plugged in, and that ")
                  TEXT("you have a joystick driver installed."),
-                 TEXT("Configuration"),
+                 "Configuration",
                  MB_ICONEXCLAMATION | MB_SETFOREGROUND);
       return 0;
     }
@@ -824,7 +824,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
                  TEXT("Ensure that your game port is configured properly, ")
                  TEXT("that the joystick is firmly plugged in, and that ")
                  TEXT("you have a joystick driver installed."),
-                 TEXT("Configuration"),
+                 "Configuration",
                  MB_ICONEXCLAMATION | MB_SETFOREGROUND);
       return 0;
     }
@@ -837,7 +837,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 		// Shouldn't be necessary, since Property Sheet's logic should prevent this option being given to the user.
 	  MessageBox(window,
 				 TEXT("Mouse interface card is enabled - unable to use mouse for joystick emulation."),
-				 TEXT("Configuration"),
+				 "Configuration",
 				 MB_ICONEXCLAMATION | MB_SETFOREGROUND);
 	  return 0;
 	}
@@ -851,7 +851,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
                TEXT("mouse cursor will not be visible.  To end joystick ")
                TEXT("emulation and regain the mouse cursor, click the left ")
                TEXT("mouse button while pressing Ctrl."),
-               TEXT("Configuration"),
+               "Configuration",
                MB_ICONINFORMATION | MB_SETFOREGROUND);
   }
   else if (joyinfo[newtype] == DEVICE_KEYBOARD)
@@ -865,7 +865,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 						TEXT("(and cursor-left/right to control speed).\n\n")
 						TEXT("Also if cursor keys are blocked from being read from the Apple keyboard ")
 						TEXT("then even simple AppleSoft command-line editing (cursor left/right) will not work."),
-						TEXT("Configuration"),
+						"Configuration",
 						MB_ICONINFORMATION | MB_SETFOREGROUND);
 	  }
   }
