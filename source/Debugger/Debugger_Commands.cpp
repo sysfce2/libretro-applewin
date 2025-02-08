@@ -296,7 +296,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"SOURCE1"     , CmdWindowShowSource1 , CMD_WINDOW_SOURCE_1, "Show source on top split screen"             },
 		{"SOURCE2"     , CmdWindowShowSource2 , CMD_WINDOW_SOURCE_2, "Show source on bottom split screen"          },
 
-		{TEXT("\\")          , CmdWindowViewOutput  , CMD_WINDOW_OUTPUT  , "Display Apple output until key pressed" },
+		{"\\"          , CmdWindowViewOutput  , CMD_WINDOW_OUTPUT  , "Display Apple output until key pressed" },
 //		{"INFO"        , CmdToggleInfoPanel   , CMD_WINDOW_TOGGLE },
 //		{"WINSOURCE"   , CmdWindowShowSource  , CMD_WINDOW_SOURCE },
 //		{"ZEROPAGE"    , CmdWindowShowZeropage, CMD_WINDOW_ZEROPAGE },

@@ -35,8 +35,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 CPageSound* CPageSound::ms_this = 0;	// reinit'd in ctor
 
-const char CPageSound::m_soundchoices[] =	TEXT("Disabled\0")
-											TEXT("Sound Card\0");
+const char CPageSound::m_soundchoices[] =	"Disabled\0"
+											"Sound Card\0";
 
 
 const char CPageSound::m_soundCardChoices[] =	"Mockingboard\0"

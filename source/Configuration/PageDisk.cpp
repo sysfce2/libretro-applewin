@@ -39,11 +39,11 @@ CPageDisk* CPageDisk::ms_this = 0;	// reinit'd in ctor
 
 const char CPageDisk::m_defaultDiskOptions[] =
 				TEXT("Select Disk...\0")
-				TEXT("Eject Disk\0");
+				"Eject Disk\0";
 
 const char CPageDisk::m_defaultHDDOptions[] =
 				TEXT("Select Hard Disk Image...\0")
-				TEXT("Unplug Hard Disk Image\0");
+				"Unplug Hard Disk Image\0";
 
 INT_PTR CALLBACK CPageDisk::DlgProc(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
