@@ -1987,7 +1987,7 @@ void Win32Frame::ProcessButtonClick(int button, bool bFromButtonUI /*=false*/)
 		// (GH#437) For any internet downloaded AppleWin.chm files (stored on an NTFS drive) there may be an Alt Data Stream containing a Zone Identifier
 		// - try to delete it, otherwise the content won't be displayed unless it's unblock (via File Properties)
 		{
-			const std::string filename_with_zone_identifier = filename + TEXT(":Zone.Identifier");
+			const std::string filename_with_zone_identifier = filename + ":Zone.Identifier";
 			DeleteFile(filename_with_zone_identifier.c_str());
 		}
 
@@ -2115,7 +2115,7 @@ void Win32Frame::ProcessDiskPopupMenu(HWND hwnd, POINT pt, const int iDrive)
 		1,
 		PathToCiderPress,
 		MAX_PATH,
-		TEXT("C:\\Program Files\\faddenSoft\\CiderPress\\CiderPress.exe"));
+		"C:\\Program Files\\faddenSoft\\CiderPress\\CiderPress.exe");
 	//TODO: A directory is open if an empty path to CiderPress is set. This has to be fixed.
 
 	std::string filename1= "\"";

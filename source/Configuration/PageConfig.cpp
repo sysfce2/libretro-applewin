@@ -41,7 +41,7 @@ CPageConfig* CPageConfig::ms_this = 0;	// reinit'd in ctor
 enum APPLEIICHOICE {MENUITEM_IIORIGINAL, MENUITEM_IIPLUS, MENUITEM_IIJPLUS, MENUITEM_IIE, MENUITEM_ENHANCEDIIE, MENUITEM_CLONE};
 const char CPageConfig::m_ComputerChoices[] =
 				TEXT("Apple ][ (Original)\0")
-				TEXT("Apple ][+\0")
+				"Apple ][+\0"
 				TEXT("Apple ][ J-Plus\0")
 				"Apple //e\0"
 				"Enhanced Apple //e\0"
@@ -174,8 +174,8 @@ INT_PTR CPageConfig::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPA
 			RegSaveValue("","RunningOnOS",0,0);
 			if (MessageBox(hWnd,
 				"The emulator has been set to recalibrate "
-				TEXT("itself the next time it is started.\n\n")
-				TEXT("Would you like to restart the emulator now?"),
+				"itself the next time it is started.\n\n"
+				"Would you like to restart the emulator now?",
 				REG_CONFIG,
 				MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDOK)
 			{
@@ -440,8 +440,8 @@ bool CPageConfig::IsOkToBenchmark(HWND hWnd, const bool bConfigChanged)
 	if (bConfigChanged)
 	{
 		if (MessageBox(hWnd,
-				TEXT("The hardware configuration has changed. Benchmarking will lose these changes.\n\n")
-				TEXT("Are you sure you want to do this?"),
+				"The hardware configuration has changed. Benchmarking will lose these changes.\n\n"
+				"Are you sure you want to do this?",
 				"Benchmarks",
 				MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 			return false;
@@ -452,9 +452,9 @@ bool CPageConfig::IsOkToBenchmark(HWND hWnd, const bool bConfigChanged)
 
 	if (MessageBox(hWnd,
 			"Running the benchmarks will reset the state of "
-			TEXT("the emulated machine, causing you to lose any ")
-			TEXT("unsaved work.\n\n")
-			TEXT("Are you sure you want to do this?"),
+			"the emulated machine, causing you to lose any "
+			"unsaved work.\n\n"
+			"Are you sure you want to do this?",
 			"Benchmarks",
 			MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 		return false;

@@ -810,8 +810,8 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
     {
       MessageBox(window,
                  "The emulator is unable to read your PC joystick.  "
-                 TEXT("Ensure that your game port is configured properly, ")
-                 TEXT("that the joystick is firmly plugged in, and that ")
+                 "Ensure that your game port is configured properly, "
+                 "that the joystick is firmly plugged in, and that "
                  "you have a joystick driver installed.",
                  "Configuration",
                  MB_ICONEXCLAMATION | MB_SETFOREGROUND);
@@ -821,8 +821,8 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
     {
       MessageBox(window,
                  "The emulator is unable to read thumbstick 2.  "
-                 TEXT("Ensure that your game port is configured properly, ")
-                 TEXT("that the joystick is firmly plugged in, and that ")
+                 "Ensure that your game port is configured properly, "
+                 "that the joystick is firmly plugged in, and that "
                  "you have a joystick driver installed.",
                  "Configuration",
                  MB_ICONEXCLAMATION | MB_SETFOREGROUND);
@@ -843,13 +843,13 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 	}
 
     MessageBox(window,
-               TEXT("To begin emulating a joystick with your mouse, move ")
+               "To begin emulating a joystick with your mouse, move "
                "the mouse cursor over the emulated screen of a running "
                "program and click the left mouse button.  During the "
-               TEXT("time the mouse is emulating a joystick, you will not ")
-               TEXT("be able to use it to perform mouse functions, and the ")
+               "time the mouse is emulating a joystick, you will not "
+               "be able to use it to perform mouse functions, and the "
                "mouse cursor will not be visible.  To end joystick "
-               TEXT("emulation and regain the mouse cursor, click the left ")
+               "emulation and regain the mouse cursor, click the left "
                "mouse button while pressing Ctrl.",
                "Configuration",
                MB_ICONINFORMATION | MB_SETFOREGROUND);
@@ -859,9 +859,9 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 	  if (newtype == J0C_KEYBD_CURSORS || newtype == J1C_KEYBD_CURSORS)
 	  {
 			MessageBox(window,
-						TEXT("Using cursor keys to emulate a joystick can cause conflicts.\n\n")
+						"Using cursor keys to emulate a joystick can cause conflicts.\n\n"
 						TEXT("Be aware that 'cursor-up' = CTRL+K, and 'cursor-down' = CTRL+J.\n")
-						TEXT("EG. Lode Runner uses CTRL+K/J to switch between keyboard/joystick modes ")
+						"EG. Lode Runner uses CTRL+K/J to switch between keyboard/joystick modes "
 						TEXT("(and cursor-left/right to control speed).\n\n")
 						"Also if cursor keys are blocked from being read from the Apple keyboard "
 						TEXT("then even simple AppleSoft command-line editing (cursor left/right) will not work."),

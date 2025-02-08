@@ -244,7 +244,7 @@ void Win32Frame::Benchmark(void)
 		if (FrameMessageBox(
 			"The emulator has detected a problem while running "
 			"the CPU benchmark.  Would you like to gather more "
-			TEXT("information?"),
+			"information?",
 			"Benchmarks",
 			MB_ICONQUESTION | MB_YESNO | MB_SETFOREGROUND) == IDYES) {
 			BOOL error = 0;

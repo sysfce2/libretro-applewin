@@ -406,8 +406,8 @@ bool CPropertySheetHelper::IsOkToSaveLoadState(HWND hWnd, const bool bConfigChan
 	if (bConfigChanged)
 	{
 		if (MessageBox(hWnd,
-				TEXT("The hardware configuration has changed. Save/Load state will lose these changes.\n\n")
-				TEXT("Are you sure you want to do this?"),
+				"The hardware configuration has changed. Save/Load state will lose these changes.\n\n"
+				"Are you sure you want to do this?",
 				REG_CONFIG,
 				MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 			return false;
@@ -423,9 +423,9 @@ bool CPropertySheetHelper::IsOkToRestart(HWND hWnd)
 
 	if (MessageBox(hWnd,
 			"Restarting the emulator will reset the state "
-			TEXT("of the emulated machine, causing you to lose any ")
-			TEXT("unsaved work.\n\n")
-			TEXT("Are you sure you want to do this?"),
+			"of the emulated machine, causing you to lose any "
+			"unsaved work.\n\n"
+			"Are you sure you want to do this?",
 			REG_CONFIG,
 			MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 		return false;
