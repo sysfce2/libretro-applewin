@@ -1553,8 +1553,8 @@ void CImageHelperBase::GetCharLowerExt(char* pszExt, LPCTSTR pszImageFilename, c
 	if (strrchr(pImageFileExt, PATH_SEPARATOR))
 		pImageFileExt = strrchr(pImageFileExt, PATH_SEPARATOR)+1;
 
-	if (strrchr(pImageFileExt, TEXT('.')))
-		pImageFileExt = strrchr(pImageFileExt, TEXT('.'));
+	if (strrchr(pImageFileExt, '.'))
+		pImageFileExt = strrchr(pImageFileExt, '.');
 
 	strncpy(pszExt, pImageFileExt, uExtSize);
 	pszExt[uExtSize - 1] = 0;
@@ -1568,7 +1568,7 @@ void CImageHelperBase::GetCharLowerExt2(char* pszExt, LPCTSTR pszImageFilename, 
 	strncpy(szFilename, pszImageFilename, MAX_PATH);
 	szFilename[MAX_PATH - 1] = 0;
 
-	char* pLastDot = strrchr(szFilename, TEXT('.'));
+	char* pLastDot = strrchr(szFilename, '.');
 	if (pLastDot)
 		*pLastDot = 0;
 

@@ -742,7 +742,7 @@ Update_t CmdBookmarkSave (int nArgs)
 
 		if (ConfigSave_BufferToDisk( g_aArgs[ 1 ].sArg, CONFIG_SAVE_FILE_CREATE ))
 		{
-			ConsoleBufferPush( TEXT( "Saved." ) );
+			ConsoleBufferPush(  "Saved."  );
 			return ConsoleUpdate();
 		}
 	}
@@ -786,7 +786,7 @@ Update_t CmdBenchmarkStop (int nArgs)
 	uint32_t currtime = GetTickCount();
 	while ((extbench = GetTickCount()) != currtime)
 		; // intentional busy-waiting
-	KeybQueueKeypress(TEXT(' ') ,ASCII);
+	KeybQueueKeypress(' ' ,ASCII);
 
 	return UPDATE_ALL; // 0;
 }
@@ -2074,7 +2074,7 @@ Update_t CmdBreakpointSave (int nArgs)
 
 		if (ConfigSave_BufferToDisk( g_aArgs[ 1 ].sArg, CONFIG_SAVE_FILE_CREATE ))
 		{
-			ConsoleBufferPush( TEXT( "Saved." ) );
+			ConsoleBufferPush(  "Saved."  );
 			return ConsoleUpdate();
 		}
 	}
@@ -2492,7 +2492,7 @@ Update_t CmdUnassemble (int nArgs)
 Update_t CmdKey (int nArgs)
 {
 	KeybQueueKeypress(
-		nArgs ? g_aArgs[1].nValue ? g_aArgs[1].nValue : g_aArgs[1].sArg[0] : TEXT(' '), ASCII); // FIXME!!!
+		nArgs ? g_aArgs[1].nValue ? g_aArgs[1].nValue : g_aArgs[1].sArg[0] : ' ', ASCII); // FIXME!!!
 	return UPDATE_CONSOLE_DISPLAY;
 }
 
@@ -2557,7 +2557,7 @@ Update_t CmdNOP (int nArgs)
 Update_t CmdOut (int nArgs)
 {
 //  if ((!nArgs) ||
-//      ((g_aArgs[1].sArg[0] != TEXT('0')) && (!g_aArgs[1].nValue) && (!GetAddress(g_aArgs[1].sArg))))
+//      ((g_aArgs[1].sArg[0] != '0') && (!g_aArgs[1].nValue) && (!GetAddress(g_aArgs[1].sArg))))
 //     return DisplayHelp(CmdInput);
 
 	if (!nArgs)
@@ -3619,12 +3619,12 @@ Update_t CmdFlagSet (int nArgs)
 //===========================================================================
 Update_t CmdFlag (int nArgs)
 {
-//	if (g_aArgs[0].sArg[0] == g_aParameters[PARAM_FLAG_CLEAR].aName[0] ) // TEXT('R')
+//	if (g_aArgs[0].sArg[0] == g_aParameters[PARAM_FLAG_CLEAR].aName[0] ) // 'R'
 	if (g_iCommand == CMD_FLAG_CLEAR)
 		return CmdFlagClear( nArgs );
 	else
 	if (g_iCommand == CMD_FLAG_SET)
-//	if (g_aArgs[0].sArg[0] == g_aParameters[PARAM_FLAG_SET].aName[0] ) // TEXT('S')
+//	if (g_aArgs[0].sArg[0] == g_aParameters[PARAM_FLAG_SET].aName[0] ) // 'S'
 		return CmdFlagSet( nArgs );
 
 	return UPDATE_ALL; // 0;
@@ -3990,7 +3990,7 @@ Update_t CmdMemoryEdit (int nArgs)
 Update_t CmdMemoryEnterByte (int nArgs)
 {
 	if ((nArgs < 2) ||
-		((g_aArgs[2].sArg[0] != TEXT('0')) && (!g_aArgs[2].nValue))) // arg2 not numeric or not specified
+		((g_aArgs[2].sArg[0] != '0') && (!g_aArgs[2].nValue))) // arg2 not numeric or not specified
 	{
 		Help_Arg_1( CMD_MEMORY_ENTER_WORD );
 	}
@@ -4020,7 +4020,7 @@ Update_t CmdMemoryEnterByte (int nArgs)
 Update_t CmdMemoryEnterWord (int nArgs)
 {
 	if ((nArgs < 2) ||
-		((g_aArgs[2].sArg[0] != TEXT('0')) && (!g_aArgs[2].nValue))) // arg2 not numeric or not specified
+		((g_aArgs[2].sArg[0] != '0') && (!g_aArgs[2].nValue))) // arg2 not numeric or not specified
 	{
 		Help_Arg_1( CMD_MEMORY_ENTER_WORD );
 	}
@@ -4327,13 +4327,13 @@ Update_t CmdMemoryLoad (int nArgs)
 				{
 					*pDst++ = *pSrc++;
 				}
-				ConsoleBufferPush( TEXT( "Loaded." ) );
+				ConsoleBufferPush(  "Loaded."  );
 			}
 			fclose( hFile );
 		}
 		else
 		{
-			ConsoleBufferPush( TEXT( "ERROR: Bad filename" ) );
+			ConsoleBufferPush(  "ERROR: Bad filename"  );
 
 			CmdConfigGetDebugDir( 0 );
 
@@ -4496,7 +4496,7 @@ Update_t CmdMemoryLoad (int nArgs)
 	BYTE * const pMemBankBase = bBankSpecified ? MemGetBankPtr(nBank) : mem;
 	if (!pMemBankBase)
 	{
-		ConsoleBufferPush( TEXT( "Error: Bank out of range." ) );
+		ConsoleBufferPush(  "Error: Bank out of range."  );
 		return ConsoleUpdate();
 	}
 
@@ -4695,7 +4695,7 @@ Update_t CmdMemorySave (int nArgs)
 				FILE *hFile = fopen( sLoadSaveFilePath, "rb" );
 				if (hFile)
 				{
-					ConsoleBufferPush( TEXT( "Warning: File already exists.  Overwriting." ) );
+					ConsoleBufferPush(  "Warning: File already exists.  Overwriting."  );
 					fclose( hFile );
 				}
 
@@ -4705,11 +4705,11 @@ Update_t CmdMemorySave (int nArgs)
 					size_t nWrote = fwrite( pMemory, nAddressLen, 1, hFile );
 					if (nWrote == 1) // (size_t)nAddressLen)
 					{
-						ConsoleBufferPush( TEXT( "Saved." ) );
+						ConsoleBufferPush(  "Saved."  );
 					}
 					else
 					{
-						ConsoleBufferPush( TEXT( "Error saving." ) );
+						ConsoleBufferPush(  "Error saving."  );
 					}
 					fclose( hFile );
 				}
@@ -4755,7 +4755,7 @@ Update_t CmdMemorySave (int nArgs)
 		}
 		else
 		{
-			ConsoleBufferPush( TEXT( "Last saved: none" ) );
+			ConsoleBufferPush(  "Last saved: none"  );
 		}				
 	}
 	else
@@ -4835,14 +4835,14 @@ Update_t CmdMemorySave (int nArgs)
 			const BYTE * const pMemBankBase = bBankSpecified ? MemGetBankPtr(nBank) : mem;
 			if (!pMemBankBase)
 			{
-				ConsoleBufferPush( TEXT( "Error: Bank out of range." ) );
+				ConsoleBufferPush(  "Error: Bank out of range."  );
 				return ConsoleUpdate();
 			}
 
 			FILE *hFile = fopen( sLoadSaveFilePath.c_str(), "rb" );
 			if (hFile)
 			{
-				ConsoleBufferPush( TEXT( "Warning: File already exists.  Overwriting." ) );
+				ConsoleBufferPush(  "Warning: File already exists.  Overwriting."  );
 				fclose( hFile );
 				// TODO: BUG: Is this a bug/feature that we can over-write files and the user has no control over that?
 			}
@@ -4853,17 +4853,17 @@ Update_t CmdMemorySave (int nArgs)
 				size_t nWrote = fwrite( pMemBankBase+nAddressStart, nAddressLen, 1, hFile );
 				if (nWrote == 1)
 				{
-					ConsoleBufferPush( TEXT( "Saved." ) );
+					ConsoleBufferPush(  "Saved."  );
 				}
 				else
 				{
-					ConsoleBufferPush( TEXT( "Error saving." ) );
+					ConsoleBufferPush(  "Error saving."  );
 				}
 				fclose( hFile );
 			}
 			else
 			{
-				ConsoleBufferPush( TEXT( "Error opening file." ) );
+				ConsoleBufferPush(  "Error opening file."  );
 			}
 		}
 	}
@@ -5503,7 +5503,7 @@ Update_t CmdNTSC (int nArgs)
 					ConsoleFilename::update( "Saved" );
 				}
 				else
-					ConsoleBufferPush( TEXT( "Error saving." ) );
+					ConsoleBufferPush(  "Error saving."  );
 			}
 			else
 			{
@@ -6064,7 +6064,7 @@ Update_t CmdMemorySearchHex (int nArgs)
 //===========================================================================
 Update_t CmdRegisterSet (int nArgs)
 {
-	if (nArgs < 2) // || ((g_aArgs[2].sArg[0] != TEXT('0')) && !g_aArgs[2].nValue))
+	if (nArgs < 2) // || ((g_aArgs[2].sArg[0] != '0') && !g_aArgs[2].nValue))
 	{
 		return Help_Arg_1( CMD_REGISTER_SET );
 	}

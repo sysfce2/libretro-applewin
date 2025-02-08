@@ -234,9 +234,9 @@ bool String2Address( LPCTSTR pText, WORD & nAddress_ )
 		pText = sHexApple;
 	}
 
-	if (pText[0] == TEXT('0'))
+	if (pText[0] == '0')
 	{
-		if ((pText[1] == TEXT('X')) || pText[1] == TEXT('x'))
+		if ((pText[1] == 'X') || pText[1] == 'x')
 		{
 			if (!TextIsHexString( pText+2))
 				return false;
