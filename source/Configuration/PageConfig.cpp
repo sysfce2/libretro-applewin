@@ -171,7 +171,7 @@ INT_PTR CPageConfig::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, LPA
 
 #if 0
 		case IDC_RECALIBRATE:
-			RegSaveValue(TEXT(""),TEXT("RunningOnOS"),0,0);
+			RegSaveValue(TEXT(""),"RunningOnOS",0,0);
 			if (MessageBox(hWnd,
 				TEXT("The emulator has been set to recalibrate ")
 				TEXT("itself the next time it is started.\n\n")
@@ -442,7 +442,7 @@ bool CPageConfig::IsOkToBenchmark(HWND hWnd, const bool bConfigChanged)
 		if (MessageBox(hWnd,
 				TEXT("The hardware configuration has changed. Benchmarking will lose these changes.\n\n")
 				TEXT("Are you sure you want to do this?"),
-				TEXT("Benchmarks"),
+				"Benchmarks",
 				MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 			return false;
 	}
@@ -455,7 +455,7 @@ bool CPageConfig::IsOkToBenchmark(HWND hWnd, const bool bConfigChanged)
 			TEXT("the emulated machine, causing you to lose any ")
 			TEXT("unsaved work.\n\n")
 			TEXT("Are you sure you want to do this?"),
-			TEXT("Benchmarks"),
+			"Benchmarks",
 			MB_ICONQUESTION | MB_OKCANCEL | MB_SETFOREGROUND) == IDCANCEL)
 		return false;
 

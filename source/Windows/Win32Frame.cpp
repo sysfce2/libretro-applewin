@@ -245,7 +245,7 @@ void Win32Frame::Benchmark(void)
 			TEXT("The emulator has detected a problem while running ")
 			TEXT("the CPU benchmark.  Would you like to gather more ")
 			TEXT("information?"),
-			TEXT("Benchmarks"),
+			"Benchmarks",
 			MB_ICONQUESTION | MB_YESNO | MB_SETFOREGROUND) == IDYES) {
 			BOOL error = 0;
 			WORD lastpc = 0x300;
@@ -404,7 +404,7 @@ void Win32Frame::DisplayLogo(void)
 	}
 
 	// DRAW THE VERSION NUMBER
-	char sFontName[] = TEXT("Arial");
+	char sFontName[] = "Arial";
 	HFONT font = CreateFont(-20, 0, 0, 0, FW_NORMAL, 0, 0, 0, ANSI_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		VARIABLE_PITCH | 4 | FF_SWISS,

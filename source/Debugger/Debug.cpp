@@ -145,7 +145,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	std::vector<int>       g_vPotentialCommands; // global, since TAB-completion also needs
 	std::vector<Command_t> g_vSortedCommands;
 
-//	static const char g_aFlagNames[_6502_NUM_FLAGS+1] = TEXT("CZIDBRVN");// Reversed since arrays are from left-to-right
+//	static const char g_aFlagNames[_6502_NUM_FLAGS+1] = "CZIDBRVN";// Reversed since arrays are from left-to-right
 
 
 // Cursor (Console Input) _____________________________________________________
@@ -188,7 +188,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	char     g_sFontNameConsole[ MAX_FONT_NAME ] = TEXT("Courier New");
 	char     g_sFontNameDisasm [ MAX_FONT_NAME ] = TEXT("Courier New");
 	char     g_sFontNameInfo   [ MAX_FONT_NAME ] = TEXT("Courier New");
-	char     g_sFontNameBranch [ MAX_FONT_NAME ] = TEXT("Webdings");
+	char     g_sFontNameBranch [ MAX_FONT_NAME ] = "Webdings";
 	HFONT     g_hFontWebDings  = (HFONT)0;
 #endif
 	int       g_iFontSpacing = FONT_SPACING_CLEAN;
@@ -1007,14 +1007,14 @@ Update_t CmdBreakOpcode (int nArgs) // Breakpoint IFF Full-speed!
 	if (nArgs > 1)
 		return HelpLastCommand();
 
-	char sAction[ CONSOLE_WIDTH ] = TEXT("Current"); // default to display
+	char sAction[ CONSOLE_WIDTH ] = "Current"; // default to display
 
 	if (nArgs == 1)
 	{
 		int iOpcode = g_aArgs[ 1] .nValue;
 		g_iDebugBreakOnOpcode = iOpcode & 0xFF;
 
-		strcpy( sAction, TEXT("Setting") );
+		strcpy( sAction, "Setting" );
 
 		if (iOpcode >= NUM_OPCODES)
 		{
@@ -1062,12 +1062,12 @@ Update_t CmdBreakOnInterrupt (int nArgs)
 	if (nArgs == 1 && nActive == -1)
 		return HelpLastCommand();
 
-	char sAction[CONSOLE_WIDTH] = TEXT("Current"); // default to display
+	char sAction[CONSOLE_WIDTH] = "Current"; // default to display
 
 	if (nArgs == 1)
 	{
 		g_bDebugBreakOnInterrupt = (iParam == PARAM_ON) ? true : false;
-		strcpy(sAction, TEXT("Setting"));
+		strcpy(sAction, "Setting");
 	}
 
 	ConsoleBufferPushFormat("%s Break on Interrupt: %s"
@@ -3085,7 +3085,7 @@ Update_t CmdCursorLineDown (int nArgs)
 
 		if (g_bDisasmCurBad)
 		{
-//	MessageBox( NULL, TEXT("Bad Disassembly of opcodes"), TEXT("Debugger"), MB_OK );
+//	MessageBox( NULL, TEXT("Bad Disassembly of opcodes"), "Debugger", MB_OK );
 
 //			g_nDisasmCurAddress = nCur;
 //			g_bDisasmCurBad = false;

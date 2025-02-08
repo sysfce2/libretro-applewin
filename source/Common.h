@@ -59,7 +59,7 @@ enum AppMode_e
 #define	TITLE_BASE64A           TEXT("Base64A Emulator")
 
 #define TITLE_PAUSED       TEXT("* PAUSED *")
-#define TITLE_STEPPING     TEXT("Stepping")
+#define TITLE_STEPPING     "Stepping"
 
 // Configuration
 #define REG_CONFIG						"Configuration"
