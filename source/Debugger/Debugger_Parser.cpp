@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	const char TCHAR_TAB    = '\t';
 //	const char TCHAR_QUOTED = TEXT('"');
 	const char TCHAR_QUOTE_DOUBLE = TEXT('"');
-	const char TCHAR_QUOTE_SINGLE = TEXT('\'');
+	const char TCHAR_QUOTE_SINGLE = '\'';
 	const char TCHAR_ESCAPE = '\x1B';
 
 

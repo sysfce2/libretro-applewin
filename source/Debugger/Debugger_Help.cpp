@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	http://www.codeproject.com/cpp/unicode.asp
 
-				TEXT()       _tcsrev
+				       _tcsrev
 	_UNICODE    Unicode      _wcsrev
 	_MBCS       Multi-byte   _mbsrev
 	n/a         ASCII        strrev
