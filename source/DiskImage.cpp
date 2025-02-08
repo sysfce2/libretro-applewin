@@ -291,8 +291,8 @@ void GetImageTitle(LPCTSTR pPathname, std::string & pImageName, std::string & pF
 	if (imagetitle[0])
 	{
 		LPTSTR dot = imagetitle;
-		if (strrchr(dot, TEXT('.')))
-			dot = strrchr(dot, TEXT('.'));
+		if (strrchr(dot, '.'))
+			dot = strrchr(dot, '.');
 		if (dot > imagetitle)
 			*dot = 0;
 	}
