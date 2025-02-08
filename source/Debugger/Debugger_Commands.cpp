@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	Command_t g_aCommands[] =
 	{
 	// Assembler
-//		{TEXT("!")           , CmdAssemberMini      , CMD_ASSEMBLER_MINI       , "Mini assembler"             },
+//		{"!"           , CmdAssemberMini      , CMD_ASSEMBLER_MINI       , "Mini assembler"             },
 		{"A"           , CmdAssemble          , CMD_ASSEMBLE             , "Assemble instructions"      },
 	// CPU (Main)
 		{"."           , CmdCursorJumpPC      , CMD_CURSOR_JUMP_PC       , "Locate the cursor in the disasm window" }, // centered
@@ -326,9 +326,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{ DEBUGGER__COMMANDS_VERIFY_TXT__, NULL, NUM_COMMANDS },
 
 	// Aliasies - Can be in any order
-		{TEXT("->")          , NULL                 , CMD_CURSOR_JUMP_PC       },
-		{TEXT("Ctrl ->" )    , NULL                 , CMD_CURSOR_SET_PC        },
-		{TEXT("Shift ->")    , NULL                 , CMD_CURSOR_JUMP_PC       }, // at top
+		{"->"          , NULL                 , CMD_CURSOR_JUMP_PC       },
+		{"Ctrl ->"    , NULL                 , CMD_CURSOR_SET_PC        },
+		{"Shift ->"    , NULL                 , CMD_CURSOR_JUMP_PC       }, // at top
 		{"INPUT"       , CmdIn                , CMD_IN                   },
 		// Data
 		// Flags - Clear
@@ -409,8 +409,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"<="         , NULL, PARAM_BP_LESS_EQUAL     },
 		{"<"         , NULL, PARAM_BP_LESS_THAN      },
 		{"="         , NULL, PARAM_BP_EQUAL          },
-		{TEXT("!=")         , NULL, PARAM_BP_NOT_EQUAL      },
-		{TEXT("!" )         , NULL, PARAM_BP_NOT_EQUAL_1    },
+		{"!="         , NULL, PARAM_BP_NOT_EQUAL      },
+		{"!"         , NULL, PARAM_BP_NOT_EQUAL_1    },
 		{">"         , NULL, PARAM_BP_GREATER_THAN   },
 		{">="         , NULL, PARAM_BP_GREATER_EQUAL  },
 		{"R"          , NULL, PARAM_BP_READ           },

@@ -1927,7 +1927,7 @@ void MemInitializeROM(void)
 		case A2TYPE_BASE64A:        strcpy(sRomFileName, "BASE64A.ROM"); break;
 		default:
 			{
-				strcpy(sRomFileName, TEXT("Unknown type!"));
+				strcpy(sRomFileName, "Unknown type!");
 				GetPropertySheet().ConfigSaveApple2Type(A2TYPE_APPLE2EENHANCED);
 			}
 		}

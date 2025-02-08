@@ -223,7 +223,7 @@
 		extern char  g_sConsoleCursor[];
 
 	// Display
-		extern char  g_aConsolePrompt[];// = TEXT(">!"); // input, assembler // NUM_PROMPTS
+		extern char  g_aConsolePrompt[];// = ">!"; // input, assembler // NUM_PROMPTS
 		extern char  g_sConsolePrompt[];// = ">"; // No, NOT Integer Basic!  The nostalgic '*' "Monitor" doesn't look as good, IMHO. :-(
 		extern int   g_nConsolePromptLen;
 

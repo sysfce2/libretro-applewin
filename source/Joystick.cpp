@@ -836,7 +836,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 	{
 		// Shouldn't be necessary, since Property Sheet's logic should prevent this option being given to the user.
 	  MessageBox(window,
-				 TEXT("Mouse interface card is enabled - unable to use mouse for joystick emulation."),
+				 "Mouse interface card is enabled - unable to use mouse for joystick emulation.",
 				 "Configuration",
 				 MB_ICONEXCLAMATION | MB_SETFOREGROUND);
 	  return 0;
@@ -860,7 +860,7 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 	  {
 			MessageBox(window,
 						"Using cursor keys to emulate a joystick can cause conflicts.\n\n"
-						TEXT("Be aware that 'cursor-up' = CTRL+K, and 'cursor-down' = CTRL+J.\n")
+						"Be aware that 'cursor-up' = CTRL+K, and 'cursor-down' = CTRL+J.\n"
 						"EG. Lode Runner uses CTRL+K/J to switch between keyboard/joystick modes "
 						TEXT("(and cursor-left/right to control speed).\n\n")
 						"Also if cursor keys are blocked from being read from the Apple keyboard "

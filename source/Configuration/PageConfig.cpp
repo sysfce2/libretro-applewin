@@ -42,7 +42,7 @@ enum APPLEIICHOICE {MENUITEM_IIORIGINAL, MENUITEM_IIPLUS, MENUITEM_IIJPLUS, MENU
 const char CPageConfig::m_ComputerChoices[] =
 				TEXT("Apple ][ (Original)\0")
 				"Apple ][+\0"
-				TEXT("Apple ][ J-Plus\0")
+				"Apple ][ J-Plus\0"
 				"Apple //e\0"
 				"Enhanced Apple //e\0"
 				"Clone\0";
