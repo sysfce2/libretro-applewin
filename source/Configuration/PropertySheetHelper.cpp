@@ -142,7 +142,7 @@ void CPropertySheetHelper::SetSlot(UINT slot, SS_CARDTYPE newCardType)
 std::string CPropertySheetHelper::BrowseToFile(HWND hWindow, const char* pszTitle, const char* REGVALUE, const char* FILEMASKS)
 {
 	char szFilename[MAX_PATH];
-	RegLoadString(REG_CONFIG, REGVALUE, 1, szFilename, MAX_PATH, TEXT(""));
+	RegLoadString(REG_CONFIG, REGVALUE, 1, szFilename, MAX_PATH, "");
 	std::string pathname = szFilename;
 
 	OPENFILENAME ofn;

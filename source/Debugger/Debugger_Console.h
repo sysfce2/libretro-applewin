@@ -238,7 +238,7 @@
 	// Input History
 		extern int   g_nHistoryLinesStart;// = 0;
 		extern int   g_nHistoryLinesTotal;// = 0; // number of commands entered
-		extern char  g_aHistoryLines[ HISTORY_HEIGHT ][ HISTORY_WIDTH ];// = {TEXT("")};
+		extern char  g_aHistoryLines[ HISTORY_HEIGHT ][ HISTORY_WIDTH ];// = {""};
 
 	// Input Line
 		// Raw input Line (has prompt)

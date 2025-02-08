@@ -43,10 +43,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	AddressingMode_t g_aOpmodes[ NUM_ADDRESSING_MODES ] =
 	{ // Output, but eventually used for Input when Assembler is working.
-		{TEXT("")        , 1 , "(implied)"     }, // (implied)
-		{TEXT("")        , 1 , "n/a 1"         }, // INVALID1
-		{TEXT("")        , 2 , "n/a 2"         }, // INVALID2
-		{TEXT("")        , 3 , "n/a 3"         }, // INVALID3
+		{""        , 1 , "(implied)"     }, // (implied)
+		{""        , 1 , "n/a 1"         }, // INVALID1
+		{""        , 2 , "n/a 2"         }, // INVALID2
+		{""        , 3 , "n/a 3"         }, // INVALID3
 		{TEXT("%02X")    , 2 , "Immediate"     }, // AM_M // #$%02X -> %02X
 		{TEXT("%04X")    , 3 , "Absolute"      }, // AM_A
 		{TEXT("%02X")    , 2 , "Zero Page"     }, // AM_Z

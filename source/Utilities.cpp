@@ -252,7 +252,7 @@ void LoadConfiguration(bool loadImages)
 		{
 			if (slot == SLOT3)
 			{
-				RegLoadString(REG_CONFIG, REGVALUE_UTHERNET_INTERFACE, 1, szFilename, MAX_PATH, TEXT(""));
+				RegLoadString(REG_CONFIG, REGVALUE_UTHERNET_INTERFACE, 1, szFilename, MAX_PATH, "");
 				// copy it to the new location
 				PCapBackend::SetRegistryInterface(slot, szFilename);
 
@@ -290,12 +290,12 @@ void LoadConfiguration(bool loadImages)
 
 	// Load save-state pathname *before* inserting any harddisk/disk images (for both init & reinit cases)
 	// NB. inserting harddisk/disk can change snapshot pathname
-	RegLoadString(REG_CONFIG, REGVALUE_SAVESTATE_FILENAME, 1, szFilename, MAX_PATH, TEXT(""));	// Can be pathname or just filename
+	RegLoadString(REG_CONFIG, REGVALUE_SAVESTATE_FILENAME, 1, szFilename, MAX_PATH, "");	// Can be pathname or just filename
 	Snapshot_SetFilename(szFilename);	// If not in Registry than default will be used (ie. g_sCurrentDir + default filename)
 
 	//
 
-	RegLoadString(REG_PREFS, REGVALUE_PREF_HDV_START_DIR, 1, szFilename, MAX_PATH, TEXT(""));
+	RegLoadString(REG_PREFS, REGVALUE_PREF_HDV_START_DIR, 1, szFilename, MAX_PATH, "");
 	if (szFilename[0] == '\0')
 		GetCurrentDirectory(sizeof(szFilename), szFilename);
 	SetCurrentImageDir(szFilename);
@@ -312,7 +312,7 @@ void LoadConfiguration(bool loadImages)
 	//
 
 	// Current/Starting Dir is the "root" of where the user keeps their disk images
-	RegLoadString(REG_PREFS, REGVALUE_PREF_START_DIR, 1, szFilename, MAX_PATH, TEXT(""));
+	RegLoadString(REG_PREFS, REGVALUE_PREF_START_DIR, 1, szFilename, MAX_PATH, "");
 	if (szFilename[0] == '\0')
 		GetCurrentDirectory(sizeof(szFilename), szFilename);
 	SetCurrentImageDir(szFilename);
@@ -520,8 +520,8 @@ void GetAppleWindowTitle()
 
 	switch (g_nAppMode)
 	{
-	case MODE_PAUSED: g_pAppTitle += std::string(TEXT(" [")) + TITLE_PAUSED + TEXT("]"); break;
-	case MODE_STEPPING: g_pAppTitle += std::string(TEXT(" [")) + TITLE_STEPPING + TEXT("]"); break;
+	case MODE_PAUSED: g_pAppTitle += std::string(" [") + TITLE_PAUSED + "]"; break;
+	case MODE_STEPPING: g_pAppTitle += std::string(" [") + TITLE_STEPPING + "]"; break;
 	}
 }
 

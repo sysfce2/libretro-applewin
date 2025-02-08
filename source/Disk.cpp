@@ -202,7 +202,7 @@ void Disk2InterfaceCard::LoadLastDiskImage(const int drive)
 	char pathname[MAX_PATH];
 
 	std::string regSection = RegGetConfigSlotSection(m_slot);
-	if (RegLoadString(regSection.c_str(), regKey.c_str(), TRUE, pathname, MAX_PATH, TEXT("")) && (pathname[0] != 0))
+	if (RegLoadString(regSection.c_str(), regKey.c_str(), TRUE, pathname, MAX_PATH, "") && (pathname[0] != 0))
 	{
 		m_saveDiskImage = false;
 		ImageError_e error = InsertDisk(drive, pathname, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_DONT_CREATE);
@@ -1831,7 +1831,7 @@ bool Disk2InterfaceCard::UserSelectNewDiskImage(const int drive, LPCSTR pszFilen
 
 	StringCbCopy(filename, MAX_PATH, pszFilename);
 
-	RegLoadString(REG_PREFS, REGVALUE_PREF_START_DIR, 1, directory, MAX_PATH, TEXT(""));
+	RegLoadString(REG_PREFS, REGVALUE_PREF_START_DIR, 1, directory, MAX_PATH, "");
 	std::string title = StrFormat("Select Disk Image For Drive %d", drive + 1);
 
 	OPENFILENAME ofn;

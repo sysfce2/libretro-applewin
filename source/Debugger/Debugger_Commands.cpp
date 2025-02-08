@@ -417,7 +417,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{TEXT("?")          , NULL, PARAM_BP_READ           },
 		{"W"          , NULL, PARAM_BP_WRITE          },
 		{TEXT("@")          , NULL, PARAM_BP_WRITE          },
-		{TEXT("*")          , NULL, PARAM_BP_READ_WRITE     },
+		{"*"          , NULL, PARAM_BP_READ_WRITE     },
 // Breakpoint Change, See: CmdBreakpointChange ()
 		{"E"          , NULL, PARAM_BP_CHANGE_ENABLE   },
 		{"e"          , NULL, PARAM_BP_CHANGE_DISABLE  },
@@ -493,7 +493,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		{"ZEROPAGE"    , NULL, PARAM_CAT_ZEROPAGE    },
 // Memory
 		{TEXT("?")          , NULL, PARAM_MEM_SEARCH_WILD },
-//		{TEXT("*")          , NULL, PARAM_MEM_SEARCH_BYTE },
+//		{"*"          , NULL, PARAM_MEM_SEARCH_BYTE },
 // Source level debugging
 		{"MEM"        , NULL, PARAM_SRC_MEMORY      },
 		{"MEMORY"     , NULL, PARAM_SRC_MEMORY      },
