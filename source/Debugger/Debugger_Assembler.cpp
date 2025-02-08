@@ -1138,12 +1138,12 @@ bool AssemblerGetArgs( int iArg, int nArgs, WORD nBaseAddress )
 		{
 			if (eNextState != AS_GET_MNEMONIC_PARM)
 			{
-				ConsoleBufferPush( TEXT( " Syntax Error: '#'" ) );
+				ConsoleBufferPush( " Syntax Error: '#'"  );
 				return false;
 			}
 			if (TestFlag( AF_HaveHash ))
 			{
-				ConsoleBufferPush( TEXT( " Syntax Error: Extra '#'" ) ); // No thanks, we already have one
+				ConsoleBufferPush( " Syntax Error: Extra '#'"  ); // No thanks, we already have one
 				return false;
 			}
 			SetFlag( AF_HaveHash );
@@ -1202,7 +1202,7 @@ bool AssemblerGetArgs( int iArg, int nArgs, WORD nBaseAddress )
 		{
 			if (TestFlag( AF_HaveComma ))
 			{
-				ConsoleBufferPush( TEXT( " Syntax Error: Extra ','" ) ); // No thanks, we already have one
+				ConsoleBufferPush( " Syntax Error: Extra ','"  ); // No thanks, we already have one
 				return false;
 			}
 			SetFlag( AF_HaveComma );
@@ -1294,7 +1294,7 @@ bool AssemblerGetArgs( int iArg, int nArgs, WORD nBaseAddress )
 					{
 						if (! TestFlag( AF_HaveComma ))
 						{
-							ConsoleBufferPush( TEXT( " Syntax Error: Missing ','" ) );
+							ConsoleBufferPush( " Syntax Error: Missing ','"  );
 							return false;
 						}
 						SetFlag( AF_HaveRegisterX );
@@ -1303,7 +1303,7 @@ bool AssemblerGetArgs( int iArg, int nArgs, WORD nBaseAddress )
 					{
 						if (! (TestFlag( AF_HaveComma )))
 						{
-							ConsoleBufferPush( TEXT( " Syntax Error: Missing ','" ) );
+							ConsoleBufferPush( " Syntax Error: Missing ','"  );
 							return false;
 						}
 						SetFlag( AF_HaveRegisterY );
@@ -1342,7 +1342,7 @@ bool AssemblerUpdateAddressingMode()
 	{
 		if ((! TestFlag( AF_HaveRegisterX )) && (! TestFlag( AF_HaveRegisterY )))
 		{
-			ConsoleBufferPush( TEXT( " Syntax Error: Index 'X' or 'Y'" ) );
+			ConsoleBufferPush( " Syntax Error: Index 'X' or 'Y'"  );
 			return false;
 		}
 	}
