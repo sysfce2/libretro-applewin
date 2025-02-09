@@ -40,7 +40,7 @@ CPageConfig* CPageConfig::ms_this = 0;	// reinit'd in ctor
 
 enum APPLEIICHOICE {MENUITEM_IIORIGINAL, MENUITEM_IIPLUS, MENUITEM_IIJPLUS, MENUITEM_IIE, MENUITEM_ENHANCEDIIE, MENUITEM_CLONE};
 const char CPageConfig::m_ComputerChoices[] =
-				TEXT("Apple ][ (Original)\0")
+				"Apple ][ (Original)\0"
 				"Apple ][+\0"
 				"Apple ][ J-Plus\0"
 				"Apple //e\0"

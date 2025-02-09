@@ -152,9 +152,9 @@ std::string CPropertySheetHelper::BrowseToFile(HWND hWindow, const char* pszTitl
 	ofn.hwndOwner       = hWindow;
 	ofn.hInstance       = GetFrame().g_hInstance;
 	ofn.lpstrFilter     = FILEMASKS;
-	/*ofn.lpstrFilter     =	TEXT("Applications (*.exe)\0*.exe\0")
-							TEXT("Text files (*.txt)\0*.txt\0")
-							TEXT("All Files\0*.*\0");*/
+	/*ofn.lpstrFilter     =	"Applications (*.exe)\0*.exe\0"
+							"Text files (*.txt)\0*.txt\0"
+							"All Files\0*.*\0";*/
 	ofn.lpstrFile       = szFilename;
 	ofn.nMaxFile        = MAX_PATH;
 	ofn.lpstrInitialDir = "";
@@ -198,8 +198,8 @@ int CPropertySheetHelper::SaveStateSelectImage(HWND hWindow, const char* pszTitl
 	ofn.lStructSize     = sizeof(OPENFILENAME);
 	ofn.hwndOwner       = hWindow;
 	ofn.hInstance       = GetFrame().g_hInstance;
-	ofn.lpstrFilter     = TEXT("Save State files (*.aws.yaml)\0*.aws.yaml\0")
-						  TEXT("All Files\0*.*\0");
+	ofn.lpstrFilter     = "Save State files (*.aws.yaml)\0*.aws.yaml\0"
+						  "All Files\0*.*\0";
 	ofn.lpstrFile       = szFilename;	// Dialog strips the last .EXT from this string (eg. file.aws.yaml is displayed as: file.aws
 	ofn.nMaxFile        = sizeof(szFilename);
 	ofn.lpstrInitialDir = szDirectory.c_str();

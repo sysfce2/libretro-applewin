@@ -862,9 +862,9 @@ BOOL JoySetEmulationType(HWND window, uint32_t newtype, int nJoystickNumber, con
 						"Using cursor keys to emulate a joystick can cause conflicts.\n\n"
 						"Be aware that 'cursor-up' = CTRL+K, and 'cursor-down' = CTRL+J.\n"
 						"EG. Lode Runner uses CTRL+K/J to switch between keyboard/joystick modes "
-						TEXT("(and cursor-left/right to control speed).\n\n")
+						"(and cursor-left/right to control speed).\n\n"
 						"Also if cursor keys are blocked from being read from the Apple keyboard "
-						TEXT("then even simple AppleSoft command-line editing (cursor left/right) will not work."),
+						"then even simple AppleSoft command-line editing (cursor left/right) will not work.",
 						"Configuration",
 						MB_ICONINFORMATION | MB_SETFOREGROUND);
 	  }

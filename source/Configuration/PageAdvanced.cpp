@@ -103,7 +103,7 @@ INT_PTR CPageAdvanced::DlgProcInternal(HWND hWnd, UINT message, WPARAM wparam, L
 			break;
 		case IDC_PRINTER_DUMP_FILENAME_BROWSE:
 			{				
-				std::string strPrinterDumpLoc = m_PropertySheetHelper.BrowseToFile(hWnd, "Select printer dump file", REGVALUE_PRINTER_FILENAME, TEXT("Text files (*.txt)\0*.txt\0") TEXT("All Files\0*.*\0"));
+				std::string strPrinterDumpLoc = m_PropertySheetHelper.BrowseToFile(hWnd, "Select printer dump file", REGVALUE_PRINTER_FILENAME, "Text files (*.txt)\0*.txt\0" "All Files\0*.*\0");
 				SendDlgItemMessage(hWnd, IDC_PRINTER_DUMP_FILENAME, WM_SETTEXT, 0, (LPARAM)strPrinterDumpLoc.c_str());
 			}
 			break;
