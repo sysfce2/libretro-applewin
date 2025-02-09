@@ -203,10 +203,10 @@ void LoadConfiguration(bool loadImages)
 	if(REGLOAD(REGVALUE_THE_FREEZES_F8_ROM, &dwTmp))
 		GetPropertySheet().SetTheFreezesF8Rom(dwTmp);
 
-	if(REGLOAD(TEXT(REGVALUE_SPKR_VOLUME), &dwTmp))
+	if(REGLOAD(REGVALUE_SPKR_VOLUME, &dwTmp))
 		SpkrSetVolume(dwTmp, GetPropertySheet().GetVolumeMax());
 
-	if(REGLOAD(TEXT(REGVALUE_MB_VOLUME), &dwTmp))
+	if(REGLOAD(REGVALUE_MB_VOLUME, &dwTmp))
 		GetCardMgr().GetMockingboardCardMgr().SetVolume(dwTmp, GetPropertySheet().GetVolumeMax());
 
 	if(REGLOAD(REGVALUE_SAVE_STATE_ON_EXIT, &dwTmp))
