@@ -516,9 +516,9 @@ void GetAppleWindowTitle()
 		g_pAppTitle += " (S6-13) ";
 
 	if (g_hCustomRomF8 != INVALID_HANDLE_VALUE)
-		g_pAppTitle += TEXT(" (custom rom)");
+		g_pAppTitle += " (custom rom)";
 	else if (GetPropertySheet().GetTheFreezesF8Rom() && IsApple2PlusOrClone(GetApple2Type()))
-		g_pAppTitle += TEXT(" (The Freeze's non-autostart F8 rom)");
+		g_pAppTitle += " (The Freeze's non-autostart F8 rom)";
 
 	switch (g_nAppMode)
 	{

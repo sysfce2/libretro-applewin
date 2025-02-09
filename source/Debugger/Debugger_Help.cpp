@@ -1487,7 +1487,7 @@ Update_t CmdVersion (int nArgs)
 
 				ConsoleBufferPushFormat( "  Cursor(%d)  T: %04X  C: %04X  B: %04X %c D: %02X", // Top, Cur, Bot, Delta
 					g_nDisasmCurLine, g_nDisasmTopAddress, g_nDisasmCurAddress, g_nDisasmBotAddress,
-					g_bDisasmCurBad ? TEXT('*') : ' '
+					g_bDisasmCurBad ? '*' : ' '
 					, g_nDisasmBotAddress - g_nDisasmTopAddress
 				);
 

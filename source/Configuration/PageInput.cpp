@@ -37,8 +37,8 @@ CPageInput* CPageInput::ms_this = 0;	// reinit'd in ctor
 const char CPageInput::m_szJoyChoice0[] = "Disabled\0";
 const char CPageInput::m_szJoyChoice1[] = "PC Joystick #1\0";
 const char CPageInput::m_szJoyChoice2[] = "PC Joystick #2\0";
-const char CPageInput::m_szJoyChoice3[] = TEXT("Keyboard (cursors)\0");
-const char CPageInput::m_szJoyChoice4[] = TEXT("Keyboard (numpad)\0");
+const char CPageInput::m_szJoyChoice3[] = "Keyboard (cursors)\0";
+const char CPageInput::m_szJoyChoice4[] = "Keyboard (numpad)\0";
 const char CPageInput::m_szJoyChoice5[] = "Mouse\0";
 const char CPageInput::m_szJoyChoice6[] = "PC Joystick #1 Thumbstick 2\0";
 
