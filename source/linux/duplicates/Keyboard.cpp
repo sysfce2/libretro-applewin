@@ -87,7 +87,6 @@ BYTE KeybClearStrobe(void)
     else
     {
         keycode = keys.front();
-        const BYTE result = keys.front();
         keys.pop();
         bKeyWasRead = false;
         return keycode | 0x80;
@@ -145,10 +144,9 @@ void KeybLoadSnapshot(YamlLoadHelper &yamlLoadHelper, UINT version)
     if (!yamlLoadHelper.GetSubMap(KeybGetSnapshotStructName()))
         return;
 
-    keys = std::queue<BYTE>();
-    bKeyWasRead = false;
-    keycode = (BYTE)yamlLoadHelper.LoadUint(SS_YAML_KEY_LASTKEY);
+    KeybReset();
 
+    keycode = (BYTE)yamlLoadHelper.LoadUint(SS_YAML_KEY_LASTKEY);
     if (version >= 2)
     {
         const bool keywaiting = yamlLoadHelper.LoadBool(SS_YAML_KEY_KEYWAITING);
