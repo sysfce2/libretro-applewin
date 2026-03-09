@@ -27,20 +27,15 @@ void addKeyToBuffer(BYTE key)
 
 void addTextToBuffer(const char *text)
 {
-    if (bKeyWasRead && !keys.empty())
-    {
-        keys.pop();
-        bKeyWasRead = false;
-    }
     while (*text)
     {
         if (*text == '\n')
         {
-            keys.push(0x0d);
+            addKeyToBuffer(0x0d);
         }
         else if (*text >= 0x20 && *text <= 0x7e)
         {
-            keys.push(*text);
+            addKeyToBuffer(*text);
         }
         // skip non ASCII characters
         ++text;
