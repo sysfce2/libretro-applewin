@@ -427,11 +427,6 @@ void SetRegistryAuxNumberOfBanks(void)
 	RegSaveValue(regSection.c_str(), REGVALUE_AUX_NUM_BANKS, TRUE, g_uMaxExBanks);
 }
 
-UINT GetRamWorksMemorySize()
-{
-	return g_uMaxExBanks;
-}
-
 UINT GetRamWorksActiveBank(void)
 {
 	return g_uActiveBank;

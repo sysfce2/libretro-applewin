@@ -113,7 +113,6 @@ SS_CARDTYPE GetCurrentExpansionMemType(void);
 
 UINT	GetRamWorksMemorySize();
 void	SetRamWorksMemorySize(UINT banks, bool updateRegistry=true);
-UINT	GetRamWorksMemorySize();
 UINT	GetRamWorksActiveBank(void);
 void	SetMemMainLanguageCard(LPBYTE ptr, UINT slot, bool bMemMain=false);
 void	SetRegistryAuxNumberOfBanks(void);

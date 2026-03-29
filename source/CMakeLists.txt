@@ -144,8 +144,7 @@ set(SOURCE_FILES
   linux/duplicates/PageConfig.cpp
   linux/duplicates/PageConfigTfe.cpp
   linux/duplicates/PageInput.cpp
-  linux/duplicates/PageSound.cpp
-  linux/duplicates/PageDisk.cpp
+  linux/duplicates/PageSlots.cpp
   linux/duplicates/PageAdvanced.cpp
 
   Z80VICE/z80.cpp
