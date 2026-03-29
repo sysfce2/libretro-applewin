@@ -177,7 +177,8 @@ namespace common2
 
     bool CommonFrame::HardwareChanged() const
     {
-        const CConfigNeedingRestart currentConfig = CConfigNeedingRestart::Create();
+        CConfigNeedingRestart currentConfig;
+        currentConfig.Reload();
         return myHardwareConfig != currentConfig;
     }
 

@@ -37,6 +37,11 @@ void LinuxFrame::SetFullScreenShowSubunitStatus(bool /* bShow */)
 {
 }
 
+bool LinuxFrame::GetFullScreenShowSubunitStatus()
+{
+    return false;
+}
+
 bool LinuxFrame::GetBestDisplayResolutionForFullScreen(
     UINT & /* bestWidth */, UINT & /* bestHeight */, UINT /* userSpecifiedWidth */, UINT /* userSpecifiedHeight */)
 {
