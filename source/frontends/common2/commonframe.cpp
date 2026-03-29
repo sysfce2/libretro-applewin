@@ -145,6 +145,7 @@ namespace common2
                 SoundCore_SetFade(FADE_IN);
                 break;
             case MODE_DEBUG:
+                SoundCore_SetFade(FADE_OUT);
                 DebugBegin();
                 CmdWindowViewConsole(0);
                 break;
