@@ -186,10 +186,5 @@ libretro-build-webos-armv7a:
   extends:
     - .libretro-webos-armv7a-cmake
     - .core-defs
-  before_script:
-    - export NUMPROC=$(($(nproc)/5))
-    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 16FAAD7AF99A65E2
-    - sudo apt-get update -qy
-    - sudo apt-get -qy install $(cat source/frontends/libretro/xenial/packages.txt)
   variables:
     EXTRA_PATH: source/frontends/libretro
