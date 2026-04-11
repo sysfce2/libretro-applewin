@@ -8,6 +8,7 @@
 #include "Common.h"
 #include "Card.h"
 #include "Video.h"
+#include "Interface.h"
 
 #include "libretro.h"
 
@@ -35,6 +36,9 @@ namespace
         {CATEGORY_RETROPAD_MAPPING, "RetroPad Mapping", "Configure RetroPad mapping options."},
         {nullptr, nullptr, nullptr},
     };
+
+    // we use the same bit settings for simplicity
+    const VideoStyle_e VS_280_LINES = static_cast<VideoStyle_e>(0x08);
 
     struct Variable
     {
@@ -203,11 +207,11 @@ namespace
                 CATEGORY_SYSTEM,
                 {
                     {"Empty", CT_Empty},
-                    {"Mockingboard", CT_MockingboardC},
-                    {"Mouse", CT_MouseInterface},
+                    {"Mockingboard C", CT_MockingboardC},
+                    {"Mouse Card", CT_MouseInterface},
                     {"Phasor", CT_Phasor},
                 },
-                "Mockingboard",
+                "Mockingboard C",
             },
             "Configuration\\Slot 4",
             REGVALUE_CARD_TYPE, // reset required
@@ -219,13 +223,27 @@ namespace
                 CATEGORY_SYSTEM,
                 {
                     {"Empty", CT_Empty},
-                    {"CP/M", CT_Z80},
-                    {"Mockingboard", CT_MockingboardC},
+                    {"Z80 SoftCard", CT_Z80},
+                    {"Mockingboard C", CT_MockingboardC},
                     {"Phasor", CT_Phasor},
-                    {"SAM/DAC", CT_SAM},
+                    {"SAM", CT_SAM},
                 },
             },
             "Configuration\\Slot 5",
+            REGVALUE_CARD_TYPE, // reset required
+        },
+        {
+            {
+                "slot7",
+                "Card in Slot 7",
+                CATEGORY_SYSTEM,
+                {
+                    {"Empty", CT_Empty},
+                    {"Hard Disk Controller", CT_GenericHDD},
+                },
+                "Hard Disk Controller",
+            },
+            "Configuration\\Slot 7",
             REGVALUE_CARD_TYPE, // reset required
         },
         {
@@ -254,7 +272,8 @@ namespace
                 CATEGORY_SYSTEM,
                 {
                     {"Half Scanlines", VS_HALF_SCANLINES},
-                    {"None", VS_NONE},
+                    {"560 x 192", VS_NONE},
+                    {"280 x 192", VS_280_LINES},
                 },
             },
             REG_CONFIG,
@@ -560,6 +579,12 @@ namespace ra2
         uint32_t value = 100;
         RegLoadValue(REG_RA2, REGVALUE_MOUSE_SPEED_00, TRUE, &value);
         return value / 100.0;
+    }
+
+    bool is280Lines()
+    {
+        const bool halfLines = GetVideo().IsVideoStyle(VS_280_LINES);
+        return halfLines;
     }
 
 } // namespace ra2
