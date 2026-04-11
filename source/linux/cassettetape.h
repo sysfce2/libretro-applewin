@@ -25,7 +25,7 @@ public:
     void eject();
     void rewind();
 
-    void (*playbackRateChangeCallback)(double playbackRate) = 0;
+    std::function<void(double /* playbackRate */)> playbackRateChangeCallback = 0;
 
     static CassetteTape &instance();
 

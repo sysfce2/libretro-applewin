@@ -124,8 +124,6 @@ BYTE CassetteTape::getValue(const ULONG nExecutedCycles)
     return highBit;
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 void CassetteTape::getTapeInfo(TapeInfo &info) const
 {
     info.filename = myFilename;
@@ -138,7 +136,6 @@ void CassetteTape::getTapeInfo(TapeInfo &info) const
     info.playbackRate = (myBaseCycles >= 0 && pos < size - 1) ? 1 : 0;
     info.frequency = myFrequency;
 }
-#pragma GCC diagnostic pop
 
 BYTE __stdcall TapeRead(WORD pc, WORD address, BYTE, BYTE, ULONG nExecutedCycles) // $C060 TAPEIN
 {
