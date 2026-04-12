@@ -36,7 +36,7 @@ private:
 
     std::vector<tape_data_t> myData;
 
-    int64_t myBaseCycles = -1;
+    std::optional<int64_t> myBaseCycles;
     bool myReachedEnd = false;
     int myFrequency;
     BYTE myLastBit = 1;     // negative wave
