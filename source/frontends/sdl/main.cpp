@@ -1,11 +1,11 @@
-#if __has_include(<SDL3/SDL_main.h>)
+#include "frontends/sdl/sdlappmain.h"
+
+#if SDL_VERSION_ATLEAST(3, 0, 0)
 
 #define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL_main.h>
 
 #else
-
-#include "frontends/sdl/sdlappmain.h"
 
 int main(int argc, char **argv)
 {
