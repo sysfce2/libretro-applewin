@@ -29,12 +29,12 @@ bool RegLoadString(LPCTSTR section, LPCTSTR key, bool peruser, LPTSTR buffer, ui
         const std::string s = Registry::instance->getString(section, key);
         strncpy(buffer, s.c_str(), chars);
         buffer[chars - 1] = 0;
-        result = TRUE;
+        result = true;
         LogFileOutput("RegLoadString: %s - %s = %s\n", section, key, buffer);
     }
     catch (const std::exception &e)
     {
-        result = FALSE;
+        result = false;
         LogFileOutput("RegLoadString: %s - %s = ??\n", section, key);
     }
     return result;
@@ -46,12 +46,12 @@ bool RegLoadValue(LPCTSTR section, LPCTSTR key, bool peruser, uint32_t *value)
     try
     {
         *value = Registry::instance->getDWord(section, key);
-        result = TRUE;
+        result = true;
         LogFileOutput("RegLoadValue: %s - %s = %d\n", section, key, *value);
     }
     catch (const std::exception &e)
     {
-        result = FALSE;
+        result = false;
         LogFileOutput("RegLoadValue: %s - %s = ??\n", section, key);
     }
     return result;

@@ -564,21 +564,21 @@ namespace ra2
     KeyboardType getKeyboardEmulationType()
     {
         uint32_t value = static_cast<uint32_t>(KeyboardType::ASCII);
-        RegLoadValue(REG_RA2, REGVALUE_KEYBOARD_TYPE, TRUE, &value);
+        RegLoadValue(REG_RA2, REGVALUE_KEYBOARD_TYPE, true, &value);
         return static_cast<KeyboardType>(value);
     }
 
     PlaylistStartDisk getPlaylistStartDisk()
     {
         uint32_t value = static_cast<uint32_t>(PlaylistStartDisk::First);
-        RegLoadValue(REG_RA2, REGVALUE_PLAYLIST_START, TRUE, &value);
+        RegLoadValue(REG_RA2, REGVALUE_PLAYLIST_START, true, &value);
         return static_cast<PlaylistStartDisk>(value);
     }
 
     double getMouseSpeed()
     {
         uint32_t value = 100;
-        RegLoadValue(REG_RA2, REGVALUE_MOUSE_SPEED_00, TRUE, &value);
+        RegLoadValue(REG_RA2, REGVALUE_MOUSE_SPEED_00, true, &value);
         return value / 100.0;
     }
 
