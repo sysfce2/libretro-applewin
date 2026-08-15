@@ -458,30 +458,30 @@ void RegisterExtensions()
 // NB. On a restart, it's OK to call RegisterHotKey() again since the old g_hFrameWindow has been destroyed
 static void RegisterHotKeys()
 {
-	BOOL bStatus[3] = {0,0,0};
+	bool bStatus[3] = {false, false, false};
 
-	bStatus[0] = RegisterHotKey( 
+	bStatus[0] = RegisterHotKey(
 		GetFrame().g_hFrameWindow , // HWND hWnd
 		VK_SNAPSHOT_560, // int id (user/custom id)
 		0              , // UINT fsModifiers
 		VK_SNAPSHOT      // UINT vk = PrintScreen
 	);
 
-	bStatus[1] = RegisterHotKey( 
+	bStatus[1] = RegisterHotKey(
 		GetFrame().g_hFrameWindow , // HWND hWnd
 		VK_SNAPSHOT_280, // int id (user/custom id)
 		MOD_SHIFT      , // UINT fsModifiers
 		VK_SNAPSHOT      // UINT vk = PrintScreen
 	);
 
-	bStatus[2] = RegisterHotKey( 
+	bStatus[2] = RegisterHotKey(
 		GetFrame().g_hFrameWindow  , // HWND hWnd
 		VK_SNAPSHOT_TEXT, // int id (user/custom id)
 		MOD_CONTROL     , // UINT fsModifiers
 		VK_SNAPSHOT       // UINT vk = PrintScreen
 	);
 
-	if ((!bStatus[0] || !bStatus[1] || !bStatus[2]))
+	if (!bStatus[0] || !bStatus[1] || !bStatus[2])
 	{
 		std::string msg("Unable to register for PrintScreen key(s):\n");
 
@@ -741,7 +741,7 @@ static void RepeatInitialization()
 	VideoSwitchVideocardPalette(RGB_GetVideocard(), GetVideo().GetVideoType());
 
 	// Allow the slots to be configured as empty
-	// . remove all first, so that single-instance cards can can switch slots
+	// . remove all first, so that single-instance cards can switch slots
 	// NB. this state is persisted to the Registry/conf.ini
 	for (UINT i = SLOT0; i < NUM_SLOTS; i++)
 	{
@@ -795,6 +795,12 @@ static void RepeatInitialization()
 				dynamic_cast<MockingboardCard&>(GetCardMgr().GetRef(i)).UseBad6522A();
 			if (g_cmdLine.slotInfo[i].useBad6522B)
 				dynamic_cast<MockingboardCard&>(GetCardMgr().GetRef(i)).UseBad6522B();
+			for (UINT socket = 0; socket < NUM_AY8913; socket++)
+			{
+				const AY891xType type = g_cmdLine.slotInfo[i].socketAY891x[socket];
+				if (type != AY_Unknown)
+					dynamic_cast<MockingboardCard&>(GetCardMgr().GetRef(i)).SetSocketAY891x(socket, type);
+			}
 			for (UINT socket = 0; socket < NUM_SSI263; socket++)
 			{
 				const SSI263Type type = g_cmdLine.slotInfo[i].socketSSI263[socket];
