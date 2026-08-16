@@ -68,14 +68,19 @@ namespace ra2
 {
 
     DiskControl::DiskControl()
-        : myEjected(true)
-        , myIndex(0)
+        : myEjected{true, true}
+        , myIndex{0, 0}
     {
     }
 
     const std::string &DiskControl::getCurrentDiskFolder() const
     {
         return myCurrentDiskFolder;
+    }
+
+    Drive_e DiskControl::activeDrive() const
+    {
+        return ra2::getDiskControlDrive();
     }
 
     void DiskControl::storeCurrentDiskFolder(const std::string &path)
@@ -86,19 +91,19 @@ namespace ra2
         myCurrentDiskFolder = filePath.parent_path().string();
     }
 
-    bool DiskControl::insertDisk(const std::string &path)
+    bool DiskControl::insertDisk(const Drive_e drive, const std::string &path)
     {
         const bool writeProtected = IMAGE_FORCE_WRITE_PROTECTED;
         const bool createIfNecessary = IMAGE_DONT_CREATE;
 
-        if (insertFloppyDisk(DRIVE_1, path, writeProtected, createIfNecessary))
+        if (insertFloppyDisk(drive, path, writeProtected, createIfNecessary))
         {
-            myIndex = 0;
+            myIndex[drive] = 0;
             myImages.clear();
 
             const std::filesystem::path filePath(path);
             myImages.push_back({filePath.string(), filePath.stem().string(), writeProtected, createIfNecessary});
-            myEjected = false;
+            myEjected[drive] = false;
             return true;
         }
 
@@ -144,7 +149,8 @@ namespace ra2
                 const std::filesystem::path imagePath = savePath / filename;
 
                 // TODO: this disk is NOT formatted
-                myImages.push_back({imagePath.string(), label, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_CREATE, true});
+                myImages.push_back(
+                    {imagePath.string(), label, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_CREATE, true});
             }
             else if (startsWith(line, M3U_LABEL))
             {
@@ -181,7 +187,7 @@ namespace ra2
         }
 
         // insert the first image by default
-        myIndex = 0;
+        myIndex[DRIVE_1] = 0;
 
         const PlaylistStartDisk playlistStartDisk = getPlaylistStartDisk();
 
@@ -191,7 +197,7 @@ namespace ra2
             if (!ourInitialPath.empty() && ourInitialIndex < myImages.size() &&
                 myImages[ourInitialIndex].path == ourInitialPath)
             {
-                myIndex = ourInitialIndex;
+                myIndex[DRIVE_1] = ourInitialIndex;
                 // do we need to reset for next time?
                 ourInitialPath.clear();
                 ourInitialIndex = 0;
@@ -199,19 +205,21 @@ namespace ra2
         }
 
         // this is safe even if myImages is empty
-        myEjected = true;
-        const bool inserted = setEjectedState(false);
+        myEjected[DRIVE_1] = true;
+        const bool inserted = setEjectedStateForDrive(DRIVE_1, false);
 
         // MultiDrive support: if M3U filename constains "(MD") or option is enabled, insert second disk into DRIVE_2
         // Only when starting from disk 0 to avoid conflicts with Previous resume
         // Skip save disks - those are for manual swap only
-        if (inserted && myIndex == 0 && myImages.size() > 1 &&
+        if (inserted && myIndex[DRIVE_1] == 0 && myImages.size() > 1 &&
             (playlistStem.find("(MD") != std::string::npos || ra2::getFloppyMultiDrive()))
         {
             const auto &image = myImages[1];
             if (!image.isSaveDisk)
             {
                 insertFloppyDisk(DRIVE_2, image.path, image.writeProtected, image.createIfNecessary);
+                myEjected[DRIVE_2] = false;
+                myIndex[DRIVE_2] = 1;
             }
         }
 
@@ -261,12 +269,19 @@ namespace ra2
 
     bool DiskControl::getEjectedState() const
     {
-        return myEjected;
+        const Drive_e drive = activeDrive();
+        return myEjected[drive];
     }
 
     bool DiskControl::setEjectedState(bool ejected)
     {
-        if (myEjected == ejected)
+        const Drive_e drive = activeDrive();
+        return setEjectedStateForDrive(drive, ejected);
+    }
+
+    bool DiskControl::setEjectedStateForDrive(const Drive_e drive, bool ejected)
+    {
+        if (myEjected[drive] == ejected)
         {
             return true;
         }
@@ -275,20 +290,31 @@ namespace ra2
         Disk2InterfaceCard *disk2Card = dynamic_cast<Disk2InterfaceCard *>(cardManager.GetObj(SLOT6));
 
         bool result = false;
-        if (disk2Card && myIndex < myImages.size())
+        if (disk2Card && myIndex[drive] < myImages.size())
         {
             if (ejected)
             {
-                disk2Card->EjectDisk(DRIVE_1);
+                disk2Card->EjectDisk(drive);
                 result = true;
-                myEjected = ejected;
+                myEjected[drive] = ejected;
             }
             else
             {
-                const auto &image = myImages[myIndex];
+                // if the other dirve has the same disk, eject it first to avoid conflicts
+                const Drive_e otherDrive = (drive == DRIVE_1) ? DRIVE_2 : DRIVE_1;
+                if (!myEjected[otherDrive] && myIndex[otherDrive] < myImages.size() &&
+                    myIndex[otherDrive] == myIndex[drive])
+                {
+                    disk2Card->EjectDisk(otherDrive);
+                    myEjected[otherDrive] = true;
+                    ra2::log_cb(
+                        RETRO_LOG_INFO, "Ejecting drive %d to avoid conflict with drive %d\n", otherDrive + 1,
+                        drive + 1);
+                }
+                const auto &image = myImages[myIndex[drive]];
                 // inserted
-                result = insertFloppyDisk(DRIVE_1, image.path, image.writeProtected, image.createIfNecessary);
-                myEjected = !result;
+                result = insertFloppyDisk(drive, image.path, image.writeProtected, image.createIfNecessary);
+                myEjected[drive] = !result;
             }
         }
 
@@ -297,14 +323,16 @@ namespace ra2
 
     size_t DiskControl::getImageIndex() const
     {
-        return myIndex;
+        const Drive_e drive = activeDrive();
+        return myIndex[drive];
     }
 
     bool DiskControl::setImageIndex(size_t index)
     {
-        if (myEjected)
+        const Drive_e drive = activeDrive();
+        if (myEjected[drive])
         {
-            myIndex = index;
+            myIndex[drive] = index;
             return true;
         }
         else
@@ -320,7 +348,8 @@ namespace ra2
 
     bool DiskControl::replaceImageIndex(size_t index, const std::string &path)
     {
-        if (myEjected && myIndex < myImages.size())
+        const Drive_e drive = activeDrive();
+        if (myEjected[drive] && myIndex[drive] < myImages.size())
         {
             const std::filesystem::path filePath(path);
 
@@ -338,16 +367,17 @@ namespace ra2
 
     bool DiskControl::removeImageIndex(size_t index)
     {
-        if (myEjected && myIndex < myImages.size())
+        const Drive_e drive = activeDrive();
+        if (myEjected[drive] && myIndex[drive] < myImages.size())
         {
             myImages.erase(myImages.begin() + index);
-            if (myImages.empty() || myIndex == index)
+            if (myImages.empty() || myIndex[drive] == index)
             {
-                myIndex = myImages.size();
+                myIndex[drive] = myImages.size();
             }
-            else if (myIndex > index)
+            else if (myIndex[drive] > index)
             {
-                --myIndex;
+                --myIndex[drive];
             }
             return true;
         }
@@ -381,7 +411,18 @@ namespace ra2
     {
         if (index < myImages.size())
         {
-            strncpy(label, myImages[index].label.c_str(), len);
+            const Drive_e drive = activeDrive();
+            const Drive_e otherDrive = (drive == DRIVE_1) ? DRIVE_2 : DRIVE_1;
+
+            std::string displayLabel = "S6D" + std::to_string(drive + 1) + " - " + myImages[index].label;
+
+            // Mark the label with an asterisk if the same disk is inserted in the other drive
+            if (!myEjected[otherDrive] && myIndex[otherDrive] == index)
+            {
+                displayLabel += " <*>";
+            }
+
+            strncpy(label, displayLabel.c_str(), len);
             label[len - 1] = 0;
             return true;
         }
@@ -394,8 +435,11 @@ namespace ra2
     void DiskControl::serialise(Buffer<char> &buffer) const
     {
         writeString(buffer, myCurrentDiskFolder);
-        buffer.get<bool>() = myEjected;
-        buffer.get<size_t>() = myIndex;
+        for (int d = 0; d < NUM_DRIVES; ++d)
+        {
+            buffer.get<bool>() = myEjected[d];
+            buffer.get<size_t>() = myIndex[d];
+        }
         buffer.get<size_t>() = myImages.size();
 
         for (DiskInfo const &image : myImages)
@@ -411,8 +455,11 @@ namespace ra2
     void DiskControl::deserialise(Buffer<char const> &buffer)
     {
         readString(buffer, myCurrentDiskFolder);
-        myEjected = buffer.get<bool const>();
-        myIndex = buffer.get<size_t const>();
+        for (int d = 0; d < NUM_DRIVES; ++d)
+        {
+            myEjected[d] = buffer.get<bool const>();
+            myIndex[d] = buffer.get<size_t const>();
+        }
         size_t const numberOfImages = buffer.get<size_t const>();
         myImages.clear();
         myImages.resize(numberOfImages);

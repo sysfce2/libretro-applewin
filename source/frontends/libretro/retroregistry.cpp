@@ -25,16 +25,19 @@ namespace
     const char *REGVALUE_KEYBOARD_TYPE = "Keyboard type";
     const char *REGVALUE_PLAYLIST_START = "Playlist start";
     const char *REGVALUE_FLOPPY_MULTI_DRIVE = "Floppy multidrive";
+    const char *REGVALUE_DISK_CONTROL_DRIVE = "Disk control drive";
     const char *REGVALUE_MOUSE_SPEED_00 = "Mouse speed";
 
     const char *CATEGORY_SYSTEM = "system";
     const char *CATEGORY_INPUT = "input";
     const char *CATEGORY_RETROPAD_MAPPING = "retropad";
+    const char *CATEGORY_DISK_CONTROL = "disk_control";
 
     retro_core_option_v2_category ourOptionCatsUS[] = {
         {CATEGORY_SYSTEM, "System", "Configure system options."},
         {CATEGORY_INPUT, "Input", "Configure input options."},
         {CATEGORY_RETROPAD_MAPPING, "RetroPad Mapping", "Configure RetroPad mapping options."},
+        {CATEGORY_DISK_CONTROL, "Disk Control", "Configure disk control options."},
         {nullptr, nullptr, nullptr},
     };
 
@@ -298,7 +301,7 @@ namespace
             {
                 "playlist_start",
                 "Playlist Start Disk",
-                CATEGORY_SYSTEM,
+                CATEGORY_DISK_CONTROL,
                 {
                     {"First", static_cast<uint32_t>(ra2::PlaylistStartDisk::First)},
                     {"Previous", static_cast<uint32_t>(ra2::PlaylistStartDisk::Previous)},
@@ -311,7 +314,7 @@ namespace
             {
                 "floppy_multidrive",
                 "Floppy MultiDrive",
-                CATEGORY_SYSTEM,
+                CATEGORY_DISK_CONTROL,
                 {
                     {"disabled", 0},
                     {"enabled", 1},
@@ -319,6 +322,19 @@ namespace
             },
             REG_RA2,
             REGVALUE_FLOPPY_MULTI_DRIVE,
+        },
+        {
+            {
+                "disk_control_drive",
+                "Disk Control Drive",
+                CATEGORY_DISK_CONTROL,
+                {
+                    {"Drive 1", DRIVE_1},
+                    {"Drive 2", DRIVE_2},
+                },
+            },
+            REG_RA2,
+            REGVALUE_DISK_CONTROL_DRIVE,
         },
         {
             {
@@ -594,6 +610,13 @@ namespace ra2
         uint32_t value = static_cast<uint32_t>(PlaylistStartDisk::First);
         RegLoadValue(REG_RA2, REGVALUE_PLAYLIST_START, true, &value);
         return static_cast<PlaylistStartDisk>(value);
+    }
+
+    Drive_e getDiskControlDrive()
+    {
+        uint32_t value = DRIVE_1;
+        RegLoadValue(REG_RA2, REGVALUE_DISK_CONTROL_DRIVE, true, &value);
+        return (value == DRIVE_2) ? DRIVE_2 : DRIVE_1;
     }
 
     double getMouseSpeed()
