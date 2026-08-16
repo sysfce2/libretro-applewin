@@ -51,7 +51,7 @@ The core can be statically linked in Linux and MSYS2, pass `-DSTATIC_LINKING=ON`
 
 ## M3U Playlists and Disk Control
 
-The core cupports libretro [Disk Control Interface](https://docs.libretro.com/guides/disc-swapping/), allowing disk swaps from the frontend UI.
+The core cupports libretro [Disk Control Interface](https://docs.libretro.com/guides/disc-swapping/), allowing disk swaps from the frontend UI (the drive is selectable via a core option).
 
 ### M3U format
 
@@ -114,3 +114,4 @@ Save disks (`#SAVEDISK:`) are never auto-inserted into DRIVE_2.
 | ------ | ------ | ----------- |
 | Playlist Start Disk | First, Previous | Whether to start from disk 0 or resume from the previously used disk |
 | Floppy MultiDrive | disabled, enabled | Auto-insert second disk into DRIVE_2 for all playlists |
+| Disk Control Drive | Drive 1, 2 | Active drive for the Disk Control Interface. |
