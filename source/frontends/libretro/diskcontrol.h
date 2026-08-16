@@ -22,6 +22,7 @@ namespace ra2
         std::string label;
         bool writeProtected = IMAGE_FORCE_WRITE_PROTECTED;
         bool createIfNecessary = IMAGE_DONT_CREATE;
+        bool isSaveDisk = false;
     };
 
     class DiskControl
@@ -61,7 +62,7 @@ namespace ra2
         size_t myIndex;
         std::string myCurrentDiskFolder;
 
-        bool insertFloppyDisk(const std::string &path, const bool writeProtected, bool const createIfNecessary);
+        bool insertFloppyDisk(const Drive_e drive, const std::string &path, const bool writeProtected, bool const createIfNecessary);
         bool insertHardDisk(const std::string &path);
         void storeCurrentDiskFolder(const std::string &path);
 

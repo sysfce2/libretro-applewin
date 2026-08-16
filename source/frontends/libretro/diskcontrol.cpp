@@ -15,8 +15,11 @@ namespace
 {
 
     const std::string M3U_COMMENT("#");
+    const std::string M3U_LABEL("#LABEL:");
+    const std::string M3U_EXTINF("#EXTINF:");
     const std::string M3U_SAVEDISK("#SAVEDISK:");
-    const std::string M3U_SAVEDISK_LABEL("Save Disk ");
+
+    const std::string SAVEDISK_LABEL("Save Disk ");
 
     bool startsWith(const std::string &value, const std::string &prefix)
     {
@@ -88,7 +91,7 @@ namespace ra2
         const bool writeProtected = IMAGE_FORCE_WRITE_PROTECTED;
         const bool createIfNecessary = IMAGE_DONT_CREATE;
 
-        if (insertFloppyDisk(path, writeProtected, createIfNecessary))
+        if (insertFloppyDisk(DRIVE_1, path, writeProtected, createIfNecessary))
         {
             myIndex = 0;
             myImages.clear();
@@ -117,11 +120,13 @@ namespace ra2
         const std::string playlistStem = playlistPath.stem().string();
 
         std::string line;
+        std::string pendingLabel;
         while (std::getline(playlist, line))
         {
             // should we trim initial spaces?
             if (startsWith(line, M3U_SAVEDISK))
             {
+                pendingLabel.clear();
                 const size_t index = myImages.size() + 1;
                 const std::string filename = StrFormat("%s.save%" SIZE_T_FMT ".dsk", playlistStem.c_str(), index);
 
@@ -134,12 +139,25 @@ namespace ra2
                 }
 
                 // Always prefix with "Save Disk"
-                const std::string label = M3U_SAVEDISK_LABEL + labelSuffix;
+                const std::string label = SAVEDISK_LABEL + labelSuffix;
 
                 const std::filesystem::path imagePath = savePath / filename;
 
                 // TODO: this disk is NOT formatted
-                myImages.push_back({imagePath.string(), label, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_CREATE});
+                myImages.push_back({imagePath.string(), label, IMAGE_USE_FILES_WRITE_PROTECT_STATUS, IMAGE_CREATE, true});
+            }
+            else if (startsWith(line, M3U_LABEL))
+            {
+                pendingLabel = line.substr(M3U_LABEL.size());
+            }
+            else if (startsWith(line, M3U_EXTINF))
+            {
+                // #EXTINF: standard - label follows the first comma
+                const size_t comma = line.find(',', M3U_EXTINF.size());
+                if (comma != std::string::npos)
+                {
+                    pendingLabel = line.substr(comma + 1);
+                }
             }
             else if (!startsWith(line, M3U_COMMENT))
             {
@@ -147,11 +165,18 @@ namespace ra2
                 std::string label;
                 getLabelAndPath(line, imagePath, label);
 
+                // #LABEL: or #EXTINF: override pipe label
+                if (!pendingLabel.empty())
+                {
+                    label = pendingLabel;
+                    pendingLabel.clear();
+                }
+
                 if (imagePath.is_relative())
                 {
                     imagePath = parent / imagePath;
                 }
-                myImages.push_back({imagePath.string(), label, IMAGE_FORCE_WRITE_PROTECTED, IMAGE_DONT_CREATE});
+                myImages.push_back({imagePath.string(), label, IMAGE_FORCE_WRITE_PROTECTED, IMAGE_DONT_CREATE, false});
             }
         }
 
@@ -175,19 +200,38 @@ namespace ra2
 
         // this is safe even if myImages is empty
         myEjected = true;
-        return setEjectedState(false);
+        const bool inserted = setEjectedState(false);
+
+        // MultiDrive support: if M3U filename constains "(MD") or option is enabled, insert second disk into DRIVE_2
+        // Only when starting from disk 0 to avoid conflicts with Previous resume
+        // Skip save disks - those are for manual swap only
+        if (inserted && myIndex == 0 && myImages.size() > 1 &&
+            (playlistStem.find("(MD") != std::string::npos || ra2::getFloppyMultiDrive()))
+        {
+            const auto &image = myImages[1];
+            if (!image.isSaveDisk)
+            {
+                insertFloppyDisk(DRIVE_2, image.path, image.writeProtected, image.createIfNecessary);
+            }
+        }
+
+        return inserted;
     }
 
-    bool DiskControl::insertFloppyDisk(const std::string &path, const bool writeProtected, bool const createIfNecessary)
+    bool DiskControl::insertFloppyDisk(
+        const Drive_e drive, const std::string &path, const bool writeProtected, bool const createIfNecessary)
     {
         CardManager &cardManager = GetCardMgr();
         Disk2InterfaceCard *disk2Card = dynamic_cast<Disk2InterfaceCard *>(cardManager.GetObj(SLOT6));
 
         if (disk2Card)
         {
-            const ImageError_e error = disk2Card->InsertDisk(DRIVE_1, path, writeProtected, createIfNecessary);
+            const ImageError_e error = disk2Card->InsertDisk(drive, path, writeProtected, createIfNecessary);
+            const bool result = (error == eIMAGE_ERROR_NONE);
 
-            if (error == eIMAGE_ERROR_NONE)
+            ra2::log_cb(RETRO_LOG_INFO, "Insert into drive %d: %s -> %d\n", drive + 1, path.c_str(), result);
+
+            if (result)
             {
                 storeCurrentDiskFolder(path);
                 return true;
@@ -241,11 +285,10 @@ namespace ra2
             }
             else
             {
+                const auto &image = myImages[myIndex];
                 // inserted
-                result = insertFloppyDisk(
-                    myImages[myIndex].path, myImages[myIndex].writeProtected, myImages[myIndex].createIfNecessary);
+                result = insertFloppyDisk(DRIVE_1, image.path, image.writeProtected, image.createIfNecessary);
                 myEjected = !result;
-                ra2::log_cb(RETRO_LOG_INFO, "Insert new disk: %s -> %d\n", myImages[myIndex].path.c_str(), result);
             }
         }
 
@@ -361,6 +404,7 @@ namespace ra2
             writeString(buffer, image.label);
             buffer.get<bool>() = image.writeProtected;
             buffer.get<bool>() = image.createIfNecessary;
+            buffer.get<bool>() = image.isSaveDisk;
         }
     }
 
@@ -379,6 +423,7 @@ namespace ra2
             readString(buffer, image.label);
             image.writeProtected = buffer.get<const bool>();
             image.createIfNecessary = buffer.get<const bool>();
+            image.isSaveDisk = buffer.get<const bool>();
         }
     }
 

@@ -24,6 +24,7 @@ namespace
     const char *REG_RA2 = "ra2";
     const char *REGVALUE_KEYBOARD_TYPE = "Keyboard type";
     const char *REGVALUE_PLAYLIST_START = "Playlist start";
+    const char *REGVALUE_FLOPPY_MULTI_DRIVE = "Floppy multidrive";
     const char *REGVALUE_MOUSE_SPEED_00 = "Mouse speed";
 
     const char *CATEGORY_SYSTEM = "system";
@@ -308,6 +309,19 @@ namespace
         },
         {
             {
+                "floppy_multidrive",
+                "Floppy MultiDrive",
+                CATEGORY_SYSTEM,
+                {
+                    {"disabled", 0},
+                    {"enabled", 1},
+                },
+            },
+            REG_RA2,
+            REGVALUE_FLOPPY_MULTI_DRIVE,
+        },
+        {
+            {
                 "keyboard_type",
                 "Keyboard Type",
                 CATEGORY_INPUT,
@@ -559,6 +573,13 @@ namespace ra2
     {
         const auto registry = std::make_shared<common2::PTreeRegistry>();
         return registry;
+    }
+
+    bool getFloppyMultiDrive()
+    {
+        uint32_t value = 0;
+        RegLoadValue(REG_RA2, REGVALUE_FLOPPY_MULTI_DRIVE, true, &value);
+        return value != 0;
     }
 
     KeyboardType getKeyboardEmulationType()
