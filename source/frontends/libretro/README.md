@@ -112,6 +112,6 @@ Save disks (`#SAVEDISK:`) are never auto-inserted into DRIVE_2.
 
 | Option | Values | Description |
 | ------ | ------ | ----------- |
-| Playlist Start Disk | First, Previous | Whether to start from disk 0 or resume from the previously used disk |
-| Floppy MultiDrive | disabled, enabled | Auto-insert second disk into DRIVE_2 for all playlists |
 | Disk Control Drive | Drive 1, 2 | Active drive for the Disk Control Interface. |
+| Playlist Start Disk | First, Previous | Whether to start from disk 1 or resume from the previously used disk |
+| Floppy MultiDrive | Disabled, Enabled | Auto-insert second disk into DRIVE_2 for all playlists |
