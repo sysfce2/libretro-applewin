@@ -35,9 +35,9 @@ namespace
 
     retro_core_option_v2_category ourOptionCatsUS[] = {
         {CATEGORY_SYSTEM, "System", "Configure system options."},
+        {CATEGORY_DISK_CONTROL, "Disk Control", "Configure disk control options."},
         {CATEGORY_INPUT, "Input", "Configure input options."},
         {CATEGORY_RETROPAD_MAPPING, "RetroPad Mapping", "Configure RetroPad mapping options."},
-        {CATEGORY_DISK_CONTROL, "Disk Control", "Configure disk control options."},
         {nullptr, nullptr, nullptr},
     };
 
@@ -299,6 +299,19 @@ namespace
         },
         {
             {
+                "disk_control_drive",
+                "Disk Control Drive",
+                CATEGORY_DISK_CONTROL,
+                {
+                    {"Drive 1", DRIVE_1},
+                    {"Drive 2", DRIVE_2},
+                },
+            },
+            REG_RA2,
+            REGVALUE_DISK_CONTROL_DRIVE,
+        },
+        {
+            {
                 "playlist_start",
                 "Playlist Start Disk",
                 CATEGORY_DISK_CONTROL,
@@ -322,19 +335,6 @@ namespace
             },
             REG_RA2,
             REGVALUE_FLOPPY_MULTI_DRIVE,
-        },
-        {
-            {
-                "disk_control_drive",
-                "Disk Control Drive",
-                CATEGORY_DISK_CONTROL,
-                {
-                    {"Drive 1", DRIVE_1},
-                    {"Drive 2", DRIVE_2},
-                },
-            },
-            REG_RA2,
-            REGVALUE_DISK_CONTROL_DRIVE,
         },
         {
             {

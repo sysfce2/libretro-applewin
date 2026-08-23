@@ -302,8 +302,7 @@ namespace ra2
             {
                 // if the other dirve has the same disk, eject it first to avoid conflicts
                 const Drive_e otherDrive = (drive == DRIVE_1) ? DRIVE_2 : DRIVE_1;
-                if (!myEjected[otherDrive] && myIndex[otherDrive] < myImages.size() &&
-                    myIndex[otherDrive] == myIndex[drive])
+                if (!myEjected[otherDrive] && (myIndex[otherDrive] == myIndex[drive]))
                 {
                     disk2Card->EjectDisk(otherDrive);
                     myEjected[otherDrive] = true;
