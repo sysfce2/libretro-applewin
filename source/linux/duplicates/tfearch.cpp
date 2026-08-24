@@ -49,7 +49,7 @@ bool tfe_arch_enumadapter_close()
 
 pcap_t *TfePcapOpenAdapter(const std::string &interface_name)
 {
-    return NULL;
+    return nullptr;
 }
 
 void TfePcapCloseAdapter(pcap_t *TfePcapFP)
@@ -77,7 +77,10 @@ void tfe_arch_set_hashfilter(const uint32_t hash_mask[2])
 #endif
 }
 
-inline static const char* bool_to_cstring(bool b) { return b ? "true" : "false"; }
+static const char *bool_to_cstring(bool b)
+{
+    return b ? "true" : "false";
+}
 
 void tfe_arch_recv_ctl(
     bool bBroadcast,   /* broadcast */
@@ -133,7 +136,7 @@ int tfe_arch_receive(
 
 const char *tfe_arch_lib_version()
 {
-    return 0;
+    return nullptr;
 }
 
 bool tfe_arch_is_npcap_loaded()
