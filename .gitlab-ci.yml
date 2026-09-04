@@ -172,6 +172,18 @@ android-x86_64:
     API_LEVEL: 24
     EXTRA_PATH: source/frontends/libretro
 
+# Android 32-bit x86
+android-x86:
+  extends:
+    - .libretro-android-cmake-x86
+    - .core-defs
+  before_script:
+    - export NUMPROC=$(($(nproc)/5))
+  variables:
+    CXXFLAGS: -Wno-deprecated-declarations -Wno-unknown-attributes
+    API_LEVEL: 24
+    EXTRA_PATH: source/frontends/libretro
+
 # iOS
 libretro-build-ios-arm64:
   extends:
