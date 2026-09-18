@@ -90,7 +90,16 @@ libretro-build-linux-x64:
   image: $CI_SERVER_HOST:5050/libretro-infrastructure/libretro-build-amd64-ubuntu:backports
   before_script:
     - export NUMPROC=$(($(nproc)/5))
-    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 16FAAD7AF99A65E2
+    # Kitware's apt signing key, for the CMake repository this image builds
+    # against. Fetched over HTTPS rather than through gpg's own keyserver
+    # client: hkp://keyserver.ubuntu.com resolves to addresses the container
+    # cannot always reach - "gpg: keyserver receive failed: Cannot assign
+    # requested address", which took the x64 job down on 17/09 while the i686
+    # one, running the same line minutes later, got through. curl picks a
+    # reachable address and fails loudly if it cannot, and the key lands where
+    # apt reads keys from now that apt-key is deprecated.
+    - curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x16FAAD7AF99A65E2'
+      | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kitware-archive.gpg
     - sudo apt-get update -qy
     - sudo apt-get -qy install $(cat source/frontends/libretro/xenial/packages.txt)
   variables:
@@ -105,7 +114,16 @@ libretro-build-linux-i686:
     - .core-defs
   before_script:
     - export NUMPROC=$(($(nproc)/5))
-    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 16FAAD7AF99A65E2
+    # Kitware's apt signing key, for the CMake repository this image builds
+    # against. Fetched over HTTPS rather than through gpg's own keyserver
+    # client: hkp://keyserver.ubuntu.com resolves to addresses the container
+    # cannot always reach - "gpg: keyserver receive failed: Cannot assign
+    # requested address", which took the x64 job down on 17/09 while the i686
+    # one, running the same line minutes later, got through. curl picks a
+    # reachable address and fails loudly if it cannot, and the key lands where
+    # apt reads keys from now that apt-key is deprecated.
+    - curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x16FAAD7AF99A65E2'
+      | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kitware-archive.gpg
     - sudo apt-get update -qy
     - sudo apt-get -qy install $(cat source/frontends/libretro/xenial/packages.txt)
   variables:
